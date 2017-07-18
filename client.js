@@ -25,6 +25,9 @@ socket.on('feedback', function (feedback) {
             logUtil.jsonLog(teamInfo);
             break;
         
+        case 'INVITERESULT':
+            feedbackProxy.handleInvitation(feedback);
+            break;
     }
 });
 

@@ -95,4 +95,18 @@ exports.handleRegister = function(socket) {
     });
 }
 
+exports.handleInviteFriend = function(socket) {
+    socket.on('inviteFriend', function (invitePackage) {
+        if (socketProxy.isUserOnline(invitePackage.userId)) {
+            var dstSocket = socketProxy.mapToSocket(invitePackage.userId);
+            dstSocket.emit('friendInvited', invitePackage);
+        } else {
+            socket.emit('feedback', {
+                errorCode: 1,
+                type: 'INVITERESULT',
+                text: invitePackage.userName + '邀请失败'
+            });
+        }
+    })
+}
 

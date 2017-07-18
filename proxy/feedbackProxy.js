@@ -31,3 +31,12 @@ exports.handleTeamEstablishResult = function (feedback) {
         return null;
     }
 }
+
+exports.handleInvitation = function (feedback) {
+    logger.methodLog('handleInvitation');
+
+    if (feedback.errorCode == 1) {
+        console.log(feedback.text);
+    }
+    
+}

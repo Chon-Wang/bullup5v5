@@ -32,5 +32,4 @@ exports.testEstablishTeam = function (socket, userInfo) {
     })
 }
 
-
-
+exports.testInviteFriend = function (socket, )

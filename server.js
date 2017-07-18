@@ -12,7 +12,11 @@ io.on('connection', function (socket) {
 
     userProxy.handleRegister(socket);
 
+    userProxy.handleInviteFriend(socket);
+
     teamProxy.handleTeamEstablish(socket);
+
+
 });
 
 io.listen(3000);
