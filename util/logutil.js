@@ -29,3 +29,7 @@ exports.levelMsgLog = function(level, content) {
     }
     console.log(prefix + content);
 }
+
+exports.methodLog = function(methodName) {
+    console.log('In ' + methodName + ' method!');
+}

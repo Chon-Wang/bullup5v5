@@ -6,26 +6,36 @@ var logUtil = require('./util/logutil.js');
 var feedbackProxy = require('./proxy/feedbackProxy.js');
 
 var userInfo = null;
+var teamInfo = null;
 
 socket.on('feedback', function (feedback) {
     switch(feedback.type) {
         case 'LOGINRESULT':
             userInfo = feedbackProxy.handleLoginResult(feedback);
+            logUtil.jsonLog(userInfo);
             break;
 
         case 'REGISTERRESULT':
             userInfo = feedbackProxy.handleRegisterResult(feedback);
+            logUtil.jsonLog(userInfo);
             break;
         
         case 'ESTABLISHTEAMRESULT':
-            
-    }
-    
-    if (userInfo) {
-        logUtil.jsonLog(userInfo);
+            teamInfo = feedbackProxy.handleTeamEstablishResult(feedback);
+            logUtil.jsonLog(teamInfo);
+            break;
+        
     }
 });
 
+
 testCase.testLogin(socket);
+
+setTimeout(
+    function () {
+        testCase.testEstablishTeam(socket, userInfo);
+    }, 1000);
+
+
 
 // testCase.testRegister(socket);

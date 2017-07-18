@@ -12,7 +12,8 @@ var logger = require('../util/logutil.js');
 exports.handleTeamEstablish = function(socket) {
     socket.on('teamEstablish', function (team) {
         logger.listenerLog('teamEstablish');
-        formedTeams[team.name] = team;
+        logger.jsonLog(team);
+        unformedTeams[team.name] = team;
         // 将该socket放入teamname命名的room中
         socket.join(team.name);
 

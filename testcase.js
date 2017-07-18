@@ -14,5 +14,23 @@ exports.testRegister = function (socket) {
     });
 }
 
+exports.testEstablishTeam = function (socket, userInfo) {
+    socket.emit('teamEstablish', {
+        name: (new Date).valueOf(),
+        captian: {
+            name: userInfo.name,
+            userId: userInfo.userId,
+        },
+        participants: [
+            {
+                name: userInfo.name,
+                userId: userInfo.userId,
+                avatarId: userInfo.avatarId,
+                strength: userInfo.strength
+            }
+        ]
+    })
+}
+
 
 
