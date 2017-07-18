@@ -18,7 +18,7 @@ connection.connect(function(err) {
  * @param nickname 用户名
  */
 exports.findUserByNick = function(nickname, callback) {
-    connection.query('select * from `user` where user_id=?', [nickname], function (err, results){
+    connection.query('select * from `user` where nick_name=?', [nickname], function (err, results){
         if (err) throw err;
         callback(results[0]);
     });
