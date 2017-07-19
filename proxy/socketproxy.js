@@ -1,13 +1,16 @@
-var userSocketMap = {};
-var socketUserMap = {};
+
+exports.init = function() {
+    this.userSocketMap = {};
+    this.socketUserMap = {};
+}
 /**
  * 添加用户id和socket的映射
  * @param userId 用户id
  * @param socket 用于连接的socket包
  */
 exports.add = function(userId, socket) {
-    userSocketMap[userId] = socket;
-    socketUserMap[socket.id] = userId;
+    this.userSocketMap[userId] = socket;
+    this.socketUserMap[socket.id] = userId;
 }
 
 
@@ -16,8 +19,8 @@ exports.add = function(userId, socket) {
  * @param userId 用户id 
  */
 exports.remove = function(userId) {
-    socketUserMap[userSocketMap[userId].id] = null;
-    userSocketMap[userId] = null;
+    this.socketUserMap[userSocketMap[userId].id] = null;
+    this.userSocketMap[userId] = null;
 }
 
 /**
@@ -25,7 +28,7 @@ exports.remove = function(userId) {
  * @param userId 用户id
  */
 exports.isUserOnline = function(userId) {
-    return userSocketMap[userId]? true: false;
+    return this.userSocketMap[userId]? true: false;
 }
 
 /**
@@ -33,5 +36,5 @@ exports.isUserOnline = function(userId) {
  * @param userId 用户id
  */
 exports.mapToSocket = function(userId) {
-    return socketUserMap[userId];
+    return this.userSocketMap[userId];
 }

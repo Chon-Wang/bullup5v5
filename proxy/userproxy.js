@@ -7,10 +7,10 @@ var socketProxy = require('./socketproxy.js');
  * 处理用户连接
  * @param socket
  */
-exports.handleLogin = function(socket) {
+exports.handleLogin = function (socket) {
     socket.on('login', function (data) {
         logger.listenerLog('login');
-        dbUtil.findUserByNick(data.userName, function(user) {
+        dbUtil.findUserByNick(data.userName, function (user) {
             if (!user || user.password != data.password) {
                 // 登录失败
                 socket.emit('feedback', {
@@ -63,7 +63,7 @@ exports.handleLogin = function(socket) {
  * 处理用户注册
  * @param socket
  */
-exports.handleRegister = function(socket) {
+exports.handleRegister = function (socket) {
     socket.on('register', function (userInfo) {
         logger.listenerLog('register');
         dbUtil.findUserByNick(userInfo.userName, function (user) {
@@ -76,7 +76,7 @@ exports.handleRegister = function(socket) {
                 });
             } else {
                 dbUtil.addUser(userInfo, function (userId) {
-                    
+
                     socket.emit('feedback', {
                         errorCode: 0,
                         text: '注册成功',
@@ -90,16 +90,17 @@ exports.handleRegister = function(socket) {
                 });
             }
         });
-        
-        
+
+
     });
 }
 
-exports.handleInviteFriend = function(socket) {
+exports.handleInviteFriend = function (socket) {
     socket.on('inviteFriend', function (invitePackage) {
+        logger.listenerLog('inviteFriend');
         if (socketProxy.isUserOnline(invitePackage.userId)) {
             var dstSocket = socketProxy.mapToSocket(invitePackage.userId);
-            dstSocket.emit('friendInvited', invitePackage);
+            dstSocket.emit('friendInvitation', invitePackage);
         } else {
             socket.emit('feedback', {
                 errorCode: 1,

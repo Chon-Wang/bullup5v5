@@ -26,9 +26,10 @@ exports.handleTeamEstablishResult = function (feedback) {
     if (feedback.errorCode == 0) {
         //TODO 展示在页面上
         console.log(feedback.text);
+        return feedback.extension;
     } else {
         logger.levelMsgLog(1, feedback.text);
-        return null;
+
     }
 }
 
