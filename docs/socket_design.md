@@ -117,6 +117,7 @@ var feedBack = {
 ```js
 // 邀请好友
 var invitePacket = {
+    // 改名字为受邀者的名字
     name: 'colinyoung',
     userId: 14,
     host: {
@@ -140,6 +141,7 @@ var inivitFeedback = {
     text: 'colinyoung加入游戏', //如果拒绝,text为colinyoung拒绝加入游戏 
     extension: {      // 如果受邀用户拒绝,则extension只有hostName字段和userInfo的name字段
         hostName: 'hudsonjoe',
+        hostId: 13,
         teamName: 'hudsonjoe134124',
         userInfo:  {
             name: 'colinyoung',

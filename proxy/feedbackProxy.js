@@ -11,6 +11,7 @@ exports.handleLoginResult = function (feedback) {
     }
 }
 
+
 exports.handleRegisterResult = function (feedback) {
     logger.methodLog('handleRegisterResult');
     if (feedback.errorCode == 0) {
@@ -36,8 +37,19 @@ exports.handleTeamEstablishResult = function (feedback) {
 exports.handleInvitation = function (feedback) {
     logger.methodLog('handleInvitation');
 
-    if (feedback.errorCode == 1) {
+    if (feedback.errorCode == 0) {
         console.log(feedback.text);
+    }
+    switch (feedback.errorCode) {
+        case 1: // 服务器问题导致用户邀请失败
+            logger.levelMsgLog(1, feedback.text);
+            //TODO Do something
+            break;
+
+        case 2: // 受邀用户拒绝邀请
+            logger.levelMsgLog(1, feedback.text);
+            //TODO Do something
+            break;
     }
     
 }

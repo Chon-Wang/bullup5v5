@@ -7,6 +7,7 @@ var feedbackProxy = require('./proxy/feedbackProxy.js');
 
 var userInfo = null;
 var teamInfo = null;
+var inviteInfo = null;
 
 socket.on('feedback', function (feedback) {
     switch(feedback.type) {
@@ -45,9 +46,13 @@ socket.on('friendInvitation', function (invitePacket) {
     logger.listenerLog('friendInvitation');
     // TODO 获取邀请者信息, 选择是否接受邀请\
     logger.jsonLog(invitePacket);
+    inviteInfo = invitePacket;
 });
 
-testCase.testLogin(socket);
+testCase.testLogin(socket, {
+    userName: 'colinyoung',
+    password: '123456'
+});
 
 setTimeout(
     function () {
@@ -62,5 +67,11 @@ setTimeout(
     2000
 );
 
+setTimeout(
+    function () {
+        testCase.testRefuseInvitation(socket, userInfo, inviteInfo);
+    },
+    3000
+);
 
 // testCase.testRegister(socket);

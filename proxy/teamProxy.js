@@ -28,3 +28,20 @@ exports.handleTeamEstablish = function(socket) {
     });
 }
 
+
+/**
+ * 通过队伍名获取未形成的队伍信息
+ * @param teamName 队伍名
+ */
+exports.mapTeamNameToUnformedTeam = function (teamName) {
+    return this.unformedTeams[teamName];
+}
+
+/**
+ * 向未形成的队伍列表中的某一个team添加参与者
+ * @param teamName 队伍名
+ * @param participant 参与者信息
+ */
+exports.addParticipantToTeam = function (teamName, participant) {
+    this.unformedTeams[teamName].participants.push(participant);
+}

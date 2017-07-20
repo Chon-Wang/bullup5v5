@@ -1,17 +1,9 @@
-exports.testLogin = function (socket) {
-    socket.emit('login', {
-        userName: 'colinyoung',
-        password: '123456'
-    });
+exports.testLogin = function (socket, loginInfo) {
+    socket.emit('login', loginInfo);
 }
 
-exports.testRegister = function (socket) {
-    socket.emit('register', {
-        userName: 'colinyoung2',
-        tel: '18553358649',
-        email: '1427714873@qq.com',
-        password: '123456'
-    });
+exports.testRegister = function (socket, registerInfo) {
+    socket.emit('register', registerInfo);
 }
 
 exports.testEstablishTeam = function (socket, userInfo) {
@@ -54,4 +46,35 @@ exports.testInviteFriend = function (socket, userInfo, friendName, teamInfo) {
             rule: teamInfo.rule
         }
     });
+}
+
+exports.testRecvInvitation = function (socket, userInfo, inviteInfo) {
+    socket.emit('inviteResult', {
+        errorCode: 0,
+        type: 'INVITERESULT',
+        text: userInfo.name + '加入游戏',
+        extension: {
+            hostName: inviteInfo.host.name,
+            hostId: inviteInfo.host.userId,
+            teamName: inviteInfo.team.name,
+            userInfo: {
+                name: userInfo.name,
+                userId: userInfo.userId,
+                avatarId: userInfo.avatarId,
+                strength: userInfo.strength
+            }
+        }
+    });
+}
+
+exports.testRefuseInvitation = function (socket, userInfo, inviteInfo) {
+    socket.emit('inviteResult', {
+        errorCode: 1,
+        type: 'INVITERESULT',
+        text: userInfo.name + '拒绝了邀请',
+        extension: {
+            hostName: inviteInfo.host.name,
+            hostId: inviteInfo.host.userId
+        }
+    })
 }

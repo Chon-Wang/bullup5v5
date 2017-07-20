@@ -78,7 +78,7 @@ exports.findFriendListByUserId = function(userId, callback) {
                 
                 //获取用户状态
                 if (online) {
-                    status = socketProxy.mapToSocket(data.user_id).status;
+                    status = socketProxy.mapUserIdToSocket(data.user_id).status;
                 }
 
                 friendList[data.nick_name] = {

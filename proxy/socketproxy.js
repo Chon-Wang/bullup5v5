@@ -35,6 +35,6 @@ exports.isUserOnline = function(userId) {
  * 通过用户id映射socket
  * @param userId 用户id
  */
-exports.mapToSocket = function(userId) {
+exports.mapUserIdToSocket = function(userId) {
     return this.userSocketMap[userId];
 }
