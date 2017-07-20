@@ -25,6 +25,15 @@ io.on('connection', function (socket) {
 
     teamProxy.handleTeamEstablish(socket);
 
+    teamProxy.handleTeamForm(io, socket);
+
+    teamProxy.handleVersusLobbyRefresh(socket);
+
+});
+
+io.on('disconnect', function (socket) {
+    logger.levelMsgLog(0, 'User ' + socket.id + ' disconnected!');
+    socketProxy.remove(socket);
 
 });
 

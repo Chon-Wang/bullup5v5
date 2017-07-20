@@ -175,9 +175,9 @@ var establishTeamPacket = {
 ## 队伍列表的数据
 在队长确认创建队伍信息,或者是某个客户端刷新, 客户端广播最新的队伍列表信息
 ```js
-var broadcastTeamList = [
-    {
-        name: 'hudsonjoe134124', // 用户昵称 + 时间戳
+var broadcastTeamList = {
+    'hudsonjoe134124': {
+        teamName: 'hudsonjoe134124', // 用户昵称 + 时间戳
         status: 'ESTABLISHING',// 'PUBLISHING' 'MATCHING' 'GAMING'
         type: 'BATTLE', // 'MATCH'
         bet: 100, // 赌注
@@ -185,7 +185,7 @@ var broadcastTeamList = [
         rule: '基地爆炸',
         participantsCount: 5
     }
-]
+}
 ```
 
 ## 队伍详情请求包

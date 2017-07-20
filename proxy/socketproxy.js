@@ -18,9 +18,9 @@ exports.add = function(userId, socket) {
  * 删除映射
  * @param userId 用户id 
  */
-exports.remove = function(userId) {
-    this.socketUserMap[userSocketMap[userId].id] = null;
-    this.userSocketMap[userId] = null;
+exports.remove = function(socket) {
+    this.userSocketMap[this.socketUserMap[socket.id].userId] = null;
+    this.socketUserMap[socket.id] = null;
 }
 
 /**

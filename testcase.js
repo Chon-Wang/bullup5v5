@@ -78,3 +78,10 @@ exports.testRefuseInvitation = function (socket, userInfo, inviteInfo) {
         }
     })
 }
+
+exports.testFormTeam = function (socket, userInfo, teamInfo) {
+    socket.emit('teamForm', {
+        teamName: teamInfo.name,
+        userId: userInfo.userId
+    });
+}

@@ -8,6 +8,7 @@ var feedbackProxy = require('./proxy/feedbackProxy.js');
 var userInfo = null;
 var teamInfo = null;
 var inviteInfo = null;
+var versusInfo = null;
 
 socket.on('success', function (data) {
     logger.listenerLog('success');
@@ -44,6 +45,11 @@ socket.on('feedback', function (feedback) {
         case 'INVITERESULT':
             feedbackProxy.handleInvitation(feedback);
             break;
+
+        case 'VERSUSLOBBYINFO':
+            versusInfo = feedbackProxy.handleVersusLobbyInfo(feedback);
+            logger.jsonLog(versusInfo);
+            break;
     }
 });
 
@@ -54,10 +60,17 @@ socket.on('friendInvitation', function (invitePacket) {
     inviteInfo = invitePacket;
 });
 
+// 监听服务端队伍信息更新
 socket.on('teamInfoUpdate', function(data) {
     logger.listenerLog('teamInfoUpdate');
     logger.jsonLog(data);
     teamInfo = data;
+});
+
+socket.on('teamForm', function() {
+    logger.listenerLog('teamForm');
+    //TODO 切换到对战大厅
+    socket.emit('versusLobbyRefresh');
 });
 
 testCase.testLogin(socket, {
@@ -84,5 +97,12 @@ setTimeout(
     },
     3000
 );
+
+setTimeout(
+    function () {
+        testCase.testFormTeam(socket, userInfo, teamInfo);
+    },
+    4000
+)
 
 // testCase.testRegister(socket);

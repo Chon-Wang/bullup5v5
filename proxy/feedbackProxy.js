@@ -53,3 +53,14 @@ exports.handleInvitation = function (feedback) {
     }
     
 }
+
+exports.handleVersusLobbyInfo = function(feedback) {
+    logger.methodLog('handleVersusLobbyInfo');
+
+    if (feedback.errorCode == 0) {
+        console.log(feedback.text);
+        return feedback.extension;
+    } else {
+        // TODO 处理失败逻辑
+    }
+}

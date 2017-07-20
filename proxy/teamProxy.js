@@ -5,7 +5,10 @@ exports.init = function() {
     this.formedTeams = {};
     // 正在创建中的队伍列表
     this.unformedTeams = {};
+    // 用来进行广播的队伍列表
+    this.broadcastTeamInfos = {};
 }
+
 /**
  * 队伍创建监听
  * @param socket
@@ -44,4 +47,48 @@ exports.mapTeamNameToUnformedTeam = function (teamName) {
  */
 exports.addParticipantToTeam = function (teamName, participant) {
     this.unformedTeams[teamName].participants.push(participant);
+}
+
+/**
+ * 处理用户确认创建队伍请求
+ * @param io
+ * @param socket
+ */
+exports.handleTeamForm = function (io, socket) {
+    socket.on('teamForm', function (teamInfo) {
+        logger.listenerLog('teamForm');
+
+        teamInfo = exports.mapTeamNameToUnformedTeam(teamInfo.teamName);
+        // 将未形成队伍列表中的队伍放入已形成队伍列表中
+        exports.formedTeams[teamInfo.name] = teamInfo;
+        // 将该队伍可以用来广播的内容加入到广播列表中
+        exports.broadcastTeamInfos[teamInfo.name] = {
+            teamName: teamInfo.name,
+            status: teamInfo.status,
+            type: teamInfo.type,
+            bet: teamInfo.bet,
+            mapId: teamInfo.mapId,
+            rule: teamInfo.rule,
+            participantsCount: teamInfo.participants.length
+        };
+        exports.unformedTeams[teamInfo.name] = null;
+        // 告诉该队伍中的所有用户队伍已经形成
+        io.in(teamInfo.name).emit('teamForm');
+    });
+}
+
+/**
+ * 处理用户更新对战大厅房间请求
+ * @param socket
+ */
+exports.handleVersusLobbyRefresh = function(socket) {
+    socket.on('versusLobbyRefresh', function () {
+        logger.listenerLog('versusLobbyRefresh');
+        socket.emit('feedback', {
+            errorCode: 0,
+            type: 'VERSUSLOBBYINFO',
+            text: '对战大厅更新数据',
+            extension: exports.broadcastTeamInfos
+        });
+    });
 }
