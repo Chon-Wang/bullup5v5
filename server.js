@@ -29,6 +29,8 @@ io.on('connection', function (socket) {
 
     teamProxy.handleVersusLobbyRefresh(socket);
 
+    teamProxy.handleTeamDetails(socket);
+
 });
 
 io.on('disconnect', function (socket) {

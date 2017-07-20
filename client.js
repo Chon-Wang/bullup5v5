@@ -50,6 +50,11 @@ socket.on('feedback', function (feedback) {
             versusInfo = feedbackProxy.handleVersusLobbyInfo(feedback);
             logger.jsonLog(versusInfo);
             break;
+
+        case 'TEAMDETAILS':
+            var teamDetails = feedbackProxy.handleTeamDetails(feedback);
+            logger.jsonLog(teamDetails);
+            break;
     }
 });
 
@@ -84,25 +89,34 @@ setTimeout(
     }, 1000
 );
 
-setTimeout(
-    function () {
-        testCase.testInviteFriend(socket, userInfo, 'colinyoung', teamInfo);
-    },
-    2000
-);
+// setTimeout(
+//     function () {
+//         testCase.testInviteFriend(socket, userInfo, 'colinyoung', teamInfo);
+//     },
+//     2000
+// );
 
-setTimeout(
-    function () {
-        testCase.testRecvInvitation(socket, userInfo, inviteInfo);
-    },
-    3000
-);
+// setTimeout(
+//     function () {
+//         testCase.testRecvInvitation(socket, userInfo, inviteInfo);
+//     },
+//     3000
+// );
 
 setTimeout(
     function () {
         testCase.testFormTeam(socket, userInfo, teamInfo);
     },
-    4000
-)
+    2000
+);
 
+setTimeout(
+    function() {
+        testCase.testTeamDetails(socket, {
+            teamName: teamInfo.name,
+            userId: userInfo.userId
+        })
+    },
+    3000
+)
 // testCase.testRegister(socket);

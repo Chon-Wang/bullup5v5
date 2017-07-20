@@ -26,7 +26,7 @@ exports.handleTeamEstablishResult = function (feedback) {
     logger.methodLog('handleTeamEstablishResult');
     if (feedback.errorCode == 0) {
         //TODO 展示在页面上
-        console.log(feedback.text);
+        logger.levelMsgLog(1, feedback.text);
         return feedback.extension;
     } else {
         logger.levelMsgLog(1, feedback.text);
@@ -38,7 +38,7 @@ exports.handleInvitation = function (feedback) {
     logger.methodLog('handleInvitation');
 
     if (feedback.errorCode == 0) {
-        console.log(feedback.text);
+        logger.levelMsgLog(1, feedback.text);
     }
     switch (feedback.errorCode) {
         case 1: // 服务器问题导致用户邀请失败
@@ -51,16 +51,27 @@ exports.handleInvitation = function (feedback) {
             //TODO Do something
             break;
     }
-    
+
 }
 
-exports.handleVersusLobbyInfo = function(feedback) {
+exports.handleVersusLobbyInfo = function (feedback) {
     logger.methodLog('handleVersusLobbyInfo');
 
     if (feedback.errorCode == 0) {
-        console.log(feedback.text);
+        logger.levelMsgLog(1, feedback.text);
         return feedback.extension;
     } else {
         // TODO 处理失败逻辑
+    }
+}
+
+exports.handleTeamDetails = function (feedback) {
+    logger.methodLog('handleTeamDetails');
+
+    if (feedback.errorCode == 0) {
+        logger.levelMsgLog(1, feedback.text);
+        return feedback.extension;
+    } else {
+        logger.levelMsgLog(1, feedback.text);
     }
 }

@@ -85,3 +85,7 @@ exports.testFormTeam = function (socket, userInfo, teamInfo) {
         userId: userInfo.userId
     });
 }
+
+exports.testTeamDetails = function (socket, teamInfo) {
+    socket.emit('teamDetails', teamInfo);
+}

@@ -59,6 +59,8 @@ exports.handleTeamForm = function (io, socket) {
         logger.listenerLog('teamForm');
 
         teamInfo = exports.mapTeamNameToUnformedTeam(teamInfo.teamName);
+        // 更新队伍信息状态
+        teamInfo.status = 'PUBLISHING';
         // 将未形成队伍列表中的队伍放入已形成队伍列表中
         exports.formedTeams[teamInfo.name] = teamInfo;
         // 将该队伍可以用来广播的内容加入到广播列表中
@@ -91,4 +93,30 @@ exports.handleVersusLobbyRefresh = function(socket) {
             extension: exports.broadcastTeamInfos
         });
     });
+}
+
+
+/**
+ * 处理用户查看详情
+ * @param socket
+ */
+exports.handleTeamDetails = function (socket) {
+    socket.on('teamDetails', function (teamInfo) {
+        var team = exports.formedTeams[teamInfo.teamName];
+        if (team.status == 'PUBLISHING') {
+            socket.emit('feedback', {
+                errorCode: 0,
+                type: 'TEAMDETAILS',
+                text: '队伍详情',
+                extension: team,
+            })
+        } else {
+            socket.emit('feedback', {
+                errorCode: 1,
+                type: 'TEAMDETAILS',
+                text: '查看队伍详情失败, 请刷新对战大厅',
+                extension: null
+            })
+        }
+    })
 }
