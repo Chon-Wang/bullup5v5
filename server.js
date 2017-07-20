@@ -7,8 +7,9 @@ var teamProxy = require('./proxy/teamProxy.js');
 var socketProxy = require('./proxy/socketproxy.js');
 
 // 初始化Proxy, 所有需要保存数据结构的对象都需要初始化, 只能初始化一次
-socketProxy.init();
+userProxy.init();
 teamProxy.init();
+socketProxy.init();
 
 
 io.on('connection', function (socket) {

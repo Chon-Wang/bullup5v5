@@ -9,6 +9,11 @@ var userInfo = null;
 var teamInfo = null;
 var inviteInfo = null;
 
+socket.on('success', function (data) {
+    logger.listenerLog('success');
+    console.log(data);
+})
+
 socket.on('feedback', function (feedback) {
     switch(feedback.type) {
         case 'LOGINRESULT':
@@ -44,9 +49,15 @@ socket.on('feedback', function (feedback) {
 
 socket.on('friendInvitation', function (invitePacket) {
     logger.listenerLog('friendInvitation');
-    // TODO 获取邀请者信息, 选择是否接受邀请\
+    // TODO 获取邀请者信息, 选择是否接受邀请
     logger.jsonLog(invitePacket);
     inviteInfo = invitePacket;
+});
+
+socket.on('teamInfoUpdate', function(data) {
+    logger.listenerLog('teamInfoUpdate');
+    logger.jsonLog(data);
+    teamInfo = data;
 });
 
 testCase.testLogin(socket, {
@@ -69,7 +80,7 @@ setTimeout(
 
 setTimeout(
     function () {
-        testCase.testRefuseInvitation(socket, userInfo, inviteInfo);
+        testCase.testRecvInvitation(socket, userInfo, inviteInfo);
     },
     3000
 );

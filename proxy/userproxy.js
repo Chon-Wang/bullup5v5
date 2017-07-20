@@ -3,6 +3,17 @@ var logger = require('../util/logutil.js');
 var socketProxy = require('./socketproxy.js');
 var teamProxy = require('./teamProxy.js');
 
+exports.init = function () {
+    this.users = {};
+}
+
+/**
+ * 向数据结构中添加用户
+ */
+exports.addUser = function (user) {
+    this.users[user.userId] = user;
+}
+
 /**
  * 处理用户连接
  * @param socket
@@ -51,6 +62,7 @@ exports.handleLogin = function (socket) {
                                 }
                             }
                         };
+                        exports.addUser(feedback.extension);
                         socket.emit('feedback', feedback);
                     });
                 });
@@ -126,21 +138,29 @@ exports.handleUserInviteResult = function (io, socket) {
 
         //用户接受邀请
         if (feedback.errorCode == 0) {
+            //socket.emit('success', 'hello');
             var teamName = feedback.extension.teamName;
             var participant = feedback.extension.userInfo;
+            
+            // TODO 更新用户状态
+
             // 更新teamList中team信息, 添加该参与者
             teamProxy.addParticipantToTeam(teamName, participant);
-            
             socket.join(teamName);
+        //    socket.emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
             // 向房间内的所有用户广播当前队伍信息
-            io.sockets.in(teamName).emit('teamInfo', teamProxy.mapTeamNameToUnformedTeam(teamName));
+            io.in(teamName).emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
         } else if (feedback.errorCode == 1) {
             // 用户拒绝邀请
             var hostId = feedback.extension.hostId;
             // 向发起者发送拒绝信息
-            var socket = socketProxy.mapUserIdToSocket(hostId);
-            socket.emit('feedback', feedback);
+            var dstSocket = socketProxy.mapUserIdToSocket(hostId);
+            dstSocket.emit('feedback', feedback);
         }
     });
+}
+
+exports.changeUserStatus = function(userId, status) {
+    this.users[userId].status = status;
 }
 
