@@ -201,9 +201,9 @@ var teamDetailsRequest = {
 应战方在查看队伍详情后确定应战发送的战斗请求数据包
 ```js
 var fightRequest = {
-    teamName: 'hudsonjoe134124',
-    userId: 14,
-    myteamName: 'gjm1230123'
+    challengerTeamName: 'hudsonjoe134124',
+    hostTeamName: 'gjm1230123',
+    userId: 14
 }
 ```
 

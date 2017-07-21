@@ -89,3 +89,7 @@ exports.testFormTeam = function (socket, userInfo, teamInfo) {
 exports.testTeamDetails = function (socket, teamInfo) {
     socket.emit('teamDetails', teamInfo);
 }
+
+exports.testBattleInvite = function (socket, battleInfo) {
+    socket.emit('battleInvite', battleInfo);
+}

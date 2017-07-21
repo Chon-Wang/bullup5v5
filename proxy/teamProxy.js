@@ -41,6 +41,13 @@ exports.mapTeamNameToUnformedTeam = function (teamName) {
 }
 
 /**
+ * 根据队伍获取已经形成的队伍信息
+ * @param teamName 队伍名
+ */
+exports.mapTeamNameToFormedTeam = function (teamName) {
+    return this.formedTeams[teamName];
+}
+/**
  * 向未形成的队伍列表中的某一个team添加参与者
  * @param teamName 队伍名
  * @param participant 参与者信息
@@ -103,7 +110,8 @@ exports.handleVersusLobbyRefresh = function(socket) {
 exports.handleTeamDetails = function (socket) {
     socket.on('teamDetails', function (teamInfo) {
         var team = exports.formedTeams[teamInfo.teamName];
-        if (team.status == 'PUBLISHING') {
+        
+        if (team && team.status == 'PUBLISHING') {
             socket.emit('feedback', {
                 errorCode: 0,
                 type: 'TEAMDETAILS',

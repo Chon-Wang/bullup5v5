@@ -78,6 +78,12 @@ socket.on('teamForm', function() {
     socket.emit('versusLobbyRefresh');
 });
 
+socket.on('battleRequest', function(battleRequest) {
+    logger.listenerLog('battleRequest');
+    // TODO 提示用户有对战邀请, 点击查看对方详情
+    logger.jsonLog(battleRequest);
+});
+
 testCase.testLogin(socket, {
     userName: 'colinyoung',
     password: '123456'
@@ -118,5 +124,17 @@ setTimeout(
         })
     },
     3000
+);
+
+setTimeout(
+    function() {
+        testCase.testBattleInvite(socket, {
+            challegerTeamName: teamInfo.name,
+            hostTeamName: teamInfo.name,
+            userId: userInfo.userId
+        })
+    },
+    4000
 )
+
 // testCase.testRegister(socket);
