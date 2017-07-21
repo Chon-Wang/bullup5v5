@@ -8,7 +8,8 @@ var feedbackProxy = require('./proxy/feedbackProxy.js');
 var userInfo = null;
 var teamInfo = null;
 var inviteInfo = null;
-var versusInfo = null;
+var versusLobbyInfo = null;
+var battleInfo = null;
 
 socket.on('success', function (data) {
     logger.listenerLog('success');
@@ -16,7 +17,7 @@ socket.on('success', function (data) {
 })
 
 socket.on('feedback', function (feedback) {
-    switch(feedback.type) {
+    switch (feedback.type) {
         case 'LOGINRESULT':
             userInfo = feedbackProxy.handleLoginResult(feedback);
             //----------------为了测试---------------------
@@ -36,24 +37,29 @@ socket.on('feedback', function (feedback) {
             userInfo = feedbackProxy.handleRegisterResult(feedback);
             logger.jsonLog(userInfo);
             break;
-        
+
         case 'ESTABLISHTEAMRESULT':
             teamInfo = feedbackProxy.handleTeamEstablishResult(feedback);
             logger.jsonLog(teamInfo);
             break;
-        
+
         case 'INVITERESULT':
             feedbackProxy.handleInvitation(feedback);
             break;
 
         case 'VERSUSLOBBYINFO':
-            versusInfo = feedbackProxy.handleVersusLobbyInfo(feedback);
-            logger.jsonLog(versusInfo);
+            versusLobbyInfo = feedbackProxy.handleVersusLobbyInfo(feedback);
+            logger.jsonLog(versusLobbyInfo);
             break;
 
         case 'TEAMDETAILS':
             var teamDetails = feedbackProxy.handleTeamDetails(feedback);
             logger.jsonLog(teamDetails);
+            break;
+
+        case 'INVITEBATTLERESULT':
+            // 这里应该有一个自己的处理函数但是目前处理方式相同所以暂时用这个
+            feedbackProxy.handleInvitation(feedback);
             break;
     }
 });
@@ -61,27 +67,33 @@ socket.on('feedback', function (feedback) {
 socket.on('friendInvitation', function (invitePacket) {
     logger.listenerLog('friendInvitation');
     // TODO 获取邀请者信息, 选择是否接受邀请
-    logger.jsonLog(invitePacket);
     inviteInfo = invitePacket;
+    logger.jsonLog(inviteInfo);
 });
 
 // 监听服务端队伍信息更新
-socket.on('teamInfoUpdate', function(data) {
+socket.on('teamInfoUpdate', function (data) {
     logger.listenerLog('teamInfoUpdate');
     logger.jsonLog(data);
     teamInfo = data;
 });
 
-socket.on('teamForm', function() {
+socket.on('teamForm', function () {
     logger.listenerLog('teamForm');
     //TODO 切换到对战大厅
     socket.emit('versusLobbyRefresh');
 });
 
-socket.on('battleRequest', function(battleRequest) {
+socket.on('battleRequest', function (battleRequest) {
     logger.listenerLog('battleRequest');
     // TODO 提示用户有对战邀请, 点击查看对方详情
     logger.jsonLog(battleRequest);
+});
+
+socket.on('battleInfo', function (battle) {
+    logger.listenerLog('battleInfo');
+    battleInfo = battle;
+    logger.jsonLog(battleInfo);
 });
 
 testCase.testLogin(socket, {
@@ -117,7 +129,7 @@ setTimeout(
 );
 
 setTimeout(
-    function() {
+    function () {
         testCase.testTeamDetails(socket, {
             teamName: teamInfo.name,
             userId: userInfo.userId
@@ -127,9 +139,9 @@ setTimeout(
 );
 
 setTimeout(
-    function() {
+    function () {
         testCase.testBattleInvite(socket, {
-            challegerTeamName: teamInfo.name,
+            challengerTeamName: teamInfo.name,
             hostTeamName: teamInfo.name,
             userId: userInfo.userId
         })
@@ -137,4 +149,21 @@ setTimeout(
     4000
 )
 
+setTimeout(
+    function () {
+        testCase.testRecvBattleInvite(socket, {
+            errorCode: 0,
+            type: 'INVITEBATTLERESULT',
+            text: teamInfo.name + '队拒绝了邀请',
+            extension: {
+                // Just for test---------------
+                challengerTeamName: teamInfo.name,
+                hostTeamName: teamInfo.name,
+                userId: userInfo.userId
+                // Just for test---------------
+            }
+        })
+    },
+    5000
+)
 // testCase.testRegister(socket);

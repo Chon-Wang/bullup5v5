@@ -33,3 +33,48 @@ exports.handleBattleInvite = function (socket) {
         }
     });
 }
+
+exports.handleBattleInviteResult = function (io, socket) {
+    socket.on('battleInviteResult', function (feedback) {
+        // 如果接受了邀请
+        if (feedback.errorCode == 0) {
+            // 向两方队伍中的所有人进行广播
+            var challengerTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.challengerTeamName);
+            var hostTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.hostTeamName);
+            var currentTime = require('moment')().format('YYYYMMDDHHmmss');
+
+            var battle = {
+                battleName: challengerTeam.captain.name + hostTeam.captain.name + (new Date).valueOf(),
+                blueSide: challengerTeam,
+                redSide: hostTeam,
+                status: 'unready',
+                time: {
+                    unready: currentTime,
+                    ready: null,
+                    start: null
+                }
+            };
+
+            // 将对战信息放入数据结构
+            exports.battles[battle.battleName] = battle;
+
+            // 将挑战队伍的所有用户加入到新的socket room
+            for (var i in challengerTeam.participants) {
+                socketProxy.userJoin(challengerTeam.participants[i].userId, battle.battleName);
+            }
+
+            // 将受挑战队伍的所有用户加入到新的socket room
+            for (var i in hostTeam.participants) {
+                socketProxy.userJoin(hostTeam.participants[i].userId, battle.battleName);
+            }
+
+            io.sockets.in(battle.battleName).emit('battleInfo', battle);
+
+        } else if (feedback.errorCode == 1) {
+
+            var dstSocket = socketProxy.mapUserIdToSocket(feedback.extension.userId);
+
+            dstSocket.emit('feedback', feedback)
+        }
+    })
+}

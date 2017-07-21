@@ -219,8 +219,8 @@ var fightRequest = {
      type: 'FIGHTRESULT',
      text: null,
      extension: {
-         team1Name: 'hudsonjoe134124',
-         team2Name: 'gjm1230123'
+         challengerTeamName: 'hudsonjoe134124',
+         hostTeamName: 'gjm1230123'
      }
  }
 ```
@@ -228,17 +228,13 @@ var fightRequest = {
 对局产生在服务端和客户端保存的对局的数据结构
 ```js
 // 服务端缓存中保存的对局信息
-var game = {
-    gameName:'hudsonjoegjm124124', //captain1+captain2+timestamp
+var battle = {
+    battleName:'hudsonjoegjm124124', //邀请者captain1+受邀者captain2+timestamp
     blueSide: { 
-        teamPacket: {
-          //  ...
-        }
+        // teamPacket
     },
     redSide: {
-        teamPacket: {
-          //  ...
-        }
+        // teamPacket
     },
     status:'unready',
     time:{

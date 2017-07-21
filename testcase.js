@@ -9,7 +9,7 @@ exports.testRegister = function (socket, registerInfo) {
 exports.testEstablishTeam = function (socket, userInfo) {
     socket.emit('teamEstablish', {
         name: userInfo.name + (new Date).valueOf(),
-        captian: {
+        captain: {
             name: userInfo                                                                                                                                                                       .name,
             userId: userInfo.userId,
         },
@@ -92,4 +92,8 @@ exports.testTeamDetails = function (socket, teamInfo) {
 
 exports.testBattleInvite = function (socket, battleInfo) {
     socket.emit('battleInvite', battleInfo);
+}
+
+exports.testRecvBattleInvite = function (socket, battleInfo) {
+    socket.emit('battleInviteResult', battleInfo);
 }

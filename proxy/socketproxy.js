@@ -38,3 +38,12 @@ exports.isUserOnline = function(userId) {
 exports.mapUserIdToSocket = function(userId) {
     return this.userSocketMap[userId];
 }
+
+/**
+ * 将用户的socket加入某个房间
+ * @param userId 用户的id
+ * @param roomName 要加入的房间
+ */
+exports.userJoin = function (userId, roomName) {
+    this.userSocketMap[userId].join(roomName);
+}

@@ -35,6 +35,8 @@ io.on('connection', function (socket) {
 
     battleProxy.handleBattleInvite(socket);
 
+    battleProxy.handleBattleInviteResult(io, socket);
+
 });
 
 io.on('disconnect', function (socket) {
