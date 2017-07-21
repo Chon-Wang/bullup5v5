@@ -93,3 +93,14 @@ exports.handleBattleInviteResult = function (io, socket) {
         }
     })
 }
+
+/**
+ * 处理lol房间创建完毕
+ * @param io
+ * @param socket
+ */
+exports.handleLOLRoomEstablished = function (io, socket) {
+    socket.on('lolRoomEstablished', function (battleInfo) {
+        io.sockets.in(battleInfo.battleName).emit('lolRoomEstablished');
+    })
+}

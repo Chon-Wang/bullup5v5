@@ -104,7 +104,12 @@ socket.on('lolRoomEstablish', function (lolRoom) {
         // 如果不是创建者，则显示等待蓝方队长建立房间
         logger.jsonLog(lolRoom);
     }
-})
+});
+
+socket.on('lolRoomEstablished', function () {
+    logger.listenerLog('lolRoomEstablished');
+    logger.levelMsgLog(1, '进入游戏，开始游戏');
+});
 
 testCase.testLogin(socket, {
     userName: 'colinyoung',
@@ -175,5 +180,16 @@ setTimeout(
         })
     },
     5000
+);
+
+setTimeout(
+    function () {
+        socket.emit('lolRoomEstablished', {
+            battleName: battleInfo.battleName
+        })
+    },
+    6000
 )
+
+
 // testCase.testRegister(socket);
