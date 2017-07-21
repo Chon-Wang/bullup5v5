@@ -128,3 +128,16 @@ exports.handleTeamDetails = function (socket) {
         }
     })
 }
+
+/**
+ * 改变队伍状态，只改变已形成的队伍，未形成的队伍的状态只有ESTABLISHING
+ * @param teamName 需要改变状态的队伍名
+ * @param status 新状态
+ */
+exports.changeTeamStatus = function (teamName, status) {
+    this.formedTeams.status = status;
+}
+
+exports.removeBroadcastTeam = function (teamName) {
+    this.broadcastTeamInfos[teamName] = null;
+}

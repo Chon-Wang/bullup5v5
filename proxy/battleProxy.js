@@ -43,6 +43,14 @@ exports.handleBattleInviteResult = function (io, socket) {
             var hostTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.hostTeamName);
             var currentTime = require('moment')().format('YYYYMMDDHHmmss');
 
+            // 更新队伍状态
+            teamProxy.changeTeamStatus(challengerTeam.name, 'INBATTLE');
+            teamProxy.changeTeamStatus(hostTeam.name, 'INBATTLE');
+
+            // 状态改变的队伍不再需要在对战大厅中显示，所以不再广播类表中
+            teamProxy.removeBroadcastTeam(challengerTeam.name);
+            teamProxy.removeBroadcastTeam(challengerTeam.name);
+
             var battle = {
                 battleName: challengerTeam.captain.name + hostTeam.captain.name + (new Date).valueOf(),
                 blueSide: challengerTeam,
@@ -54,8 +62,7 @@ exports.handleBattleInviteResult = function (io, socket) {
                     start: null
                 }
             };
-
-            // 将对战信息放入数据结构
+            
             exports.battles[battle.battleName] = battle;
 
             // 将挑战队伍的所有用户加入到新的socket room
@@ -68,13 +75,21 @@ exports.handleBattleInviteResult = function (io, socket) {
                 socketProxy.userJoin(hostTeam.participants[i].userId, battle.battleName);
             }
 
+            // 向该对局中所有的用户广播对局信息
             io.sockets.in(battle.battleName).emit('battleInfo', battle);
 
+            // 向对局中所有用户广播要建立的lol房间信息
+            io.sockets.in(battle.battleName).emit('lolRoomEstablish', {
+                roomName: 'BULLUP' + (new Date).valueOf(),
+                password: Math.floor(Math.random() * 1000), // 4位随机数
+                creatorId: challengerTeam.captain
+            });
+            
         } else if (feedback.errorCode == 1) {
 
             var dstSocket = socketProxy.mapUserIdToSocket(feedback.extension.userId);
 
-            dstSocket.emit('feedback', feedback)
+            dstSocket.emit('feedback', feedback);
         }
     })
 }

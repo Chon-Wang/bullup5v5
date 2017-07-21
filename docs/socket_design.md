@@ -94,7 +94,7 @@ var teamPacket =
         },
         // 其他用户信息
     ],
-    status: 'ESTABLISHING',// 'PUBLISHING' 'MATCHING' 'GAMING'
+    status: 'ESTABLISHING',// 'PUBLISHING' 'MATCHING' 'GAMING' 'INBATTLE'
     type: 'BATTLE', // 'MATCH'
     bet: 100, // 赌注
     mapId: 1,
@@ -248,9 +248,9 @@ var battle = {
 服务端向客户端发送的创建LOL房间的数据包
 ```js
 var createLOLRoom = {
-    gameName: 'hudsonjoegjm124124',
-    name: 'BullUP24234', // BULLUP + 时间戳
-    password: '1234' // 随机4位数 
+    roomName: 'BULLUP24234', // BULLUP + 时间戳
+    password: '2345', // 4位随机数
+    creatorId: '13' // 需要创建lol房间的用户为挑战者
 }
 ```
 

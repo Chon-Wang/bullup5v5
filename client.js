@@ -96,6 +96,16 @@ socket.on('battleInfo', function (battle) {
     logger.jsonLog(battleInfo);
 });
 
+socket.on('lolRoomEstablish', function (lolRoom) {
+    logger.listenerLog('lolRoomEstablish');
+    if (userInfo.userId == lolRoom.creatorId) {
+        // 如果用户是创建者，则创建房间
+    } else {
+        // 如果不是创建者，则显示等待蓝方队长建立房间
+        logger.jsonLog(lolRoom);
+    }
+})
+
 testCase.testLogin(socket, {
     userName: 'colinyoung',
     password: '123456'
