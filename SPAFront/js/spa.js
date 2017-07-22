@@ -19,6 +19,7 @@ douniu.loadSwigView = function (pageRef, data) {
 
 $().ready(function () {
 	$('.nav-link').on('click', function (e) {
+		// prevent default event
 		e.preventDefault();
 		var pageRef = $(this).attr('href');
 		//        douniu.loadView(pageRef, '.content', null);

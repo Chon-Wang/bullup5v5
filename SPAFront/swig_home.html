@@ -20,13 +20,8 @@
 <body>
   
   
-  <ul id="dropdown1" class="dropdown-content grey darken-4">
-	<li><a href="#log_modal">登录</a></li>
-	<li><a href="#sign_modal">注册</a></li>
-	<li><a href="#link_modal">绑定账号</a></li>
-	<li class="divider"></li>
-	<li><a href="#">最小化</a></li>
-	<li><a href="#">退出</a></li>
+  <ul id="dropdown_menu" class="dropdown-content grey darken-4">
+
   </ul>
   <div class="navbar-fixed">
 	<nav>
@@ -44,7 +39,7 @@
 		  <li><a href="./spa_chat.html" class="nav-link">聊天室</a></li>
 		  <li><a href="#message_sheet">消息中心</a></li>
 		  <!-- Dropdown Trigger -->
-		  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">系统菜单</a></li>
+		  <li><a class="dropdown-button" href="#!" data-activates="dropdown_menu">系统菜单</a></li>
 		</ul>
 	  </div>
 	</nav>
@@ -339,7 +334,18 @@
   <script src="./js/global.js"></script>
   <script src="./js/spa.js"></script>
   <script src="./js/login.js"></script>
-	
+  <script src="./js/swig.js"></script>
+
+  <script>
+   $().ready(function(){
+	 var temp = myApp.loadSwigView("./swig_menu.html", {
+	   logged_user: "hji"
+	 });
+
+	 $('#dropdown_menu').html(temp);
+
+   });
+  </script>
 </body>
 
 </html>

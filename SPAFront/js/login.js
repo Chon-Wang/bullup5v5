@@ -9,10 +9,12 @@ $().ready(function(){
 		alert($log_password);
 
 		//communicate with the server
+		
 
 
 
 		// get the log in result and render the page
+		
 		
 	});
 });
