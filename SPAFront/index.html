@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8"> 
+    <title>Context Menu</title>
+	<script src="./js/jquery-2.2.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap-theme.min.css"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+	<script src="./js/create_room.js"></script>
+	<link rel="stylesheet" href="./css/modal.css">
+	<script src="./js/modal.js"></script>
+
+	<!-- form css -->
+	<link rel="stylesheet" href="./css/form.css">
+
+	<!-- validate -->
+	<script src="./js/jquery.validate.min.js"></script>
+	<script src="./js/validate_roominfo.js"></script>
+	<style>
+	 
+	 body{
+	   background: #000000;
+	   padding-top: 70px;
+	   padding-left: 15px;
+	   padding-right: 15px;
+	 }
+	 .navbar{
+	   -webkit-user-select:none;
+	   -webkit-app-region:drag;
+	 }
+	 
+	 .battle-panel {
+	   background-color: #333;
+	   border-color: #333;
+	   /* 	   width: 48%; */
+	   margin: 10px 0% 1em;
+	   padding: 15px;
+	 }
+	 .battle-info {
+	   text-align: left;
+	 }
+
+	 .battle-teaser {
+	   width: 80px;
+	   height:80px;
+	   /* 	   margin: 2px 1% 2px; */
+	 }
+
+	 .server-badge {
+	   text-align: right;
+	 }
+	 #box-pad {
+	   height: 70px;
+	 }
+
+	 .battle-name {
+	   color: #00b0f0;
+	 }
+
+	 .battle-details {
+	   margin-top:20px;
+	   /* 	   margin-bottom: 10px; */
+	 }
+
+	 .align-right {
+	   text-align: right;
+	 }
+
+	 .rift-map {
+	   text-align: center;
+	 }
+	 
+	 .rift-map img {
+	   width: 90%;
+	 }
+
+	 
+	 label.error {
+	   background: #f4f7f8;
+	   color: #ff4124;
+	 }
+	 
+	 /* .battle-details > div {
+		vertical-align: middle;
+		} */
+
+	</style>
+  </head>
+  <body style="width: 100%; height: 100%; ">
+    
+	<!-- Navigator Bar(Using body padding to solve the 'fixed nav bar problem') -->
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+      </button>
+	  <a class="navbar-brand" href="#">
+		<img src="./media/imgs/bullup-noborder.png" width="54" height="40" alt="">
+	  </a>
+	  <a class="navbar-brand" href="#">斗牛电竞</a>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+		  <li class="nav-item">
+            <a class="nav-link" href="./home.html">首页<span class="sr-only">(current)</span></a>
+		  </li>
+		  <li class="nav-item active">
+            <a class="nav-link" href="./index.html">对战大厅</a>
+		  </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="./dataquery.html">数据查询</a>
+		  </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="./userinfo.html">个人中心</a>
+		  </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="./chatbox.html">聊天室</a>
+		  </li>
+		</ul>
+		<form class="form-inline my-2 my-lg-0">
+		  <input class="form-control mr-sm-2" type="text" placeholder="Search">
+		  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
+      </div>
+    </nav>
+
+
+
+
+	<!-- <div class="row">
+		 <div class="col-sm-4">
+		 
+		 </div>
+		 </div> -->
+	
+	<!-- <div id="box-pad"></div> -->
+
+	<div class="container">
+	  <div class="row">
+		<button type="button" class="btn btn-success" id="create_room">创建房间</button>
+	  </div>
+	  <!-- Row for two battle cards -->
+	  <div class="row">
+		<!-- First Card -->
+		<div class="col-sm-6">
+		  
+		  <div class="battle-panel card card-inverse">
+			<!-- First row: battle teaser and server name -->
+			<div class="row">
+			  <div class="col-2 col-sm-2">
+				<img class="battle-teaser card-img-left" src="./media/imgs/timg-2.jpeg" alt="Card image cap">
+			  </div>
+			  <div class="battle-info col-4 col-sm-4">
+				<h4 class="battle-name">A Battle</h4>
+				<p>不服来战！</p>
+			  </div>
+			  <div class="server-badge col-6 col-sm-6">
+				<h4><span class="badge badge-success">比尔吉沃特</span></h4>
+			  </div>
+
+			  <!-- Second Row -->
+			  
+			</div>
+			<div class="battle-details row">
+			  <div class="col">战斗力:500</div>
+			  <div class="col">奖励:100</div>
+			  <div class="col">06.28 20:00</div>
+			  <div class="col align-right">
+				<button type="button" class="btn btn-success">一键建房</button>
+			  </div>
+			</div>
+		  </div>  <!-- end for card -->
+		  
+		</div><!-- end for col-sm-6 -->
+		<!-- Second Card -->
+		<div class="col-sm-6">
+
+		  <div class="battle-panel card card-inverse">
+			<!-- First row: battle teaser and server name -->
+			<div class="row">
+			  <div class="col-2 col-sm-2">
+				<img class="battle-teaser card-img-left" src="./media/imgs/timg-2.jpeg" alt="Card image cap">
+			  </div>
+			  <div class="battle-info col-4 col-sm-4">
+				<h4 class="battle-name">A Battle</h4>
+				<p>不服来战！</p>
+			  </div>
+			  <div class="server-badge col-6 col-sm-6">
+				<h4><span class="badge badge-success">比尔吉沃特</span></h4>
+			  </div>
+
+			  <!-- Second Row -->
+			  
+			</div>
+			<div class="battle-details row">
+			  <div class="col">战斗力:500</div>
+			  <div class="col">奖励:100</div>
+			  <div class="col">06.28 20:00</div>
+			  <div class="col align-right">
+				<button type="button" class="btn btn-success">一键建房</button>
+			  </div>
+			</div>
+		  </div>  <!-- end for card -->
+		  
+		</div>
+	  </div>
+	</div>
+
+
+
+	<div class="modal" id="create_room_modal">
+	  <div class="modal-content">
+
+		<div class="modal-header">
+		  <span class="close" id="create_close">&times;</span>
+		</div>
+		<div class="modal-body">
+
+		  <div class="form-style-5">
+			<form id="roominfo_form">
+			  <div class="row">
+				<div class="col">
+				  <fieldset>
+					<legend><span class="number">1</span>房间基本信息</legend>
+					<input type="text" name="roominfo_name" id="roominfo_name" placeholder="房间名 *">
+					<input type="text" name="roominfo_desc" id="roominfo_desc" value="不服来战">
+
+					<legend><span class="number">2</span>对战地图</legend>
+					<select id="map" name="field3">
+
+					  <option value="fast-condition">召唤师峡谷</option>
+					  <option value="full-condition" disabled>嚎哭深渊（敬请期待）</option>
+
+					</select>
+					<div class="rift-map">
+					  <img src="./media/imgs/rift_map.jpg">
+					</div>
+				  </fieldset>
+
+				 
+				</div>
+				<div class="col">
+				  <fieldset>
+					<legend><span class="number">3</span>房间设置</legend>
+					
+					<label for="winning">胜利条件</label>
+					<select id="winning" name="field4">
+
+					  <option value="fast-condition">1血1塔100刀</option>
+					  <option value="full-condition">推掉基地</option>
+
+					</select>
+
+					<label for="game-mode">游戏模式</label>
+					<select id="game-mode" name="field5">
+					  <option value="fast-condition">常规模式</option>
+					  <option value="full-condition">娱乐模式</option>
+					</select>
+					
+					<label for="reward-type">奖励类型</label>
+					<select id="reward-type" name="field6">
+					  <option value="fast-condition">礼券</option>
+					  <option value="full-condition">积分</option>
+					</select>
+
+					<label for="reward-amount">奖励数量</label>
+					<input type="text" placeholder="100">
+
+					<label>创建时间</label>
+					<label id="create_date_time"></label>
+					
+				  </fieldset>
+
+				  <input type="submit" value="创建" />
+				</div>
+			  </div>
+			</form>
+		  </div>
+		  
+		</div>
+	  </div>
+	</div><!-- End of Log Modal -->
+
+
+
+    <!-- <script src="../js/main.js"></script> -->
+    <!-- <script>
+		 var os = require('os');
+		 document.write('You are running on ', os.platform());
+		 // Create an empty context menu
+		 var menu = new nw.Menu();
+
+		 // Add some items with label
+		 menu.append(new nw.MenuItem({
+		 label: 'Item A',
+		 click: function(){
+		 alert('You have clicked at "Item A"');
+		 }
+		 }));
+		 menu.append(new nw.MenuItem({ label: 'Item B' }));
+		 menu.append(new nw.MenuItem({ type: 'separator' }));
+		 menu.append(new nw.MenuItem({ label: 'Item C' }));
+
+		 // Hooks the "contextmenu" event
+		 document.body.addEventListener('contextmenu', function(ev) {
+		 // Prevent showing default context menu
+		 ev.preventDefault();
+		 // Popup the native context menu at place you click
+		 menu.popup(ev.x, ev.y);
+
+		 return false;
+		 }, false);
+
+		 </script>   -->
+  </body>
+</html>

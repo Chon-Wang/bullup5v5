@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>spa_personal</title>
+</head>
+
+<body>
+    <!-- Personal Info -->
+    <div class="row">
+        <div class="col s2 center-align">
+            <a href="#" data-activates="slide-out" class="button-collapse">
+                <img class="personalInfo-teaser" src="./media/imgs/timg-2.jpeg">
+            </a>
+        </div>
+
+        <!-- 召唤师名 所属服务器 -->
+        <div class="col s6 m2">
+            <label class="personal-title">
+		  HudsonJoe
+		</label>
+            <div class="personal-server chip">
+                艾欧尼亚
+            </div>
+        </div>
+
+        <!-- 战斗力 -->
+        <div class="col s6 m2">
+
+            <label class="personal-title">战斗力</label>
+
+            <div class="personal-value">
+                8000
+            </div>
+        </div>
+
+        <!-- 胜率 -->
+        <div class="col s6 m2">
+            <label class="personal-title">
+		  胜率
+		</label>
+            <div class="personal-value">
+                66.7%
+            </div>
+        </div>
+
+        <!-- 财富 -->
+        <div class="col s6 m2">
+            <label class="personal-title">
+		  财富($)
+		</label>
+            <div class="personal-value">
+                3000
+            </div>
+        </div>
+
+        <!-- 排行 -->
+        <div class="col s6 m2">
+            <label class="personal-title">
+		  排行
+		</label>
+            <div class="personal-value">
+                23
+            </div>
+        </div>
+    </div>
+    <!-- first row -->
+
+    <div class="row">
+        <div class="col s12 m3">
+            <canvas id="chart-area"></canvas>
+        </div>
+        <div class="col s12 m3">
+            <canvas id="polar-area"></canvas>
+        </div>
+
+        <!--  -->
+        <div class="col s12 m3">
+            <canvas id="radar-area"></canvas>
+        </div>
+
+        <div class="col s12 m3">
+            <!-- Win and Lose table -->
+            <label class="table-name ">最近盈亏</label>
+            <table class="bordered recent-pl">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>盈亏</th>
+                        <th>排名浮动</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>+300</td>
+                        <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>245</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>-200</td>
+                        <td><label><i class="fa fa-arrow-down" aria-hidden="true"></i></label>332</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>+300</td>
+                        <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>+300</td>
+                        <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>+300</td>
+                        <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>+300</td>
+                        <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>+300</td>
+                        <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>+300</td>
+                        <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>+300</td>
+                        <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+
+    </div>
+    <!-- Personal Info Ends Here -->
+    <script src="./js/Chart.bundle.js"></script>
+    <script>
+        window.chartColors = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)'
+        };
+
+        var config1 = {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [
+                        10, 20, 30
+                    ],
+                    backgroundColor: [
+                        window.chartColors.blue,
+                        window.chartColors.red,
+                        window.chartColors.purple,
+                    ],
+                }],
+                labels: [
+                    "中单",
+                    "打野",
+                    "ADC",
+                ]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: '常用位置'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+
+
+        /* window.onload = function() {
+         *   var ctx = document.getElementById("chart-area").getContext("2d");
+         *   window.myDoughnut = new Chart(ctx, config);
+         * };*/
+
+
+        /* Polar area */
+        var chartColors = window.chartColors;
+        var color = Chart.helpers.color;
+        var config2 = {
+            data: {
+                datasets: [{
+                    data: [
+                        10, 20, 30
+                    ],
+                    backgroundColor: [
+                        color(chartColors.red).alpha(0.5).rgbString(),
+                        color(chartColors.blue).alpha(0.5).rgbString(),
+                        color(chartColors.green).alpha(0.5).rgbString(),
+                    ],
+                    label: 'My dataset' // for legend
+                }],
+                labels: [
+                    "刺客",
+                    "法师",
+                    "肉盾",
+                ]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: '常用英雄类型'
+                },
+                scale: {
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    reverse: false
+                },
+                animation: {
+                    animateRotate: false,
+                    animateScale: true
+                }
+            }
+        };
+//        debugger;
+        /* radar chart */
+        var config3 = {
+            type: 'radar',
+            data: {
+                labels: ['击杀', '生存', '助攻', '物理', '魔法', '防御', '金钱'],
+                datasets: [{
+                    label: "能力雷达图",
+                    backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                    borderColor: window.chartColors.red,
+                    pointBackgroundColor: chartColors.red,
+                    data: [
+                        87,
+                        66,
+                        25,
+                        88,
+                        99,
+                        48,
+                        78
+                    ]
+                }, ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: '能力'
+                },
+                scale: {
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+
+
+
+
+        var ctx1 = document.getElementById("chart-area");
+        var ctx2 = document.getElementById("polar-area");
+        var radar = document.getElementById("radar-area");
+        window.myDoughnut = new Chart(ctx1, config1)
+        window.myPolarArea = Chart.PolarArea(ctx2, config2);
+        window.myRadar = new Chart(radar, config3);
+
+    </script>
+</body>
+
+</html>

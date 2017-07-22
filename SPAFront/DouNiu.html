@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>斗牛电竞</title>
+	<link href="./font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="./css/materialize.min.css" rel="stylesheet">
+	<link href="./css/mhome.css" rel="stylesheet">
+	<link href="./css/battle.css" rel="stylesheet">
+	<link href="./css/searchusr.css" rel="stylesheet">
+	<link href="./css/personalInfo.css" rel="stylesheet">
+	<link href="./css/rank.css" rel="stylesheet">
+	<link href="./css/personalInfo.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="./css/boxstyle.css">
+	<link rel="stylesheet" type="text/css" href="./css/friendbox.css">
+	<link rel="stylesheet" type="text/css" href="./css/searchbox.css">
+
+</head>
+
+<body>
+	<ul id="dropdown1" class="dropdown-content grey darken-4">
+		<li><a href="#log_modal">登录</a></li>
+		<li><a href="#sign_modal">注册</a></li>
+		<li><a href="#link_modal">绑定账号</a></li>
+		<li class="divider"></li>
+		<li><a href="#">最小化</a></li>
+		<li><a href="#">退出</a></li>
+	</ul>
+	<div class="navbar-fixed">
+		<nav>
+			<div class="nav-wrapper grey darken-4">
+
+				<a href="#!" class="brand-logo"><img src="./media/imgs/bullup-noborder.png" width="54" height="40">斗牛电竞</a>
+
+
+				<ul class="right hide-on-med-and-down">
+					<li><a href="./spa_home.html" class="nav-link">主页</a></li>
+					<li class=""><a href="./spa_battle.html" class="nav-link">对战大厅</a></li>
+					<li><a href="./spa_dataquery.html" class="nav-link">数据查询</a></li>
+					<li><a href="./spa_rank.html" class="nav-link">排行榜</a></li>
+					<li><a href="./spa_personal.html" class="nav-link">个人中心</a></li>
+					<li><a href="./spa_chat.html" class="nav-link">聊天室</a></li>
+					<li><a href="#message_sheet">消息中心</a></li>
+					<!-- Dropdown Trigger -->
+					<li><a class="dropdown-button" href="#!" data-activates="dropdown1">系统菜单</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+
+	<div class="content">
+
+	</div>
+
+	<!-- side nav bar -->
+	<ul id="slide-out" class="side-nav">
+		<li>
+			<div class="user-view">
+				<div class="background">
+					<img src="./media/imgs/usr_bg.jpg">
+				</div>
+				<a href="#!user"><img class="circle" src="./media/imgs/timg.jpeg"></a>
+				<a href="#!name"><span class="white-text name">John Doe</span></a>
+				<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+			</div>
+		</li>
+		<li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+		<li><a href="#!">Second Link</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a class="subheader">Subheader</a></li>
+		<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+	</ul>
+
+
+	<div class="fixed-action-btn vertical">
+		<a class="btn-floating btn-large red">
+			<i class="fa fa-plus" aria-hidden="true"></i>
+		</a>
+		<ul>
+			<li><a class="btn-floating red" href="#create_room_modal"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
+			<li><a class="btn-floating blue"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+			<li><a class="btn-floating yellow darken-1 button-collapse" data-activates="slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+			<li><a class="btn-floating green"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+		</ul>
+	</div>
+
+
+
+	<!-- modal structure -->
+	<div id="create_room_modal" class="modal">
+		<div class="modal-content">
+			<h4>创建房间</h4>
+			<div class="row">
+				<form class="col s12">
+					<div class="row">
+						<!-- first column -->
+						<div class="col s6">
+							<!-- Room name -->
+							<div class="input-field col s12">
+								<input id="room_name" type="text" class="validate">
+								<label for="room_name">房间名</label>
+							</div>
+
+							<!-- Battle Declaration -->
+							<div class="input-field col s12">
+								<input id="battle_desc" type="text" class="validate" value="不服来战">
+								<label for="battle_desc">房间描述</label>
+							</div>
+
+							<!-- winning condition -->
+							<div class="row">
+								<div class="input-field col s12">
+									<!-- Winning Condition -->
+									<select id="map-selection">
+					  <option value="">召唤师峡谷</option>
+					  <option disabled value="">嚎哭深渊（敬请期待）</option>
+					</select>
+									<label>地图</label>
+								</div>
+							</div>
+
+							<div class="map-container">
+								<img src="./media/imgs/rift_map.jpg" class="room_map">
+							</div>
+
+						</div>
+
+						<!-- second column -->
+						<div class="col s6">
+
+							<!-- winning condition -->
+							<div class="row">
+								<div class="input-field col s12">
+									<!-- Winning Condition -->
+									<select id="winning_condition">
+					  <option value="">1血1塔100刀</option>
+					  <option value="">推掉基地</option>
+					</select>
+									<label>胜利条件</label>
+								</div>
+							</div>
+
+							<!-- Team Size -->
+							<div class="row">
+								<div class="input-field col s12">
+									<!-- Winning Condition -->
+									<select id="winning_condition">
+					  <option value="">1血1塔100刀</option>
+					  <option value="">推掉基地</option>
+					</select>
+									<label>胜利条件</label>
+								</div>
+							</div>
+
+
+							<!-- Game Mode -->
+							<div class="row">
+								<div class="input-field col s12">
+									<select id="game_mode">
+					  <option>常规模式</option>
+					  <option>娱乐模式</option>
+					</select>
+									<label>游戏模式</label>
+								</div>
+							</div>
+
+							<!-- Reward Type -->
+							<div class="row">
+								<div class="input-field col s12">
+									<select id="reward_type">
+					  <option value="1">礼券</option>
+					  <option vlaue="2">积分</option>
+					  <option vlaue="3">美金</option>
+					</select>
+									<label>下注类型</label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="input-field col s12">
+									<input id="reward_amount" type="number" class="validate" value="100">
+									<label for="reward_amount">下注数量</label>
+								</div>
+							</div>
+
+							<!-- Room Created Time -->
+							<div class="row">
+								<div class="input-field col s12">
+									<input disabled id="created_time" type="text" class="validate">
+									<label for="created_time">创建时间</label>
+								</div>
+							</div>
+
+							<!--  -->
+
+
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- end of create room modal -->
+
+
+
+
+
+
+
+	<!-- Modal Structure -->
+	<div id="log_modal" class="modal">
+		<div class="modal-content">
+			<h4>登录</h4>
+			<div class="row">
+				<form class="col s12">
+					<div class="row">
+						<div class="input-field col s6">
+							<i class="fa fa-user prefix" aria-hidden="true"></i>
+							<input id="icon_prefix" type="text" class="validate">
+							<label for="icon_prefix">用户名</label>
+						</div>
+						<div class="input-field col s6">
+							<i class="fa fa-key prefix" aria-hidden="true"></i>
+							<input id="icon_telephone" type="password" class="validate">
+							<label for="icon_telephone">密码</label>
+						</div>
+					</div>
+
+					<button class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">登录
+			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!--  sign modal  -->
+	<div id="sign_modal" class="modal">
+		<div class="modal-content">
+			<h4>新用户注册</h4>
+			<div class="row">
+				<form class="col s12">
+					<div class="row">
+						<div class="input-field col s12">
+							<i class="fa fa-user prefix" aria-hidden="true"></i>
+							<input id="usr_name" type="text" class="validate">
+							<label for="usr_name">用户名</label>
+						</div>
+
+						<div class="input-field col s12">
+							<i class="fa fa-key prefix" aria-hidden="true"></i>
+							<input id="usr_pwd" type="password" class="validate">
+							<label for="usr_pwd">密码</label>
+						</div>
+
+						<div class="input-field col s12">
+							<i class="fa fa-key prefix" aria-hidden="true"></i>
+							<input id="usr_repwd" type="password" class="validate">
+							<label for="usr_repwd">确认密码</label>
+						</div>
+
+						<p>
+							<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+							<label for="filled-in-box" class="agree-check">我同意用户协议</label>
+						</p>
+					</div>
+
+					<button class="btn waves-effect waves-light right orange lighten-1" type="submit" name="action">注册
+			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- link modal -->
+	<!-- Modal Structure -->
+	<div id="link_modal" class="modal">
+		<div class="modal-content">
+			<h4>绑定英雄联盟账号</h4>
+			<div class="row">
+				<form class="col s12">
+					<div class="row">
+						<div class="input-field col s12">
+							<i class="fa fa-user prefix" aria-hidden="true"></i>
+							<input id="icon_prefix" type="text" class="validate">
+							<label for="icon_prefix">英雄联盟用户名</label>
+						</div>
+					</div>
+
+					<button class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">绑定
+			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- notification center Modal Structure -->
+	<div id="message_sheet" class="modal bottom-sheet">
+		<div class="modal-content" id="message_modal_content">
+			<h4>消息中心</h4>
+			<ul class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
+				<li>
+					<div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>First</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				</li>
+				<li>
+					<div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>Second</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				</li>
+				<li>
+					<div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>Third</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				</li>
+			</ul>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
+		</div>
+	</div>
+
+
+
+	<script src=./js/jquery-2.2.4.js></script>
+	<script src="./js/materialize.min.js"></script>
+	<script src="./js/global.js"></script>
+	<script src="./js/jquery.validate.min.js"></script>
+	<script src="./js/validate_sign.js"></script>
+	<script src="./js/global.js"></script>
+	<script src="./js/spa.js"></script>
+	<script>
+		
+	</script>
+
+
+</body>
+
+</html>

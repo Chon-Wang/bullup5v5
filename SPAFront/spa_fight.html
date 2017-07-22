@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Fight Room</title>
+	<link rel="stylesheet" href="./flipclock/flipclock.css">
+	<link href="./css/materialize.min.css" rel="stylesheet">
+
+
+	<link rel="stylesheet" href="./css/spa_fight.css">
+
+</head>
+
+<body>
+	<div class="row">
+		<div class="col s12 m4">
+			<!--     我方队长和队员     -->
+			<ul class="collapsible" id="my_collapsible" data-collapsible="expandable">
+				<!--               Single Unit -->
+				<li>
+					<div class="collapsible-header left-align">
+						<img src="./media/imgs/timg-2.jpeg" class="candi-img"> First
+					</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				</li>
+				<!-- Unit ends here -->
+				<li>
+					<div class="collapsible-header left-align">
+						<img src="./media/imgs/timg-2.jpeg" class="candi-img"> First
+					</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				</li>
+				<li>
+					<div class="collapsible-header left-align">
+						<img src="./media/imgs/timg-2.jpeg" class="candi-img"> First
+					</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				</li>
+			</ul>
+
+		</div>
+		<div class="col s12 m4 center-info">
+			<div class="countdown-name">建房倒计时</div>
+
+			<div class="countdown-clock"></div>
+
+			<!--       雷达图        -->
+			<canvas id="teams-radar-chart"></canvas>
+		</div>
+		<div class="col s12 m4">
+			<!--      对方队长和队员 -->
+			<ul class="collapsible" id="component_collapsible" data-collapsible="expandable">
+				<li>
+					<div class="collapsible-header left-align">
+						<img src="./media/imgs/timg-2.jpeg" class="candi-img"> First
+					</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				</li>
+				<li>
+					<div class="collapsible-header left-align">
+						<img src="./media/imgs/timg-2.jpeg" class="candi-img"> First
+					</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				</li>
+				<li>
+					<div class="collapsible-header left-align">
+						<img src="./media/imgs/timg-2.jpeg" class="candi-img"> First
+					</div>
+					<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="row center">
+		<a class="waves-effect waves-light btn">button text</a>
+	</div>
+
+	
+	<script src="./js/jquery-2.2.4.js"></script>
+	<script src="./js/materialize.min.js"></script>
+	<script src="./flipclock/flipclock.js"></script>
+	<script>
+		var clock = $('.countdown-clock').FlipClock(60, {
+			// ... your options here
+			clockFace: 'MinuteCounter',
+			countdown: true
+		});
+		
+		$('#my_collapsible').collapsible('open', 0);
+		$('#my_collapsible').collapsible('open', 1);
+		$('#my_collapsible').collapsible('open', 2);
+		
+		$('#component_collapsible').collapsible('open', 0);
+		$('#component_collapsible').collapsible('open', 1);
+		$('#component_collapsible').collapsible('open', 2);
+		
+
+	</script>
+	<script src="./js/Chart.bundle.js"></script>
+	<!--	<script src="./js/draw_radar.js"></script>-->
+	<script src="./js/genRadar.js"></script>
+	<script>
+		var my_data = [9.5, 88, 39, 20, 30, 88];
+		var component_data = [99, 78, 99, 67, 99, 89];
+
+		drawRadarWithData(my_data, component_data, 'teams-radar-chart');
+
+	</script>
+</body>
+
+</html>
