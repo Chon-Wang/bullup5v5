@@ -1,0 +1,245 @@
+<!DOCTYPE>
+<html>
+<meta charset="UTF-8">
+
+<head>
+
+</head>
+
+<body>
+
+
+	<div class="row">
+		<!-- button will fade away -->
+		<a class="waves-effect waves-light btn right" href="#create_room_modal">创建房间</a>
+
+		<a class="nav-link waves-effect waves-light btn right" id="my_room" href="./spa_myroom.html">我的房间</a>
+	</div>
+
+
+	<div class="row">
+		<div class="col s12 m6 l4">
+			<div class="card battle-card grey darken-2">
+				<div class="card-content white-text">
+					<div class="row">
+						<!-- teaser -->
+						<div class="col s2">
+							<img class="battle-teaser" src="./media/imgs/timg-2.jpeg">
+						</div>
+						<div class="col s10">
+							<div class="row">
+								<span class="card-title right">HudsonJoe的对战</span>
+								<div class="chip right ">
+									比尔吉沃特
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- first row -->
+				</div>
+
+				<div class="card-action">
+					<a href="#team-detail-modal">详情</a>
+					<a href="#">收藏</a>
+
+					<div class="chip right">
+						<i class="fa fa-gamepad" aria-hidden="true"></i> 常规模式
+					</div>
+					<div class="chip right">
+						<i class="fa fa-money" aria-hidden="true"></i> 奖券 100
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+
+
+		<div class="col s12 m6 l4">
+			<div class="card battle-card grey darken-2">
+				<div class="card-content white-text">
+					<div class="row">
+						<!-- teaser -->
+						<div class="col s2">
+							<img class="battle-teaser" src="./media/imgs/timg.jpeg">
+						</div>
+						<div class="col s10">
+							<div class="row">
+								<span class="card-title right">HudsonJoe的对战</span>
+								<div class="chip right ">
+									比尔吉沃特
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- first row -->
+				</div>
+
+				<div class="card-action">
+					<a href="#team-detail-modal">详情</a>
+					<a href="#">收藏</a>
+
+					<div class="chip right">
+						<i class="fa fa-gamepad" aria-hidden="true"></i> 常规模式
+					</div>
+					<div class="chip right">
+						<i class="fa fa-money" aria-hidden="true"></i> 奖券 100
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- team detail modal Structure -->
+	<div id="team-detail-modal" class="modal">
+		<div class="modal-content">
+			<div class="row">
+				<div class="col s12 m2">
+					<h4>HudsonJoe的队伍</h4>
+					<label for="team-size">队伍人数</label>
+					<p id="team-size">5</p>
+
+					<label for="team-desc">队伍描述</label>
+					<p id="team-desc">我们战斗吧</p>
+
+					<label for="game-mode">游戏模式</label>
+					<p id="game-mode">常规</p>
+					<label for="winning-condition">胜利条件</label>
+					<p id="winning-condition">推掉基地</p>
+					<label for="bet-amount">下注金额</label>
+					<p id="bet-amount">30</p>
+				</div>
+				<div class="s12 m9">
+					<!--  Radar Chart of two teams                  -->
+					<canvas id="team-detail-chart"></canvas>
+
+				</div>
+			</div>
+
+		</div>
+		<div class="modal-footer">
+			<a href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-btn">邀请战斗</a>
+		</div>
+	</div>
+
+	<!-- Modal Structure -->
+	<div id="waiting-modal" class="modal">
+		<div class="modal-content">
+			<h4>等待对方队长应答</h4>
+			<!--            preloader-->
+			<div class="row center">
+				<div class="preloader-wrapper big active">
+					<div class="spinner-layer spinner-blue">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+
+					<div class="spinner-layer spinner-red">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+
+					<div class="spinner-layer spinner-yellow">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+
+					<div class="spinner-layer spinner-green">
+						<div class="circle-clipper left">
+							<div class="circle"></div>
+						</div>
+						<div class="gap-patch">
+							<div class="circle"></div>
+						</div>
+						<div class="circle-clipper right">
+							<div class="circle"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<a href="./spa_fight.html" class="modal-action waves-effect waves-green btn-flat nav-link" id="hide-btn">隐藏到后台</a>
+		</div>
+	</div>
+
+	<div class="swig-content">
+
+	</div>
+
+	<script src="./js/Chart.bundle.js"></script>
+	<script src="./js/genRadar.js"></script>
+	<script src="./js/spa.js"></script>
+	<script>
+		$('#team-detail-modal').modal();
+
+		$('#waiting-modal').modal();
+
+		var my_data = [9.5, 88, 39, 20, 30, 88];
+		var component_data = [99, 78, 99, 67, 99, 89];
+
+		drawRadarWithData(my_data, component_data, 'team-detail-chart');
+
+		$('#invite-btn').click(function() {
+			$('#team-detail-modal').modal('close');
+			$('.modal-overlay').remove();
+		});
+
+		$('#hide-btn').click(function() {
+			$('#waiting-modal').modal('close');
+			$('.modal-overlay').remove();
+		});
+
+//		var battle_list = douniu.loadSwigView('swig_battle', {
+//			teams: [{
+//					teamName: 'hudsonjoe134124', // 用户昵称 + 时间戳
+//					status: 'ESTABLISHING', // 'PUBLISHING' 'MATCHING' 'GAMING'
+//					type: 'BATTLE', // 'MATCH'
+//					bet: 100, // 赌注
+//					mapId: 1,
+//					rule: '基地爆炸',
+//					participantsCount: 5
+//				},
+//				{
+//					teamName: 'Conyj12323', // 用户昵称 + 时间戳
+//					status: 'ESTABLISHING', // 'PUBLISHING' 'MATCHING' 'GAMING'
+//					type: 'BATTLE', // 'MATCH'
+//					bet: 100, // 赌注
+//					mapId: 1,
+//					rule: '基地爆炸',
+//					participantsCount: 5
+//				}
+//			]
+//		});
+//		
+//		$('.content').html(battle_list);
+
+	</script>
+	<script src="./js/find_team.js"></script>
+
+</body>
+
+</html>

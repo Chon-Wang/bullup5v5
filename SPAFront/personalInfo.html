@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8"> 
+    <title>斗牛电竞</title>
+	<script src="./js/jquery-2.2.4.js"></script>
+
+	<!-- kanban -->
+	<link href="./js/jkanban.min.css" rel="stylesheet">
+	<!-- 
+		 <link href="./css/main.css" rel="stylesheet">
+		 <link href="./css/modal.css" rel="stylesheet"> -->
+
+	<!-- validation -->
+	<script src="./js/jquery.validate.min.js"></script>
+	<script src="./js/validate_sign.js"></script>
+
+	<!-- materializecss -->
+	<link href="./css/materialize.min.css" rel="stylesheet">
+	<script src="./js/materialize.min.js"></script>
+
+	<!-- Compiled and minified CSS -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+	   -->
+	<!-- Compiled and minified JavaScript -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script> -->
+
+	<!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- font awesome -->
+	<!-- Font Awesome icons -->
+	<link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+
+
+	<!-- customi -->
+	<link href="./css/mhome.css" rel="stylesheet">
+	<link href="./css/battle.css" rel="stylesheet">
+	<link href="./css/searchusr.css" rel="stylesheet">
+	<link href="./css/personalInfo.css" rel="stylesheet">
+	<script src="./js/global.js"></script>
+
+	<!-- chart.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+
+
+  </head>
+  <body class="black">
+	
+	<!-- Dropdown Structure -->
+	<ul id="dropdown1" class="dropdown-content grey darken-4">
+	  <li><a href="#log_modal">登录</a></li>
+	  <li><a href="#sign_modal">注册</a></li>
+	  <li><a href="#link_modal">绑定账号</a></li>
+	  <li class="divider"></li>
+	  <li><a href="#">最小化</a></li>
+	  <li><a href="#">退出</a></li>
+	</ul>
+	<nav>
+	  <div class="nav-wrapper grey darken-4">
+
+		<a href="#!" class="brand-logo"><img src="./media/imgs/bullup-noborder.png" width="54" height="40">斗牛电竞</a>
+
+		
+		<ul class="right hide-on-med-and-down">
+		  <li><a href="./mhome.html">主页</a></li>
+		  <li ><a href="./battlepage.html">对战大厅</a></li>
+		  <li><a href="#">数据查询</a></li>
+		  <li><a href="./rank.html">排行榜</a></li>
+		  <li  class="active"><a href="#">个人中心</a></li>
+		  <li><a href="./chatroom.html">聊天室</a></li>
+		  <li><a href="#message_sheet">消息中心</a></li>
+		  <!-- Dropdown Trigger -->
+		  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">系统菜单<i class="material-icons right">arrow_drop_down</i></a></li>
+		</ul>
+	  </div>
+	</nav>
+
+	<!-- Personal Info -->
+	<div class="row">
+	  <div class="col s2 center-align">
+		<a href="#" data-activates="slide-out" class="button-collapse">
+		  <img class="personalInfo-teaser" src="./media/imgs/timg-2.jpeg">
+		</a>
+	  </div>
+
+	  <!-- 召唤师名 所属服务器 -->
+	  <div class="col s6 m2">
+		<label class="personal-title">
+		  HudsonJoe
+		</label>
+		<div class="personal-server chip">
+		  艾欧尼亚
+		</div>
+	  </div>
+
+	  <!-- 战斗力 -->
+	  <div class="col s6 m2">
+	
+		<label class="personal-title">战斗力</label>
+
+		<div class="personal-value">
+		  8000
+		</div>
+	  </div>
+
+	  <!-- 胜率 -->
+	  <div class="col s6 m2">
+		<label class="personal-title">
+		  胜率
+		</label>
+		<div class="personal-value">
+		  66.7%
+		</div>
+	  </div>
+
+	  <!-- 财富 -->
+	  <div class="col s6 m2">
+		<label class="personal-title">
+		  财富($)
+		</label>
+		<div class="personal-value">
+		  3000
+		</div>
+	  </div>
+
+	  <!-- 排行 -->
+	  <div class="col s6 m2">
+		<label class="personal-title">
+		  排行
+		</label>
+		<div class="personal-value">
+		  23
+		</div>
+	  </div>
+	</div><!-- first row -->
+
+	<div class="row">
+	  <div class="col s12 m3">
+		<canvas id="chart-area"></canvas>
+	  </div>
+	  <div class="col s12 m3">
+		<canvas id="polar-area"></canvas>
+	  </div>
+
+	  <!--  -->
+	  <div class="col s12 m3">
+		<canvas id="radar-area"></canvas>
+	  </div>
+
+	  <div class="col s12 m3">
+		<!-- Win and Lose table -->
+		<label class="table-name ">最近盈亏</label>
+		<table class="bordered recent-pl">
+          <thead>
+			<tr>
+              <th>No.</th>
+              <th>盈亏</th>
+              <th>排名浮动</th>
+			</tr>
+          </thead>
+
+          <tbody>
+			<tr>
+              <td>1</td>
+              <td>+300</td>
+              <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>245</td>
+			</tr>
+			<tr>
+              <td>2</td>
+              <td>-200</td>
+              <td><label><i class="fa fa-arrow-down" aria-hidden="true"></i></label>332</td>
+			</tr>
+			<tr>
+              <td>1</td>
+              <td>+300</td>
+              <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+			</tr>
+			<tr>
+              <td>1</td>
+              <td>+300</td>
+              <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+			</tr>
+			<tr>
+              <td>1</td>
+              <td>+300</td>
+              <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+			</tr>
+			<tr>
+              <td>1</td>
+              <td>+300</td>
+              <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+			</tr>
+			<tr>
+              <td>1</td>
+              <td>+300</td>
+              <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+			</tr>
+			<tr>
+              <td>1</td>
+              <td>+300</td>
+              <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+			</tr>
+			<tr>
+              <td>1</td>
+              <td>+300</td>
+              <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
+			</tr>
+          </tbody>
+		</table>
+	  </div>
+	</div>
+
+	<div class="row">
+	  
+	</div>
+	<!-- Personal Info Ends Here -->
+
+	
+	<!-- side nav bar -->
+	<ul id="slide-out" class="side-nav">
+      <li><div class="user-view">
+		<div class="background">
+          <img src="./media/imgs/usr_bg.jpg">
+		</div>
+		<a href="#!user"><img class="circle" src="./media/imgs/timg.jpeg"></a>
+		<a href="#!name"><span class="white-text name">John Doe</span></a>
+		<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+      </div></li>
+      <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+      <li><a href="#!">Second Link</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Subheader</a></li>
+      <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+	</ul>
+
+    
+	<!-- side nav bar ends here -->
+
+	<div class="fixed-action-btn vertical">
+      <a class="btn-floating btn-large red">
+		<i class="fa fa-plus" aria-hidden="true"></i>
+      </a>
+      <ul>
+		<li><a class="btn-floating red" href="#create_room_modal"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
+		<li><a class="btn-floating yellow darken-1"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+		<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+		<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+      </ul>
+	</div>
+	
+	
+
+	<!-- modal structure -->
+	<div id="create_room_modal" class="modal">
+	  <div class="modal-content">
+		<h4>创建房间</h4>
+		<div class="row">
+		  <form class="col s12">
+			<div class="row">
+			  <!-- first column -->
+			  <div class="col s6">
+				<!-- Room name -->
+				<div class="input-field col s12">
+				  <input id="room_name" type="text" class="validate">
+				  <label for="room_name" >房间名</label>
+				</div>
+
+				<!-- Battle Declaration -->
+				<div class="input-field col s12">
+				  <input id="battle_desc" type="text" class="validate" value="不服来战">
+				  <label for ="battle_desc">房间描述</label>
+				</div>
+
+				<!-- winning condition -->
+				<div class="row">
+				  <div class="input-field col s12">
+					<!-- Winning Condition -->
+					<select id="map-selection">
+					  <option value="">召唤师峡谷</option>
+					  <option disabled value="">嚎哭深渊（敬请期待）</option>
+					</select>
+					<label>胜利条件</label>
+				  </div>
+				</div>
+
+				<div class="map-container">
+				  <img src="./media/imgs/rift_map.jpg" class="room_map">
+				</div>
+				
+			  </div>
+
+			  <!-- second column -->
+			  <div class="col s6">
+				
+				<!-- winning condition -->
+				<div class="row">
+				  <div class="input-field col s12">
+					<!-- Winning Condition -->
+					<select id="winning_condition">
+					  <option value="">1血1塔100刀</option>
+					  <option value="">推掉基地</option>
+					</select>
+					<label>胜利条件</label>
+				  </div>
+				</div>
+
+				<!-- Team Size -->
+				<div class="row">
+				  <div class="input-field col s12">
+					<!-- Winning Condition -->
+					<select id="winning_condition">
+					  <option value="">1血1塔100刀</option>
+					  <option value="">推掉基地</option>
+					</select>
+					<label>胜利条件</label>
+				  </div>
+				</div>
+				
+
+				<!-- Game Mode -->
+				<div class="row">
+				  <div class="input-field col s12">
+					<select id="game_mode">
+					  <option>常规模式</option>
+					  <option>娱乐模式</option>
+					</select>
+					<label>游戏模式</label>
+				  </div>
+				</div>
+
+				<!-- Reward Type -->
+				<div class="row">
+				  <div class="input-field col s12">
+					<select id="reward_type">
+					  <option value="1">礼券</option>
+					  <option vlaue="2">积分</option>
+					  <option vlaue="3">美金</option>
+					</select>
+					<label>下注类型</label>
+				  </div>
+				</div>
+
+				<div class="row">
+				  <div class="input-field col s12">
+					<input id="reward_amount" type="number" class="validate" value="100">
+					<label for="reward_amount">下注数量</label>
+				  </div>
+				</div>
+
+				<!-- Room Created Time -->
+				<div class="row">
+				  <div class="input-field col s12">
+					<input disabled id="created_time" type="text" class="validate">
+					<label for="created_time">创建时间</label>
+				  </div>
+				</div>
+
+				<!--  -->
+				
+				
+			  </div>
+			</div>
+		  </form>
+		</div>
+	  </div>
+	</div>
+	
+	<!-- end of create room modal -->
+
+	
+
+
+
+
+
+
+
+	
+	<!-- Modal Structure -->
+	<div id="log_modal" class="modal">
+      <div class="modal-content">
+		<h4>登录</h4>
+		<div class="row">
+		  <form class="col s12">
+			<div class="row">
+			  <div class="input-field col s6">
+				<i class="fa fa-user prefix" aria-hidden="true"></i>
+				<input id="icon_prefix" type="text" class="validate">
+				<label for="icon_prefix">用户名</label>
+			  </div>
+			  <div class="input-field col s6">
+				<i class="fa fa-key prefix" aria-hidden="true"></i>
+				<input id="icon_telephone" type="password" class="validate">
+				<label for="icon_telephone">密码</label>
+			  </div>
+			</div>
+
+			<button class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">登录
+			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+		  </form>
+		</div>
+      </div>
+	</div>
+
+	<div id="sign_modal" class="modal">
+	  <div class="modal-content">
+		<h4>新用户注册</h4>
+		<div class="row">
+		  <form class="col s12">
+			<div class="row">
+			  <div class="input-field col s12">
+				<i class="fa fa-user prefix" aria-hidden="true"></i>
+				<input id="usr_name" type="text" class="validate">
+				<label for="usr_name">用户名</label>
+			  </div>
+
+			  <div class="input-field col s12">
+				<i class="fa fa-key prefix" aria-hidden="true"></i>
+				<input id="usr_pwd" type="password" class="validate">
+				<label for="usr_pwd">密码</label>
+			  </div>
+
+			  <div class="input-field col s12">
+				<i class="fa fa-key prefix" aria-hidden="true"></i>
+				<input id="usr_repwd" type="password" class="validate">
+				<label for="usr_repwd">确认密码</label>
+			  </div>
+
+			  <p>
+				<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+				<label for="filled-in-box" class="agree-check">我同意用户协议</label>
+			  </p>
+			</div>
+
+			<button class="btn waves-effect waves-light right orange lighten-1" type="submit" name="action">注册
+			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+		  </form>
+		</div>
+	  </div>
+	</div>
+
+
+	<!-- link modal -->
+	<!-- Modal Structure -->
+	<div id="link_modal" class="modal">
+      <div class="modal-content">
+		<h4>绑定英雄联盟账号</h4>
+		<div class="row">
+		  <form class="col s12">
+			<div class="row">
+			  <div class="input-field col s12">
+				<i class="fa fa-user prefix" aria-hidden="true"></i>
+				<input id="icon_prefix" type="text" class="validate">
+				<label for="icon_prefix">英雄联盟用户名</label>
+			  </div>
+			</div>
+
+			<button class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">绑定
+			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+		  </form>
+		</div>
+      </div>
+	</div>
+
+	
+	<!-- Modal Structure -->
+	<div id="message_sheet" class="modal bottom-sheet">
+      <div class="modal-content" id="message_modal_content">
+		<h4>消息中心</h4>
+		<ul class="collapsible popout" data-collapsible="accordion">
+		  <li>
+			<div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+		  </li>
+		  <li>
+			<div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+		  </li>
+		  <li>
+			<div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+		  </li>
+		</ul>
+      </div>
+      <div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
+      </div>
+	</div>
+	
+	<script>
+	 window.chartColors = {
+	   red: 'rgb(255, 99, 132)',
+	   orange: 'rgb(255, 159, 64)',
+	   yellow: 'rgb(255, 205, 86)',
+	   green: 'rgb(75, 192, 192)',
+	   blue: 'rgb(54, 162, 235)',
+	   purple: 'rgb(153, 102, 255)',
+	   grey: 'rgb(201, 203, 207)'
+	 };
+
+	 var config1 = {
+       type: 'doughnut',
+       data: {
+         datasets: [{
+           data: [
+             10, 20, 30
+           ],
+		   backgroundColor: [
+             window.chartColors.blue,
+             window.chartColors.red,
+             window.chartColors.purple,
+           ],
+         }],
+         labels: [
+           "中单",
+           "打野",
+           "ADC",
+         ]
+       },
+       options: {
+         responsive: true,
+         legend: {
+           position: 'top',
+         },
+         title: {
+           display: true,
+           text: '常用位置'
+         },
+         animation: {
+           animateScale: true,
+           animateRotate: true
+         }
+       }
+     };
+
+	 
+	 /* window.onload = function() {
+	  *   var ctx = document.getElementById("chart-area").getContext("2d");
+	  *   window.myDoughnut = new Chart(ctx, config);
+	  * };*/
+
+
+	 /* Polar area */
+	 var chartColors = window.chartColors;
+	 var color = Chart.helpers.color;
+	 var config2 = {
+	   data: {
+		 datasets: [{
+		   data: [
+			 10,20,30
+		   ],
+		   backgroundColor: [
+			 color(chartColors.red).alpha(0.5).rgbString(),
+			 color(chartColors.blue).alpha(0.5).rgbString(),
+			 color(chartColors.green).alpha(0.5).rgbString(),
+		   ],
+		   label: 'My dataset' // for legend
+		 }],
+		 labels: [
+		   "刺客",
+		   "法师",
+		   "肉盾",
+		 ]
+	   },
+	   options: {
+		 responsive: true,
+		 title: {
+		   display: true,
+		   text: '常用英雄类型'
+		 },
+		 scale: {
+		   ticks: {
+			 beginAtZero: true
+		   },
+		   reverse: false
+		 },
+		 animation: {
+		   animateRotate: false,
+		   animateScale: true
+		 }
+	   }
+	 };
+
+	 /* radar chart */
+	 var config3 = {
+	   type: 'radar',
+	   data: {
+		 labels: ['击杀', '生存', '助攻', '物理', '魔法', '防御', '金钱'],
+		 datasets: [{
+		   label: "能力雷达图",
+		   backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+		   borderColor: window.chartColors.red,
+		   pointBackgroundColor: chartColors.red,
+		   data: [
+			 87,
+			 66,
+			 25,
+			 88,
+			 99,
+			 48,
+			 78
+		   ]
+		 },]
+	   },
+	   options: {
+		 title: {
+		   display: true,
+		   text: '能力'
+		 },
+		 scale: {
+		   ticks: {
+			 beginAtZero: true
+		   }
+		 }
+	   }
+	 };
+	 
+
+	 
+
+	 window.onload = function() {
+	   var ctx1 = document.getElementById("chart-area").getContext("2d");
+	   var ctx2 = document.getElementById("polar-area");
+	   var radar = document.getElementById("radar-area");
+	   window.myDoughnut = new Chart(ctx1, config1)
+	   window.myPolarArea = Chart.PolarArea(ctx2, config2);
+	   window.myRadar = new Chart(radar, config3);
+	 };
+	 
+	</script>
+  </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link href="./font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="./css/materialize.min.css" rel="stylesheet">
+
+	<link href="./css/battle.css" rel="stylesheet">
+
+</head>
+<body>
+	
+	
+	{% if teams %}
+	{% for team in teams %}
+		{% if loop.index % 3 == 1 %}
+		<div class="row">
+		{% endif %}
+		<div class="col s12 m6 l4">
+			<div class="card battle-card grey darken-2">
+				<div class="card-content white-text">
+					<div class="row">
+						<!-- teaser -->
+						<div class="col s2">
+							<img class="battle-teaser" src="./media/imgs/timg-2.jpeg">
+						</div>
+						<div class="col s10">
+							<div class="row">
+								<span class="card-title right">
+									{{team.teamName}}
+								</span>
+								<div class="chip right ">
+									{{ team.type }}
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- first row -->
+				</div>
+
+				<div class="card-action">
+					<a href="#team-detail-modal">详情</a>
+					<a href="#">收藏</a>
+
+					<div class="chip right">
+						<i class="fa fa-gamepad" aria-hidden="true"></i>
+						{{ team.rule }}
+					</div>
+					<div class="chip right">
+						<i class="fa fa-money" aria-hidden="true"></i>
+						{{ team.bet }}
+					</div>
+				</div>
+			</div>
+		</div>
+		{% if loop.index % 3 == 0 %}
+		</div>
+		{% endif %}
+	{% endfor %}
+{% endif %}
+	<script src="./js/Chart.bundle.js"></script>
+	<script src="./js/genRadar.js"></script>
+	<script src="./js/spa.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8"> 
+    <title>Context Menu</title>
+	<script src="./js/jquery-2.2.4.js"></script>
+
+	<!-- kanban -->
+	<link href="./js/jkanban.min.css" rel="stylesheet">
+	<!-- 
+		 <link href="./css/main.css" rel="stylesheet">
+		 <link href="./css/modal.css" rel="stylesheet"> -->
+
+	<!-- validation -->
+	<script src="./js/jquery.validate.min.js"></script>
+	<script src="./js/validate_sign.js"></script>
+
+	<!-- materializecss -->
+	<link href="./css/materialize.min.css" rel="stylesheet">
+	<script src="./js/materialize.min.js"></script>
+
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+
+	<!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+	<!-- font awesome -->
+	<!-- Font Awesome icons -->
+	<link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+
+
+	<!-- mhome.css -->
+	<link href="./css/mhome.css" rel="stylesheet">
+	
+	
+  </head>
+  <body class="black">
+	
+	<!-- Dropdown Structure -->
+	<ul id="dropdown1" class="dropdown-content grey darken-4">
+	  <li><a href="#log_modal">登录</a></li>
+	  <li><a href="#sign_modal">注册</a></li>
+	  <li><a href="#link_modal"></a></li>
+	  <li class="divider"></li>
+	  <li><a href="#">最小化</a></li>
+	  <li><a href="#">退出</a></li>
+	</ul>
+	<nav>
+	  <div class="nav-wrapper grey darken-4">
+
+		<a href="#!" class="brand-logo"><img src="./media/imgs/bullup-noborder.png" width="54" height="40">斗牛电竞</a>
+
+		
+		<ul class="right hide-on-med-and-down">
+		  <li class="active orange accent-3"><a href="#">主页</a></li>
+		  <li><a href="./battlepage.html">对战大厅</a></li>
+		  <li><a href="./searchusr.html">数据查询</a></li>
+		  <li><a href="./rank.html">排行榜</a></li>
+		  <li><a href="./personalInfo.html">个人中心</a></li>
+		  <li><a href="./chatroom.html">聊天室</a></li>
+		  <li><a href="#message_sheet">消息中心</a></li>
+		  <!-- Dropdown Trigger -->
+		  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">系统菜单<i class="material-icons right">arrow_drop_down</i></a></li>
+		</ul>
+	  </div>
+	</nav>
+
+
+	<!-- Modal Structure -->
+	<div id="log_modal" class="modal">
+      <div class="modal-content">
+		<h4>登录</h4>
+		<div class="row">
+		  <form class="col s12">
+			<div class="row">
+			  <div class="input-field col s6">
+				<i class="fa fa-user prefix" aria-hidden="true"></i>
+				<input id="icon_prefix" type="text" class="validate">
+				<label for="icon_prefix">用户名</label>
+			  </div>
+			  <div class="input-field col s6">
+				<i class="fa fa-key prefix" aria-hidden="true"></i>
+				<input id="icon_telephone" type="password" class="validate">
+				<label for="icon_telephone">密码</label>
+			  </div>
+			</div>
+
+			<button class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">登录
+			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+		  </form>
+		</div>
+      </div>
+	</div>
+
+	<div id="sign_modal" class="modal">
+	  <div class="modal-content">
+		<h4>新用户注册</h4>
+		<div class="row">
+		  <form class="col s12">
+			<div class="row">
+			  <div class="input-field col s12">
+				<i class="fa fa-user prefix" aria-hidden="true"></i>
+				<input id="usr_name" type="text" class="validate">
+				<label for="usr_name">用户名</label>
+			  </div>
+
+			  <div class="input-field col s12">
+				<i class="fa fa-key prefix" aria-hidden="true"></i>
+				<input id="usr_pwd" type="password" class="validate">
+				<label for="usr_pwd">密码</label>
+			  </div>
+
+			  <div class="input-field col s12">
+				<i class="fa fa-key prefix" aria-hidden="true"></i>
+				<input id="usr_repwd" type="password" class="validate">
+				<label for="usr_repwd">确认密码</label>
+			  </div>
+
+			  <p>
+				<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+				<label for="filled-in-box" class="agree-check">我同意用户协议</label>
+			  </p>
+			</div>
+
+			<button class="btn waves-effect waves-light right orange lighten-1" type="submit" name="action">注册
+			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+		  </form>
+		</div>
+	  </div>
+	</div>
+
+	
+	<!-- Modal Structure -->
+	<div id="message_sheet" class="modal bottom-sheet">
+      <div class="modal-content" id="message_modal_content">
+		<h4>消息中心</h4>
+		<ul class="collapsible popout" data-collapsible="accordion">
+		  <li>
+			<div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+		  </li>
+		  <li>
+			<div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+		  </li>
+		  <li>
+			<div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+		  </li>
+		</ul>
+      </div>
+      <div class="modal-footer">
+		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
+      </div>
+	</div>
+	
+	<script>
+	 $().ready(function(){
+	   /* dropdown menu initialize */
+	   $(".dropdown-button").dropdown({
+		 constrainWidth: true,
+		 hover: true
+	   });
+
+	   
+	   /* modal initialize */
+	   $("#log_modal").modal();
+
+	   $("#sign_modal").modal();
+
+	   $("#message_sheet").modal();
+	 });
+	 
+	 
+	</script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>swig test</title>
+	<link rel="stylesheet" href="./css/materialize.min.css">
+</head>
+
+<body>
+	<div class="content"></div>
+
+	<script src="./js/jquery-2.2.4.js"></script>
+	<script src="./js/spa.js"></script>
+	<script src="./js/materialize.min.js"></script>
+	<script>
+		var template = douniu.loadSwigView('swig_battle.html', {
+			teams: [{
+					teamName: 'hudsonjoe134124', // 用户昵称 + 时间戳
+					status: 'ESTABLISHING', // 'PUBLISHING' 'MATCHING' 'GAMING'
+					type: 'BATTLE', // 'MATCH'
+					bet: 100, // 赌注
+					mapId: 1,
+					rule: '基地爆炸',
+					participantsCount: 5
+				},
+				{
+					teamName: 'hudsonjoe134124', // 用户昵称 + 时间戳
+					status: 'ESTABLISHING', // 'PUBLISHING' 'MATCHING' 'GAMING'
+					type: 'BATTLE', // 'MATCH'
+					bet: 100, // 赌注
+					mapId: 1,
+					rule: '基地爆炸',
+					participantsCount: 5
+				}
+			]
+		});
+		$('.content').html(template);
+
+	</script>
+</body>
+
+</html>

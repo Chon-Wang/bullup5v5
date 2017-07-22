@@ -1,0 +1,18 @@
+.tabs {
+	background-color: #111;
+}
+
+.tab a {
+	color: #f4f7f8 !important;
+}
+
+.rank-number {
+	border-radius: 50%;
+	background-color: #ba68c8;
+	width: 20px;
+	height: 20px;
+	color: white;
+	text-align: center;
+}
+
+

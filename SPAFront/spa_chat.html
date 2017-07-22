@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>spa_chat</title>
+     <script src="./js/spa.js"></script>
+</head>
+<body>
+    <!-- chat room -->
+
+<div class="row">
+    <div class="col s12 m6">
+        <div class="chat-page">
+            <div class="chatbox">
+                <div class="chatlogs">
+                    <!-- chat messages -->
+                    <div class="chat friend">
+                        <div class="user-photo">
+                            <img src="./media/imgs/timg-2.jpeg">
+                        </div>
+                        <p class="chat-message">Hello, Everyone.</p>
+                    </div>
+                    <!-- end of this message -->
+
+                    <!-- chat messages -->
+                    <div class="chat self">
+                        <div class="user-photo">
+                            <img src="./media/imgs/timg.jpeg">
+                        </div>
+                        <p class="chat-message">Hello, Everyone.</p>
+                    </div>
+                    <!-- end of this message -->
+
+                </div>
+
+
+
+
+                <!-- chat form -->
+                <div class="chat-form">
+                    <textarea></textarea>
+                </div>
+                <div class="btn-wrap">
+                    <button class="send-btn">
+				<i class="fa fa-paper-plane" aria-hidden="true"></i>
+			  </button>
+                    <div class="chat-btns">
+                        <!-- Emotion Icon Button -->
+                        <div class="tool-btn emo" onclick="toggleEmo()">
+                            <span class="emotion-box" id="emotion-picker">Emotions</span>
+                            <i class="fa fa-smile-o" aria-hidden="true"></i>
+                        </div>
+                        <!-- Insert Image Button -->
+                        <div class="tool-btn img">
+                            <i class="fa fa-picture-o" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="tool-btn screenshot">
+                            <i class="fa fa-scissors" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s12 m6">
+        <div class="friend-box">
+            <div class="friend-list">
+
+                <!-- Friend Information -->
+                <div class="friend-item">
+                    <!-- friend image -->
+                    <div class="friend-photo">
+                        <img src="./media/imgs/timg-2.jpeg">
+                    </div>
+                    <!-- friend name -->
+                    <div class="friend-name">
+                        ColinYoung
+                    </div>
+                    <!-- friend server -->
+                    <div class="friend-server">
+                        <p class="server-name">德玛西亚</p>
+                    </div>
+                    <!-- friend buttons -->
+                    <!-- friend buttons -->
+
+                    <div class="friend-buttons">
+                        <div class="friend-btn info">
+                            <i class="fa fa-id-card" aria-hidden="true"></i>
+                        </div>
+                        <div class="friend-btn chat">
+                            <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                    <!-- end of friend buttons -->
+                </div>
+                <!-- End of Friend Information -->
+
+                <div class="friend-item">
+                    <!-- friend image -->
+                    <div class="friend-photo">
+                        <img src="./media/imgs/timg.jpeg">
+                    </div>
+                    <!-- friend name -->
+                    <div class="friend-name">
+                        Hudsonjoe
+                    </div>
+                    <!-- friend server -->
+                    <div class="friend-server">
+                        <p class="server-name">比尔吉沃特</p>
+                    </div>
+                    <!-- friend buttons -->
+
+                    <div class="friend-buttons">
+                        <div class="friend-btn info">
+                            <i class="fa fa-id-card" aria-hidden="true"></i>
+                        </div>
+                        <div class="friend-btn chat">
+                            <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                    <!-- end of friend buttons -->
+                </div>
+
+            </div>
+            <!-- friend list -->
+
+            <div class="friend-form">
+                <!-- search box -->
+                <div class="search-box">
+                    <input type="search" placeholder="搜索好友">
+                </div>
+                <!-- add friend button -->
+                <div class="form-btn add">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </div>
+                <!-- delete friend button -->
+                <div class="form-btn delete">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </div>
+            </div>
+            <!-- friend form -->
+        </div>
+        <!-- friend box -->
+    </div>
+</div>
+
+<!-- chat room ends here -->
+
+</body>
+</html>
+
+

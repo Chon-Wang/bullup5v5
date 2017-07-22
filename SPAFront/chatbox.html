@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8"> 
+    <title>Context Menu</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap-theme.min.css"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="./css/boxstyle.css">
+	<link rel="stylesheet" type="text/css" href="./css/friendbox.css">
+	<link rel="stylesheet" type="text/css" href="./css/searchbox.css">
+
+	<!-- Font Awesome icons -->
+	<link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+  </head>
+  <body style="width: 100%; height: 100%; ">
+    
+	<!-- Navigator Bar(Using body padding to solve the 'fixed nav bar problem') -->
+
+	<!-- Navigator Bar(Using body padding to solve the 'fixed nav bar problem') -->
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+      </button>
+	  <a class="navbar-brand" href="#">
+		<img src="./media/imgs/bullup-noborder.png" width="54" height="40" alt="">
+	  </a>
+      <a class="navbar-brand" href="#">斗牛电竞</a>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+		  <li class="nav-item">
+            <a class="nav-link" href="./home.html">首页</a>
+		  </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="./index.html">对战大厅</a>
+		  </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="./dataquery.html">数据查询</a>
+		  </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="./userinfo.html">个人中心</a>
+		  </li>
+		  <li class="nav-item active">
+            <a class="nav-link" href="./chatbox.html">聊天室</a>
+		  </li>
+		</ul>
+		
+		<form class="form-inline my-2 my-lg-0">
+		  <input class="form-control mr-sm-2" type="text" placeholder="Search">
+		  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
+      </div>
+    </nav>
+
+	<div class="container-fluid">
+	  <div class="chat-page">
+		<div class ="chatbox">
+		  <div class="chatlogs">
+			<!-- chat messages -->
+			<div class="chat friend">
+			  <div class="user-photo">
+				<img src="./media/imgs/timg-2.jpeg">
+			  </div>
+			  <p class="chat-message">Hello, Everyone.</p>
+			</div>
+			<!-- end of this message -->
+
+			<!-- chat messages -->
+			<div class="chat self">
+			  <div class="user-photo">
+				<img src="./media/imgs/timg.jpeg">
+			  </div>
+			  <p class="chat-message">Hello, Everyone.</p>
+			</div>
+			<!-- end of this message -->
+
+		  </div>
+
+		 
+		  
+
+		  <!-- chat form -->
+		  <div class="chat-form">
+			<textarea></textarea>
+		  </div>
+		  <div class="btn-wrap">
+			<button class="send-btn">
+			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+			<div class="chat-btns">
+			  <!-- Emotion Icon Button -->
+			  <div class="tool-btn emo" onclick="toggleEmo()">
+				<span class="emotion-box" id="emotion-picker">Emotions</span>
+				<i class="fa fa-smile-o" aria-hidden="true"></i>
+			  </div>
+			  <!-- Insert Image Button -->
+			  <div class="tool-btn img">
+				<i class="fa fa-picture-o" aria-hidden="true"></i>
+			  </div>
+
+			  <div class="tool-btn screenshot">
+				<i class="fa fa-scissors" aria-hidden="true"></i>
+			  </div>
+			</div>
+		  </div>
+		</div>
+
+		<!-- Friend List -->
+		<div class="friend-box">
+		  <div class="friend-list">
+
+			<!-- Friend Information -->
+			<div class="friend-item">
+			  <!-- friend image -->
+			  <div class="friend-photo">
+				<img src="./media/imgs/timg-2.jpeg">
+			  </div>
+			  <!-- friend name -->
+			  <div class="friend-name">
+				ColinYoung
+			  </div>
+			  <!-- friend server -->
+			  <div class="friend-server">
+				<p class="server-name">德玛西亚</p>
+			  </div>
+			  <!-- friend buttons -->
+			  <!-- friend buttons -->
+			  
+			  <div class="friend-buttons">
+				<div class="friend-btn info">
+				  <i class="fa fa-id-card" aria-hidden="true"></i>
+				</div>
+				<div class="friend-btn chat">
+				  <i class="fa fa-handshake-o" aria-hidden="true"></i>
+				</div>
+			  </div>
+
+			  <!-- end of friend buttons -->
+			</div>
+			<!-- End of Friend Information -->
+
+			<div class="friend-item">
+			  <!-- friend image -->
+			  <div class="friend-photo">
+				<img src="./media/imgs/timg.jpeg">
+			  </div>
+			  <!-- friend name -->
+			  <div class="friend-name">
+				Hudsonjoe
+			  </div>
+			  <!-- friend server -->
+			  <div class="friend-server">
+				<p class="server-name">比尔吉沃特</p>
+			  </div>
+			  <!-- friend buttons -->
+			  
+			  <div class="friend-buttons">
+				<div class="friend-btn info">
+				  <i class="fa fa-id-card" aria-hidden="true"></i>
+				</div>
+				<div class="friend-btn chat">
+				  <i class="fa fa-handshake-o" aria-hidden="true"></i>
+				</div>
+			  </div>
+
+			  <!-- end of friend buttons -->
+			</div>
+			
+		  </div><!-- friend list -->
+
+		  <div class="friend-form">
+			<!-- search box -->
+			<div class="search-box">
+			  <input type="search" placeholder="搜索好友">
+			</div>
+			<!-- add friend button -->
+			<div class="form-btn add">
+			  <i class="fa fa-plus" aria-hidden="true"></i>
+			</div>
+			<!-- delete friend button -->
+			<div class="form-btn delete">
+			  <i class="fa fa-trash-o" aria-hidden="true"></i>
+			</div>
+		  </div><!-- friend form -->
+		</div><!-- friend box -->
+	  </div><!-- chat-page -->
+	</div><!-- Container -->
+
+
+	<script>
+	 // When the user clicks on div, open the popup
+	 function toggleEmo() {
+       var popup = document.getElementById("emotion-picker");
+       popup.classList.toggle("show");
+	 }
+	</script>
+	
+  </body>
+
+</html>

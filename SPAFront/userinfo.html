@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8"> 
+    <title>Context Menu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap-theme.min.css"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+
+	<link href="./css/main.css" rel="stylesheet">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+	
+  </head>
+  <body style="width: 100%; height: 100%; ">
+    
+	<!-- Navigator Bar(Using body padding to solve the 'fixed nav bar problem') -->
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+      </button>
+	  <a class="navbar-brand" href="#">
+		<img src="./media/imgs/bullup-noborder.png" width="54" height="40" alt="">
+	  </a>
+      <a class="navbar-brand" href="#">斗牛电竞</a>
+	  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+		  <li class="nav-item">
+            <a class="nav-link" href="./home.html">首页</a>
+		  </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="./index.html">对战大厅</a>
+		  </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="./dataquery.html">数据查询</a>
+		  </li>
+		  <li class="nav-item">
+            <a class="nav-link active" href="./userinfo.html">个人中心</a>
+		  </li>
+		  <li class="nav-item">
+            <a class="nav-link" href="./chatbox.html">聊天室</a>
+		  </li>
+		</ul>
+		<form class="form-inline my-2 my-lg-0">
+		  <input class="form-control mr-sm-2" type="text" placeholder="Search">
+		  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
+      </div>
+    </nav>
+
+
+	
+	
+	<div class="container-fluid">
+	  <div class="row">
+		<div class="col-sm-2">
+		  <div class="list-group">
+			<a href="#" class="list-group-item list-group-item-action list-group-item-info active">角色信息</a>
+			<a href="#" class="list-group-item list-group-item-action list-group-item-info">基本信息</a>
+			<a href="#" class="list-group-item list-group-item-action list-group-item-info">角色绑定</a>
+		  </div>
+		</div>
+		
+		<div class="col-sm-2">
+		  <!-- image of user -->
+		  <img src="./media/imgs/timg.jpeg" class="user-detail-img">
+		</div>
+
+		<div class="col-sm-2 align-left">
+		  <!-- user information -->
+		  <h4><span class="badge badge-pill badge-success">比尔吉沃特</span></h4>
+		  <div class="nick-name">HudsonJoe</div>
+		</div>
+
+		<div class="col-sm-2 align-center">
+		  <h4 class="white-color">战斗力</h4>
+		  <span class="value-number">500</span>
+		</div>
+
+		<div class="col-sm-2 align-center">
+		  <h4 class="white-color">胜率</h4>
+		  <span class="value-number">66.7%</span>
+		</div>
+		
+		<div class="col-sm-2 align-center">
+
+		  <h4 class="white-color">胜率排名</h4>
+		  <span class="value-number">827</span>
+		  
+		</div>
+	  </div>
+	  
+	  <div class="row">
+
+		<div class="col-sm-3" id="canvas-holder">
+		  <canvas id="chart-area"></canvas>
+		</div>
+
+
+
+		<div class="col-sm-3" id="canvas-holder">
+		  <canvas id="polar-area"></canvas>
+		</div>
+
+		<div class="col-sm-6">
+		  <h5 class="white-color">历史战绩</h5>
+		  
+		  <!-- History Battles -->
+
+		  <!-- Card Example 1 -->
+		  <div class="battle-panel card card-inverse">
+			<!-- First row: battle teaser and server name -->
+			<div class="row">
+			  <div class="col-2 col-sm-2">
+				<img class="battle-teaser card-img-left" src="./media/imgs/timg-2.jpeg" alt="Card image cap">
+			  </div>
+			  <div class="battle-info col-4 col-sm-4">
+				<h4 class="battle-name">A Battle</h4>
+				<p>不服来战！</p>
+			  </div>
+			  <div class="server-badge col-6 col-sm-6">
+				<h6><span class="badge badge-warning">比尔吉沃特</span></h6>
+			  </div>
+
+			  <!-- Second Row -->
+			  
+			</div>
+			<div class="battle-details row">
+			  <div class="col">战斗力:500</div>
+			  <div class="col">奖励:100</div>
+			  <div class="col">06.28 20:00</div>
+			  <div class="col align-right">
+				<h4><span class="badge badge-success">胜利</span></h4>
+			  </div>
+			</div>
+		  </div>  <!-- end for card -->
+
+		  <!-- Card Example 2 -->
+		  <div class="battle-panel card card-inverse">
+			<!-- First row: battle teaser and server name -->
+			<div class="row">
+			  <div class="col-2 col-sm-2">
+				<img class="battle-teaser card-img-left" src="./media/imgs/timg-2.jpeg" alt="Card image cap">
+			  </div>
+			  <div class="battle-info col-4 col-sm-4">
+				<h4 class="battle-name">A Battle</h4>
+				<p>不服来战！</p>
+			  </div>
+			  <div class="server-badge col-6 col-sm-6">
+				<h6><span class="badge badge-warning">比尔吉沃特</span></h6>
+			  </div>
+
+			  <!-- Second Row -->
+			  
+			</div>
+			<div class="battle-details row">
+			  <div class="col">战斗力:500</div>
+			  <div class="col">奖励:100</div>
+			  <div class="col">06.28 20:00</div>
+			  <div class="col align-right">
+				<h4><span class="badge badge-danger">失败</span></h4>
+			  </div>
+			</div>
+		  </div>  <!-- end for card -->
+
+		  <!-- End of History of Battles -->
+		  
+		</div>
+
+	  </div>
+
+
+	</div>
+
+	<script>
+	 window.chartColors = {
+	   red: 'rgb(255, 99, 132)',
+	   orange: 'rgb(255, 159, 64)',
+	   yellow: 'rgb(255, 205, 86)',
+	   green: 'rgb(75, 192, 192)',
+	   blue: 'rgb(54, 162, 235)',
+	   purple: 'rgb(153, 102, 255)',
+	   grey: 'rgb(201, 203, 207)'
+	 };
+	 
+	 var config1 = {
+       type: 'doughnut',
+       data: {
+         datasets: [{
+           data: [
+             10, 20, 30
+           ],
+		   backgroundColor: [
+             window.chartColors.blue,
+             window.chartColors.red,
+             window.chartColors.purple,
+           ],
+         }],
+         labels: [
+           "中单",
+           "打野",
+           "ADC",
+         ]
+       },
+       options: {
+         responsive: true,
+         legend: {
+           position: 'top',
+         },
+         title: {
+           display: true,
+           text: '常用位置'
+         },
+         animation: {
+           animateScale: true,
+           animateRotate: true
+         }
+       }
+     };
+
+	 
+	 /* window.onload = function() {
+	  *   var ctx = document.getElementById("chart-area").getContext("2d");
+	  *   window.myDoughnut = new Chart(ctx, config);
+	  * };*/
+
+
+	 /* Polar area */
+	 var chartColors = window.chartColors;
+	 var color = Chart.helpers.color;
+	 var config2 = {
+	   data: {
+		 datasets: [{
+		   data: [
+			 10,20,30
+		   ],
+		   backgroundColor: [
+			 color(chartColors.red).alpha(0.5).rgbString(),
+			 color(chartColors.blue).alpha(0.5).rgbString(),
+			 color(chartColors.green).alpha(0.5).rgbString(),
+		   ],
+		   label: 'My dataset' // for legend
+		 }],
+		 labels: [
+		   "刺客",
+		   "法师",
+		   "肉盾",
+		 ]
+	   },
+	   options: {
+		 responsive: true,
+		 title: {
+		   display: true,
+		   text: '常用英雄类型'
+		 },
+		 scale: {
+		   ticks: {
+			 beginAtZero: true
+		   },
+		   reverse: false
+		 },
+		 animation: {
+		   animateRotate: false,
+		   animateScale: true
+		 }
+	   }
+	 };
+
+	 /* radar chart */
+	 /* var config3 = {
+	  *   type: 'radar',
+	  *   data: {
+	  *     labels: ['击杀', '生存', '助攻', '物理', '魔法', '防御', '金钱'],
+	  *     datasets: [{
+	  *       label: "能力雷达图",
+	  *       backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+	  *       borderColor: window.chartColors.red,
+	  *       pointBackgroundColor: chartColors.red,
+	  *       data: [
+	  *         87,
+	  *         66,
+	  *         25,
+	  *         88,
+	  *         99,
+	  *         48,
+	  *         78
+	  *       ]
+	  *     },]
+	  *   },
+	  *   options: {
+	  *     title: {
+	  *       display: true,
+	  *       text: '能力'
+	  *     },
+	  *     scale: {
+	  *       ticks: {
+	  *         beginAtZero: true
+	  *       }
+	  *     }
+	  *   }
+	  * };
+	  */
+
+
+	 
+
+	 window.onload = function() {
+	   var ctx1 = document.getElementById("chart-area").getContext("2d");
+	   var ctx2 = document.getElementById("polar-area");
+	   var radar = document.getElementById("radar-area");
+	   window.myDoughnut = new Chart(ctx1, config1)
+	   window.myPolarArea = Chart.PolarArea(ctx2, config2);
+	   /* 	   window.myRadar = new Chart(radar, config3);*/
+	 };
+
+	</script>
+
+  </body>
+</html>
