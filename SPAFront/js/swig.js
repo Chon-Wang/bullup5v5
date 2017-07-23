@@ -1,13 +1,12 @@
 var myApp = {};
 
-myApp.loadSwigView = function (view, data) {
-	var fileName = './' + view + '.html',
-		swig = require('swig');
-	return swig.renderFile(fileName, data || {});
+myApp.loadSwigView = function (pageRef, data) {
+	var	swig = require('swig');
+	return swig.renderFile(pageRef, data || {});
 }; // Loading views/swigTemplate.html 
 
 
-var template = myApp.loadSwigView('swig_test', {
+var template = myApp.loadSwigView('swig_test.html', {
 	swigTest: 'awesome people',
 });
 $('#mainView').html(template);
