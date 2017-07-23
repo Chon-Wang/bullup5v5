@@ -81,10 +81,11 @@ exports.handleRegister = function (socket) {
         dbUtil.findUserByNick(userInfo.userName, function (user) {
             if (user) {
                 // 如果该用户存在
-                socket.emit('registerResult', {
-                    success: false,
-                    text: '该用户已注册',
-                    userId: -1
+                socket.emit('feedback', {
+                    errorCode: 1,
+                    text: '该用户已经注册',
+                    type: 'REGISTERRESULT',
+                    extension: null
                 });
             } else {
                 dbUtil.addUser(userInfo, function (userId) {
@@ -141,13 +142,13 @@ exports.handleUserInviteResult = function (io, socket) {
             //socket.emit('success', 'hello');
             var teamName = feedback.extension.teamName;
             var participant = feedback.extension.userInfo;
-            
+
             // TODO 更新用户状态
 
             // 更新teamList中team信息, 添加该参与者
             teamProxy.addParticipantToTeam(teamName, participant);
             socket.join(teamName);
-        //    socket.emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
+            //    socket.emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
 
             // 向房间内的所有用户广播当前队伍信息
             io.in(teamName).emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
@@ -162,7 +163,7 @@ exports.handleUserInviteResult = function (io, socket) {
     });
 }
 
-exports.changeUserStatus = function(userId, status) {
+exports.changeUserStatus = function (userId, status) {
     this.users[userId].status = status;
 }
 

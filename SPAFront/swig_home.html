@@ -246,7 +246,6 @@
 	<div class="modal-content">
 	  <h4>新用户注册</h4>
 	  <div class="row">
-		<form class="col s12">
 		  <div class="row">
 			<div class="input-field col s12">
 			  <i class="fa fa-user prefix" aria-hidden="true"></i>
@@ -266,16 +265,27 @@
 			  <label for="usr_repwd">确认密码</label>
 			</div>
 
+			<div class="input-field col s12">
+				<i class="fa fa-phone prefix" aria-hidden="true"></i>
+				<input type="tel" id="usr_tel" class="validate">
+				<label for="usr_tel">手机号</label>
+			</div>
+
+			<div class="input-field col s12">
+				<i class="fa fa-envelope prefix" aria-hidden="true"></i>
+				<input type="email" id="usr_email" class="validate">
+				<label for="usr_email">邮箱</label>
+			</div>
+			
 			<p>
 			  <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
 			  <label for="filled-in-box" class="agree-check">我同意用户协议</label>
 			</p>
 		  </div>
 
-		  <button class="btn waves-effect waves-light right orange lighten-1" type="submit" name="action">注册
+		  <button class="btn waves-effect waves-light right orange lighten-1" id="register_btn">注册
 			<i class="fa fa-paper-plane" aria-hidden="true"></i>
 		  </button>
-		</form>
 	  </div>
 	</div>
   </div>
@@ -339,7 +349,7 @@
   <script src="./js/validate_sign.js"></script>
   <script src="./js/global.js"></script>
   <script src="./js/spa.js"></script>
-  <script src="./js/login.js"></script>
+	<script src="./js/login.js"></script>
 	
 </body>
 
