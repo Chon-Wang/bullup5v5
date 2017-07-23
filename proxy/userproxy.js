@@ -39,7 +39,7 @@ exports.handleLogin = function (socket) {
                         var feedback = {
                             errorCode: 0,
                             type: 'LOGINRESULT',
-                            text: null,
+                            text: "登陆成功",
                             extension: {
                                 name: user.nick_name,
                                 userId: user.user_id,
@@ -148,11 +148,13 @@ exports.handleUserInviteResult = function (io, socket) {
             teamProxy.addParticipantToTeam(teamName, participant);
             socket.join(teamName);
         //    socket.emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
+
             // 向房间内的所有用户广播当前队伍信息
             io.in(teamName).emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
         } else if (feedback.errorCode == 1) {
             // 用户拒绝邀请
             var hostId = feedback.extension.hostId;
+
             // 向发起者发送拒绝信息
             var dstSocket = socketProxy.mapUserIdToSocket(hostId);
             dstSocket.emit('feedback', feedback);

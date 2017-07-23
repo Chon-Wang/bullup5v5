@@ -5,9 +5,10 @@ $().ready(function(){
 		// get user name and user password
 		var $log_name = $('#login_username').val();
 		var $log_password = $('#login_password').val();
-		alert($log_name);
-		alert($log_password);
-
+		socket.emit('login', {
+			userName: $log_name,
+			password: $log_password
+		});
 		//communicate with the server
 
 
