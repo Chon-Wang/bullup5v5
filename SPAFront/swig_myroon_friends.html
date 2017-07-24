@@ -1,0 +1,12 @@
+{% if friends_invited %}
+  <div class="col s12 m4 offset-m2">
+
+    <ul class="collection">
+	  {% for friend in friends_invited %}
+		<a href="#!" class="collection-item">
+          <label><i class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i></label> Alvin
+		</a>
+	  {% endfor %}
+    </ul>
+  </div>
+{% endif %}

@@ -1,6 +1,6 @@
-var myApp = {};
+var douniu = {};
 
-myApp.loadSwigView = function (pageRef, data) {
+douniu.loadSwigView = function (pageRef, data) {
 		swig = require('swig');
 	return swig.renderFile(pageRef, data || {});
 }; // Loading views/swigTemplate.html 

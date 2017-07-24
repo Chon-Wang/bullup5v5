@@ -1,0 +1,15 @@
+{% if ranked_list %}
+  <ul class="collection">
+	{% for player in ranked_list %}
+      <li class="collection-item avatar">
+        <img src="./media/imgs/timg-2.jpeg" alt="" class="circle">
+        <span class="title">{{ player.name }}</span>
+        <p>{{ player.wealth }} <br> {{ player.cap }}
+        </p>
+        <div class="secondary-content rank-number right">1</div>
+      </li>
+	{% endfor %}
+  </ul>
+{% else %}
+  <h5>排行榜加载错误，请稍后重试</h5>
+{% endif %}

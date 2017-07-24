@@ -32,7 +32,7 @@
 
 		<ul class="right hide-on-med-and-down">
 		  <li><a href="./spa_home.html" class="nav-link">主页</a></li>
-		  <li class=""><a href="./spa_battle.html" class="nav-link">对战大厅</a></li>
+		  <li class=""><a href="./spa_battle.html" id="router_dataquery">对战大厅</a></li>
 		  <li><a href="./spa_dataquery.html" class="nav-link">数据查询</a></li>
 		  <li><a href="./spa_rank.html" class="nav-link">排行榜</a></li>
 		  <li><a href="./spa_personal.html" class="nav-link">个人中心</a></li>
@@ -326,7 +326,7 @@
 
   
 
-  <script src=./js/jquery-2.2.4.js></script>
+  <script src="./js/jquery-2.2.4.js"></script>
   <script src="./js/materialize.min.js"></script>
   <script src="./js/global.js"></script>
   <script src="./js/jquery.validate.min.js"></script>
@@ -335,10 +335,11 @@
   <script src="./js/spa.js"></script>
   <script src="./js/login.js"></script>
   <script src="./js/swig.js"></script>
+  <script src="./js/router.js"></script>
 
   <script>
    $().ready(function(){
-	 var temp = myApp.loadSwigView("./swig_menu.html", {
+	 var temp = douniu.loadSwigView("./swig_menu.html", {
 	   logged_user: "hji"
 	 });
 
