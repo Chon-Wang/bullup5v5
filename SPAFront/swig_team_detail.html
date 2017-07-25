@@ -1,0 +1,25 @@
+{% if team %}
+  <div class="row">
+	<div class="col s12 m2">
+	  <h4>HudsonJoe的队伍</h4>
+	  <label for="team-size">队伍人数</label>
+	  <p id="team-size">5</p>
+
+	  <label for="team-desc">队伍描述</label>
+	  <p id="team-desc">我们战斗吧</p>
+
+	  <label for="game-mode">游戏模式</label>
+	  <p id="game-mode">常规</p>
+	  <label for="winning-condition">胜利条件</label>
+	  <p id="winning-condition">推掉基地</p>
+	  <label for="bet-amount">下注金额</label>
+	  <p id="bet-amount">30</p>
+	</div>
+	<div class="col s12 m9">
+	  <!--  Radar Chart of two teams                  -->
+	  <canvas id="team-detail-chart"></canvas>
+
+	</div>
+  </div>
+
+{% endif %}
