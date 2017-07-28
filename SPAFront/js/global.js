@@ -30,4 +30,6 @@ $().ready(function(){
 	$('#message_collapsible').collapsible();
     // If waiting mode ends, close detail modal and open the created room modal
 
+	$('.collapsible').collapsible();
+
 });

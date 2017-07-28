@@ -1,0 +1,15 @@
+{% if matches %}
+
+  {% for match in matches  %}
+	<li class="collection-item avatar match-item">
+	  <img src="./media/lol_champions/Draven.png" alt="" class="circle">
+	  <span class="title champion-name">{{ match.champion_name }}</span>
+	  <span class="right match-win-title">{{ match.result }}</span>
+	  <p>{{ match.mode }}</p>
+	  <span class="center-align">{{ match.datetime }}</span>
+	  <span class="right">{{ match.kdanumber }}</span>
+	</li>
+  {% endfor %}
+
+{% endif %}
+

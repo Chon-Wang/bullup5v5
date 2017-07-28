@@ -20,13 +20,8 @@
 <body>
   
   
-  <ul id="dropdown1" class="dropdown-content grey darken-4">
-	<li><a href="#log_modal">登录</a></li>
-	<li><a href="#sign_modal">注册</a></li>
-	<li><a href="#link_modal">绑定账号</a></li>
-	<li class="divider"></li>
-	<li><a href="#">最小化</a></li>
-	<li><a href="#">退出</a></li>
+  <ul id="dropdown_menu" class="dropdown-content grey darken-4">
+
   </ul>
   <div class="navbar-fixed">
 	<nav>
@@ -37,14 +32,14 @@
 
 		<ul class="right hide-on-med-and-down">
 		  <li><a href="./spa_home.html" class="nav-link">主页</a></li>
-		  <li class=""><a href="./spa_battle.html" class="nav-link">对战大厅</a></li>
+		  <li class=""><a id="router_battle">对战大厅</a></li>
 		  <li><a href="./spa_dataquery.html" class="nav-link">数据查询</a></li>
-		  <li><a href="./spa_rank.html" class="nav-link">排行榜</a></li>
-		  <li><a href="./spa_personal.html" class="nav-link">个人中心</a></li>
-		  <li><a href="./spa_chat.html" class="nav-link">聊天室</a></li>
-		  <li><a href="#message_sheet">消息中心</a></li>
+		  <li><a id="router_rank">排行榜</a></li>
+		  <li><a href="./spa_personal.html" class="nav-link" id="router_personal">个人中心</a></li>
+		  <li><a href="./spa_chat.html" class="nav-link" id="router_chat">聊天室</a></li>
+		  <li><a href="#message_sheet" id="router_message">消息中心</a></li>
 		  <!-- Dropdown Trigger -->
-		  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">系统菜单</a></li>
+		  <li><a class="dropdown-button" href="#!" data-activates="dropdown_menu">系统菜单</a></li>
 		</ul>
 	  </div>
 	</nav>
@@ -92,7 +87,7 @@
 
 
   <!-- modal structure -->
-  <div id="create_room_modal" class="modal">
+  <div class="modal">
 	<div class="modal-content">
 	  <h4>创建房间</h4>
 	  <div class="row">
@@ -150,10 +145,13 @@
 				<div class="input-field col s12">
 				  <!-- Winning Condition -->
 				  <select id="winning_condition">
-					<option value="">1血1塔100刀</option>
-					<option value="">推掉基地</option>
+					<option value="">1</option>
+					<option value="">2</option>
+					<option value="">3</option>
+					<option value="">4</option>
+					<option value="">5</option>
 				  </select>
-				  <label>胜利条件</label>
+				  <label>队伍规模</label>
 				</div>
 			  </div>
 
@@ -322,15 +320,17 @@
 	  <ul class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
 		<li>
 		  <div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>First</div>
-		  <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-		</li>
-		<li>
-		  <div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>Second</div>
-		  <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-		</li>
-		<li>
-		  <div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>Third</div>
-		  <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+		  <div class="collapsible-body">
+			<span>Lorem ipsum dolor sit amet.</span>
+			<div class="right">
+			  <a class="waves-effect waves-light btn">
+				<i class="fa fa-check" aria-hidden="true"></i>
+			  </a>
+			  <a class="waves-effect waves-light btn">
+				<i class="fa fa-times" aria-hidden="true"></i>
+			  </a>
+			</div>
+		  </div>
 		</li>
 	  </ul>
 	</div>
@@ -340,7 +340,6 @@
   </div>
 
   
-
   <script src=./js/jquery-2.2.4.js></script>
 	<script src="./js/materialize.min.js"></script>
 	<script src="./js/socket_util.js"></script>
@@ -349,7 +348,29 @@
   <script src="./js/validate_sign.js"></script>
   <script src="./js/global.js"></script>
   <script src="./js/spa.js"></script>
+  <script src="./js/login.js"></script>
+  <script src="./js/swig.js"></script>
 	<script src="./js/login.js"></script>
+  
+
+
+  <!-- test data script -->
+  <!-- comment this out and replace these data with those from database -->
+  <script src="./js/testData.js"></script>
+
+  <!-- router -->
+  <script src="./js/router.js"></script>
+
+  <script>
+   $().ready(function(){
+	 var temp = douniu.loadSwigView("./swig_menu.html", {
+	   logged_user: "hji"
+	 });
+
+	 $('#dropdown_menu').html(temp);
+
+   });
+  </script>
 	
 </body>
 

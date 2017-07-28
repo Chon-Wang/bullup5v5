@@ -1,0 +1,19 @@
+{% if team %}
+  
+  <h4>{{ team.teamName }}</h4>
+  <label for="team-size">队伍人数</label>
+  <p id="team-size">{{ team.size }}</p>
+
+  <label for="team-desc">队伍描述</label>
+  <p id="team-desc">{{ team.desc }}</p>
+
+  <label for="game-mode">游戏模式</label>
+  <p id="game-mode">{{ team.gameMode }}</p>
+  
+  <label for="winning-condition">胜利条件</label>
+  <p id="winning-condition">{{ team.winningCondi }}</p>
+  
+  <label for="bet-amount">下注金额</label>
+  <p id="bet-amount">{{ team.bet }}</p>
+
+{% endif %}
