@@ -12,13 +12,14 @@ douniu.loadView = function (pageRef, containerId, callbackName) {
 
 // load template file with url stored in pageRef
 douniu.loadSwigView = function (pageRef, data) {
-		swig = require('swig');
+	var swig = require('swig');
 	return swig.renderFile(pageRef, data || {});
 };
 
 
 $().ready(function () {
 	$('.nav-link').on('click', function (e) {
+		// prevent default event
 		e.preventDefault();
 		var pageRef = $(this).attr('href');
 		//        douniu.loadView(pageRef, '.content', null);
@@ -35,7 +36,6 @@ $().ready(function () {
 			dataType: "text",
 
 			success: function (response) {
-				console.log('the page has been loaded', response);
 				$('.content').html(response);
 			},
 
