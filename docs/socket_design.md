@@ -2,6 +2,8 @@
 <!-- TOC -->
 
 - [通信协议与数据结构](#通信协议与数据结构)
+    - [用户登录包](#用户登录包)
+    - [用户注册包](#用户注册包)
     - [通讯图](#通讯图)
     - [登录的用户包](#登录的用户包)
     - [队伍组建包](#队伍组建包)
@@ -21,6 +23,23 @@
     - [LOL广播数据包](#lol广播数据包)
 
 <!-- /TOC -->
+## 用户登录包
+```js
+var loginPacket = {
+    userName: 'hudsonjoe',
+    password: '123456'
+}
+```
+
+## 用户注册包
+```js
+var registerPacket = {
+    userName: 'colinyoung',
+    password: '123456',
+    tel: '18553358649',
+    email: '1427714873@qq.com'
+}
+```
 ## 通讯图
 ![5v5逻辑图](.\5v5_logic@1-56.png)
 ## 登录的用户包
@@ -94,7 +113,7 @@ var teamPacket =
         },
         // 其他用户信息
     ],
-    status: 'ESTABLISHING',// 'PUBLISHING' 'MATCHING' 'GAMING'
+    status: 'ESTABLISHING',// 'PUBLISHING' 'MATCHING' 'GAMING' 'INBATTLE'
     type: 'BATTLE', // 'MATCH'
     bet: 100, // 赌注
     mapId: 1,
@@ -117,6 +136,7 @@ var feedBack = {
 ```js
 // 邀请好友
 var invitePacket = {
+    // 改名字为受邀者的名字
     name: 'colinyoung',
     userId: 14,
     host: {
@@ -140,6 +160,7 @@ var inivitFeedback = {
     text: 'colinyoung加入游戏', //如果拒绝,text为colinyoung拒绝加入游戏 
     extension: {      // 如果受邀用户拒绝,则extension只有hostName字段和userInfo的name字段
         hostName: 'hudsonjoe',
+        hostId: 13,
         teamName: 'hudsonjoe134124',
         userInfo:  {
             name: 'colinyoung',
@@ -173,9 +194,9 @@ var establishTeamPacket = {
 ## 队伍列表的数据
 在队长确认创建队伍信息,或者是某个客户端刷新, 客户端广播最新的队伍列表信息
 ```js
-var broadcastTeamList = [
-    {
-        name: 'hudsonjoe134124', // 用户昵称 + 时间戳
+var broadcastTeamList = {
+    'hudsonjoe134124': {
+        teamName: 'hudsonjoe134124', // 用户昵称 + 时间戳
         status: 'ESTABLISHING',// 'PUBLISHING' 'MATCHING' 'GAMING'
         type: 'BATTLE', // 'MATCH'
         bet: 100, // 赌注
@@ -183,7 +204,7 @@ var broadcastTeamList = [
         rule: '基地爆炸',
         participantsCount: 5
     }
-]
+}
 ```
 
 ## 队伍详情请求包
@@ -199,9 +220,9 @@ var teamDetailsRequest = {
 应战方在查看队伍详情后确定应战发送的战斗请求数据包
 ```js
 var fightRequest = {
-    teamName: 'hudsonjoe134124',
-    userId: 14,
-    myteamName: 'gjm1230123'
+    challengerTeamName: 'hudsonjoe134124',
+    hostTeamName: 'gjm1230123',
+    userId: 14
 }
 ```
 
@@ -217,8 +238,8 @@ var fightRequest = {
      type: 'FIGHTRESULT',
      text: null,
      extension: {
-         team1Name: 'hudsonjoe134124',
-         team2Name: 'gjm1230123'
+         challengerTeamName: 'hudsonjoe134124',
+         hostTeamName: 'gjm1230123'
      }
  }
 ```
@@ -226,17 +247,13 @@ var fightRequest = {
 对局产生在服务端和客户端保存的对局的数据结构
 ```js
 // 服务端缓存中保存的对局信息
-var game = {
-    gameName:'hudsonjoegjm124124', //captain1+captain2+timestamp
+var battle = {
+    battleName:'hudsonjoegjm124124', //邀请者captain1+受邀者captain2+timestamp
     blueSide: { 
-        teamPacket: {
-          //  ...
-        }
+        // teamPacket
     },
     redSide: {
-        teamPacket: {
-          //  ...
-        }
+        // teamPacket
     },
     status:'unready',
     time:{
@@ -250,9 +267,9 @@ var game = {
 服务端向客户端发送的创建LOL房间的数据包
 ```js
 var createLOLRoom = {
-    gameName: 'hudsonjoegjm124124',
-    name: 'BullUP24234', // BULLUP + 时间戳
-    password: '1234' // 随机4位数 
+    roomName: 'BULLUP24234', // BULLUP + 时间戳
+    password: '2345', // 4位随机数
+    creatorId: '13' // 需要创建lol房间的用户为挑战者
 }
 ```
 

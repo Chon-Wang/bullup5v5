@@ -2,6 +2,7 @@ var mysql = require('mysql');
 var dbCfg = require('./dbcfg.js');
 var logger = require('../util/logutil.js');
 var async = require('async');
+var socketProxy = require('../proxy/socketproxy.js');
 
 var connection = mysql.createConnection(dbCfg.server);
 
@@ -71,7 +72,22 @@ exports.findFriendListByUserId = function(userId, callback) {
         var friendList = {};
         async.eachSeries(friendIds, function(friend, errCb){
             exports.findUserById(friend.friend_id, function(data) {
-                friendList[data.user_id] = data;
+                
+                var online = require('../proxy/socketproxy').isUserOnline(data.user_id);
+                var status = null;
+                
+                //获取用户状态
+                if (online) {
+                    status = socketProxy.mapUserIdToSocket(data.user_id).status;
+                }
+
+                friendList[data.nick_name] = {
+                    name: data.nick_name,
+                    userId: data.user_id,
+                    avatarId: data.icon,
+                    online: online,
+                    status: status
+                };
                 errCb();
             })
         }, function(err) {

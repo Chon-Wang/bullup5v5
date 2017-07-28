@@ -1,13 +1,16 @@
-var userSocketMap = {};
-var socketUserMap = {};
+
+exports.init = function() {
+    this.userSocketMap = {};
+    this.socketUserMap = {};
+}
 /**
  * 添加用户id和socket的映射
  * @param userId 用户id
  * @param socket 用于连接的socket包
  */
 exports.add = function(userId, socket) {
-    userSocketMap[userId] = socket;
-    socketUserMap[socket.id] = userId;
+    this.userSocketMap[userId] = socket;
+    this.socketUserMap[socket.id] = userId;
 }
 
 
@@ -15,9 +18,9 @@ exports.add = function(userId, socket) {
  * 删除映射
  * @param userId 用户id 
  */
-exports.remove = function(userId) {
-    socketUserMap[userSocketMap[userId].id] = null;
-    userSocketMap[userId] = null;
+exports.remove = function(socket) {
+    this.userSocketMap[this.socketUserMap[socket.id].userId] = null;
+    this.socketUserMap[socket.id] = null;
 }
 
 /**
@@ -25,13 +28,22 @@ exports.remove = function(userId) {
  * @param userId 用户id
  */
 exports.isUserOnline = function(userId) {
-    return userSocketMap[userId]? true: false;
+    return this.userSocketMap[userId]? true: false;
 }
 
 /**
  * 通过用户id映射socket
  * @param userId 用户id
  */
-exports.mapToSocket = function(userId) {
-    return socketUserMap[userId];
+exports.mapUserIdToSocket = function(userId) {
+    return this.userSocketMap[userId];
+}
+
+/**
+ * 将用户的socket加入某个房间
+ * @param userId 用户的id
+ * @param roomName 要加入的房间
+ */
+exports.userJoin = function (userId, roomName) {
+    this.userSocketMap[userId].join(roomName);
 }
