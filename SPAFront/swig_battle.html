@@ -70,13 +70,13 @@
     <div class="row center-align">
 
       <ul class="pagination">
-        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+        <li class="disabled"><a href="#!"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
         <li class="active"><a href="#!">1</a></li>
         <li class="waves-effect"><a href="#!">2</a></li>
         <li class="waves-effect"><a href="#!">3</a></li>
         <li class="waves-effect"><a href="#!">4</a></li>
         <li class="waves-effect"><a href="#!">5</a></li>
-        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+        <li class="waves-effect"><a href="#!"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
       </ul>
     </div>
 
@@ -85,8 +85,16 @@
 	<!-- team detail modal Structure -->
 	<div id="team-detail-modal" class="modal">
 	  <div class="modal-content">
-		
-
+		<div class="row">
+		  <!-- Where Details go -->
+		  <div class="col s12 m2" id ="team_detail_container">
+		  </div>
+		  <!-- End of Details -->
+		  <div class="col s12 m9">
+			<!--  Radar Chart of two teams                  -->
+			<canvas id="team-detail-chart"></canvas>
+		  </div>
+		</div>
 	  </div>
 	  <div class="modal-footer">
 		<a href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-btn">邀请战斗</a>
@@ -163,6 +171,10 @@
     <script src="./js/spa.js"></script>
     <script src="./js/materialize.min.js"></script>
     <script src="./js/materialize-pagination.min.js"></script>
+	<script src="./js/global.js"></script>
+	<script src="./js/close_modal.js"></script>
+
+	
 
 
   </body>

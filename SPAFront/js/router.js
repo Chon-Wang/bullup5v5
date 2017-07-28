@@ -1,35 +1,7 @@
 $().ready(function(){
 
-	//队伍的模拟数据，用于加载swig_battle.html模板
-	var teams = [
-		{
-			teamName: 'myTeam',
-			type: '3',
-			rule: 1,
-			bet: 30
-		},
-		{
-			teamName: 'your Team',
-			type: '4',
-			rule: 1,
-			bet: 30
-		},
-		{
-			teamName: 'your Team',
-			type: '4',
-			rule: 1,
-			bet: 30
-		},
-		{
-			teamName: 'your Team',
-			type: '4',
-			rule: 1,
-			bet: 30
-		}
-		
-		
-	];
-	$('#router_dataquery').on('click', function(e){
+	
+	$('#router_battle').on('click', function(e){
 		e.preventDefault();
 		//get a data structure in which teams information are stored
 		
@@ -50,5 +22,29 @@ $().ready(function(){
 		$('.content').html(battle_teams);
 		
 		// 
+	});
+
+
+
+	$('#router_rank').on('click', function(e){
+		e.preventDefault();
+		//get rank data from database
+
+		//get total page numbers of rank list
+
+		//render page with first page data
+		var rank_list = douniu.loadSwigView('swig_rank.html', {
+			ranked_list: rank_lists
+		});
+
+		$('.content').html(rank_list);
+
+		$('ul.tabs').tabs();
+	});
+
+	$('#router_personal').on('click', function(e){
+		e.preventDefault();
+
+		
 	});
 });

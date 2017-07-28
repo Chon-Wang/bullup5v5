@@ -6,7 +6,7 @@ douniu.loadSwigView = function (pageRef, data) {
 }; // Loading views/swigTemplate.html 
 
 
-// var template = myApp.loadSwigView('swig_test', {
+// var template = myApp.loadSwigView('swig_test.html', {
 // 	swigTest: 'awesome people',
 // });
 // $('#mainView').html(template);
