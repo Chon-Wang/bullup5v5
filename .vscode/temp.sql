@@ -1,2 +1,0 @@
-INSERT INTO `bullup`.`user` (`mobile_no`, `password`, `email`, `real_name`, `icon`, `nick_name`, `credit_worthiness`, `is_forbid`) VALUES ('18553358649', '123456', '1427714873@qq.com', 'chenyang', '11', 'colinyoung', '1000', 'false');
-INSERT INTO `bullup`.`user` (`mobile_no`, `password`, `email`, `real_name`, `icon`, `nick_name`, `credit_worthiness`, `is_forbid`) VALUES ('18862220138', '123456', '1477991514@qq.com', 'jihaoyu', '12', 'hudsonjoe', '1100', 'false');
