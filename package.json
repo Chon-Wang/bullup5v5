@@ -7,7 +7,8 @@
     "mysql": "~2.13.0",
     "lolapi": "~0.3.1",
     "async": "~2.5.0",
-    "moment": "~2.18.1"
+    "moment": "~2.18.1",
+    "request": "~2.81.0"
   },
   "main": "index.html"
 }

@@ -97,6 +97,33 @@ exports.findFriendListByUserId = function(userId, callback) {
     })
 }
 
+
+function getStrengthScoreboard(userId, callback) {
+    async.waterfall([
+        function(callback){
+            connection.query('select user_id from bullup_strength order by bullup_strength_score desc limit 100', function(err, row) {
+                if (err){ 
+                    throw err;
+                }
+                callback(null, row);
+            });
+        },
+        
+        function(ids, callback){
+            connection.query('select user_id from bullup_strength where user_id =?', row[i], function(err, row) {
+                if (err){ 
+                    throw err;
+                }
+                callback(null, row);
+            });
+        }
+    ], function(err,result){
+        
+        
+    });
+    
+}
+
 // exports.findFriendListByUserId(1, function (data) {
 //     logger.jsonLog(data);
 // });
