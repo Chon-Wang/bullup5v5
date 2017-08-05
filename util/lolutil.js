@@ -1,7 +1,8 @@
 var request = require('request');
 var async = require('async');
+var lolcfg = require('../cfg/lolcfg.js');
 
-var apiKey =  "RGAPI-37683430-a2df-46fa-a006-60fff9f9aba7";
+var apiKey =  "RGAPI-8f64929d-c988-4c1b-b96a-5d0210599b73";
 
 function getItemsStaticData(callback){
     var options = {
@@ -50,30 +51,17 @@ function getSummonerByName(name, callback){
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
         }
     };
-    async.waterfall([
-        function(callback){
-            request(options, function(error, response, body){
-                bodyObj = JSON.parse(body);
-                if(bodyObj.name != undefined){
-                    callback(null, bodyObj);
-                }else{
-                    callback("404", null);
-                }
-            });
-        }
-    ], function (err, result) {
-        if(err == null){
-            callback(result);
-        }else{
-            callback(undefined);
-        }
-
+    request(options, function(error, response, body){
+        bodyObj = JSON.parse(body);
+        callback(bodyObj);
     });
 }
 
-function getRecentMatchesListByAccountId(accountId, callback){
+function getRecentMatchesListByAccountId(accountId, startTimeStr, endTimeStr, callback){
+    var startTime = (new Date(startTimeStr)).getTime(); 
+    var endTime = (new Date(endTimeStr)).getTime();
     var options = {
-        url: 'https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/' + accountId + '/recent',
+        url: 'https://na1.api.riotgames.com/lol/match/v3/matchlists/by-account/' + accountId + '?beginTime=' + startTime + '&endTime=' + endTime,
         headers: {
             "Origin": "https://developer.riotgames.com",
             "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -106,21 +94,105 @@ function getMatchDetailsByGameId(gameId, callback){
 }
 
 function getBullupMatchDetailsBySummonerName(name,startTime,endTime,callback){
-    /*
+    async.waterfall([
+        function(done){
+            getSummonerByName(name, function(summoner){
+                done(null, summoner);
+            });
+        },
+        function(summoner, done){
+            getRecentMatchesListByAccountId(summoner.accountId, startTime, endTime, function(gameList){
+                done(null, summoner, gameList);
+            });
+        },
+        function(summoner, gameList, done){
+            var matchDetails = {};
+            async.eachSeries(gameList.matches, function(match, errCb){
+                getMatchDetailsByGameId(match.gameId, function(details){
+                    matchDetails[match.gameId] = details;
+                    errCb();
+                });
+            }, function(err) {
+                if (err) console.log(err);
+                matchDetails.summoner = summoner;
+                done(null, matchDetails);
+            });
+        }
+    ],function(err,matchDetails){
+        var count = 0;
+        var result = {};
+        result.matches =[];
+
+        for(var gameId in matchDetails){
+            var match = matchDetails[gameId];
+            var mainPlayerParticipantId;
+
+            result.matches[count] = {};
+            result.matches[count].name = matchDetails.summoner.name;
+            result.matches[count].gameMode = match.gameMode;
+            result.matches[count].gameType = match.gameType;
+            result.matches[count].time = new Date(match.gameCreation);
+            result.matches[count].paticipants = [];
+
+            var paticipantCount = 0;
+            var paticipantIds = [];
+            for(var index in match.participantIdentities){
+                paticipantIds[paticipantCount] = match.participantIdentities[index].player.participantId;
+                if(result.matches[count].name == match.participantIdentities[index].player.summonerName){
+                    mainPlayerParticipantId = match.participantIdentities[index].participantId;
+                }
+                paticipantCount++;
+            }
+
+            paticipantCount = 0;
+            for(var participant in match.participants){
+                if(participant.participantId == mainPlayerParticipantId){
+                    result.matches[count].championId = participant.championId;
+                    result.matches[count].championName = lolcfg.getChampionNameById(participant.championId);
+                    if(participant.stats.win){
+                        result.matches[count].win = '胜利';
+                    }else{
+                        result.matches[count].win = '失败';
+                    }
+                    result.matches[count].kda = participant.stats.kills + '/' + participant.stats.deaths + '/' + participant.stats.assists;
+
+                }
+                result.matches[count].paticipants[paticipantCount] = {};
+                result.matches[count].paticipants[paticipantCount].name = match.participantIdentities[participant.participantId - 1].player.name;
+                result.matches[count].paticipants[paticipantCount].kda = participant.stats.kills + '/' + participant.stats.deaths + '/' + participant.stats.assists;
+                result.matches[count].paticipants[paticipantCount].kdaScore = (participant.stats.kills + participant.stats.assists) / participant.stats.deaths;
+                result.matches[count].paticipants[paticipantCount].damage = participant.stats.totalDamageDealtToChampions;
+                result.matches[count].paticipants[paticipantCount].damageTaken = participant.stats.totalDamageTaken;
+                result.matches[count].paticipants[paticipantCount].goldEarned = participant.stats.goldEarned;
+                result.matches[count].paticipants[paticipantCount].items = {};
+                result.matches[count].paticipants[paticipantCount].items['item0'] = participant.stats.item0;
+                result.matches[count].paticipants[paticipantCount].items['item1'] = participant.stats.item1;
+                result.matches[count].paticipants[paticipantCount].items['item2'] = participant.stats.item2;
+                result.matches[count].paticipants[paticipantCount].items['item3'] = participant.stats.item3;
+                result.matches[count].paticipants[paticipantCount].items['item4'] = participant.stats.item4;
+                result.matches[count].paticipants[paticipantCount].items['item5'] = participant.stats.item5;
+                result.matches[count].paticipants[paticipantCount].items['item6'] = participant.stats.item6;
+                paticipantCount++;
+            }
+            count++;
+        }
+        callback(result);
+        /*
+    //----------------------------------result-data----------------------------------------/
         {
             "matches" : [
                 {
                     "name" : "Who is 55Kai",
                     "championId" : "1",
                     "championName" : "黑暗之女",
-                    "gameMode" : "经典匹配",
+                    "gameMode" : "CLASSIC",
+                    "gameType" : "MATCHED_GAME",
                     "time" : "2017-05-09 15:34:03",
                     "kda" : "13/0/9",
                     "win" : true,
-                    "paticipant" : [
+                    "paticipants" : [
                         {
                             "name" : "Who is 55Kai",
-                            "lane" : "打野",
                             "kda" : "13/0/9",
                             "kdaScore" : "13.5",
                             "damage" : "20000",
@@ -144,10 +216,8 @@ function getBullupMatchDetailsBySummonerName(name,startTime,endTime,callback){
             ]
         }
     */
-
+    });
 }
-
-//--------------------------------------data--------------------------------------------/
 
 //--------------------------------------test--------------------------------------------/
 
@@ -176,6 +246,11 @@ function getBullupMatchDetailsBySummonerName(name,startTime,endTime,callback){
 //     console.log(matches.matches[0].gameId);
 // });
 
-getMatchDetailsByGameId(2564449052, function(gameInfo){
-    console.log(JSON.stringify(gameInfo));
+// getMatchDetailsByGameId(2564449052, function(gameInfo){
+//     console.log(JSON.stringify(gameInfo));
+// });
+
+getBullupMatchDetailsBySummonerName('Who is 55Kai', '2017/8/1', '2017/8/4', function(info){
+
+
 });

@@ -17,6 +17,7 @@ $().ready(function(){
 		var battle_teams = douniu.loadSwigView('swig_battle.html', {
 			teams: teams
 		});
+		
 
 		//load template to content div
 		$('.content').html(battle_teams);

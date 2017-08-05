@@ -68,23 +68,23 @@ exports.hello = function () {
  * 通过用户id获取用户的朋友列表
  */
 exports.findFriendListByUserId = function(userId, callback) {
-    connection.query('select friend_id from friend where id=?', [userId], function(err, friendIds) {
+    connection.query('select friend_id from friend where id=?', [userId], function(err, rows) {
         var friendList = {};
-        async.eachSeries(friendIds, function(friend, errCb){
-            exports.findUserById(friend.friend_id, function(data) {
+        async.eachSeries(rows, function(row, errCb){
+            exports.findUserById(row.friend_id, function(user) {
                 
-                var online = require('../proxy/socketproxy').isUserOnline(data.user_id);
+                var online = require('../proxy/socketproxy').isUserOnline(user.user_id);
                 var status = null;
                 
                 //获取用户状态
                 if (online) {
-                    status = socketProxy.mapUserIdToSocket(data.user_id).status;
+                    status = socketProxy.mapUserIdToSocket(user.user_id).status;
                 }
 
-                friendList[data.nick_name] = {
-                    name: data.nick_name,
-                    userId: data.user_id,
-                    avatarId: data.icon,
+                friendList[user.nick_name] = {
+                    name: user.nick_name,
+                    userId: user.user_id,
+                    avatarId: user.icon,
                     online: online,
                     status: status
                 };

@@ -10,10 +10,7 @@ $().ready(function () {
 			userName: $log_name,
 			password: $log_password
 		});
-
 		// get the log in result and render the page
-		
-		
 	});
 
 
