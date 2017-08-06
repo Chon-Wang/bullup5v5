@@ -19,9 +19,9 @@ var teams = [
 var rank_lists = {
 	wealth_ranked_list: [
 		{
-			name: 'hudson',
+			name: '123',
 			wealth: 3000,
-			cap: 3029
+			//cap: 3029
 		},
 		{
 			name: 'fefe',

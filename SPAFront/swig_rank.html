@@ -25,15 +25,15 @@
   </div>
 
   <div id="cap_list" class="col s12">
-	{% if ranked_list.cap_ranked_list %}
+	{% if strengthRankList %}
 	  <ul class="collection">
-		{% for player in ranked_list.cap_ranked_list %}
+		{% for player in strengthRankList %}
 		  <li class="collection-item avatar">
-			<img src="./media/imgs/timg-2.jpeg" alt="" class="circle">
-			<span class="title">{{ player.name }}</span>
-			<p>{{ player.wealth }} <br> {{ player.cap }}
+			<img src="./media/user_icon/1.png" alt="" class="circle">
+			<span class="title">{{ player.user_nickname }}</span>
+			<p>{{ player.user_strength }}
 			</p>
-			<div class="secondary-content rank-number right">1</div>
+			<div class="secondary-content rank-number right">{{player}}</div>
 		  </li>
 		{% endfor %}
 	  </ul>
