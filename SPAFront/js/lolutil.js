@@ -93,7 +93,7 @@ function getMatchDetailsByGameId(gameId, callback){
     });
 }
 
-function getBullupMatchDetailsBySummonerName(name,startTime,endTime,callback){
+exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,callback){
     async.waterfall([
         function(done){
             getSummonerByName(name, function(summoner){
