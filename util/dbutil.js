@@ -98,7 +98,7 @@ exports.findFriendListByUserId = function(userId, callback) {
 }
 
 
-function getStrengthScoreboard(userId, callback) {
+exports.getStrengthScoreboard = function(userId, callback) {
     async.waterfall([
         function(callback){
             connection.query('select user_id,bullup_strength_score from bullup_strength order by bullup_strength_score desc limit 100', function(err, row) {
@@ -108,7 +108,7 @@ function getStrengthScoreboard(userId, callback) {
                 callback(null, row);
             });
         },
-        function(usersStrengthInfo,callback){
+        function(usersStrengthInfo, callback){
             var usersInfo = {};
             async.eachSeries(usersStrengthInfo, function(strengthInfo, errCb){
                 connection.query('select user_nickname from user_base where user_id = ?', [strengthInfo.user_id], function(err, row) {
@@ -116,12 +116,26 @@ function getStrengthScoreboard(userId, callback) {
                         throw err;
                     }
                     (usersInfo[strengthInfo.user_id]) = {};
+                    (usersInfo[strengthInfo.user_id]).user_id = strengthInfo.user_id;
                     (usersInfo[strengthInfo.user_id]).user_nickname = row[0].user_nickname;
                     (usersInfo[strengthInfo.user_id]).user_strength = strengthInfo.bullup_strength_score;
                     errCb();
                 });
             },function(errCb){
                 callback(null, usersInfo);
+            });
+        }, function(usersStrengthInfo, callback){
+            var res = usersStrengthInfo;
+            async.eachSeries(usersStrengthInfo, function(strengthInfo, errCb){
+                connection.query('select icon_id from bullup_profile where user_id = ?', [strengthInfo.user_id], function(err, row) {
+                    if (err){ 
+                        throw err;
+                    }
+                    (res[strengthInfo.user_id]).icon_id = row[0].icon_id;
+                    errCb();
+                });
+            },function(errCb){
+                callback(null, res);
             });
         }
     ], function(err,result){
@@ -131,9 +145,6 @@ function getStrengthScoreboard(userId, callback) {
     });
 }
 
-getStrengthScoreboard(3,function(result){
-    
-});
 
 // exports.findFriendListByUserId(1, function (data) {
 //     logger.jsonLog(data);

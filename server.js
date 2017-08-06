@@ -23,6 +23,8 @@ io.on('connection', function (socket) {
 
     userProxy.handleInviteFriend(socket);
 
+    userProxy.handleRankRequest(socket);
+
     userProxy.handleUserInviteResult(io, socket);
 
     teamProxy.handleTeamEstablish(socket);

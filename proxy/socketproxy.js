@@ -40,6 +40,15 @@ exports.mapUserIdToSocket = function(userId) {
 }
 
 /**
+ * 通过socketid映射user
+ * @param socketId socketid
+ */
+exports.mapUserIdToSocket = function(socketId) {
+    return this.socketUserMap[socketId];
+}
+
+
+/**
  * 将用户的socket加入某个房间
  * @param userId 用户的id
  * @param roomName 要加入的房间
