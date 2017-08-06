@@ -1,8 +1,8 @@
 
 exports.server = {
-    host: '192.168.1.104',
+    host: '67.216.196.197',
     user: 'root',
-    password: '123456',
+    password: '1234',
     database: 'bullup'
 };
 

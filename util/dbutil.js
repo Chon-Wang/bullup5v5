@@ -107,22 +107,15 @@ function getStrengthScoreboard(userId, callback) {
                 }
                 callback(null, row);
             });
-        },
-        
-        function(ids, callback){
-            connection.query('select user_id from bullup_strength where user_id =?', row[i], function(err, row) {
-                if (err){ 
-                    throw err;
-                }
-                callback(null, row);
-            });
         }
     ], function(err,result){
-        
-        
+        console.log(result);
     });
-    
 }
+
+getStrengthScoreboard(1,function(result){
+    
+});
 
 // exports.findFriendListByUserId(1, function (data) {
 //     logger.jsonLog(data);
