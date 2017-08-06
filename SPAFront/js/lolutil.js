@@ -176,6 +176,7 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
             }
             count++;
         }
+        console.log(result);
         callback(result);
         /*
     //-------------------------------result-data-example----------------------------------/

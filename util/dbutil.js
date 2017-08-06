@@ -101,19 +101,37 @@ exports.findFriendListByUserId = function(userId, callback) {
 function getStrengthScoreboard(userId, callback) {
     async.waterfall([
         function(callback){
-            connection.query('select user_id from bullup_strength order by bullup_strength_score desc limit 100', function(err, row) {
+            connection.query('select user_id,bullup_strength_score from bullup_strength order by bullup_strength_score desc limit 100', function(err, row) {
                 if (err){ 
                     throw err;
                 }
                 callback(null, row);
             });
+        },
+        function(usersStrengthInfo,callback){
+            var usersInfo = {};
+            async.eachSeries(usersStrengthInfo, function(strengthInfo, errCb){
+                connection.query('select user_nickname from user_base where user_id = ?', [strengthInfo.user_id], function(err, row) {
+                    if (err){ 
+                        throw err;
+                    }
+                    (usersInfo[strengthInfo.user_id]) = {};
+                    (usersInfo[strengthInfo.user_id]).user_nickname = row[0].user_nickname;
+                    (usersInfo[strengthInfo.user_id]).user_strength = strengthInfo.bullup_strength_score;
+                    errCb();
+                });
+            },function(errCb){
+                callback(null, usersInfo);
+            });
         }
     ], function(err,result){
-        console.log(result);
+        if (err) console.log(err);
+        console.log(JSON.stringify(result));
+        callback(result)
     });
 }
 
-getStrengthScoreboard(1,function(result){
+getStrengthScoreboard(3,function(result){
     
 });
 
