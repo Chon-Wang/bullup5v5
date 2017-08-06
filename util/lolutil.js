@@ -145,33 +145,33 @@ function getBullupMatchDetailsBySummonerName(name,startTime,endTime,callback){
             }
 
             paticipantCount = 0;
-            for(var participant in match.participants){
-                if(participant.participantId == mainPlayerParticipantId){
-                    result.matches[count].championId = participant.championId;
-                    result.matches[count].championName = lolcfg.getChampionNameById(participant.championId);
-                    if(participant.stats.win){
+            for(var index in match.participants){
+                if(match.participants[index].participantId == mainPlayerParticipantId){
+                    result.matches[count].championId = match.participants[index].championId;
+                    result.matches[count].championName = lolcfg.getChampionNameById(match.participants[index].championId);
+                    if(match.participants[index].stats.win){
                         result.matches[count].win = '胜利';
                     }else{
                         result.matches[count].win = '失败';
                     }
-                    result.matches[count].kda = participant.stats.kills + '/' + participant.stats.deaths + '/' + participant.stats.assists;
+                    result.matches[count].kda = match.participants[index].stats.kills + '/' + match.participants[index].stats.deaths + '/' + match.participants[index].stats.assists;
 
                 }
                 result.matches[count].paticipants[paticipantCount] = {};
-                result.matches[count].paticipants[paticipantCount].name = match.participantIdentities[participant.participantId - 1].player.name;
-                result.matches[count].paticipants[paticipantCount].kda = participant.stats.kills + '/' + participant.stats.deaths + '/' + participant.stats.assists;
-                result.matches[count].paticipants[paticipantCount].kdaScore = (participant.stats.kills + participant.stats.assists) / participant.stats.deaths;
-                result.matches[count].paticipants[paticipantCount].damage = participant.stats.totalDamageDealtToChampions;
-                result.matches[count].paticipants[paticipantCount].damageTaken = participant.stats.totalDamageTaken;
-                result.matches[count].paticipants[paticipantCount].goldEarned = participant.stats.goldEarned;
+                result.matches[count].paticipants[paticipantCount].name = match.participantIdentities[match.participants[index].participantId - 1].player.summonerName;
+                result.matches[count].paticipants[paticipantCount].kda = match.participants[index].stats.kills + '/' + match.participants[index].stats.deaths + '/' + match.participants[index].stats.assists;
+                result.matches[count].paticipants[paticipantCount].kdaScore = (match.participants[index].stats.kills + match.participants[index].stats.assists) / match.participants[index].stats.deaths;
+                result.matches[count].paticipants[paticipantCount].damage = match.participants[index].stats.totalDamageDealtToChampions;
+                result.matches[count].paticipants[paticipantCount].damageTaken = match.participants[index].stats.totalDamageTaken;
+                result.matches[count].paticipants[paticipantCount].goldEarned = match.participants[index].stats.goldEarned;
                 result.matches[count].paticipants[paticipantCount].items = {};
-                result.matches[count].paticipants[paticipantCount].items['item0'] = participant.stats.item0;
-                result.matches[count].paticipants[paticipantCount].items['item1'] = participant.stats.item1;
-                result.matches[count].paticipants[paticipantCount].items['item2'] = participant.stats.item2;
-                result.matches[count].paticipants[paticipantCount].items['item3'] = participant.stats.item3;
-                result.matches[count].paticipants[paticipantCount].items['item4'] = participant.stats.item4;
-                result.matches[count].paticipants[paticipantCount].items['item5'] = participant.stats.item5;
-                result.matches[count].paticipants[paticipantCount].items['item6'] = participant.stats.item6;
+                result.matches[count].paticipants[paticipantCount].items['item0'] = match.participants[index].stats.item0;
+                result.matches[count].paticipants[paticipantCount].items['item1'] = match.participants[index].stats.item1;
+                result.matches[count].paticipants[paticipantCount].items['item2'] = match.participants[index].stats.item2;
+                result.matches[count].paticipants[paticipantCount].items['item3'] = match.participants[index].stats.item3;
+                result.matches[count].paticipants[paticipantCount].items['item4'] = match.participants[index].stats.item4;
+                result.matches[count].paticipants[paticipantCount].items['item5'] = match.participants[index].stats.item5;
+                result.matches[count].paticipants[paticipantCount].items['item6'] = match.participants[index].stats.item6;
                 paticipantCount++;
             }
             count++;
