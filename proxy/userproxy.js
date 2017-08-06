@@ -170,16 +170,18 @@ exports.changeUserStatus = function (userId, status) {
 exports.handleRankRequest = function (socket){
     socket.on('rankRequest', function(request){
         var userId = socketProxy.mapUserIdToSocket(socket.id);
-        dbUtil.getStrengthScoreboard(userId,function(strengthRankList){
-            socket.emit('feedback', {
-                errorCode: 0,
-                text: '获取排名成功',
-                type: 'STRENGTHRANKRESULT',
-                extension: {
-                    "strengthRankList" : strengthRankList
-                }
+        dbUtil.getStrengthScoreRank(userId,function(strengthRankList){
+            dbUtil.getWealthRank(userId,function(wealthRankList){
+                 socket.emit('feedback', {
+                    errorCode: 0,
+                    text: '获取排名成功',
+                    type: 'STRENGTHRANKRESULT',
+                    extension: {
+                        "strengthRankList": strengthRankList,
+                        "wealthRankList": wealthRankList
+                    }
+                });
             });
-
         });
     });
 }

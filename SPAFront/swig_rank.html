@@ -6,15 +6,15 @@
     </ul>
   </div>
   <div id="wealth_list" class="col s12">
-    {% if ranked_list.wealth_ranked_list %}
+    {% if wealthRankList %}
 	  <ul class="collection">
-		{% for player in ranked_list.wealth_ranked_list %}
+		{% for player in wealthRankList %}
 		  <li class="collection-item avatar">
-			<img src="./media/imgs/timg-2.jpeg" alt="" class="circle">
-			<span class="title">{{ player.name }}</span>
-			<p>{{ player.wealth }} <br> {{ player.cap }}
+			<img src="./media/user_icon/{{ player.icon_id }}.png" alt="" class="circle">
+			<span class="title">{{ player.user_nickname }}</span>
+			<p>{{ player.user_wealth }}
 			</p>
-			<div class="secondary-content rank-number right">1</div>
+			<div class="secondary-content rank-number right">{{loop.index}}</div>
 		  </li>
 		{% endfor %}
 	  </ul>
@@ -29,11 +29,11 @@
 	  <ul class="collection">
 		{% for player in strengthRankList %}
 		  <li class="collection-item avatar">
-			<img src="./media/user_icon/1.png" alt="" class="circle">
+			<img src="./media/user_icon/{{ player.icon_id }}.png" alt="" class="circle">
 			<span class="title">{{ player.user_nickname }}</span>
 			<p>{{ player.user_strength }}
 			</p>
-			<div class="secondary-content rank-number right">{{player}}</div>
+			<div class="secondary-content rank-number right">{{loop.index}}</div>
 		  </li>
 		{% endfor %}
 	  </ul>
