@@ -1,7 +1,6 @@
 var io = require('socket.io-client');
-console.log(io);
 var socket = io.connect('http://127.0.0.1:3000');
-console.log(socket);
+
 
 var userInfo = null;
 var teamInfo = null;
@@ -52,31 +51,7 @@ socket.on('feedback', function (feedback) {
 
         case 'STRENGTHRANKRESULT':
             var rankList = handleFeedback(feedback);
-            var strengthRankList = rankList.strengthRankList;
-            var wealthRankList = rankList.wealthRankList;
-             console.log("strengthRankList : " + JSON.stringify(strengthRankList));
-            var strengthArray = new Array();
-            for(obj in strengthRankList){
-                strengthArray.push(strengthRankList[obj]);
-            }
-            strengthArray.sort(function(x,y){
-                return x.user_strength < y.user_strength ? 1 : -1;
-            });
-            console.log("st : " + strengthArray);
-            var wealthArray = new Array();
-            for(obj in wealthRankList){
-                wealthArray.push(wealthRankList[obj]);
-            }
-            wealthArray.sort(function(x,y){
-                return x.user_wealth < y.user_wealth ? 1 : -1;
-            });
-            
-            var rank_list = douniu.loadSwigView('swig_rank.html', {
-                strengthRankList: strengthArray,
-                wealthRankList: wealthArray
-            });
-            $('.content').html(rank_list);
-            $('ul.tabs').tabs();
+            handleRankList(rankList);
         }
 });
 
@@ -146,3 +121,29 @@ function handleFeedback(feedback) {
     }
 }
 
+function handleRankList(rankList){
+    var strengthRankList = rankList.strengthRankList;
+    var wealthRankList = rankList.wealthRankList;
+    var strengthArray = new Array();
+    for(obj in strengthRankList){
+        strengthArray.push(strengthRankList[obj]);
+    }
+    strengthArray.sort(function(x,y){
+        return x.user_strength < y.user_strength ? 1 : -1;
+    });
+    var wealthArray = new Array();
+    for(obj in wealthRankList){
+        wealthArray.push(wealthRankList[obj]);
+    }
+    wealthArray.sort(function(x,y){
+        return x.user_wealth < y.user_wealth ? 1 : -1;
+    });
+    
+    var rank_list = douniu.loadSwigView('swig_rank.html', {
+        strengthRankList: strengthArray,
+        wealthRankList: wealthArray
+    });
+    $('.content').html(rank_list);
+    $('ul.tabs').tabs();
+
+}
