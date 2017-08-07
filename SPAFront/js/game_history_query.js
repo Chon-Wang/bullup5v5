@@ -1,16 +1,29 @@
-var lolapi = require('lolutil.js');
+var lolapi = require('./js/lolutil.js');
+
 
 $().ready(function () {
     $('#query_btn').on('click', function (e) {
-		e.preventDefault();
-        var summonerName = $('icon_prefix').value;
-        lolapi.getBullupMatchDetailsBySummonerName(summonerName, function(matchDetails){
-            var template = douniu.loadSwigView("swig_matches.html",matchDetails);
-            $('#user-matches').html(template);
-            $('#main-view').html($('#user-matches'));
-            //douniu.loadSwigView("swig_match_detail.html",matchDetails);
+        var summonerName = $('#query_summoner_name').val();
+        e.preventDefault();
+        lolapi.getBullupMatchDetailsBySummonerName(summonerName, '2017/8/1', '2017/8/4', function(matchDetails){
+            var frame = douniu.loadSwigView("swig_queryres.html", {});
+            var leftTemplate = douniu.loadSwigView("swig_matches.html",matchDetails);
+            globalMatchDetails = matchDetails;
+            $('.content').html(frame);
+            $('#user-matches').html(leftTemplate);
+            $('.match-item').on('click', function(e){
+                alert('123');
+                var htmlId = $(this).attr('id');
+                var index = String(htmlId).substring(0, 1);
+                var rightTemplate = douniu.loadSwigView("swig_match_detail.html", {
+                    match: matchDetails.matches[index - 1],
+                });
+                $('#match_wrapper').html(rightTemplate); 
+            });
         });
     });
+
+    
 });
 
 // {

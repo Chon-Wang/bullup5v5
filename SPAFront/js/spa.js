@@ -17,7 +17,7 @@ douniu.loadSwigView = function (pageRef, data) {
 };
 
 
-$().ready(function () {
+$(document).ready(function () {
 	$('.nav-link').on('click', function (e) {
 		// prevent default event
 		e.preventDefault();

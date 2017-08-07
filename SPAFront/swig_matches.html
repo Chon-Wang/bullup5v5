@@ -1,15 +1,23 @@
 {% if matches %}
-
-  {% for match in matches  %}
-	<li class="collection-item avatar match-item">
-	  <img src="./media/lol_champions/Draven.png" alt="" class="circle">
-	  <span class="title champion-name">{{ match.name }}</span>
-	  <span class="right match-win-title">{{ match.win }}</span>
-	  <p>{{ match.gameMode }}</p>
-	  <span class="center-align">{{ match.time }}</span>
-	  <span class="right">{{ match.kda }}</span>
+	{% for match in matches  %}
+	<li class="collection-item avatar match-item" id="{{ loop.index }}_match">
+		<img src="./media/lol_champions/{{ match.championEnglishName }}.png" alt="" class="circle">
+		<span class="title champion-name">{{ match.name }}</span>
+		{% if match.win == '胜利' %}
+		<span class="right match-win-title">{{ match.win }}</span>
+		{% else %}
+		<span class="right match-lose-title">{{ match.win }}</span>
+		{% endif %}
+			{% if match.gameType == 'MATCHED_GAME' %}
+				<p>经典匹配</p>
+			{% else %}
+				<p>未知模式</p>
+			{% endif %}
+		
+		<span class="center-align">{{ match.time }}</span>
+		<span class="right">{{ match.kda }}</span>
 	</li>
+	
   {% endfor %}
 
 {% endif %}
-

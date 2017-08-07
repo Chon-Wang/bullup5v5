@@ -968,10 +968,15 @@ var champions = {
     }
 }
 
-exports.getChampionNameById = function(championId){
+exports.getChampionChineseNameById = function(championId){
     var key =  champions['keys'][championId];
     return champions['data'][key]['name'];
 }
+
+exports.getChampionEnglishNameById = function(championId){
+    return (champions.keys)[championId];
+}
+
 
 //console.log(exports.getChampionNameById(133));
 

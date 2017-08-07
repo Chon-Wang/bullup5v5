@@ -1,8 +1,8 @@
 var request = require('request');
 var async = require('async');
-var lolcfg = require('lolcfg.js');
+var lolcfg = require('./lolcfg.js');
 
-var apiKey =  "RGAPI-af1fc9c7-e596-4e26-af02-b9a6c1ad49f6";
+var apiKey =  "RGAPI-b102fb18-6642-4225-8fad-0a8d9be5a01f";
 
 function getItemsStaticData(callback){
     var options = {
@@ -122,16 +122,19 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
         var count = 0;
         var result = {};
         result.matches =[];
-
+       
         for(var gameId in matchDetails){
+            if(gameId == 'summoner'){
+                continue;
+            }
             var match = matchDetails[gameId];
             var mainPlayerParticipantId;
-
             result.matches[count] = {};
             result.matches[count].name = matchDetails.summoner.name;
             result.matches[count].gameMode = match.gameMode;
             result.matches[count].gameType = match.gameType;
-            result.matches[count].time = new Date(match.gameCreation);
+            var date = new Date(match.gameCreation);
+            result.matches[count].time = date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay();
             result.matches[count].paticipants = [];
 
             var paticipantCount = 0;
@@ -148,7 +151,8 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
             for(var index in match.participants){
                 if(match.participants[index].participantId == mainPlayerParticipantId){
                     result.matches[count].championId = match.participants[index].championId;
-                    result.matches[count].championName = lolcfg.getChampionNameById(match.participants[index].championId);
+                    result.matches[count].championChineseName = lolcfg.getChampionChineseNameById(match.participants[index].championId);
+                    result.matches[count].championEnglishName = lolcfg.getChampionEnglishNameById(match.participants[index].championId);
                     if(match.participants[index].stats.win){
                         result.matches[count].win = '胜利';
                     }else{
@@ -160,7 +164,7 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
                 result.matches[count].paticipants[paticipantCount] = {};
                 result.matches[count].paticipants[paticipantCount].name = match.participantIdentities[match.participants[index].participantId - 1].player.summonerName;
                 result.matches[count].paticipants[paticipantCount].kda = match.participants[index].stats.kills + '/' + match.participants[index].stats.deaths + '/' + match.participants[index].stats.assists;
-                result.matches[count].paticipants[paticipantCount].kdaScore = (match.participants[index].stats.kills + match.participants[index].stats.assists) / match.participants[index].stats.deaths;
+                result.matches[count].paticipants[paticipantCount].kdaScore = ((match.participants[index].stats.kills + match.participants[index].stats.assists) / (match.participants[index].stats.deaths + 1.2)).toFixed(1);
                 result.matches[count].paticipants[paticipantCount].damage = match.participants[index].stats.totalDamageDealtToChampions;
                 result.matches[count].paticipants[paticipantCount].damageTaken = match.participants[index].stats.totalDamageTaken;
                 result.matches[count].paticipants[paticipantCount].goldEarned = match.participants[index].stats.goldEarned;
@@ -185,7 +189,8 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
                 {
                     "name" : "Who is 55Kai",
                     "championId" : "1",
-                    "championName" : "黑暗之女",
+                    "championChineseName" : "黑暗之女",
+                    "championEnglishName" : "Annie",
                     "gameMode" : "CLASSIC",
                     "gameType" : "MATCHED_GAME",
                     "time" : "2017-05-09 15:34:03",
@@ -251,7 +256,7 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
 //     console.log(JSON.stringify(gameInfo));
 // });
 
-// getBullupMatchDetailsBySummonerName('Who is 55Kai', '2017/8/1', '2017/8/4', function(info){
+exports.getBullupMatchDetailsBySummonerName('Who is 55Kai', '2017/8/1', '2017/8/4', function(info){
 
 
-// });
+});
