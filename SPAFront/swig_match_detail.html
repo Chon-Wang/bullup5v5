@@ -1,60 +1,56 @@
 {% if match %}
   {% if match.paticipants %}
 	<div class="collection team-wrapper">
-	{% for player in match.paticipants %}
-	  <!-- Player Item -->
-	  <div class="collection-item avatar player-item">
-		<div class="col">
-		  <img src="./media/lol_champions/Akali.png" alt="" class="circle">
-		</div>
-		
-		<div class="col">
-		  <span class="title summoner-name">{{ player.name }}</span>
-		</div>
-		
-		<div class="col s1">
-		  <span class="player-detail-values">
-			{{ player.mode }}
-		  </span>
-		</div>
-		
-		<div class="col s1">
-		  <div class="valign-wrapper player-kdanumber">
-			{{ player.kda }}
+	  {% for player in match.paticipants %}
+		<!-- Player Item -->
+		<div class="collection-item avatar player-item">
+		  <div class="col">
+			<img src="./media/lol_champions/Akali.png" alt="" class="circle">
 		  </div>
-		</div>
-
-		<div class="col s1">
-		  <span class="player-detail-value">{{ player.damage }}</span>
-		</div>
-
-		<div class="col s1">
-		  <span class="player-detail-value">{{ player.damageTaken }}</span>
-		</div>
-
-
-		<div class="col s1">
-		  <span class="player-detail-value">{{ player.kdaScore }}</span>
-		</div>
-		<div class="col s1">
-		  <span class="player-detail-value">{{ player.goldEarned }}</span>
-		</div>
-		
-		
-		<!-- items -->
-		<div class="lol-items right">
+		  
+		  <div class="col">
+			<span class="title summoner-name">{{ player.name }}</span>
+		  </div>
+		  
+		  
+		  <!-- items -->
+		  <div class="lol-items right">
 			{% for item in player.items %}
-				{% if item == 0 %}
-					<img class="lol-item" src="./media/item_imgs/ttt.png" alt="">
-				{% else %}
-					<img class="lol-item" src="./media/item_imgs/{{ item }}.png" alt="">
-				{% endif %}
-		  {% endfor %}
-		</div>
+			  {% if item == 0 %}
+				<img class="lol-item" src="./media/item_imgs/ttt.png" alt="">
+			  {% else %}
+				<img class="lol-item" src="./media/item_imgs/{{ item }}.png" alt="">
+			  {% endif %}
+			{% endfor %}
+		  </div>
 
-	  </div>
-	  <!-- Player Item ends here -->
-	{% endfor %}
+		  <div class="right">
+			<div class="col">
+			  <div class="valign-wrapper player-kdanumber">
+				{{ player.kda }}
+			  </div>
+			</div>
+
+			<div class="col">
+			  <span class="player-detail-value">{{ player.damage }}</span>
+			</div>
+
+			<div class="col">
+			  <span class="player-detail-value">{{ player.damageTaken }}</span>
+			</div>
+
+
+			<div class="col">
+			  <span class="player-detail-value">{{ player.kdaScore }}</span>
+			</div>
+			<div class="col">
+			  <span class="player-detail-value">{{ player.goldEarned }}</span>
+			</div>
+		  </div>
+
+		</div>
+		<!-- Player Item ends here -->
+	  {% endfor %}
 	</div>
   {% endif %}
 {% endif %}

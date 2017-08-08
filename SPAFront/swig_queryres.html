@@ -8,6 +8,20 @@
   </head>
   <body>
 	<div class="row">
+	  <div class="input-field col s3 datepicker-holder">
+		<input type="text" class="datepicker">
+		<label>From</label>
+      </div>
+	  <div class="input-field col s3 datepicker-holder">
+		<input type="text" class="datepicker">
+		<label>To</label>
+      </div>
+
+	  <div class="search_btn">
+		<a class="waves-effect waves-light btn">查询</a>
+	  </div>
+	</div>
+	<div class="row">
 	  <!-- Left Panel for user matches list -->
 	  <div class="col s12 m3">
 		<ul class="collection" id="user-matches">
@@ -25,17 +39,18 @@
 		  <div class="col s1">
 			召唤师
 		  </div>
+
 		  
-		  <div class="col s1">
-			模式
+		  <div class="col s1 offset-s3">
+			<span>
+			  战绩
+			</span>
 		  </div>
 		  
 		  <div class="col s1">
-			战绩
-		  </div>
-		  
-		  <div class="col s1">
-			造成伤害
+			<span>	
+			  造成伤害
+			</span>
 		  </div>
 		  
 		  <div class="col s1">
@@ -49,7 +64,12 @@
 		  <div class="col s1">
 			经济
 		  </div>
+
+		  <div class="col s1">
+			出装
+		  </div>
 		</div>
+		
 		<div class="match-wrapper" id="match_wrapper">
 		  <!-- team wrapper -->
 
@@ -57,6 +77,10 @@
 		<!-- Match wrapper ends here -->
 	  </div>
 	</div>
-	
+
+
+	<div class="row pagination-holder">
+	  
+	</div>
   </body>
 </html>
