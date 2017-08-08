@@ -12,7 +12,6 @@ $().ready(function () {
             $('.content').html(frame);
             $('#user-matches').html(leftTemplate);
             $('.match-item').on('click', function(e){
-                alert('123');
                 var htmlId = $(this).attr('id');
                 var index = String(htmlId).substring(0, 1);
                 var rightTemplate = douniu.loadSwigView("swig_match_detail.html", {

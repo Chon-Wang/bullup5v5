@@ -192,11 +192,6 @@ exports.getWealthRank = function(userId, callback) {
     });
 }
 
-
-exports.getWealthRank(0,function(result){
-    console.log(JSON.stringify(result));
-});
-
 // exports.findFriendListByUserId(1, function (data) {
 //     logger.jsonLog(data);
 // });
