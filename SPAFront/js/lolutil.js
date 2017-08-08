@@ -2,7 +2,7 @@ var request = require('request');
 var async = require('async');
 var lolcfg = require('./lolcfg.js');
 
-var apiKey =  "RGAPI-b102fb18-6642-4225-8fad-0a8d9be5a01f";
+var apiKey =  "RGAPI-b9c26d5f-982a-4297-9156-3e403b530998";
 
 function getItemsStaticData(callback){
     var options = {
@@ -257,12 +257,4 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
 //     console.log(JSON.stringify(gameInfo));
 // });
 
-// exports.getBullupMatchDetailsBySummonerName('Who is 55Kai', '2017/8/1', '2017/8/4', function(info){
-<<<<<<< HEAD
 
-
-=======
-    
-
->>>>>>> 8181d20a27d0da9f4080be7a6d5508a8def9a1db
-// });

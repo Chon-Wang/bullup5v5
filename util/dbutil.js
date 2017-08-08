@@ -18,8 +18,8 @@ connection.connect(function(err) {
  * 通过用户名获取用户
  * @param nickname 用户名
  */
-exports.findUserByNick = function(nickname, callback) {
-    connection.query('select * from `user` where nick_name=?', [nickname], function (err, results){
+exports.findUserByAccount = function(account, callback) {
+    connection.query('select * from `user_base` where user_account=?', [account], function (err, results){
         if (err) throw err;
         callback(results[0]);
     });
@@ -30,10 +30,10 @@ exports.findUserByNick = function(nickname, callback) {
  * @param userId
  */
 exports.findUserById = function(userId, callback) {
-    connection.query('select * from `user` where user_id=?', [userId], function (err, results, fields) {
+    connection.query('select * from `user_base` where user_id=?', [userId], function (err, results, fields) {
         if (err) throw err;
         callback(results[0]);
-    })
+    });
 }
 
 /**
@@ -47,15 +47,30 @@ exports.addUser = function(userInfo, callback) {
                 connection.rollback();
             }
             callback(rows.insertId);
-        });
+    });
+}
+
+exports.findUserIconById = function(userId, callback){
+    connection.query('select icon_id from `bullup_profile` where user_id=?', [userId], function (err, results, fields) {
+        if (err) throw err;
+        callback(results[0]);
+    });
+
 }
 
 /**
  * 通过用户信息查找角色信息
  * @param userId 用户的id5
  */
-exports.findRoleInfoByUserId = function(userId, callback) {
-    connection.query('select * from role_info where user_id=?',  [userId], function(err, row) {
+exports.findStrengthInfoByUserId = function(userId, callback) {
+    connection.query('select * from bullup_strength where user_id=?',  [userId], function(err, row) {
+        if (err) throw err;
+        callback(row[0]);
+    });
+}
+
+exports.findUserWealthByUserId = function(userId, callback) {
+    connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',  [userId], function(err, row) {
         if (err) throw err;
         callback(row[0]);
     });
