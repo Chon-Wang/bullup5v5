@@ -19,7 +19,7 @@ $().ready(function(){
 
 	$("#link_modal").modal();
 
-	$(".button-collapse").sideNav();
+	$(".user-collapse").sideNav();
 	
     $('ul.tabs').tabs();
 
