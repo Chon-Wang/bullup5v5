@@ -33,6 +33,5 @@ $().ready(function () {
 		} else {
 			alert('两次密码输入不一致!');
 		}
-
 	});
 });
