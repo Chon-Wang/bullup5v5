@@ -79,3 +79,8 @@
 	height: 40px;
 	border-radius:50%;
 }
+
+#user-matches {
+	height: 100%;
+	overflow-y: scroll;
+}
