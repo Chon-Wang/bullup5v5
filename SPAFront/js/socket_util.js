@@ -19,8 +19,8 @@ socket.on('success', function (data) {
 socket.on('feedback', function (feedback) {
     switch (feedback.type) {
         case 'LOGINRESULT':
-           handleLoginResult(feedback);
-
+            handleLoginResult(feedback);
+            break;
         case 'REGISTERRESULT':
             userInfo = handleFeedback(feedback);
             console.log(JSON.stringify(userInfo, null, '\t'));
@@ -95,17 +95,26 @@ socket.on('lolRoomEstablished', function () {
  * @param {*} feedback 
  */
 function handleLoginResult(feedback) {
-    
     if (feedback.errorCode == 0) {
-        // 登陆成功
+        // 登录成功
         alert(feedback.text);
         userInfo = feedback.extension;
         //跳转
         var temp = douniu.loadSwigView("./swig_menu.html", { logged_user: userInfo });
         // 关闭
         $("#log_modal").css("display", "none");
-
         $('#dropdown_menu').html(temp);
+        $('#log_modal').modal('close');
+        $('.modal-overlay').remove();
+        $("#log_out_button").on('click', function(e){
+		    alert('登出成功!');
+            e.preventDefault();
+            userInfo = null;
+            var temp = douniu.loadSwigView("./swig_menu.html", null);
+            // 打开
+            $("#log_modal").css("display", "block");
+            $('#dropdown_menu').html(temp);
+        });
     } else if (feedback.errorCode == 1) {
         // 登录失败
         alert(feedback.text);
