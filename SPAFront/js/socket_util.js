@@ -114,7 +114,9 @@ function handleLoginResult(feedback) {
 
 function handleFeedback(feedback) {
     if (feedback.errorCode == 0) {
-        if (feedback.text) alert(feedback.text);
+        if (feedback.text) 
+            //alert(feedback.text);
+            console.log(feedback.text);
         return feedback.extension;
     } else {
         alert(feedback.text);

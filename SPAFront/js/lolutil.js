@@ -168,6 +168,7 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
                 result.matches[count].paticipants[paticipantCount].damage = match.participants[index].stats.totalDamageDealtToChampions;
                 result.matches[count].paticipants[paticipantCount].damageTaken = match.participants[index].stats.totalDamageTaken;
                 result.matches[count].paticipants[paticipantCount].goldEarned = match.participants[index].stats.goldEarned;
+                result.matches[count].paticipants[paticipantCount].championEnglishName = lolcfg.getChampionEnglishNameById(match.participants[index].championId);
                 result.matches[count].paticipants[paticipantCount].items = {};
                 result.matches[count].paticipants[paticipantCount].items['item0'] = match.participants[index].stats.item0;
                 result.matches[count].paticipants[paticipantCount].items['item1'] = match.participants[index].stats.item1;
@@ -180,7 +181,7 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
             }
             count++;
         }
-        console.log(result);
+        //console.log(result);
         callback(result);
         /*
     //-------------------------------result-data-example----------------------------------/
@@ -257,6 +258,11 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
 // });
 
 // exports.getBullupMatchDetailsBySummonerName('Who is 55Kai', '2017/8/1', '2017/8/4', function(info){
+<<<<<<< HEAD
 
 
+=======
+    
+
+>>>>>>> 8181d20a27d0da9f4080be7a6d5508a8def9a1db
 // });
