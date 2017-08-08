@@ -257,7 +257,4 @@ exports.getBullupMatchDetailsBySummonerName = function(name,startTime,endTime,ca
 //     console.log(JSON.stringify(gameInfo));
 // });
 
-// exports.getBullupMatchDetailsBySummonerName('Who is 55Kai', '2017/8/1', '2017/8/4', function(info){
-    
 
-// });
