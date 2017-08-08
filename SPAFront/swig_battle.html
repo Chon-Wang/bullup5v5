@@ -13,7 +13,12 @@
   </head>
 
   <body>
+	<div class="row">
+	  <!-- button will fade away -->
+	  <a class="waves-effect waves-light btn right" href="#create_room_modal">创建房间</a>
 
+	  <a class="nav-link waves-effect waves-light btn right" id="my_room" href="./spa_myroom.html">我的房间</a>
+	</div>
 
     {% if teams %}
       <!-- cycle through two teams, put  -->
@@ -61,7 +66,7 @@
 		  </div>
 		{% endif %}
 		{% if loop.index % 3 != 0 and loop.revindex == 1 %}
-		  </div>
+	</div>
 		{% endif %}
 	  {% endfor %}
 	{% endif %}
@@ -73,7 +78,7 @@
         <li class="disabled"><a href="#!"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
         <li class="active"><a href="#!">1</a></li>
         <li class="waves-effect"><a href="#!">2</a></li>
-        <li class="waves-effect"><a href="#!">3</a></li>
+        <li class="waves-effect"><a href="#!">2</a></li>
         <li class="waves-effect"><a href="#!">4</a></li>
         <li class="waves-effect"><a href="#!">5</a></li>
         <li class="waves-effect"><a href="#!"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
@@ -173,7 +178,6 @@
     <script src="./js/materialize-pagination.min.js"></script>
 	<script src="./js/global.js"></script>
 	<script src="./js/close_modal.js"></script>
-
 	
 
 
