@@ -214,3 +214,48 @@ exports.handleRankRequest = function (socket){
         });
     });
 }
+
+
+exports.handleLOLBind = function(socket){
+    socket.on('lolBindRequest',function(request){
+        var userId = request.userId;
+        var lolAccount = request.lolAccount;
+        var lolNickname = request.lolNickname;
+        var lolArea = request.lolArea;
+        async.waterfall([
+            function(callback){
+                dbUtil.validateBindInfo(userId, lolAccount, function(bindValidity){
+                    //如果该用户在该大区已绑定了账号  或者该大区的账号已被绑定  则拒绝绑定
+                    var feedback = {};
+                    if(bindValidity.value != 'true'){
+                        feedback.text = '绑定失败';
+                        feedback.type = 'LOLBINDRESULT';
+                        switch(bindValidity.code){
+                            case 1:{
+                                feedback.errorCode = 1;
+                                feedback.extension = {};
+                                feedback.extensio.tips = '该英雄联盟账号已被绑定';
+                                break;
+                            }
+                            case 2:{
+                                feedback.errorCode = 2;
+                                feedback.extension = {};
+                                feedback.extensio.tips = '您已经绑定了英雄联盟账号';
+                                break;
+                            }
+                        }
+                        socket.emit('feedback', feedback);
+                        callback('error', null);
+                    }else{
+                        callback(null, null);
+                    }
+                });   
+            },
+            function(blankData, callback){
+                
+            }
+        ],function(err,result){
+
+        });
+    });
+}
