@@ -217,24 +217,48 @@ exports.validateBindInfo = function(userId, lolAccount, lolArea, callback){
                     bindValidity.value = 'true';
                     callback('finished', bindValidity);
                 }else{
-                    callback(null, row);
+                    var tempInfo = {};
+                    tempInfo.userId = userId;
+                    tempInfo.lolAccount = lolAccount;
+                    tempInfo.lolArea = lolArea;
+                    tempInfo.lolInfoIds = row;
+                    callback(null, tempInfo);
                 }
             });
         },
-        function(lolInfoIds, callback){
+        function(tempInfo, callback){
+            var lolInfoIds = tempInfo.lolInfoIds;
+            async.eachSeries(lolInfoIds, function(lolInfoId, errCb){
+                connection.query('select * from lol_info where lol_info_id = ?', [lolInfoId.lol_info_id], function(err, row) {
+                    if (err){ 
+                        throw err;
+                    }
+                    console.log(JSON.stringify(row));
+                    errCb();
+                });
+            },function(errCb){
+                //
+            });
+
             // connection.query('select * from lol_info where lol_info_id = ?', [row[0].lol_info_id], function(err, row){
-                
+            callback(null, tempInfo);
             // });
         }
     ],
     function(err,result){
-
+        callback(result);
     });    
 }
 
 exports.insertBindInfo = function(userId, lolAccount, lolNickname, lolArea, callback){
-
+    connection.
 }
+
+
+exports.validateBindInfo(3, 'GuoJingming123', 'NU', function(result){
+    //console.log(JSON.stringify(result));
+
+});
 
 
 //exports.validateBindInfo
