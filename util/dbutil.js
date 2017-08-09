@@ -159,8 +159,6 @@ exports.getStrengthScoreRank = function(userId, callback) {
     });
 }
 
-
-
 exports.getWealthRank = function(userId, callback) {
     async.waterfall([
         function(callback){
@@ -207,6 +205,36 @@ exports.getWealthRank = function(userId, callback) {
     });
 }
 
-// exports.findFriendListByUserId(1, function (data) {
-//     logger.jsonLog(data);
-// });
+exports.validateBindInfo = function(userId, lolAccount, lolArea, callback){
+    async.waterfall([
+        function(callback){
+            connection.query('select lol_info_id from lol_bind where user_id = ?', [userId], function(err, row) {
+                if (err){ 
+                    throw err;
+                }
+                var bindValidity = {};
+                if(row == undefined || row == null){
+                    bindValidity.value = 'true';
+                    callback('finished', bindValidity);
+                }else{
+                    callback(null, row);
+                }
+            });
+        },
+        function(lolInfoIds, callback){
+            // connection.query('select * from lol_info where lol_info_id = ?', [row[0].lol_info_id], function(err, row){
+                
+            // });
+        }
+    ],
+    function(err,result){
+
+    });    
+}
+
+exports.insertBindInfo = function(userId, lolAccount, lolNickname, lolArea, callback){
+
+}
+
+
+//exports.validateBindInfo
