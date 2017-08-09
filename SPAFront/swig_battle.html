@@ -1,185 +1,159 @@
-<!DOCTYPE html>
-<html lang="en">
 
-  <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <link href="./font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="./css/materialize.min.css" rel="stylesheet">
+<div class="row">
+  <!-- button will fade away -->
+  <a class="waves-effect waves-light btn right" href="#create_room_modal">创建房间</a>
 
-    <link href="./css/battle.css" rel="stylesheet">
+  <a class="nav-link waves-effect waves-light btn right" id="my_room" href="./spa_myroom.html">我的房间</a>
+</div>
 
-  </head>
-
-  <body>
-	<div class="row">
-	  <!-- button will fade away -->
-	  <a class="waves-effect waves-light btn right" href="#create_room_modal">创建房间</a>
-
-	  <a class="nav-link waves-effect waves-light btn right" id="my_room" href="./spa_myroom.html">我的房间</a>
-	</div>
-
-    {% if teams %}
-      <!-- cycle through two teams, put  -->
-      {% for team in teams %}
-		<!-- For the first team -->
-		{% if loop.index % 3 == 1 %}
-		  <div class="row">
-        {% endif %}
-        <div class="col s12 m6 l4">
-          <div class="card battle-card grey darken-2">
-            <div class="card-content white-text">
-              <div class="row">
-                <!-- teaser -->
-                <div class="col s2">
-                  <img class="battle-teaser" src="./media/imgs/timg-2.jpeg">
-                </div>
-                <div class="col s10">
-                  <div class="row">
-                    <span class="card-title right">
-					  {{team.teamName}}
-					</span>
-                    <div class="chip right ">
-                      {{ team.type }}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- first row -->
+{% if teams %}
+  <!-- cycle through two teams, put  -->
+  {% for team in teams %}
+	<!-- For the first team -->
+	{% if loop.index % 3 == 1 %}
+	  <div class="row">
+    {% endif %}
+    <div class="col s12 m6 l4">
+      <div class="card battle-card grey darken-2">
+        <div class="card-content white-text">
+          <div class="row">
+            <!-- teaser -->
+            <div class="col s2">
+              <img class="battle-teaser" src="./media/imgs/timg-2.jpeg">
             </div>
-
-            <div class="card-action">
-              <a href="#team-detail-modal">详情</a>
-              <a href="#">收藏</a>
-
-              <div class="chip right">
-                <i class="fa fa-gamepad" aria-hidden="true"></i> {{ team.rule }}
-              </div>
-              <div class="chip right">
-                <i class="fa fa-money" aria-hidden="true"></i> {{ team.bet }}
+            <div class="col s10">
+              <div class="row">
+                <span class="card-title right">
+				  {{team.teamName}}
+				</span>
+                <div class="chip right ">
+                  {{ team.type }}
+                </div>
               </div>
             </div>
           </div>
+          <!-- first row -->
         </div>
-        {% if loop.index % 3 == 0 %}
-		  </div>
-		{% endif %}
-		{% if loop.index % 3 != 0 and loop.revindex == 1 %}
-	</div>
-		{% endif %}
-	  {% endfor %}
-	{% endif %}
 
+        <div class="card-action">
+          <a href="#team-detail-modal">详情</a>
+          <a href="#">收藏</a>
 
-    <div class="row center-align">
-
-      <ul class="pagination">
-        <li class="disabled"><a href="#!"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
-        <li class="active"><a href="#!">1</a></li>
-        <li class="waves-effect"><a href="#!">2</a></li>
-        <li class="waves-effect"><a href="#!">2</a></li>
-        <li class="waves-effect"><a href="#!">4</a></li>
-        <li class="waves-effect"><a href="#!">5</a></li>
-        <li class="waves-effect"><a href="#!"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
-      </ul>
+          <div class="chip right">
+            <i class="fa fa-gamepad" aria-hidden="true"></i> {{ team.rule }}
+          </div>
+          <div class="chip right">
+            <i class="fa fa-money" aria-hidden="true"></i> {{ team.bet }}
+          </div>
+        </div>
+      </div>
     </div>
+    {% if loop.index % 3 == 0 %}
+	  </div>
+	{% endif %}
+	{% if loop.index % 3 != 0 and loop.revindex == 1 %}
+</div>
+	{% endif %}
+  {% endfor %}
+{% endif %}
 
 
-	<!-- team detail modal Structure -->
-	<div id="team-detail-modal" class="modal">
-	  <div class="modal-content">
-		<div class="row">
-		  <!-- Where Details go -->
-		  <div class="col s12 m2" id ="team_detail_container">
+<div class="row center-align">
+
+  <ul class="pagination">
+    <li class="disabled"><a href="#!"><i class="fa fa-chevron-left" aria-hidden="true"></i></a></li>
+    <li class="active"><a href="#!">1</a></li>
+    <li class="waves-effect"><a href="#!">2</a></li>
+    <li class="waves-effect"><a href="#!">2</a></li>
+    <li class="waves-effect"><a href="#!">4</a></li>
+    <li class="waves-effect"><a href="#!">5</a></li>
+    <li class="waves-effect"><a href="#!"><i class="fa fa-chevron-right" aria-hidden="true"></i></a></li>
+  </ul>
+</div>
+
+
+<!-- team detail modal Structure -->
+<div id="team-detail-modal" class="modal">
+  <div class="modal-content">
+	<div class="row">
+	  <!-- Where Details go -->
+	  <div class="col s12 m2" id ="team_detail_container">
+	  </div>
+	  <!-- End of Details -->
+	  <div class="col s12 m9">
+		<!--  Radar Chart of two teams                  -->
+		<canvas id="team-detail-chart"></canvas>
+	  </div>
+	</div>
+  </div>
+  <div class="modal-footer">
+	<a href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-btn">邀请战斗</a>
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="waiting-modal" class="modal">
+  <div class="modal-content">
+	<h4>等待对方队长应答</h4>
+	<!--            preloader-->
+	<div class="row center">
+	  <div class="preloader-wrapper big active">
+		<div class="spinner-layer spinner-blue">
+		  <div class="circle-clipper left">
+			<div class="circle"></div>
 		  </div>
-		  <!-- End of Details -->
-		  <div class="col s12 m9">
-			<!--  Radar Chart of two teams                  -->
-			<canvas id="team-detail-chart"></canvas>
+		  <div class="gap-patch">
+			<div class="circle"></div>
+		  </div>
+		  <div class="circle-clipper right">
+			<div class="circle"></div>
+		  </div>
+		</div>
+
+		<div class="spinner-layer spinner-red">
+		  <div class="circle-clipper left">
+			<div class="circle"></div>
+		  </div>
+		  <div class="gap-patch">
+			<div class="circle"></div>
+		  </div>
+		  <div class="circle-clipper right">
+			<div class="circle"></div>
+		  </div>
+		</div>
+
+		<div class="spinner-layer spinner-yellow">
+		  <div class="circle-clipper left">
+			<div class="circle"></div>
+		  </div>
+		  <div class="gap-patch">
+			<div class="circle"></div>
+		  </div>
+		  <div class="circle-clipper right">
+			<div class="circle"></div>
+		  </div>
+		</div>
+
+		<div class="spinner-layer spinner-green">
+		  <div class="circle-clipper left">
+			<div class="circle"></div>
+		  </div>
+		  <div class="gap-patch">
+			<div class="circle"></div>
+		  </div>
+		  <div class="circle-clipper right">
+			<div class="circle"></div>
 		  </div>
 		</div>
 	  </div>
-	  <div class="modal-footer">
-		<a href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-btn">邀请战斗</a>
-	  </div>
 	</div>
-
-	<!-- Modal Structure -->
-	<div id="waiting-modal" class="modal">
-	  <div class="modal-content">
-		<h4>等待对方队长应答</h4>
-		<!--            preloader-->
-		<div class="row center">
-		  <div class="preloader-wrapper big active">
-			<div class="spinner-layer spinner-blue">
-			  <div class="circle-clipper left">
-				<div class="circle"></div>
-			  </div>
-			  <div class="gap-patch">
-				<div class="circle"></div>
-			  </div>
-			  <div class="circle-clipper right">
-				<div class="circle"></div>
-			  </div>
-			</div>
-
-			<div class="spinner-layer spinner-red">
-			  <div class="circle-clipper left">
-				<div class="circle"></div>
-			  </div>
-			  <div class="gap-patch">
-				<div class="circle"></div>
-			  </div>
-			  <div class="circle-clipper right">
-				<div class="circle"></div>
-			  </div>
-			</div>
-
-			<div class="spinner-layer spinner-yellow">
-			  <div class="circle-clipper left">
-				<div class="circle"></div>
-			  </div>
-			  <div class="gap-patch">
-				<div class="circle"></div>
-			  </div>
-			  <div class="circle-clipper right">
-				<div class="circle"></div>
-			  </div>
-			</div>
-
-			<div class="spinner-layer spinner-green">
-			  <div class="circle-clipper left">
-				<div class="circle"></div>
-			  </div>
-			  <div class="gap-patch">
-				<div class="circle"></div>
-			  </div>
-			  <div class="circle-clipper right">
-				<div class="circle"></div>
-			  </div>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	  <div class="modal-footer">
-		<a href="./spa_fight.html" class="modal-action waves-effect waves-green btn-flat nav-link" id="hide-btn">隐藏到后台</a>
-	  </div>
-	</div>
-	
-
-    <script src="./js/jquery-2.2.4.js"></script>
-	<script src="./js/swig.js"></script>
-    <script src="./js/Chart.bundle.js"></script>
-    <script src="./js/genRadar.js"></script>
-    <script src="./js/spa.js"></script>
-    <script src="./js/materialize.min.js"></script>
-    <script src="./js/materialize-pagination.min.js"></script>
-	<script src="./js/global.js"></script>
-	<script src="./js/close_modal.js"></script>
-	
+  </div>
+  <div class="modal-footer">
+	<a href="./spa_fight.html" class="modal-action waves-effect waves-green btn-flat nav-link" id="hide-btn">隐藏到后台</a>
+  </div>
+</div>
 
 
-  </body>
 
-</html>
+
+

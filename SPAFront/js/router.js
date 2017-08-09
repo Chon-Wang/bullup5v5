@@ -21,6 +21,8 @@ $().ready(function(){
 
 		//load template to content div
 		$('.content').html(battle_teams);
+		$('#team-detail-modal').modal();
+		$('#waiting-modal').modal();
 		
 		// 
 	});
@@ -47,5 +49,21 @@ $().ready(function(){
 		e.preventDefault();
 
 		
+	});
+
+	$('#router_dataquery').on('click', function(e){
+		e.preventDefault();
+
+		var dataquery = douniu.loadSwigView('swig_dataquery.html', {});
+		$('.content').html(dataquery);
+		
+		$('.datepicker').pickadate({
+			selectMonths: true, // Creates a dropdown to control month
+			selectYears: 15, // Creates a dropdown of 15 years to control year,
+			today: 'Today',
+			clear: 'Clear',
+			close: 'Ok',
+			closeOnSelect: true // Close upon selecting a date,
+		});
 	});
 });
