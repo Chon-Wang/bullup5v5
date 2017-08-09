@@ -24,6 +24,8 @@ $().ready(function(){
 		$('#team-detail-modal').modal();
 		$('#waiting-modal').modal();
 
+		$.getScript('/js/close_modal.js');
+
 		var pages = {
 			totalPage: 10,
 	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
