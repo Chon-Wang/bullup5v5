@@ -17,18 +17,20 @@ $().ready(function () {
 	$("#register_btn").on('click', function (e) {
 		e.preventDefault();
 
-		var $userName = $('#usr_name').val();
-		var $password = $('#usr_pwd').val();
+		var $userAccount = $('#usr_name').val();
+		var $userPassword = $('#usr_pwd').val();
 		var $confirmedPwd = $('#usr_repwd').val();
+		var $userNickname = $('#usr_nick').val();
 		var $tel = $('#usr_tel').val();
 		var $email = $('#usr_email').val();
 
-		if ($password == $confirmedPwd) {
+		if ($userPassword == $confirmedPwd) {
 			socket.emit('register', {
-				userName: $userName,
-				password: $password,
-				tel: $tel,
-				email: $email
+				userAccount: $userAccount,
+				userPassword: $userPassword,
+				userNickname: $userNickname,
+				userPhoneNumber: $tel,
+				userEmail: $email
 			});
 		} else {
 			alert('两次密码输入不一致!');

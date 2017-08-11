@@ -41,7 +41,7 @@ exports.findUserById = function(userId, callback) {
  * @param userInfo 用户信息，格式：{userName: 'cy', password: '123', tel: '123', email: '123@qq.com'}
  */
 exports.addUser = function(userInfo, callback) {
-    connection.query('insert into `user` (nick_name, password, mobile_no, email, icon) values (?, ?, ?, ?, ?)', 
+    connection.query('insert into `user_base` (user_account, user_password, user_nickname) values (?, ?, ?)', 
         [userInfo.userName, userInfo.password, userInfo.tel, userInfo.email, 1], function (err, rows) {
             if (err) {
                 connection.rollback();

@@ -107,7 +107,7 @@ exports.handleLogin = function (socket) {
 exports.handleRegister = function (socket) {
     socket.on('register', function (userInfo) {
         logger.listenerLog('register');
-        dbUtil.findUserByNick(userInfo.userName, function (user) {
+        dbUtil.findUserByAccount(userInfo.userAccount, function (user) {
             if (user) {
                 // 如果该用户存在
                 socket.emit('feedback', {
@@ -118,13 +118,13 @@ exports.handleRegister = function (socket) {
                 });
             } else {
                 dbUtil.addUser(userInfo, function (userId) {
-
                     socket.emit('feedback', {
                         errorCode: 0,
                         text: '注册成功',
                         type: 'REGISTERRESULT',
                         extension: {
-                            name: userInfo.userName,
+                            account: userInfo.userAccount,
+                            userNickname: userInfo.userNickname,
                             userId: userId,
                             avatarId: 1,
                         }
@@ -132,8 +132,6 @@ exports.handleRegister = function (socket) {
                 });
             }
         });
-
-
     });
 }
 
