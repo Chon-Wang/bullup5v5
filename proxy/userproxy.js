@@ -224,13 +224,13 @@ exports.handleLOLBind = function(socket){
         var lolArea = request.lolArea;
         async.waterfall([
             function(callback){
-                dbUtil.validateBindInfo(userId, lolAccount, lolArea, function(bindValidity){
+                dbUtil.validateBindInfo(userId, lolAccount, lolArea, function(bindValidityResult){
                     //如果该用户在该大区已绑定了账号  或者该大区的账号已被绑定  则拒绝绑定
                     var feedback = {};
-                    if(bindValidity.value != 'true'){
+                    if(bindValidityResult.value != 'true'){
                         feedback.text = '绑定失败';
                         feedback.type = 'LOLBINDRESULT';
-                        switch(bindValidity.errorCode){
+                        switch(bindValidityResult.errorCode){
                             case 1:{
                                 feedback.errorCode = 1;
                                 feedback.extension = {};
@@ -244,7 +244,6 @@ exports.handleLOLBind = function(socket){
                                 break;
                             }
                         }
-                        //socket.emit('feedback', feedback);
                         callback('error', feedback);
                     }else{
                         callback(null, null);
@@ -254,13 +253,15 @@ exports.handleLOLBind = function(socket){
             function(blankData, callback){
                 dbUtil.insertBindInfo(userId, lolAccount, lolNickname, lolArea, function(bindResult){
                     if(bindResult.errorCode == 0){
-                        socket.emit('feedback', {
+                        var feedback = {
                             errorCode: 0,
                             type: 'LOLBINDRESULT',
                             text: '绑定成功',
-                            extension: {}
-                        });
-                        callback(null, null);
+                            extension: {
+                                tips: '绑定成功'
+                            }
+                        };
+                        callback(null, feedback);
                     }else{
                         var feedback = {
                             errorCode: 3,
@@ -270,7 +271,7 @@ exports.handleLOLBind = function(socket){
                                 tips: '服务器异常，请稍后再试' 
                             }
                         }
-                        callback('failed', feedback);
+                        callback(null, feedback);
                     }
                 });
             }

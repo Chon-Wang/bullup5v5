@@ -52,6 +52,10 @@ socket.on('feedback', function (feedback) {
         case 'STRENGTHRANKRESULT':
             var rankList = handleFeedback(feedback);
             handleRankList(rankList);
+            break;
+
+        case 'LOLBINDRESULT':
+            handleLOLBINDRESULT(feedback);
         }
 });
 
@@ -156,5 +160,8 @@ function handleRankList(rankList){
     });
     $('.content').html(rank_list);
     $('ul.tabs').tabs();
+}
 
+function handleLOLBINDRESULT(feedback){
+    alert(feedback.extension.tips);
 }
