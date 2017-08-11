@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "nwjs",
+            "request": "launch",
+            "name": "Launch NWJS",
+            "nwjsVersion": "any",
+            "webRoot": "${workspaceRoot}"
+        },
+        {
+            "type": "nwjs",
+            "request": "attach",
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "nwjsVersion": "any",
+            "webRoot": "${workspaceRoot}"
+        }
+    ]
+}

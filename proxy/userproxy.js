@@ -224,38 +224,58 @@ exports.handleLOLBind = function(socket){
         var lolArea = request.lolArea;
         async.waterfall([
             function(callback){
-                dbUtil.validateBindInfo(userId, lolAccount, function(bindValidity){
+                dbUtil.validateBindInfo(userId, lolAccount, lolArea, function(bindValidity){
                     //如果该用户在该大区已绑定了账号  或者该大区的账号已被绑定  则拒绝绑定
                     var feedback = {};
                     if(bindValidity.value != 'true'){
                         feedback.text = '绑定失败';
                         feedback.type = 'LOLBINDRESULT';
-                        switch(bindValidity.code){
+                        switch(bindValidity.errorCode){
                             case 1:{
                                 feedback.errorCode = 1;
                                 feedback.extension = {};
-                                feedback.extensio.tips = '该英雄联盟账号已被绑定';
+                                feedback.extension.tips = '该英雄联盟账号已被绑定';
                                 break;
                             }
                             case 2:{
                                 feedback.errorCode = 2;
                                 feedback.extension = {};
-                                feedback.extensio.tips = '您已经绑定了英雄联盟账号';
+                                feedback.extension.tips = '您在该区已经绑定了英雄联盟账号';
                                 break;
                             }
                         }
-                        socket.emit('feedback', feedback);
-                        callback('error', null);
+                        //socket.emit('feedback', feedback);
+                        callback('error', feedback);
                     }else{
                         callback(null, null);
                     }
                 });   
             },
             function(blankData, callback){
-                
+                dbUtil.insertBindInfo(userId, lolAccount, lolNickname, lolArea, function(bindResult){
+                    if(bindResult.errorCode == 0){
+                        socket.emit('feedback', {
+                            errorCode: 0,
+                            type: 'LOLBINDRESULT',
+                            text: '绑定成功',
+                            extension: {}
+                        });
+                        callback(null, null);
+                    }else{
+                        var feedback = {
+                            errorCode: 3,
+                            type: 'LOLBINDRESULT',
+                            text: '绑定失败',
+                            extension: {
+                                tips: '服务器异常，请稍后再试' 
+                            }
+                        }
+                        callback('failed', feedback);
+                    }
+                });
             }
-        ],function(err,result){
-
+        ],function(err,feedback){
+            socket.emit('feedback', feedback);
         });
     });
 }

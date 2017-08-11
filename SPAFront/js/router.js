@@ -76,5 +76,8 @@ $().ready(function(){
 			close: 'Ok',
 			closeOnSelect: true // Close upon selecting a date,
 		});
+
+		$.getScript('/js/game_history_query.js');
+
 	});
 });

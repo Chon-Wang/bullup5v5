@@ -159,8 +159,6 @@ exports.getStrengthScoreRank = function(userId, callback) {
     });
 }
 
-
-
 exports.getWealthRank = function(userId, callback) {
     async.waterfall([
         function(callback){
@@ -207,6 +205,79 @@ exports.getWealthRank = function(userId, callback) {
     });
 }
 
-// exports.findFriendListByUserId(1, function (data) {
-//     logger.jsonLog(data);
-// });
+exports.validateBindInfo = function(userId, lolAccount, lolArea, callback){
+    async.waterfall([
+        function(callback){
+            connection.query('select lol_info_id from lol_bind where user_id = ?', [userId], function(err, row) {
+                if (err){ 
+                    throw err;
+                }
+                var bindValidity = {};
+                if(row == undefined || row == null){
+                    //如果没有搜到，说明用户还没绑账号
+                    bindValidity.value = 'true';
+                    callback('finished', bindValidity);
+                }else{
+                    //如果有  则继续判断 是否在该区绑定了账号
+                    var tempInfo = {};
+                    tempInfo.userId = userId;
+                    tempInfo.lolAccount = lolAccount;
+                    tempInfo.lolArea = lolArea;
+                    tempInfo.lolInfoIds = row;
+                    tempInfo.errorCode = 0;
+                    callback(null, tempInfo);
+                }
+            });
+        },
+        function(tempInfo, callback){
+            var lolInfoIds = tempInfo.lolInfoIds;
+            async.eachSeries(lolInfoIds, function(lolInfoId, errCb){
+                connection.query('select * from lol_info where lol_info_id = ?', [lolInfoId.lol_info_id], function(err, row) {
+                    if (err){ 
+                        throw err;
+                    }
+                    if(tempInfo.lolArea == row[0].user_lol_area){
+                        tempInfo.errorCode = 2;
+                    }
+
+                    console.log(JSON.stringify(row));
+
+                    errCb();
+                });
+            },function(errCb){
+                callback(null, tempInfo);
+            });
+        }
+    ],
+    function(err,result){
+        callback(result);
+        //callback(result);
+    });    
+}
+
+exports.insertBindInfo = function(userId, lolAccount, lolNickname, lolArea, callback){
+    //connection.
+}
+
+
+exports.validateBindInfo(3, 'GuoJingming123', 'NU', function(result){
+    console.log(JSON.stringify(result));
+
+});
+
+
+
+
+var info;
+function simpleFunction (callback){
+    connection.query('select lol_info_id from lol_bind where user_id = ?', [userId], function(err, result) {
+        info = result;
+    });
+}
+
+
+console.log(info);
+
+
+
+//exports.validateBindInfo
