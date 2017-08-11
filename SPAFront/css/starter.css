@@ -1,0 +1,132 @@
+.starter-btn {
+	width: 100%;
+}
+
+#mySidenav a {
+    position: absolute; /* Position them relative to the browser window */
+    left: -90px; /* Position them outside of the screen */
+    transition: 0.3s; /* Add transition on hover */
+    padding: 15px; /* 15px padding */
+    width: 120px; /* Set a specific width */
+    text-decoration: none; /* Remove underline */
+    font-size: 20px; /* Increase font size */
+    color: white; /* White text color */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the top right and bottom right side */
+}
+
+#mySidenav a:hover {
+    left: 0; /* On mouse-over, make the elements appear as they should */
+	border-top: 1px solid #f4f7f8;
+	border-bottom: 1px solid #f4f7f8;
+	border-right: 1px solid #f4f7f8;
+}
+
+/* The about link: 20px from the top with a green background */
+#btn-fight {
+    top: 70px;
+    background-color: #4CAF50;
+	z-index: 2;
+}
+
+#btn-match {
+    top: 140px;
+    background-color: #2196F3; /* Blue */
+	z-index: 2;
+}
+
+#btn-personal {
+    top: 210px;
+    background-color: #f44336; /* Red */
+	z-index: 2;
+}
+
+#btn-chatroom {
+    top: 280px;
+    background-color: #555; /* Light Black */
+	z-index: 2;
+}
+
+
+/* #starter-carousel { */
+/* 	margin-left: -40px; */
+/* } */
+
+.starter-btns-holder {
+	display: flex;
+	flex-direction: row;
+	justify-content: center; /* align horizontal */
+	align-items: center; /* align vertical */
+}
+
+.starter-btn {
+	font-size: 25px;
+	display: flex;
+	flex-direction: row;
+	color: #f4f7f8;
+	background: #26a69a;
+	width: 23.5%;
+	height: 50px;
+	border-radius: 3px;
+	margin: auto;
+
+	
+	justify-content: center; /* align horizontal */
+	align-items: center; /* align vertical */
+}
+
+.video-carousel  {
+	height: 50px;
+}
+
+
+.starter-collection-holder {
+	float: right;
+	padding-top: 0px;
+	height: 400px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.starter-collection-holder::-webkit-scrollbar {
+	width:10px;
+}
+
+.starter-collection-holder::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,.1);
+}
+
+.news-collection {
+	margin: auto;
+}
+
+.news-collection .collection-item {
+	width: 100%;
+}
+
+
+.tournament-holder {
+	padding: 0;
+	margin: auto;
+	height: 400px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.tournament-holder::-webkit-scrollbar {
+	width: 10px;
+}
+.tournament-holder::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,.1);
+}
+
+.tournament-card {
+	margin-top: 0;
+	margin-bottom: 10px;
+}
+
+.tournament-image {
+	width: 120px !important;
+	height: 100%;
+}

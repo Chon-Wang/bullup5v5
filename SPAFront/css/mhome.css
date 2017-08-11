@@ -1,6 +1,5 @@
 body {
 	background-color: #000000;
-
 }
 
 body::after {
@@ -13,7 +12,15 @@ body::after {
 	bottom: 0;
 	right: 0;
 	position: absolute;
-	z-index: -1;   
+	z-index: -1;
+}
+
+body::-webkit-scrollbar {
+	width: 1px;
+}
+body::-webkit-scrollbar-thumb {
+	border-radius: 5px;
+	background: rgba(0,0,0,.1);
 }
 
 .brand-logo img{
