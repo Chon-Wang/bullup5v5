@@ -102,7 +102,9 @@
 
 .news-collection .collection-item {
 	width: 100%;
+	cursor: pointer;
 }
+
 
 
 .tournament-holder {
@@ -129,4 +131,12 @@
 .tournament-image {
 	width: 120px !important;
 	height: 100%;
+}
+
+.more {
+	float: right;
+}
+
+.main-carousel-img {
+
 }
