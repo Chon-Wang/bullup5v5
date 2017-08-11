@@ -230,7 +230,7 @@ exports.handleLOLBind = function(socket){
                     if(bindValidity.value != 'true'){
                         feedback.text = '绑定失败';
                         feedback.type = 'LOLBINDRESULT';
-                        switch(bindValidity.code){
+                        switch(bindValidity.errorCode){
                             case 1:{
                                 feedback.errorCode = 1;
                                 feedback.extension = {};
@@ -240,7 +240,7 @@ exports.handleLOLBind = function(socket){
                             case 2:{
                                 feedback.errorCode = 2;
                                 feedback.extension = {};
-                                feedback.extension.tips = '您已经绑定了英雄联盟账号';
+                                feedback.extension.tips = '您在该区已经绑定了英雄联盟账号';
                                 break;
                             }
                         }
