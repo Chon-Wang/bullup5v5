@@ -1,5 +1,9 @@
 body{
-	background: #000000;
+	/* background: #000000; */
+	background-image: url(../media/imgs/body-bg.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
 	padding-top: 70px;
 	padding-left: 15px;
 	padding-right: 15px;
