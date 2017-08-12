@@ -143,4 +143,26 @@
 
 #test_carousel_1 {
 	background-image: url(/media/imgs/arcade.jpeg);
+	background-size: 100% auto;
+	background-position: 50% 5%;
+}
+
+
+#test_carousel_2 {
+	background-image: url(/media/imgs/tacos.jpg);
+	background-size: 100% auto;
+	background-position: 50% 5%;
+}
+
+#test_carousel_3 {
+	background-image: url(/media/imgs/ornn.jpg);
+	background-size: 100% auto;
+	background-position: 50% 5%;
+	
+}
+
+#test_carousel_4 {
+	background-image: url(/media/imgs/arcade_veigar.jpg);
+	background-size: 100% auto;
+	background-position: 50% 5%;
 }
