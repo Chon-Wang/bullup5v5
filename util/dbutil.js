@@ -66,6 +66,12 @@ exports.addUser = function(userInfo, callback) {
             connection.query('insert into `bullup_profile` (user_id, icon_id) values (?, ?)', [userInfo.userId, 1], function(err, row){
                 callback(null, userInfo);
             });
+        },
+        function(userInfo, callback){
+            connection.query('insert into `bullup_wealth` (user_id, bullup_currency_type, bullup_currency_amount) values (?, ?, ?)', [userInfo.userId, 'score', '0'], function(err, row){
+                userInfo.wealth = 0;
+                callback(null, userInfo);
+            });
         }
     ],    
     function(err, result){
@@ -95,7 +101,7 @@ exports.findStrengthInfoByUserId = function(userId, callback) {
 }
 
 exports.findUserWealthByUserId = function(userId, callback) {
-    connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',  [userId], function(err, row) {
+    connection.query('select bullup_currency_amount from bullup_wealth where user_id = ? and bullup_currency_type = ?',  [userId, 'score'], function(err, row) {
         if (err) throw err;
         callback(row[0]);
     });
@@ -263,9 +269,15 @@ exports.validateBindInfo = function(userId, lolAccount, lolArea, callback){
                     bindValidityResult.errorCode = 0;
                     callback('finished', bindValidityResult);
                 }else{
-                    //如果有  则继续判断  该用户是否在该区绑定了账号
-                    tempInfo.lolInfoIds = row;
-                    callback(null, tempInfo);
+                    var bindValidityResult = {};
+                    bindValidityResult.value = 'false';
+                    bindValidityResult.errorCode = 2;
+                    callback('finished', bindValidityResult);
+
+                    // //以下是同一斗牛电竞账号能绑定多个大区的LOL账号的扩展代码
+                    // //如果用户已经绑定过账号了  则继续判断  该用户是否在该区绑定了账号
+                    // tempInfo.lolInfoIds = row;
+                    // callback(null, tempInfo);
                 }
             });
         },
@@ -322,4 +334,8 @@ exports.insertBindInfo = function(userId, lolAccount, lolNickname, lolArea, call
             callback(result);
         });
     });
+}
+
+exports.addStrengthInfo = function(bindInfo, callback){
+    
 }

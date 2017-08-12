@@ -5,7 +5,7 @@ $().ready(function () {
     $('#query_btn').on('click', function (e) {
         var summonerName = $('#query_summoner_name').val();
         e.preventDefault();
-        lolapi.getBullupMatchDetailsBySummonerName(summonerName, '2017/8/1', '2017/8/4', function(matchDetails){
+        lolapi.getMatchDetailsBySummonerName(summonerName, '2017/8/1', '2017/8/4', function(matchDetails){
             var frame = douniu.loadSwigView("swig_queryres.html", {});
             var leftTemplate = douniu.loadSwigView("swig_matches.html",matchDetails);
             globalMatchDetails = matchDetails;

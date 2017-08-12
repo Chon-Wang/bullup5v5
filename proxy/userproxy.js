@@ -64,7 +64,6 @@ exports.handleLogin = function (socket) {
                     }
                 ], function(err, userInfo){
                     var userStrength = userInfo.strengthInfo;
-                    var kda = ((userStrength.bullup_strength_k + userStrength.bullup_strength_a) / (userStrength.bullup_strength_d + 1.2)).toFixed(1);
                     var feedback = {
                         errorCode: 0,
                         type: 'LOGINRESULT',
@@ -73,15 +72,6 @@ exports.handleLogin = function (socket) {
                             name: userInfo.userNickname,
                             userId: userInfo.userId,
                             avatarId: userInfo.userIconId,
-                            strength: {
-                                kda: kda,
-                                averageGoldEarned: userStrength.bullup_strength_gold,
-                                averageTurretsKilled: userStrength.bullup_strength_tower,
-                                averageDamage: userStrength.bullup_strength_damage,
-                                averageDamageTaken: userStrength.bullup_strength_damage_taken,
-                                averageHeal: userStrength.bullup_strength_heal,
-                                score: userStrength.bullup_strength_score
-                            },
                             wealth: userInfo.wealth,
                             online: true,
                             status: 'IDLE',
@@ -92,6 +82,21 @@ exports.handleLogin = function (socket) {
                             }
                         }
                     };
+                    if(userStrength != undefined){
+                        var kda = ((userStrength.bullup_strength_k + userStrength.bullup_strength_a) / (userStrength.bullup_strength_d + 1.2)).toFixed(1);
+                        feedback.extension.strength = {
+                            kda: kda,
+                            averageGoldEarned: userStrength.bullup_strength_gold,
+                            averageTurretsKilled: userStrength.bullup_strength_tower,
+                            averageDamage: userStrength.bullup_strength_damage,
+                            averageDamageTaken: userStrength.bullup_strength_damage_taken,
+                            averageHeal: userStrength.bullup_strength_heal,
+                            score: userStrength.bullup_strength_score
+                        }
+                    }else{
+                        feedback.extension.strength = undefined;
+                    }
+                    
                     exports.addUser(feedback.extension);
                     socket.emit('feedback', feedback);
                 });
@@ -255,7 +260,10 @@ exports.handleLOLBind = function(socket){
                             type: 'LOLBINDRESULT',
                             text: '绑定成功',
                             extension: {
-                                tips: '绑定成功'
+                                tips: '绑定成功',
+                                userId: userId,
+                                lolNickname: lolNickname,
+                                lolArea : lolArea
                             }
                         };
                         callback(null, feedback);
@@ -273,6 +281,14 @@ exports.handleLOLBind = function(socket){
                 });
             }
         ],function(err,feedback){
+            if(feedback.errorCode == 0){
+                //更新用户战力表
+                var bindInfo = feedback.extension;
+                dbUtil.addStrengthInfo(bindInfo, function(result){
+                    
+                });
+            }
+
             socket.emit('feedback', feedback);
         });
     });
