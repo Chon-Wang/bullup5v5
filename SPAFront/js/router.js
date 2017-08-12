@@ -1,5 +1,39 @@
 $().ready(function(){
 
+	/* ----------------------------------------------
+	 * navbar router region
+	 * ----------------------------------------------
+	 */
+	//==============
+	//	test data
+	//==============
+	var starter_data = {
+		tournaments:[
+			{
+				name:'S7 Championship',
+				description: 'Starting at October'
+			},
+			{
+				name:'MSI Championship',
+				description: 'Starting at May'
+			}
+			
+		],
+		news:[
+			{
+				title: 'New champion coming soon'
+			},
+			{
+				title: 'Arcade 2017 Overview'
+			}
+		]
+	};
+	loadStarter(starter_data);
+
+	$('#router_starter').on('click', function(e){
+		e.preventDefault();
+		loadStarter(starter_data);
+	});
 	
 	$('#router_battle').on('click', function(e){
 		e.preventDefault();
@@ -34,7 +68,7 @@ $().ready(function(){
 		
 		//
 		var pagination = douniu.loadSwigView('swig_pagination.html', pages);
-		console.log(pagination);
+		//		console.log(pagination);
 		$('#pagination-holder').html(pagination);
 	});
 
@@ -80,4 +114,15 @@ $().ready(function(){
 		$.getScript('/js/game_history_query.js');
 
 	});
+
+	/* ----------------------------------------------
+	 * navbar router region ends here
+	 * ----------------------------------------------
+	 */
 });
+
+
+function loadStarter(starter_data){
+	douniu.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
+}
+
