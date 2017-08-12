@@ -117,16 +117,16 @@ exports.handleRegister = function (socket) {
                     extension: null
                 });
             } else {
-                dbUtil.addUser(userInfo, function (userId) {
+                dbUtil.addUser(userInfo, function (userAddRes) {
                     socket.emit('feedback', {
                         errorCode: 0,
                         text: '注册成功',
                         type: 'REGISTERRESULT',
                         extension: {
-                            account: userInfo.userAccount,
+                            userAccount: userInfo.userAccount,
                             userNickname: userInfo.userNickname,
-                            userId: userId,
-                            avatarId: 1,
+                            userId: userAddRes.userId,
+                            userIconId: 1,
                         }
                     });
                 });
@@ -212,7 +212,6 @@ exports.handleRankRequest = function (socket){
         });
     });
 }
-
 
 exports.handleLOLBind = function(socket){
     socket.on('lolBindRequest',function(request){

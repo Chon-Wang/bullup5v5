@@ -22,8 +22,7 @@ socket.on('feedback', function (feedback) {
             handleLoginResult(feedback);
             break;
         case 'REGISTERRESULT':
-            userInfo = handleFeedback(feedback);
-            console.log(JSON.stringify(userInfo, null, '\t'));
+            userInfo = handleRegistResult(feedback);
             break;
 
         case 'ESTABLISHTEAMRESULT':
@@ -164,4 +163,12 @@ function handleRankList(rankList){
 
 function handleLOLBINDRESULT(feedback){
     alert(feedback.extension.tips);
+}
+
+function handleRegistResult(feedback){
+    alert(feedback.text);
+    console.log(JSON.stringify(userInfo));
+    $('#sign_modal').modal('close');
+    $('.modal-overlay').remove();
+    return feedback.extension;
 }

@@ -36,18 +36,43 @@ exports.findUserById = function(userId, callback) {
     });
 }
 
-/**
- * 插入用户信息
- * @param userInfo 用户信息，格式：{userName: 'cy', password: '123', tel: '123', email: '123@qq.com'}
- */
+
 exports.addUser = function(userInfo, callback) {
-    connection.query('insert into `user_base` (user_account, user_password, user_nickname) values (?, ?, ?)', 
-        [userInfo.userName, userInfo.password, userInfo.tel, userInfo.email, 1], function (err, rows) {
-            if (err) {
-                connection.rollback();
-            }
-            callback(rows.insertId);
+    async.waterfall([
+        function(callback){
+            connection.query('insert into `user_base` (user_account, user_password, user_nickname) values (?, ?, ?)', [userInfo.userAccount, userInfo.userPassword, userInfo.userNickname], function (err, rows) {
+                if (err) {
+                    connection.rollback();
+                }
+                if(rows.affectedRows > 0){
+                    callback(null, userInfo);
+                }
+        });
+        },
+        function(userInfo, callback){
+            connection.query('select user_id from `user_base` where user_account = ? and user_nickname = ?', [userInfo.userAccount, userInfo.userNickname], function(err, row){
+                if(err) console.log(err);
+                userInfo.userId = row[0].user_id;
+                callback(null, userInfo);
+            });
+        },
+        function(userInfo, callback){
+            connection.query('insert into `user_info` (user_id, user_phone, user_mail) values (?, ?, ?)', [userInfo.userId, userInfo.userPhoneNumber, userInfo.userEmail], function(err, row){
+                if(err) console.log(err);
+                callback(null, userInfo);
+            });
+        },
+        function(userInfo, callback){
+            connection.query('insert into `bullup_profile` (user_id, icon_id) values (?, ?)', [userInfo.userId, 1], function(err, row){
+                callback(null, userInfo);
+            });
+        }
+    ],    
+    function(err, result){
+        if(err) console.log(err);
+        callback(result);
     });
+    
 }
 
 exports.findUserIconById = function(userId, callback){
