@@ -337,5 +337,7 @@ exports.insertBindInfo = function(userId, lolAccount, lolNickname, lolArea, call
 }
 
 exports.addStrengthInfo = function(bindInfo, callback){
-    
+    connection.query("insert into bullup_strength values (?, 0, 0, 0, 0, 0, 0, 0, 0, 'unknown', 0, 0, 0, 2000)", [bindInfo.userId], function(err, res){
+        callback(res);
+    });
 }

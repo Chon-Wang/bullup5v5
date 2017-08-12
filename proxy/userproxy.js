@@ -226,6 +226,7 @@ exports.handleLOLBind = function(socket){
         var lolArea = request.lolArea;
         async.waterfall([
             function(callback){
+                console.log(userId);
                 dbUtil.validateBindInfo(userId, lolAccount, lolArea, function(bindValidityResult){
                     //如果该用户在该大区已绑定了账号  或者该大区的账号已被绑定  则拒绝绑定
                     var feedback = {};
@@ -285,10 +286,9 @@ exports.handleLOLBind = function(socket){
                 //更新用户战力表
                 var bindInfo = feedback.extension;
                 dbUtil.addStrengthInfo(bindInfo, function(result){
-                    
+                    console.log("result" + result);
                 });
             }
-
             socket.emit('feedback', feedback);
         });
     });
