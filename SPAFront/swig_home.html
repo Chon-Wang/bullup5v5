@@ -32,7 +32,7 @@
 
 
 		  <ul class="right hide-on-med-and-down">
-			<li><a href="./spa_home.html" class="nav-link">主页</a></li>
+			<li><a class="nav-link" id="router_starter">主页</a></li>
 			<li class=""><a id="router_battle">对战大厅</a></li>
 			<li><a id="router_dataquery">数据查询</a></li>
 			<li><a id="router_rank">排行榜</a></li>
@@ -49,109 +49,8 @@
 	<div class="content" id="main-view">
 
 	  <!-- load view in this container -->
+
 	  
-
-	  <div class="row">
-		
-		<div class="col s12 m12">
-		  <div class="carousel carousel-slider center" data-indicators="true" id="starter-carousel">
-			<div class="carousel-item red white-text" href="#one!">
-			  <h2>First Panel</h2>
-			  <p class="white-text">This is your first panel</p>
-			</div>
-			<div class="carousel-item amber white-text" href="#two!">
-			  <h2>Second Panel</h2>
-			  <p class="white-text">This is your second panel</p>
-			</div>
-			<div class="carousel-item green white-text" href="#three!">
-			  <h2>Third Panel</h2>
-			  <p class="white-text">This is your third panel</p>
-			</div>
-			<div class="carousel-item blue white-text" href="#four!">
-			  <h2>Fourth Panel</h2>
-			  <p class="white-text">This is your fourth panel</p>
-			</div>
-		  </div>
-		</div>
-
-	  </div><!-- row -->
-
-	  <div class="row center-align starter-btns-holder">
-		<a class="starter-btn waves-effect">约战</a>
-		<a class="starter-btn waves-effect">匹配</a>
-		<a class="starter-btn waves-effect">个人中心</a>
-		<a class="starter-btn waves-effect">聊天室</a>
-	  </div>
-
-	  <div class="row">
-		<div class="col s4">
-		  <div class="carousel carousel-slider center video-carousel" data-indicators="true">
-			<div class="carousel-fixed-item center">
-			  <a class="btn waves-effect white grey-text darken-text-2">视频中心</a>
-			</div>
-			<div class="carousel-item red white-text" href="#one!">
-			  <h2>First Panel</h2>
-			  <p class="white-text">This is your first panel</p>
-			</div>
-			<div class="carousel-item amber white-text" href="#two!">
-			  <h2>Second Panel</h2>
-			  <p class="white-text">This is your second panel</p>
-			</div>
-			<div class="carousel-item green white-text" href="#three!">
-			  <h2>Third Panel</h2>
-			  <p class="white-text">This is your third panel</p>
-			</div>
-		  </div>
-		</div>
-
-		<div class="col s4 tournament-holder">
-		  <!-- tournament -->
-		  <!-- tournament card -->
-		  <div class="card horizontal tournament-card">
-			<div class="card-image">
-			  <img src="/media/imgs/trophy.jpg" class="tournament-image">
-			</div>
-			<div class="card-stacked">
-			  <div class="card-content">
-				<p>I am a very simple card. I am good at containing small bits of information.</p>
-			  </div>
-			  <div class="card-action">
-				<a href="#">This is a link</a>
-			  </div>
-			</div>
-		  </div><!-- tournament card -->
-
-		  <!-- tournament card -->
-		  <div class="card horizontal tournament-card">
-			<div class="card-image">
-			  <img src="/media/imgs/trophy.jpg" class="tournament-image">
-			</div>
-			<div class="card-stacked">
-			  <div class="card-content">
-				<p>I am a very simple card. I am good at containing small bits of information.</p>
-			  </div>
-			  <div class="card-action">
-				<a href="#">This is a link</a>
-			  </div>
-			</div>
-		  </div><!-- tournament card -->
-		  
-		</div><!-- tournament-holder -->
-		
-		<div class="col s4 starter-collection-holder">
-		  <!-- Text View -->
-		  <div class="collection news-collection">
-			<a class="collection-item">Alvin</a>
-			<a class="collection-item">Alvin</a>
-			<a class="collection-item">Alvin</a>
-			<a class="collection-item">Alvin</a>
-			<a class="collection-item">Alvin</a>
-			<a class="collection-item">Alvin</a>
-			<a class="collection-item">Alvin</a>
-		  </div>
-		</div>
-		
-	  </div>
 	</div>
 
 	<!-- side nav bar -->
@@ -311,7 +210,21 @@
 
 	<!-- end of create room modal -->
 
-
+	<div id="choose-bet-modal" class="modal">
+      <div class="modal-content">
+		<div class="row">
+		  <div class="col s4 valign-wrapper bet-holder">
+			10
+		  </div>
+		  <div class="col s4 valign-wrapper bet-holder">
+			10
+		  </div>
+		  <div class="col s4 valign-wrapper bet-holder">
+			10
+		  </div>
+		</div>
+      </div>
+	</div>
 
 
 
@@ -449,6 +362,8 @@
 		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
 	  </div>
 	</div>
+
+	<!--  -->
 
 	
 	

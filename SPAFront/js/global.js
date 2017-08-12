@@ -28,4 +28,6 @@ $().ready(function(){
 
 	$('.collapsible').collapsible();
 
+	$('#choose-bet-modal').modal();
+
 });

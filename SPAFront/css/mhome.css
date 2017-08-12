@@ -42,7 +42,7 @@ body::-webkit-scrollbar-thumb {
 	display: inline;
 }
 
-#log_modal, #sign_modal, #link_modal, #team-detail-modal, #waiting-modal {
+#log_modal, #sign_modal, #link_modal, #team-detail-modal, #waiting-modal, #choose-bet-modal {
 	width: 50%;
 	background-color: #455a64;
 	color: #f5f5f5;
@@ -69,3 +69,11 @@ body::-webkit-scrollbar-thumb {
 /* .collapsible-header { */
 /* 	background-color: #f44336; */
 /* } */
+
+#choose-bet-modal {
+	text-align: center;
+}
+
+.bet-holder {
+	text-align: center;
+}
