@@ -115,6 +115,15 @@ $().ready(function(){
 
 	});
 
+	$('#router_tournament').on('click', function(e){
+		e.preventDefault();
+
+		var tournaments_data = [];
+
+		douniu.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');
+		
+	});
+
 	/* ----------------------------------------------
 	 * navbar router region ends here
 	 * ----------------------------------------------
