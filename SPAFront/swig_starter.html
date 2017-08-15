@@ -24,8 +24,8 @@
 </div><!-- row -->
 
 <div class="row center-align starter-btns-holder">
-  <a href="#choose-bet-modal" class="starter-btn waves-effect" id="starter-fight-btn">约战</a>
-  <a class="starter-btn waves-effect" id="starter-match-btn">匹配</a>
+  <a href="#fight-bet-modal" class="starter-btn waves-effect" id="starter-fight-btn">约战</a>
+  <a href="#match-bet-modal" class="starter-btn waves-effect" id="starter-match-btn">匹配</a>
   <a class="starter-btn waves-effect" id="starter-personal-btn">个人中心</a>
   <a class="starter-btn waves-effect" id="starter-chatroom-btn">聊天室</a>
 </div>
@@ -51,14 +51,14 @@
 	</div>
   </div>
 
-  <div class="col s4 tournament-holder">
+  <div class="col s4 starter-tournament-holder">
 	<!-- tournament -->
 	{% if tournaments %}
 	  {% for tournament in tournaments %}
 		<!-- tournament card -->
-		<div class="card horizontal tournament-card">
+		<div class="card horizontal starter-tournament-card">
 		  <div class="card-image">
-			<img src="/media/imgs/trophy.jpg" class="tournament-image">
+			<img src="/media/imgs/trophy.jpg" class="starter-tournament-image">
 		  </div>
 		  <div class="card-stacked">
 			<div class="card-content">

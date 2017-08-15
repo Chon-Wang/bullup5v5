@@ -1,4 +1,4 @@
-function drawRadarWithData(my_data, component_data, canvas_name) {
+function drawRadarWithData(my_data, rival_data, canvas_name) {
 	window.chartColors = {
 		red: 'rgb(255, 99, 132)',
 		orange: 'rgb(255, 159, 64)',

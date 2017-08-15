@@ -1,24 +1,37 @@
+<!-- This file should be rendered into
+	 div.friend-list
+	 of file swig_myroom_frame.html
+   -->
+
 {% if userInfo %}
   {% for friend in userInfo.friendList %}
-	<div class="row">
-      <div class="avatar-container">
-        <img src="./media/imgs/timg-2.jpeg" class="friend-avatar">
-      </div>
-      <div class="friend-nickname" id="user-{{ friend.name }}">
-        {{ friend.name }}
-      </div>
+	<li class="friend-li" id="friend_list">
+	  <div class="row">
+		<div class="avatar-container">
+          <img src="./media/imgs/timg-2.jpeg" class="friend-avatar">
+		</div>
+		<div class="friend-nickname" id="user-{{ friend.name }}">
+          {{ friend.name }}
+		</div>
 
-      <div class="color-dot color-dot-red">
-      </div>
-      <label class="friend-status friend-status--offline">
-        {{ friend.status }}
-      </label>
+		<div class="color-dot color-dot-red">
+		</div>
+		<label class="friend-status friend-status--offline">
+          {{ friend.status }}
+		</label>
 
-      <p class="invitebox right">
-        <input type="checkbox" id="friend_id_1" class="filled-in" value="{{ friend.name }}">
-        <label for="friend_id_1"></label>
-      </p>
-    </div>
+		<p class="invitebox right">
+          <input type="checkbox" id="friend_id_1" class="filled-in" value="{{ friend.name }}">
+          <label for="friend_id_1"></label>
+		</p>
+      </div>
+	</li><!-- 朋友信息 -->
+
+	<!-- 分割线 -->
+	<li>
+      <div class="divider">
+      </div>
+	</li>
   {% endfor %}
 
 {% endif %}
