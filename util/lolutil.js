@@ -248,9 +248,9 @@ exports.getMatchDetailsBySummonerName = function(name,startTime,endTime,callback
 //--------------------------------------test--------------------------------------------/
 
 
-// getSummonerByName("JMGuo", function(info){
-//     console.log("JMGuo's info : " + JSON.stringify(info));
-// });
+getSummonerByName("Who is 55Kai", function(info){
+    console.log("JMGuo's info : " + JSON.stringify(info));
+});
 
 // getChampionsStaticData(function(obj){
 //     var count = 0;

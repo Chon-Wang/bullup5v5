@@ -64,7 +64,6 @@ exports.handleLogin = function (socket) {
                     }
                 ], function(err, userInfo){
                     var userStrength = userInfo.strengthInfo;
-                    var kda = ((userStrength.bullup_strength_k + userStrength.bullup_strength_a) / (userStrength.bullup_strength_d + 1.2)).toFixed(1);
                     var feedback = {
                         errorCode: 0,
                         type: 'LOGINRESULT',
@@ -73,15 +72,6 @@ exports.handleLogin = function (socket) {
                             name: userInfo.userNickname,
                             userId: userInfo.userId,
                             avatarId: userInfo.userIconId,
-                            strength: {
-                                kda: kda,
-                                averageGoldEarned: userStrength.bullup_strength_gold,
-                                averageTurretsKilled: userStrength.bullup_strength_tower,
-                                averageDamage: userStrength.bullup_strength_damage,
-                                averageDamageTaken: userStrength.bullup_strength_damage_taken,
-                                averageHeal: userStrength.bullup_strength_heal,
-                                score: userStrength.bullup_strength_score
-                            },
                             wealth: userInfo.wealth,
                             online: true,
                             status: 'IDLE',
@@ -92,6 +82,21 @@ exports.handleLogin = function (socket) {
                             }
                         }
                     };
+                    if(userStrength != undefined){
+                        var kda = ((userStrength.bullup_strength_k + userStrength.bullup_strength_a) / (userStrength.bullup_strength_d + 1.2)).toFixed(1);
+                        feedback.extension.strength = {
+                            kda: kda,
+                            averageGoldEarned: userStrength.bullup_strength_gold,
+                            averageTurretsKilled: userStrength.bullup_strength_tower,
+                            averageDamage: userStrength.bullup_strength_damage,
+                            averageDamageTaken: userStrength.bullup_strength_damage_taken,
+                            averageHeal: userStrength.bullup_strength_heal,
+                            score: userStrength.bullup_strength_score
+                        }
+                    }else{
+                        feedback.extension.strength = undefined;
+                    }
+                    
                     exports.addUser(feedback.extension);
                     socket.emit('feedback', feedback);
                 });
@@ -107,7 +112,7 @@ exports.handleLogin = function (socket) {
 exports.handleRegister = function (socket) {
     socket.on('register', function (userInfo) {
         logger.listenerLog('register');
-        dbUtil.findUserByNick(userInfo.userName, function (user) {
+        dbUtil.findUserByAccount(userInfo.userAccount, function (user) {
             if (user) {
                 // 如果该用户存在
                 socket.emit('feedback', {
@@ -117,23 +122,21 @@ exports.handleRegister = function (socket) {
                     extension: null
                 });
             } else {
-                dbUtil.addUser(userInfo, function (userId) {
-
+                dbUtil.addUser(userInfo, function (userAddRes) {
                     socket.emit('feedback', {
                         errorCode: 0,
                         text: '注册成功',
                         type: 'REGISTERRESULT',
                         extension: {
-                            name: userInfo.userName,
-                            userId: userId,
-                            avatarId: 1,
+                            userAccount: userInfo.userAccount,
+                            userNickname: userInfo.userNickname,
+                            userId: userAddRes.userId,
+                            userIconId: 1,
                         }
                     });
                 });
             }
         });
-
-
     });
 }
 
@@ -215,7 +218,6 @@ exports.handleRankRequest = function (socket){
     });
 }
 
-
 exports.handleLOLBind = function(socket){
     socket.on('lolBindRequest',function(request){
         var userId = request.userId;
@@ -224,13 +226,14 @@ exports.handleLOLBind = function(socket){
         var lolArea = request.lolArea;
         async.waterfall([
             function(callback){
-                dbUtil.validateBindInfo(userId, lolAccount, lolArea, function(bindValidity){
+                console.log(userId);
+                dbUtil.validateBindInfo(userId, lolAccount, lolArea, function(bindValidityResult){
                     //如果该用户在该大区已绑定了账号  或者该大区的账号已被绑定  则拒绝绑定
                     var feedback = {};
-                    if(bindValidity.value != 'true'){
+                    if(bindValidityResult.value != 'true'){
                         feedback.text = '绑定失败';
                         feedback.type = 'LOLBINDRESULT';
-                        switch(bindValidity.errorCode){
+                        switch(bindValidityResult.errorCode){
                             case 1:{
                                 feedback.errorCode = 1;
                                 feedback.extension = {};
@@ -244,7 +247,6 @@ exports.handleLOLBind = function(socket){
                                 break;
                             }
                         }
-                        //socket.emit('feedback', feedback);
                         callback('error', feedback);
                     }else{
                         callback(null, null);
@@ -254,13 +256,18 @@ exports.handleLOLBind = function(socket){
             function(blankData, callback){
                 dbUtil.insertBindInfo(userId, lolAccount, lolNickname, lolArea, function(bindResult){
                     if(bindResult.errorCode == 0){
-                        socket.emit('feedback', {
+                        var feedback = {
                             errorCode: 0,
                             type: 'LOLBINDRESULT',
                             text: '绑定成功',
-                            extension: {}
-                        });
-                        callback(null, null);
+                            extension: {
+                                tips: '绑定成功',
+                                userId: userId,
+                                lolNickname: lolNickname,
+                                lolArea : lolArea
+                            }
+                        };
+                        callback(null, feedback);
                     }else{
                         var feedback = {
                             errorCode: 3,
@@ -270,11 +277,18 @@ exports.handleLOLBind = function(socket){
                                 tips: '服务器异常，请稍后再试' 
                             }
                         }
-                        callback('failed', feedback);
+                        callback(null, feedback);
                     }
                 });
             }
         ],function(err,feedback){
+            if(feedback.errorCode == 0){
+                //更新用户战力表
+                var bindInfo = feedback.extension;
+                dbUtil.addStrengthInfo(bindInfo, function(result){
+                    console.log("result" + result);
+                });
+            }
             socket.emit('feedback', feedback);
         });
     });

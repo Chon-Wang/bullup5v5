@@ -275,6 +275,12 @@
 			</div>
 
 			<div class="input-field col s12">
+			  <i class="fa fa-user prefix" aria-hidden="true"></i>
+			  <input id="usr_nick" type="text" class="validate">
+			  <label for="usr_nick">用户昵称</label>
+			</div>
+
+			<div class="input-field col s12">
 			  <i class="fa fa-phone prefix" aria-hidden="true"></i>
 			  <input type="tel" id="usr_tel" class="validate">
 			  <label for="usr_tel">手机号</label>
@@ -310,12 +316,12 @@
 			<div class="row">
 			  <div class="input-field col s12">
 				<i class="fa fa-user prefix" aria-hidden="true"></i>
-				<input id="icon_prefix" type="text" class="validate" />
-				<label for="icon_prefix">英雄联盟用户名</label>
+				<input id="bind_lol_account_text" type="text" class="validate" />
+				<label for="bind_lol_account_text">英雄联盟用户名</label>
 			  </div>
 			</div>
 
-			<button class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">绑定
+			<button id="bind_lol_btn" class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">绑定
 			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
 			</button>
 		  </form>
@@ -402,7 +408,7 @@
 	<script src="./js/Chart.bundle.js"></script>
 	<script src="./js/genRadar.js"></script>
 	<script src="./js/close_modal.js"></script>
-
+	<script src="./js/bind_lol.js"></script>	
 
 	<!-- test data script -->
 	<!-- comment this out and replace these data with those from database -->
