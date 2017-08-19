@@ -3,12 +3,12 @@
 	 of file swig_myroom_frame.html
    -->
 
-{% if userInfo %}
-  {% for friend in userInfo.friendList %}
+{% if user %}
+  {% for friend in user.friendList %}
 	<li class="friend-li" id="friend_list">
 	  <div class="row">
 		<div class="avatar-container">
-          <img src="./media/imgs/timg-2.jpeg" class="friend-avatar">
+          <img src="./media/user_icon/{{ friend.avatarId }}.png" class="friend-avatar">
 		</div>
 		<div class="friend-nickname" id="user-{{ friend.name }}">
           {{ friend.name }}
@@ -17,7 +17,7 @@
 		<div class="color-dot color-dot-red">
 		</div>
 		<label class="friend-status friend-status--offline">
-          {{ friend.status }}
+          在线
 		</label>
 
 		<p class="invitebox right">

@@ -30,10 +30,25 @@ exports.findUserByAccount = function(account, callback) {
  * @param userId
  */
 exports.findUserById = function(userId, callback) {
-    connection.query('select * from `user_base` where user_id=?', [userId], function (err, results, fields) {
-        if (err) throw err;
-        callback(results[0]);
+    async.waterfall([
+        function(callback){
+            connection.query('select * from `user_base` where user_id=?', [userId], function (err, results, fields) {
+                if (err) throw err;
+                callback(null, results[0]);
+            });
+        },
+        function(userBaseInfo, callback){
+            connection.query('select icon_id from `bullup_profile` where user_id=?', [userId], function (err, results, fields) {
+                if (err) throw err;
+                userBaseInfo.icon_id = results[0].icon_id;
+                callback(null, userBaseInfo);
+            });
+        }
+    ],function(err,res){
+        callback(res);
     });
+
+    
 }
 
 
@@ -117,7 +132,7 @@ exports.findFriendListByUserId = function(userId, callback) {
     connection.query('select friend_user_id from bullup_friend where user_id=?', [userId], function(err, rows) {
         var friendList = {};
         async.eachSeries(rows, function(row, errCb){
-            exports.findUserById(row.friend_id, function(user) {
+            exports.findUserById(row.friend_user_id, function(user) {
                 
                 // var online = require('../proxy/socketproxy').isUserOnline(user.user_id);
                 // var status = null;
@@ -126,14 +141,13 @@ exports.findFriendListByUserId = function(userId, callback) {
                 // if (online) {
                 //     status = socketProxy.mapUserIdToSocket(user.user_id).status;
                 // }
-
-                // friendList[user.nick_name] = {
-                //     name: user.nick_name,
-                //     userId: user.user_id,
-                //     avatarId: user.icon,
-                //     online: online,
-                //     status: status
-                // };
+                friendList[user.user_nickname] = {
+                    name: user.user_nickname,
+                    userId: user.user_id,
+                    avatarId: user.icon_id,
+                    online: "true",
+                    status: "idle"
+                };
                 errCb();
             })
         }, function(err) {
