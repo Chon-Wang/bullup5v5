@@ -102,6 +102,7 @@ function handleLoginResult(feedback) {
         // 登录成功
         alert(feedback.text);
         userInfo = feedback.extension;
+        console.log(JSON.stringify(userInfo));
         //跳转
         var temp = douniu.loadSwigView("./swig_menu.html", { logged_user: userInfo });
         // 关闭
@@ -195,4 +196,5 @@ function handleRoomEstablishmentResult(feedback){
     $('#team_info').html(roomInfoHtml);
     $('#teamates_info').html(teamatesHtml);
     $('#create_room_modal').modal('close');
+    $.getScript('/js/invite_friend.js');
 }

@@ -114,26 +114,26 @@ exports.hello = function () {
  * 通过用户id获取用户的朋友列表
  */
 exports.findFriendListByUserId = function(userId, callback) {
-    connection.query('select friend_id from friend where id=?', [userId], function(err, rows) {
+    connection.query('select friend_user_id from bullup_friend where user_id=?', [userId], function(err, rows) {
         var friendList = {};
         async.eachSeries(rows, function(row, errCb){
             exports.findUserById(row.friend_id, function(user) {
                 
-                var online = require('../proxy/socketproxy').isUserOnline(user.user_id);
-                var status = null;
+                // var online = require('../proxy/socketproxy').isUserOnline(user.user_id);
+                // var status = null;
                 
-                //获取用户状态
-                if (online) {
-                    status = socketProxy.mapUserIdToSocket(user.user_id).status;
-                }
+                // //获取用户状态
+                // if (online) {
+                //     status = socketProxy.mapUserIdToSocket(user.user_id).status;
+                // }
 
-                friendList[user.nick_name] = {
-                    name: user.nick_name,
-                    userId: user.user_id,
-                    avatarId: user.icon,
-                    online: online,
-                    status: status
-                };
+                // friendList[user.nick_name] = {
+                //     name: user.nick_name,
+                //     userId: user.user_id,
+                //     avatarId: user.icon,
+                //     online: online,
+                //     status: status
+                // };
                 errCb();
             })
         }, function(err) {
