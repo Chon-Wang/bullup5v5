@@ -27,7 +27,7 @@ io.on('connection', function (socket) {
 
     userProxy.handleUserInviteResult(io, socket);
 
-    userProxy.handleLOLBind(socket);
+    userProxy.handleLOLBind(socket); 
 
     teamProxy.handleTeamEstablish(socket);
 
