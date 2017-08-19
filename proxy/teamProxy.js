@@ -14,19 +14,19 @@ exports.init = function() {
  * @param socket
  */
 exports.handleTeamEstablish = function(socket) {
-    socket.on('teamEstablish', function (team) {
-        logger.listenerLog('teamEstablish');
-        logger.jsonLog(team);
-        exports.unformedTeams[team.name] = team;
+    socket.on('roomEstablish', function (room) {
+        logger.listenerLog('roomEstablish');
+        logger.jsonLog(room);
+        exports.unformedTeams[room.roomName] = room;
         // 将该socket放入teamname命名的room中
-        socket.join(team.name);
+        socket.join(room.roomName);
 
         // 返回回馈信息
         socket.emit('feedback', {
             errorCode: 0,
             type: 'ESTABLISHTEAMRESULT',
             text: '创建成功',
-            extension: team
+            extension: room
         });
     });
 }

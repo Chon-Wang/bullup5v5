@@ -4,6 +4,7 @@ var socket = io.connect('http://127.0.0.1:3000');
 
 var userInfo = null;
 var teamInfo = null;
+var roomInfo = null;
 var inviteInfo = null;
 var versusLobbyInfo = null;
 var battleInfo = null;
@@ -26,8 +27,7 @@ socket.on('feedback', function (feedback) {
             break;
 
         case 'ESTABLISHTEAMRESULT':
-            teamInfo = handleFeedback(feedback);
-            console.log(JSON.stringify(teamInfo, null, '\t'));
+            handleRoomEstablishmentResult(feedback);
             break;
 
         case 'INVITERESULT':
@@ -167,8 +167,34 @@ function handleLOLBINDRESULT(feedback){
 
 function handleRegistResult(feedback){
     alert(feedback.text);
-    console.log(JSON.stringify(userInfo));
     $('#sign_modal').modal('close');
     $('.modal-overlay').remove();
     return feedback.extension;
+}
+
+function handleRoomEstablishmentResult(feedback){
+    if(feedback.errorCode == 0){
+        alert(feedback.text);
+    }else{
+        alert("服务器错误,创建失败");
+        return;
+    }
+    var roomInfo = feedback.extension;
+    var roomInfoFrameHtml = douniu.loadSwigView('swig_myroom_frame.html', {});
+    var roomInfoHtml = douniu.loadSwigView('swig_myroom_info.html', {
+        room: roomInfo
+    });
+    var teamates = new Array();;
+    var captain = roomInfo.captain;
+    teamates.push(captain);
+    var teamatesHtml = douniu.loadSwigView('swig_myroom_teamate.html', teamates);
+
+    for(var teamate in teamates){
+        console.log(JSON.stringify(teamate));
+    }
+
+    $('.content').html(roomInfoFrameHtml);
+    $('#team_info').html(roomInfoHtml);
+    $('#teamates_info').html(teamatesHtml);
+    $('#create_room_modal').modal('close');
 }
