@@ -6,7 +6,7 @@ douniu.loadSwigView = function (pageRef, data) {
 	return swig.renderFile(pageRef, data || {});
 }; // Loading views/swigTemplate.html 
 
-douniu.loadTemplateIntoTarget = function(pageRef, data, target){
+douniu.loadTemplateIntoTarget = function(pageRef, data, target){ //main-view
 	var template = douniu.loadSwigView(pageRef, data);
 	$('#' + target).html(template);
 }

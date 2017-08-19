@@ -1,6 +1,0 @@
-
-$().ready(function () {
-    
-
-
-});
