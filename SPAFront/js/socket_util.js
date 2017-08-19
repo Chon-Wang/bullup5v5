@@ -184,15 +184,13 @@ function handleRoomEstablishmentResult(feedback){
     var roomInfoHtml = douniu.loadSwigView('swig_myroom_info.html', {
         room: roomInfo
     });
-    var teamates = new Array();;
+    var teamates = [];
     var captain = roomInfo.captain;
     teamates.push(captain);
-    var teamatesHtml = douniu.loadSwigView('swig_myroom_teamate.html', teamates);
-
-    for(var teamate in teamates){
-        console.log(JSON.stringify(teamate));
-    }
-
+    console.log(JSON.stringify(teamates));
+    var teamatesHtml = douniu.loadSwigView('swig_myroom_teamate.html', {
+        teamates : teamates
+    });
     $('.content').html(roomInfoFrameHtml);
     $('#team_info').html(roomInfoHtml);
     $('#teamates_info').html(teamatesHtml);
