@@ -2,9 +2,10 @@
 	 div.friend-list
 	 of file swig_myroom_frame.html
    -->
-
+{% set count = 0 %}
 {% if user %}
-  {% for friend in user.friendList %}
+	{% for friend in user.friendList %}
+	{% set count+=1 %}
 	<li class="friend-li" id="friend_list">
 	  <div class="row">
 		<div class="avatar-container">
@@ -21,8 +22,9 @@
 		</label>
 
 		<p class="invitebox right">
-          <input type="checkbox" id="friend_id_1" class="filled-in" value="{{ friend.name }}">
-          <label for="friend_id_1"></label>
+          <input type="checkbox" id="friend_{{ loop.index }}_check_box" class="filled-in" value="{{ friend.name }}">
+					<label for="friend_{{ loop.index }}_check_box"></label>
+					
 		</p>
       </div>
 	</li><!-- 朋友信息 -->
@@ -33,5 +35,5 @@
       </div>
 	</li>
   {% endfor %}
-
+	<input type="hidden" id="friend_list_size_hidden" value="{{ count }}">
 {% endif %}
