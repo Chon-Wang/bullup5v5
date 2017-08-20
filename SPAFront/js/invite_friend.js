@@ -6,9 +6,10 @@ $("#invite_friend_btn").click(function(){
         user: userInfo
     });
 
+
+    
+
     //不好用
     $("#user_view").html(friendListHeadHtml);
     $('.friend-list').html(friendListHtml);
-
-    $("#friend_list").sideNav();
 });
