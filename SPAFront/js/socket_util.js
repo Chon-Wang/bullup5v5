@@ -180,7 +180,7 @@ function handleRoomEstablishmentResult(feedback){
         alert("服务器错误,创建失败");
         return;
     }
-    var roomInfo = feedback.extension;
+    roomInfo = feedback.extension;
     var roomInfoFrameHtml = douniu.loadSwigView('swig_myroom_frame.html', {});
     var roomInfoHtml = douniu.loadSwigView('swig_myroom_info.html', {
         room: roomInfo
@@ -188,7 +188,6 @@ function handleRoomEstablishmentResult(feedback){
     var teamates = [];
     var captain = roomInfo.captain;
     teamates.push(captain);
-    console.log(JSON.stringify(teamates));
     var teamatesHtml = douniu.loadSwigView('swig_myroom_teamate.html', {
         teamates : teamates
     });

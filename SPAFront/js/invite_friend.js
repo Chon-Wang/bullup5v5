@@ -16,7 +16,24 @@ $("#invite_friend_btn").click(function(){
             
             for(var i = 0;i<friendListSize;i++){
                 if($("#friend_" + (i+1) + "_check_box").prop("checked")){//选中
-                    alert($("#friend_" + (i+1) + "_check_box").val());//打印选中的值
+                    //alert($("#friend_" + (i+1) + "_check_box").val());//打印选中的值
+                    //发送请求
+                    console.log("room : " + JSON.stringify(roomInfo));
+                    var friend = userInfo.friendList[$("#friend_" + (i+1) + "_check_box").val()];
+                    socket.emit('inviteFriend', {
+                        name: friend.name,
+                        userId: friend.userId,
+                        host: {
+                            name: userInfo.name,
+                            userId: userInfo.userId,
+                        },
+                        team: {
+                            name: roomInfo.roomName,
+                            bet: roomInfo.rewardAmount, // 赌注
+                            mapId: roomInfo.mapSelection,
+                            rule: roomInfo.winningCondition
+                        }
+                    });
                 }
             }
         });
