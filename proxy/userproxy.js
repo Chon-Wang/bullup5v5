@@ -154,7 +154,7 @@ exports.handleInviteFriend = function (socket) {
             socket.emit('feedback', {
                 errorCode: 1,
                 type: 'INVITERESULT',
-                text: invitePackage.userName + '邀请失败'
+                text: invitePackage.userName + '邀请失败,该用户已经下线'
             });
         }
     })

@@ -312,25 +312,12 @@
 	<div id="message_sheet" class="modal bottom-sheet">
 	  <div class="modal-content" id="message_modal_content">
 		<h4>消息中心</h4>
-		<ul class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
-		  <li>
-			<div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>First</div>
-			<div class="collapsible-body">
-			  <span>Lorem ipsum dolor sit amet.</span>
-			  <div class="right">
-				<a class="waves-effect waves-light btn">
-				  <i class="fa fa-check" aria-hidden="true"></i>
-				</a>
-				<a class="waves-effect waves-light btn">
-				  <i class="fa fa-times" aria-hidden="true"></i>
-				</a>
-			  </div>
-			</div>
-		  </li>
+		<ul id="message_center" class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
+		<!--swig_messages.html-->
 		</ul>
 	  </div>
 	  <div class="modal-footer">
-		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
+		<a id="message_center_btn" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
 	  </div>
 	</div>
 
@@ -388,7 +375,7 @@
 	<script src="./js/close_modal.js"></script>
 	<script src="./js/bind_lol.js"></script>	
 	<script src="./js/create_room.js"></script>	
-
+	<script src="./js/message_center.js"></script>	
 	<!-- test data script -->
 	<!-- comment this out and replace these data with those from database -->
 	<script src="./js/testData.js"></script>

@@ -20,9 +20,11 @@ $("#invite_friend_btn").click(function(){
                     //发送请求
                     console.log("room : " + JSON.stringify(roomInfo));
                     var friend = userInfo.friendList[$("#friend_" + (i+1) + "_check_box").val()];
-                    socket.emit('inviteFriend', {
+                    socket.emit('message', {
                         name: friend.name,
                         userId: friend.userId,
+                        messageText: "邀请组队",
+                        messageType: "invitedFromFriend",
                         host: {
                             name: userInfo.name,
                             userId: userInfo.userId,

@@ -5,16 +5,15 @@ var socket = io.connect('http://127.0.0.1:3000');
 var userInfo = null;
 var teamInfo = null;
 var roomInfo = null;
-var inviteInfo = null;
 var versusLobbyInfo = null;
 var battleInfo = null;
+var messageInfo = [];
 
 
 socket.on('success', function (data) {
     logger.listenerLog('success');
     console.log(data);
 });
-
 
 
 socket.on('feedback', function (feedback) {
@@ -55,14 +54,19 @@ socket.on('feedback', function (feedback) {
 
         case 'LOLBINDRESULT':
             handleLOLBINDRESULT(feedback);
+            break;
         }
 });
 
-socket.on('friendInvitation', function (invitePacket) {
-    console.log("In friendInvitation listener!");
-    // TODO 获取邀请者信息, 选择是否接受邀请
-    inviteInfo = invitePacket;
+socket.on('message', function(message){
+    switch(message.messageType){
+        case 'invitedFromFriend':
+            handleInviteFromFriend(message);
+            break;
+    }
+
 });
+
 
 // 监听服务端队伍信息更新
 socket.on('teamInfoUpdate', function (data) {
@@ -206,4 +210,11 @@ function handleRoomEstablishmentResult(feedback){
         onClose: function(el) {}
     });
 
+}
+
+function handleInviteFromFriend(message){
+    //把收到的邀请添加到消息队列
+    messageInfo.push(message);
+    //弹出消息中心
+    
 }
