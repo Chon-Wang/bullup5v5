@@ -39,7 +39,7 @@ socket.on('feedback', function (feedback) {
 
         case 'TEAMDETAILS':
             var teamDetails = handleFeedback(feedback);
-            console.log(JSON.stringify(teamDetails, null, '\t'));
+            //console.log(JSON.stringify(teamDetails, null, '\t'));
             break;
 
         case 'INVITEBATTLERESULT':
@@ -59,6 +59,7 @@ socket.on('feedback', function (feedback) {
 });
 
 socket.on('message', function(message){
+    
     switch(message.messageType){
         case 'invitedFromFriend':
             handleInviteFromFriend(message);
@@ -106,7 +107,7 @@ function handleLoginResult(feedback) {
         // 登录成功
         alert(feedback.text);
         userInfo = feedback.extension;
-        console.log(JSON.stringify(userInfo));
+        //console.log(JSON.stringify(userInfo));
         //跳转
         var temp = douniu.loadSwigView("./swig_menu.html", { logged_user: userInfo });
         // 关闭
@@ -216,5 +217,6 @@ function handleInviteFromFriend(message){
     //把收到的邀请添加到消息队列
     messageInfo.push(message);
     //弹出消息中心
-    
+    $("#message_center_nav").click();
+    //console.log("messageInfo:  " + JSON.stringify(messageInfo));
 }
