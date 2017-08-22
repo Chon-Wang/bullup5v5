@@ -7,9 +7,13 @@ body{
 	padding-top: 70px;
 	padding-left: 15px;
 	padding-right: 15px;
+	
 }
 .navbar{
 	-webkit-user-select:none;
+	-webkit-app-region:drag;
+}
+.navbar-fixed{
 	-webkit-app-region:drag;
 }
 

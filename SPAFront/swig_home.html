@@ -27,17 +27,17 @@
 	</ul>
 	<div class="navbar-fixed">
 	  <nav>
-		<div class="nav-wrapper grey darken-4">
+		<div class="nav-wrapper grey darken-4" style="-webkit-app-region:drag;">
 
 		  <a href="#!" class="brand-logo"><img src="./media/imgs/bullup-noborder.png" width="54" height="40"></a>
-		  <div class="nav-brand">
+		  <div class="nav-brand"  style="margin-left: 75px;">
 			斗牛电竞
 		  </div>
 		  <div class="nav-weblink">
 			http://bullesport.com
 		  </div>
-
-		  <ul class="right hide-on-med-and-down">
+ 
+		  <ul class="right hide-on-med-and-down wang_ul">
 			<li><a class="nav-link" id="router_starter">主页</a></li>
 			<li class=""><a id="router_battle">对战大厅</a></li>
 			<li><a id="router_tournament">赛事</a></li>
@@ -60,9 +60,14 @@
 	</div>
 
 	<!-- side nav bar -->
+	
 	<ul id="user-slide-out" class="side-nav">
+		
+			<a class="waves-effect waves-light btn ds_wang" href="#modal1">修改个人信息</a>
+			
 	  <li>
 		<div class="user-view">
+			
 		  <div class="background">
 			<img src="./media/imgs/usr_bg.jpg">
 		  </div>
@@ -390,7 +395,41 @@
       </div>
 	</div>
 
-	
+	 <!-- Modal Structure -->
+	 <div id="modal1" class="modal">
+			<div class="row">
+					<form class="col s12">
+						<div class="row">
+							<div class="input-field col s6">
+								<input placeholder="占位提示" id="first_name" type="text" class="validate">
+								<label for="first_name">个人昵称</label>
+							</div>
+							<div class="input-field col s6">
+								<input id="last_name" type="text" class="validate">
+								<label for="last_name">爱好</label>
+							</div>
+						</div>
+					
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="password" type="password" class="validate">
+								<label for="password">年龄</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<input id="email" type="email" class="validate">
+								<label for="email">邮件</label>
+							</div>
+						</div>
+
+						<button class="btn waves-effect waves-light" type="submit" name="action">提交
+							
+							</button>
+				
+					</form>
+				</div>
+		</div>
 	
 	<script src="./js/jquery-2.2.4.js"></script>
 	<script src="./js/materialize.min.js"></script>
@@ -431,7 +470,12 @@
 		 $('.carousel').carousel('next');
 		 setTimeout(autoplay, 4500);
 	   }
-     });
+		 });
+		 
+		 $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal').modal();
+  });
 	</script>
 	
   </body>
