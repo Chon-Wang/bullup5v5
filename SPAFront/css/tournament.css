@@ -65,6 +65,19 @@
 	-webkit-transition: background 0.35s;
 }
 
+.wang_ul{
+	-webkit-app-region: no-drag
+}
+.ds_wang
+{
+	position: absolute;
+    top: 96px;
+    right: 1px;
+	width: 100px;
+    height: 38px;
+}
+
+
 
 #add_tournament_card:hover .add-btn {
 	background: #607d8b;
@@ -80,6 +93,7 @@
 
 	-webkit-transition: color 0.35s;
 }
+
 
 
 
