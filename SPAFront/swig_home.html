@@ -17,6 +17,8 @@
 	<link rel="stylesheet" type="text/css" href="./css/searchbox.css">
 	<link href="/css/starter.css" rel="stylesheet"/>
 	<link href="/css/tournament.css" rel="stylesheet"/>
+	<link href="/css/myroom.css" rel="stylesheet"/>
+	<link href="/css/spa_fight.css" rel="stylesheet"/>
   </head>
 
   <body>
@@ -43,9 +45,9 @@
 			<li><a id="router_tournament">赛事</a></li>
 			<li><a id="router_dataquery">数据查询</a></li>
 			<li><a id="router_rank">排行榜</a></li>
-			<li><a href="./spa_personal.html" class="nav-link" id="router_personal">个人中心</a></li>
-			<li><a href="./spa_chat.html" class="nav-link" id="router_chat">聊天室</a></li>
-			<li><a href="#message_sheet" id="router_message">消息中心</a></li>
+			<li><a id="router_personal">个人中心</a></li>
+			<li><a id="router_chat">聊天室</a></li>
+			<li><a id="message_center_nav" href="#message_sheet" id="router_message">消息中心</a></li>
 			<!-- Dropdown Trigger -->
 			<li><a class="dropdown-button" href="#!" data-activates="dropdown_menu">系统菜单</a></li>
 		  </ul>
@@ -55,7 +57,6 @@
 
 	<div class="content" id="main-view">
 	  <!-- load view in this container -->
-
 	  
 	</div>
 
@@ -107,11 +108,6 @@
 			<div class="row">
 			  <!-- first column -->
 			  <div class="col s6">
-				<!-- Room name -->
-				<div class="input-field col s12">
-				  <input id="room_name" type="text" class="validate">
-				  <label for="room_name">房间名</label>
-				</div>
 
 				<!-- Battle Declaration -->
 				<div class="input-field col s12">
@@ -124,7 +120,7 @@
 				  <div class="input-field col s12">
 					<!-- Winning Condition -->
 					<select id="map-selection">
-					  <option value="">召唤师峡谷</option>
+					  <option id="map-selection-1" value="">召唤师峡谷</option>
 					  <option disabled value="">嚎哭深渊（敬请期待）</option>
 					</select>
 					<label>地图</label>
@@ -145,25 +141,10 @@
 				  <div class="input-field col s12">
 					<!-- Winning Condition -->
 					<select id="winning_condition">
-					  <option value="">1血1塔100刀</option>
-					  <option value="">推掉基地</option>
+						<option value="">推掉基地</option>
+						<option value="" disabled>1血1塔100刀(敬请期待)</option>
 					</select>
 					<label>胜利条件</label>
-				  </div>
-				</div>
-
-				<!-- Team Size -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<!-- Winning Condition -->
-					<select id="winning_condition">
-					  <option value="">1</option>
-					  <option value="">2</option>
-					  <option value="">3</option>
-					  <option value="">4</option>
-					  <option value="">5</option>
-					</select>
-					<label>队伍规模</label>
 				  </div>
 				</div>
 
@@ -172,8 +153,8 @@
 				<div class="row">
 				  <div class="input-field col s12">
 					<select id="game_mode">
-					  <option>常规模式</option>
-					  <option>娱乐模式</option>
+					  <option value="battle">自主约战</option>
+					  <option value="match">自由匹配</option>
 					</select>
 					<label>游戏模式</label>
 				  </div>
@@ -183,18 +164,22 @@
 				<div class="row">
 				  <div class="input-field col s12">
 					<select id="reward_type">
-					  <option value="1">礼券</option>
-					  <option vlaue="2">积分</option>
-					  <option vlaue="3">美金</option>
+					  <option value="bullupScore">积分</option>
+					  <option value="dolla" disabled>美金(暂未开放)</option>
 					</select>
 					<label>下注类型</label>
 				  </div>
 				</div>
 
+				<!-- Reward Amount -->
 				<div class="row">
 				  <div class="input-field col s12">
-					<input id="reward_amount" type="number" class="validate" value="100">
-					<label for="reward_amount">下注数量</label>
+					<select id="reward_amount">
+					  <option value="10">10</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+					<label>下注数额</label>
 				  </div>
 				</div>
 
@@ -209,7 +194,7 @@
 				<!--  -->
 				<!-- Create button -->
 				<div class="row">
-				  <a class="waves-effect waves-light btn right">创建</a>
+				  <a id="confirm_create_room_btn" class="waves-effect waves-light btn right">创建</a>
 				</div>
 
 			  </div>
@@ -220,12 +205,6 @@
 	</div>
 
 	<!-- end of create room modal -->
-
-	
-
-
-
-
 
 	<!-- Modal Structure -->
 	<div id="log_modal" class="modal">
@@ -338,25 +317,12 @@
 	<div id="message_sheet" class="modal bottom-sheet">
 	  <div class="modal-content" id="message_modal_content">
 		<h4>消息中心</h4>
-		<ul class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
-		  <li>
-			<div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>First</div>
-			<div class="collapsible-body">
-			  <span>Lorem ipsum dolor sit amet.</span>
-			  <div class="right">
-				<a class="waves-effect waves-light btn">
-				  <i class="fa fa-check" aria-hidden="true"></i>
-				</a>
-				<a class="waves-effect waves-light btn">
-				  <i class="fa fa-times" aria-hidden="true"></i>
-				</a>
-			  </div>
-			</div>
-		  </li>
+		<ul id="message_center" class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
+		<!--swig_messages.html-->
 		</ul>
 	  </div>
 	  <div class="modal-footer">
-		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
+		<a id="message_center_btn" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
 	  </div>
 	</div>
 
@@ -447,7 +413,8 @@
 	<script src="./js/genRadar.js"></script>
 	<script src="./js/close_modal.js"></script>
 	<script src="./js/bind_lol.js"></script>	
-
+	<script src="./js/create_room.js"></script>	
+	<script src="./js/message_center.js"></script>	
 	<!-- test data script -->
 	<!-- comment this out and replace these data with those from database -->
 	<script src="./js/testData.js"></script>

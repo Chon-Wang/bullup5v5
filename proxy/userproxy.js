@@ -145,16 +145,17 @@ exports.handleRegister = function (socket) {
  * @param socket
  */
 exports.handleInviteFriend = function (socket) {
-    socket.on('inviteFriend', function (invitePackage) {
-        logger.listenerLog('inviteFriend');
-        if (socketProxy.isUserOnline(invitePackage.userId)) {
-            var dstSocket = socketProxy.mapUserIdToSocket(invitePackage.userId);
-            dstSocket.emit('friendInvitation', invitePackage);
+    socket.on('message', function (inviteMessage) {
+        console.log('invite : ' + inviteMessage);
+        logger.listenerLog('message');
+        if (socketProxy.isUserOnline(inviteMessage.userId)) {
+            var dstSocket = socketProxy.mapUserIdToSocket(inviteMessage.userId);
+            dstSocket.emit('message', inviteMessage);
         } else {
             socket.emit('feedback', {
                 errorCode: 1,
                 type: 'INVITERESULT',
-                text: invitePackage.userName + '邀请失败'
+                text: inviteMessage.userName + '邀请失败,该用户已经下线'
             });
         }
     })

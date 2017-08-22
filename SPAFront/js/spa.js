@@ -29,20 +29,14 @@ $(document).ready(function () {
 	function callPage(pageRefInput) {
 		$.ajax({
 			url: pageRefInput,
-
-
 			type: "GET",
-
 			dataType: "text",
-
 			success: function (response) {
 				$('.content').html(response);
 			},
-
 			error: function (error) {
 				console.log('the page was not loaded', error);
 			},
-
 			complete: function (xhr, status) {
 				console.log('the request is complete');
 			}

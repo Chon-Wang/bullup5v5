@@ -4,16 +4,16 @@ var socket = io.connect('http://127.0.0.1:3000');
 
 var userInfo = null;
 var teamInfo = null;
-var inviteInfo = null;
+var roomInfo = null;
 var versusLobbyInfo = null;
 var battleInfo = null;
+var messageInfo = [];
 
 
 socket.on('success', function (data) {
     logger.listenerLog('success');
     console.log(data);
 });
-
 
 
 socket.on('feedback', function (feedback) {
@@ -26,8 +26,7 @@ socket.on('feedback', function (feedback) {
             break;
 
         case 'ESTABLISHTEAMRESULT':
-            teamInfo = handleFeedback(feedback);
-            console.log(JSON.stringify(teamInfo, null, '\t'));
+            handleRoomEstablishmentResult(feedback);
             break;
 
         case 'INVITERESULT':
@@ -40,7 +39,7 @@ socket.on('feedback', function (feedback) {
 
         case 'TEAMDETAILS':
             var teamDetails = handleFeedback(feedback);
-            console.log(JSON.stringify(teamDetails, null, '\t'));
+            //console.log(JSON.stringify(teamDetails, null, '\t'));
             break;
 
         case 'INVITEBATTLERESULT':
@@ -55,14 +54,20 @@ socket.on('feedback', function (feedback) {
 
         case 'LOLBINDRESULT':
             handleLOLBINDRESULT(feedback);
+            break;
         }
 });
 
-socket.on('friendInvitation', function (invitePacket) {
-    console.log("In friendInvitation listener!");
-    // TODO 获取邀请者信息, 选择是否接受邀请
-    inviteInfo = invitePacket;
+socket.on('message', function(message){
+    
+    switch(message.messageType){
+        case 'invitedFromFriend':
+            handleInviteFromFriend(message);
+            break;
+    }
+
 });
+
 
 // 监听服务端队伍信息更新
 socket.on('teamInfoUpdate', function (data) {
@@ -102,6 +107,7 @@ function handleLoginResult(feedback) {
         // 登录成功
         alert(feedback.text);
         userInfo = feedback.extension;
+        //console.log(JSON.stringify(userInfo));
         //跳转
         var temp = douniu.loadSwigView("./swig_menu.html", { logged_user: userInfo });
         // 关闭
@@ -167,8 +173,50 @@ function handleLOLBINDRESULT(feedback){
 
 function handleRegistResult(feedback){
     alert(feedback.text);
-    console.log(JSON.stringify(userInfo));
     $('#sign_modal').modal('close');
     $('.modal-overlay').remove();
     return feedback.extension;
+}
+
+function handleRoomEstablishmentResult(feedback){
+    if(feedback.errorCode == 0){
+        alert(feedback.text);
+    }else{
+        alert("服务器错误,创建失败");
+        return;
+    }
+    roomInfo = feedback.extension;
+    var roomInfoFrameHtml = douniu.loadSwigView('swig_myroom_frame.html', {});
+    var roomInfoHtml = douniu.loadSwigView('swig_myroom_info.html', {
+        room: roomInfo
+    });
+    var teamates = [];
+    var captain = roomInfo.captain;
+    teamates.push(captain);
+    var teamatesHtml = douniu.loadSwigView('swig_myroom_teamate.html', {
+        teamates : teamates
+    });
+    $('.content').html(roomInfoFrameHtml);
+    $('#team_info').html(roomInfoHtml);
+    $('#teamates_info').html(teamatesHtml);
+    $('#create_room_modal').modal('close');
+    $.getScript('/js/invite_friend.js');
+
+    $('#invite_friend_btn').sideNav({
+        menuWidth: 400, // Default is 300
+        edge: 'right', // Choose the horizontal origin
+        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        draggable: true, // Choose whether you can drag to open on touch screens,
+        onOpen: function(el) {},
+        onClose: function(el) {}
+    });
+
+}
+
+function handleInviteFromFriend(message){
+    //把收到的邀请添加到消息队列
+    messageInfo.push(message);
+    //弹出消息中心
+    $("#message_center_nav").click();
+    //console.log("messageInfo:  " + JSON.stringify(messageInfo));
 }

@@ -1,4 +1,3 @@
-
 exports.init = function() {
     this.userSocketMap = {};
     this.socketUserMap = {};
@@ -11,8 +10,13 @@ exports.init = function() {
 exports.add = function(userId, socket) {
     this.userSocketMap[userId] = socket;
     this.socketUserMap[socket.id] = userId;
+    console.log("userSocketMap: " + this.userSocketMap[userId].id);
+    console.log("socketUserMap: " + this.socketUserMap[socket.id]);
 }
 
+exports.getMapInfo = function(){
+    return this.userSocketMap;
+}
 
 /**
  * 删除映射
@@ -43,7 +47,7 @@ exports.mapUserIdToSocket = function(userId) {
  * 通过socketid映射user
  * @param socketId socketid
  */
-exports.mapUserIdToSocket = function(socketId) {
+exports.mapSocketToUserId = function(socketId) {
     return this.socketUserMap[socketId];
 }
 
