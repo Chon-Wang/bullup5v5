@@ -72,8 +72,20 @@ socket.on('message', function(message){
 // 监听服务端队伍信息更新
 socket.on('teamInfoUpdate', function (data) {
     roomInfo = data;
-    console.log(JSON.stringify(roomInfo));
-    //更新界面信息
+    //console.log(JSON.stringify(roomInfo));
+    //更新房间信息
+    var roomInfoFrameHtml = douniu.loadSwigView('swig_myroom_frame.html', {});
+    var roomInfoHtml = douniu.loadSwigView('swig_myroom_info.html', {
+        room: roomInfo
+    });
+    var teamates = roomInfo.participants;
+    var teamatesHtml = douniu.loadSwigView('swig_myroom_teamate.html', {
+        teamates : teamates
+    });
+    $('.content').html(roomInfoFrameHtml);
+    $('#team_info').html(roomInfoHtml);
+    $('#teamates_info').html(teamatesHtml);
+    
     if(userInfo.name == roomInfo.participants[0].name){
         //房主更新friendList
         $.getScript('/js/invite_friend.js');
@@ -91,20 +103,7 @@ socket.on('teamInfoUpdate', function (data) {
         $('#confirm_create_team_btn').css('display', 'none');
     }
 
-    //更新房间信息
-    var roomInfoFrameHtml = douniu.loadSwigView('swig_myroom_frame.html', {});
-    var roomInfoHtml = douniu.loadSwigView('swig_myroom_info.html', {
-        room: roomInfo
-    });
-    var teamates = roomInfo.participants;
-    var teamatesHtml = douniu.loadSwigView('swig_myroom_teamate.html', {
-        teamates : teamates
-    });
-    $('.content').html(roomInfoFrameHtml);
-    $('#team_info').html(roomInfoHtml);
-    $('#teamates_info').html(teamatesHtml);
-    
-    
+    $('#message_center_nav').click();
     // {"roomName":"嵇昊雨1503584960077","captain":{"name":"嵇昊雨","userId":30,"avatarId":1},"participants":[{"name":"嵇昊雨","userId":30,"avatarId":1,"strength":{"kda":"0.0","averageGoldEarned":0,"averageTurretsKilled":0,"averageDamage":0,"averageDamageTaken":0,"averageHeal":0,"score":2000}},{"name":"嵇昊雨","userId":30,"avatarId":1,"strength":{"kda":"0.0","averageGoldEarned":0,"averageTurretsKilled":0,"averageDamage":0,"averageDamageTaken":0,"averageHeal":0,"score":2000}}],"status":"ESTABLISHING","gameMode":"battle","battleDesc":"不服来战","rewardType":"bullupScore","rewardAmount":"10","mapSelection":"map-selection-1","winningCondition":"push-crystal"}
 
     // {"name":"嵇昊雨","userId":30,"avatarId":1,"wealth":0,"online":true,"status":"IDLE","friendList":{"郭景明":{"name":"郭景明","userId":29,"avatarId":1,"online":"true","status":"idle"},"嵇昊雨":{"name":"嵇昊雨","userId":30,"avatarId":1,"online":"true","status":"idle"}},"relationMap":{"currentTeamId":null,"currentGameId":null},"strength":{"kda":"0.0","averageGoldEarned":0,"averageTurretsKilled":0,"averageDamage":0,"averageDamageTaken":0,"averageHeal":0,"score":2000}}

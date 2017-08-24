@@ -1,13 +1,15 @@
 $(document).ready(function(){
     $("#message_center_nav").on('click', function(e){
-        console.log(' messages : ' + messageInfo);
+        //console.log(' messages : ' + messageInfo);
         var messagesHtml = douniu.loadSwigView('./swig_messages.html',{
             messages: messageInfo
         });
         $("#message_center").html(messagesHtml);
-
-        $(".message_accept_btn").unbind();
+       console.log("pre-bind");
+        //$(".message_accept_btn").unbind();
+        //if(!$._data($(".message_accept_btn")[0], "events") || !$._data($(".message_accept_btn")[0], "events")["click"])
         $(".message_accept_btn").on('click', function(e){
+            
             var messageAcceptBtnId = $(this).attr('id');
             var messageAcceptBtnIdString = String(messageAcceptBtnId);
             messageAcceptBtnIdString = messageAcceptBtnIdString.substring(messageAcceptBtnIdString.indexOf('_') + 1);
@@ -32,7 +34,6 @@ $(document).ready(function(){
                     }
                 }
             };
-            //console.log(JSON.stringify(inviteResult));
             socket.emit('inviteResult', inviteResult);
             //删除消息
             messageInfo.splice(Number.parseInt(messageIndexString), 1);
