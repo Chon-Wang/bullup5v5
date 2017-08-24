@@ -55,7 +55,7 @@ body::-webkit-scrollbar-thumb {
 	display: inline;
 }
 
-#log_modal, #sign_modal, #link_modal, #team-detail-modal, #waiting-modal, #match-bet-modal, #fight-bet-modal {
+#recharge,#log_modal, #sign_modal, #link_modal, #team-detail-modal, #waiting-modal, #match-bet-modal, #fight-bet-modal {
 	width: 50%;
 	background-color: #455a64;
 	color: #f5f5f5;

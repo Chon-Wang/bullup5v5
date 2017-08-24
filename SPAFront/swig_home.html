@@ -22,6 +22,16 @@
   </head>
 
   <body>
+		<style>
+	.selected {
+    background-color: #26a69a;
+    color: #fff;
+}
+.qies{
+	float: left;
+	margin-left: 10px;
+}
+		</style>
 	
 	
 	<ul id="dropdown_menu" class="dropdown-content grey darken-4">
@@ -289,7 +299,53 @@
 	</div>
 
 
-	<!-- link modal -->
+
+	 
+		 <!-- Modal 充值 -->
+		 <div id="recharge" class="modal">
+			<div class="row">
+				<form class="col s12">
+					<div class="row">
+						<div class="input-field col s6">
+							<input id="first_name" type="text" class="validate">
+							<label class="ois" for="first_name">输入金额</label>
+							
+						</div>
+						<div class="qies">
+						<div class="chip ">19$</div>
+						<div class="chip">29$</div>
+						<div class="chip">39$</div>
+						<div class="chip">49$</div>
+							<div class="chip">89$</div>
+								<div class="chip">99$</div>
+									<div class="chip">199$</div>
+						</div>
+						<div class="input-field col s6">
+							<input id="last_name" type="text" class="validate account">
+							<label for="last_name">银行卡号</label>
+						</div>
+					</div>
+				
+					<div class="row">
+						<div class="input-field col s6">
+								<input id="birthdate" type="text" class="datepicker picker__input" readonly="" tabindex="-1" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="birthdate_root">
+							<label for="password">有效期</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s6">
+							<input id="email" type="email" class="validate" maxlength="3" >
+							<label for="email">安全码</label>
+						</div>
+					</div>
+					
+				</form>
+				<a class="waves-effect waves-light btn an_n" >提交</a>
+			</div>
+		 </div>
+		 <!-- link modal -->
+
+		 
 	<!-- Modal Structure -->
 	<div id="link_modal" class="modal">
 	  <div class="modal-content">
@@ -421,6 +477,8 @@
 
 	<!-- router -->
 	<script src="./js/router.js"></script>
+	<!-- 银行格式js -->
+	<script src="./js/bankInput.js"></script>
 
 
 	<script>
@@ -442,7 +500,30 @@
 		 $(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
+	});
+		// 有效期时间组件
+	$('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15 // Creates a dropdown of 15 years to control year
   });
+      
+	// 价格$
+	$('.chip').click(function () {
+		var iox = $(this).index();
+		var clasvlue = $('.chip').eq(iox).text()
+		$("#first_name").val(clasvlue)
+		$('.ois').addClass('active')
+    $('.chip').eq(iox).addClass("selected").siblings().removeClass('selected')
+
+	})
+
+//银行卡号输入js配置
+	$(document).ready(function(){
+		$('.account').bankInput(); 
+		$('.account').bankInput({min:4,max:25,deimiter:'   '}); 
+		$('.account').bankList(); 
+})
+	
 	</script>
 	
   </body>
