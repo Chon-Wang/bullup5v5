@@ -20,7 +20,6 @@ exports.handleTeamEstablish = function(socket) {
         exports.unformedTeams[room.roomName] = room;
         // 将该socket放入teamname命名的room中
         socket.join(room.roomName);
-
         // 返回回馈信息
         socket.emit('feedback', {
             errorCode: 0,

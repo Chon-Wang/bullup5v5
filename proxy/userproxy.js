@@ -184,7 +184,7 @@ exports.handleUserInviteResult = function (io, socket) {
             //    socket.emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
 
             // 向房间内的所有用户广播当前队伍信息
-            io.in(teamName).emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
+            io.sockets.in(teamName).emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
         } else if (feedback.errorCode == 1) {
             // 用户拒绝邀请
             var hostId = feedback.extension.hostId;
