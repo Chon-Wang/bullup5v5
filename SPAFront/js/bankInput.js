@@ -10,7 +10,7 @@
             deimiter : ' ', // 账号分隔符 
             onlyNumber : true, // 只能输入数字 
             copy : false // 允许复制 
-        }; 
+        };
         var opts = $.extend({}, defaults, options); 
         var obj = $(this); 
         obj.css({imeMode:'Disabled',borderWidth:'1px',color:'#fff',fontFamly:'Times New Roman'}).attr('maxlength', opts.max); 
