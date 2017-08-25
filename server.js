@@ -2,7 +2,7 @@ var io = require('socket.io')();
 var logger = require('./util/logutil');
 
 // 代理
-var userProxy = require('./proxy/userproxy.js');
+var userProxy = require('./proxy/userproxy.js'); 
 var teamProxy = require('./proxy/teamProxy.js');
 var socketProxy = require('./proxy/socketproxy.js');
 var battleProxy = require('./proxy/battleProxy.js');
