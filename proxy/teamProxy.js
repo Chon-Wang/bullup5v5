@@ -31,6 +31,22 @@ exports.handleRoomEstablish = function(socket) {
 }
 
 
+exports.handleRefreshFormedBattleRoom = function(socket){
+    socket.on('refreshFormedBattleRoom', function(data){
+        console.log('refresh command');
+        var feedback = {
+            errorCode: 0,
+            type: 'REFRESHFORMEDBATTLEROOMRESULT',
+            text: '刷新成功',
+            extension: {
+                formedTeams: exports.formedTeams
+            }
+        }
+
+    });
+
+}
+
 /**
  * 通过队伍名获取未形成的队伍信息
  * @param teamName 队伍名
@@ -70,7 +86,7 @@ exports.handleTeamEstablish = function (io, socket) {
         // 将未形成队伍列表中的队伍放入已形成队伍列表中
         exports.formedTeams[teamInfo.roomName] = teamInfo;
         // 将该队伍可以用来广播的内容加入到广播列表中
-        //？？？不知道这段代码干嘛的
+        //
         // exports.broadcastTeamInfos[teamInfo.roomName] = {
         //     teamName: teamInfo.roomName,
         //     status: teamInfo.status,

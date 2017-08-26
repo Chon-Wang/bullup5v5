@@ -37,6 +37,8 @@ io.on('connection', function (socket) {
 
     teamProxy.handleTeamDetails(socket);
 
+    teamProxy.handleRefreshFormedBattleRoom(socket);
+
     battleProxy.handleBattleInvite(socket);
 
     battleProxy.handleBattleInviteResult(io, socket);
