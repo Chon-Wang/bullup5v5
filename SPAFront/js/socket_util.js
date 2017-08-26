@@ -260,7 +260,33 @@ function handleRoomEstablishmentResult(feedback){
 }
 
 function handleTeamEstablishResult(feedback){
+    if(feedback.errorCode == 0){
+        alert(feedback.text);
+        teamInfo = feedback.extension.teamInfo;
+        var formedTeams = feedback.extension.formedTeams;
+        delete formedTeams[teamInfo.roomName];
+        var battle_teams = douniu.loadSwigView('swig_battle.html', {
+			teams: formedTeams
+		});
+        //页面跳转到对战大厅
+        $('.content').html(battle_teams);
+		$('#team-detail-modal').modal();
+		$('#waiting-modal').modal();
+		$.getScript('/js/close_modal.js');
+		var pages = {
+			totalPage: 10,
+	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+	 		currentPage: 1
+		};
+		//
+		var pagination = douniu.loadSwigView('swig_pagination.html', pages);
+		//		console.log(pagination);
+		$('#pagination-holder').html(pagination);
 
+
+    }else{
+        alert(feedback.text);
+    }
 }
 
 function handleInviteFromFriend(message){

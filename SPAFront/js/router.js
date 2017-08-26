@@ -39,33 +39,25 @@ $().ready(function(){
 		e.preventDefault();
 		//get a data structure in which teams information are stored
 		
-		
 		//calculate total numbers of teams
 		
-		
 		//calculate max page number
-
 
 		//render swig_battle.html with page number 1
 		//render template
 		var battle_teams = douniu.loadSwigView('swig_battle.html', {
 			teams: teams
 		});
-		
-
 		//load template to content div
 		$('.content').html(battle_teams);
 		$('#team-detail-modal').modal();
 		$('#waiting-modal').modal();
-
 		$.getScript('/js/close_modal.js');
-
 		var pages = {
 			totalPage: 10,
 	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 	 		currentPage: 1
 		};
-		
 		//
 		var pagination = douniu.loadSwigView('swig_pagination.html', pages);
 		//		console.log(pagination);
