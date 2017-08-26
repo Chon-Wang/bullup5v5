@@ -91,10 +91,10 @@ $().ready(function(){
 	// });
 
 	$('#router_personal').on('click', function(e){
-		e.preventDefault();
-
+		//e.preventDefault();
+		var spaPersonalHtml = douniu.loadSwigView('spa_personal.html', {});
 		//
-		
+		$('.content').html(spaPersonalHtml);
 	});
 
 	$('#router_dataquery').on('click', function(e){

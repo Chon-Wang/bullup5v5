@@ -13,7 +13,7 @@ exports.init = function() {
  * 队伍创建监听
  * @param socket
  */
-exports.handleTeamEstablish = function(socket) {
+exports.handleRoomEstablish = function(socket) {
     socket.on('roomEstablish', function (room) {
         logger.listenerLog('roomEstablish');
         logger.jsonLog(room);
@@ -23,7 +23,7 @@ exports.handleTeamEstablish = function(socket) {
         // 返回回馈信息
         socket.emit('feedback', {
             errorCode: 0,
-            type: 'ESTABLISHTEAMRESULT',
+            type: 'ESTABLISHROOMRESULT',
             text: '创建成功',
             extension: room
         });
@@ -60,11 +60,11 @@ exports.addParticipantToTeam = function (teamName, participant) {
  * @param io
  * @param socket
  */
-exports.handleTeamForm = function (io, socket) {
-    socket.on('teamForm', function (teamInfo) {
-        logger.listenerLog('teamForm');
+exports.handleTeamEstablish = function (io, socket) {
+    socket.on('establishTeam', function (teamInfo) {
+        logger.listenerLog('establishTeam');
 
-        teamInfo = exports.mapTeamNameToUnformedTeam(teamInfo.teamName);
+        teamInfo = exports.mapTeamNameToUnformedTeam(teamInfo.roomName);
         // 更新队伍信息状态
         teamInfo.status = 'PUBLISHING';
         // 将未形成队伍列表中的队伍放入已形成队伍列表中

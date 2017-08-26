@@ -29,9 +29,9 @@ io.on('connection', function (socket) {
 
     userProxy.handleLOLBind(socket); 
 
-    teamProxy.handleTeamEstablish(socket);
+    teamProxy.handleRoomEstablish(socket);
 
-    teamProxy.handleTeamForm(io, socket);
+    teamProxy.handleTeamEstablish(io, socket);
 
     teamProxy.handleVersusLobbyRefresh(socket);
 

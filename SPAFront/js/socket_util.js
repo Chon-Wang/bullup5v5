@@ -25,7 +25,7 @@ socket.on('feedback', function (feedback) {
             userInfo = handleRegistResult(feedback);
             break;
 
-        case 'ESTABLISHTEAMRESULT':
+        case 'ESTABLISHROOMRESULT':
             handleRoomEstablishmentResult(feedback);
             break;
 
@@ -53,7 +53,11 @@ socket.on('feedback', function (feedback) {
             break;
 
         case 'LOLBINDRESULT':
-            handleLOLBINDRESULT(feedback);
+            handleLOLBindResult(feedback);
+            break;
+
+        case 'ESTABLISHTEAMRESULT':
+            handleTeamEstablishResult(feedback);
             break;
         }
 });
@@ -204,7 +208,7 @@ function handleRankList(rankList){
     $('ul.tabs').tabs();
 }
 
-function handleLOLBINDRESULT(feedback){
+function handleLOLBindResult(feedback){
     alert(feedback.extension.tips);
 }
 
@@ -247,6 +251,15 @@ function handleRoomEstablishmentResult(feedback){
         onOpen: function(el) {},
         onClose: function(el) {}
     });
+
+    $("#confirm_create_team_btn").click(function(){
+		console.log(roomInfo);
+		socket.emit('establishTeam', roomInfo);
+	});
+
+}
+
+function handleTeamEstablishResult(feedback){
 
 }
 
