@@ -296,7 +296,7 @@ function handleTeamEstablishResult(feedback){
 
 function handleRefreshFormedBattleRoomResult(feedback){
     if(feedback.errorCode == 0){
-        alert(feedback.text);
+        //alert(feedback.text);
         var formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
         var battle_teams = douniu.loadSwigView('swig_battle.html', {
