@@ -55,6 +55,11 @@ socket.on('feedback', function (feedback) {
         case 'LOLBINDRESULT':
             handleLOLBINDRESULT(feedback);
             break;
+       
+
+        case 'PESONALCENTERRESULT':
+            handlePersonalCenterResult(feedback);
+            break;
         }
 });
 
@@ -219,4 +224,18 @@ function handleInviteFromFriend(message){
     //弹出消息中心
     $("#message_center_nav").click();
     //console.log("messageInfo:  " + JSON.stringify(messageInfo));
+}
+
+function  handlePersonalCenterResult(feedback){
+    //判断是否成功
+    if(feedback.errorCode == 0){
+
+    }else{
+
+    }
+    //取数据
+    var data = feedback.extension;
+    //渲染
+    var personalCenterHtml = douniu.loadSwigView('./swig_personal.html', data);
+    $('#main-view').html(personalCenterHtml);
 }
