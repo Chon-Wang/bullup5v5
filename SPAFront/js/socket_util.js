@@ -274,6 +274,9 @@ function handleTeamEstablishResult(feedback){
         teamInfo = feedback.extension.teamInfo;
         var formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
+        for(var team in formedTeams){
+            formedTeams[team].participantCount = formedTeams[team].participants.length;
+        }
         var battle_teams = douniu.loadSwigView('swig_battle.html', {
 			teams: formedTeams
 		});
@@ -304,9 +307,8 @@ function handleRefreshFormedBattleRoomResult(feedback){
         //alert(feedback.text);
         var formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
-        var formedTeamsArray = [];
-        for(var key in formedTeams){
-            formedTeamsArray.push(formedTeams[key]);
+        for(var team in formedTeams){
+            formedTeams[team].participantCount = formedTeams[team].participants.length;
         }
         var battle_teams = douniu.loadSwigView('swig_battle.html', {
 			teams: formedTeams

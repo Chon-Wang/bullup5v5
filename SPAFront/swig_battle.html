@@ -17,15 +17,15 @@
           <div class="row">
             <!-- teaser -->
             <div class="col s2">
-              <img class="battle-teaser" src="./media/imgs/timg-2.jpeg">
+              <img class="battle-teaser" src="./media/user_icon/{{ team.captain.avatarId }}.png">
             </div>
             <div class="col s10">
               <div class="row">
                 <span class="card-title right">
-				  {{team.teamName}}
+				  {{team.roomName}}
 				</span>
                 <div class="chip right ">
-                  {{ team.type }}
+                  {{ team.participantCount }}V{{ team.participantCount }}
                 </div>
               </div>
             </div>
@@ -38,10 +38,10 @@
           <a href="#">收藏</a>
 
           <div class="chip right">
-            <i class="fa fa-gamepad" aria-hidden="true"></i> {{ team.rule }}
+            <i class="fa fa-gamepad" aria-hidden="true"></i>{% if team.winningCondition=='push-crystal' %}推掉水晶{% endif %}
           </div>
           <div class="chip right">
-            <i class="fa fa-money" aria-hidden="true"></i> {{ team.bet }}
+            <i class="fa fa-money" aria-hidden="true"></i> {{ team.rewardAmount }}
           </div>
         </div>
       </div>
