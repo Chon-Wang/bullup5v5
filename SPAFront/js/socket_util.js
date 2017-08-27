@@ -299,6 +299,10 @@ function handleRefreshFormedBattleRoomResult(feedback){
         //alert(feedback.text);
         var formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
+        var formedTeamsArray = [];
+        for(var key in formedTeams){
+            formedTeamsArray.push(formedTeams[key]);
+        }
         var battle_teams = douniu.loadSwigView('swig_battle.html', {
 			teams: formedTeams
 		});
