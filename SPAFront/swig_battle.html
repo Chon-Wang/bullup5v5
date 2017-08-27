@@ -1,11 +1,11 @@
 
 <div class="row">
   <!-- button will fade away -->
-  <a class="waves-effect waves-light btn right" href="#create_room_modal">创建房间</a>
+  <a class="waves-effect waves-light btn right" id="refresh_formed_battle_room">刷新房间</a>
 
-  <a class="nav-link waves-effect waves-light btn right" id="my_room" href="./spa_myroom.html">我的房间</a>
+  <!-- <a class="nav-link waves-effect waves-light btn right" id="my_room" href="./spa_myroom.html">我的房间</a> -->
 </div>
-
+<!-- 
 {% if teams %}
   <!-- cycle through two teams, put  -->
   {% for team in teams %}
@@ -24,10 +24,10 @@
             <div class="col s10">
               <div class="row">
                 <span class="card-title right">
-				  {{team.teamName}}
+				  {{team.roomName}}
 				</span>
                 <div class="chip right ">
-                  {{ team.type }}
+									{{ team.participants|length }}V{{ team.participants|length }}
                 </div>
               </div>
             </div>
@@ -40,10 +40,10 @@
           <a href="#">收藏</a>
 
           <div class="chip right">
-            <i class="fa fa-gamepad" aria-hidden="true"></i> {{ team.rule }}
+            <i class="fa fa-gamepad" aria-hidden="true"></i> {{ team.winningCondition }}
           </div>
           <div class="chip right">
-            <i class="fa fa-money" aria-hidden="true"></i> {{ team.bet }}
+            <i class="fa fa-money" aria-hidden="true"></i> {{ team.rewardAmount }}
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@
   <div class="modal-footer">
 	<a href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-btn">邀请战斗</a>
   </div>
-</div>
+</div> -->
 
 <!-- Modal Structure -->
 <div id="waiting-modal" class="modal">

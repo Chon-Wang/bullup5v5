@@ -137,6 +137,8 @@
 
 .more {
 	float: right;
+	
+	
 }
 
 /* .main-carousel-img { */
@@ -167,4 +169,8 @@
 	background-image: url(/media/imgs/arcade_veigar.jpg);
 	background-size: 100% auto;
 	background-position: 50% 5%;
+}
+.an_n{
+	float: right;
+	margin-right: 20px;
 }

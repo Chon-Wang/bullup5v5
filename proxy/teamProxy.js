@@ -13,24 +13,39 @@ exports.init = function() {
  * 队伍创建监听
  * @param socket
  */
-exports.handleTeamEstablish = function(socket) {
+exports.handleRoomEstablish = function(socket) {
     socket.on('roomEstablish', function (room) {
         logger.listenerLog('roomEstablish');
         logger.jsonLog(room);
         exports.unformedTeams[room.roomName] = room;
         // 将该socket放入teamname命名的room中
         socket.join(room.roomName);
-
         // 返回回馈信息
         socket.emit('feedback', {
             errorCode: 0,
-            type: 'ESTABLISHTEAMRESULT',
+            type: 'ESTABLISHROOMRESULT',
             text: '创建成功',
             extension: room
         });
     });
 }
 
+
+exports.handleRefreshFormedBattleRoom = function(socket){
+    socket.on('refreshFormedBattleRoom', function(data){
+        console.log('refresh command');
+        var feedback = {
+            errorCode: 0,
+            type: 'REFRESHFORMEDBATTLEROOMRESULT',
+            text: '刷新成功',
+            extension: {
+                formedTeams: exports.formedTeams
+            }
+        }
+
+    });
+
+}
 
 /**
  * 通过队伍名获取未形成的队伍信息
@@ -61,28 +76,38 @@ exports.addParticipantToTeam = function (teamName, participant) {
  * @param io
  * @param socket
  */
-exports.handleTeamForm = function (io, socket) {
-    socket.on('teamForm', function (teamInfo) {
-        logger.listenerLog('teamForm');
+exports.handleTeamEstablish = function (io, socket) {
+    socket.on('establishTeam', function (roomInfo) {
+        logger.listenerLog('establishTeam');
 
-        teamInfo = exports.mapTeamNameToUnformedTeam(teamInfo.teamName);
+        teamInfo = exports.mapTeamNameToUnformedTeam(roomInfo.roomName);
         // 更新队伍信息状态
         teamInfo.status = 'PUBLISHING';
         // 将未形成队伍列表中的队伍放入已形成队伍列表中
-        exports.formedTeams[teamInfo.name] = teamInfo;
+        exports.formedTeams[teamInfo.roomName] = teamInfo;
         // 将该队伍可以用来广播的内容加入到广播列表中
-        exports.broadcastTeamInfos[teamInfo.name] = {
-            teamName: teamInfo.name,
-            status: teamInfo.status,
-            type: teamInfo.type,
-            bet: teamInfo.bet,
-            mapId: teamInfo.mapId,
-            rule: teamInfo.rule,
-            participantsCount: teamInfo.participants.length
+        //
+        // exports.broadcastTeamInfos[teamInfo.roomName] = {
+        //     teamName: teamInfo.roomName,
+        //     status: teamInfo.status,
+        //     type: teamInfo.gameMode,
+        //     bet: teamInfo.rewardAmount,
+        //     mapId: teamInfo.mapSelection,
+        //     rule: teamInfo.winningCondition,
+        //     participantsCount: teamInfo.participants.length
+        // };
+        delete exports.unformedTeams[teamInfo.roomName];
+        var feedback = {
+            errorCode: 0,
+            type: 'ESTABLISHTEAMRESULT',
+            text: '队伍创建成功',
+            extension: {
+                teamInfo: teamInfo,
+                formedTeams: exports.formedTeams
+            }
         };
-        exports.unformedTeams[teamInfo.name] = null;
         // 告诉该队伍中的所有用户队伍已经形成
-        io.in(teamInfo.name).emit('teamForm');
+        io.sockets.in(teamInfo.roomName).emit('feedback', feedback);
     });
 }
 
