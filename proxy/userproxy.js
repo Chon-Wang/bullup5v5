@@ -294,3 +294,23 @@ exports.handleLOLBind = function(socket){
         });
     });
 }
+
+exports.handlePersonalCenterRequest = function(socket){
+    socket.on('personalCenterRequest', function(request){
+        //dbUtil.getPersonalCenterInfoByUserId();
+
+        var feedback = {};
+        if(true){
+            feedback.errorCode = 0,
+            feedback.type = 'PESONALCENTERRESULT',
+            feedback.text = '个人中心加载成功'
+            //feedback.extension = data;
+        }else{
+            feedback.errorCode = 1,
+            feedback.type = 'PESONALCENTERRESULT',
+            feedback.text = '个人中心加载失败',
+            feedback.extension = null
+        }
+    });
+
+}

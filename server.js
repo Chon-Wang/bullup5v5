@@ -29,6 +29,10 @@ io.on('connection', function (socket) {
 
     userProxy.handleLOLBind(socket); 
 
+    userProxy.handlePersonalCenterRequest(socket);
+
+    teamProxy.handleTeamEstablish(socket);
+  
     teamProxy.handleRoomEstablish(socket);
 
     teamProxy.handleTeamEstablish(io, socket);
