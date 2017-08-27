@@ -34,7 +34,8 @@
         </div>
 
         <div class="card-action">
-          <a href="#team-detail-modal">详情</a>
+					<a class="team_detail_btn" id="{{ team.roomName }}_team_detail_btn" href="#{{ team.roomName }}_team-detail-modal">详情</a>
+					<!-- <a id="battle_team_details_btn">详情</a> -->
           <a href="#">收藏</a>
 
           <div class="chip right">
@@ -59,13 +60,17 @@
 <div class="row center-align" id="pagination-holder">
 </div>
 
-
+{% if teams %}
+<!-- cycle through two teams, put  -->
+{% for team in teams %}
 <!-- team detail modal Structure -->
-<div id="team-detail-modal" class="modal">
+<div id="{{ team.roomName }}_team-detail-modal" class="modal">
   <div class="modal-content">
 	<div class="row">
 	  <!-- Where Details go -->
-	  <div class="col s12 m2" id ="team_detail_container">
+	  <div class="col s12 m2" id ="{{ team.roomName }}_team_detail_container">
+			<!-- team details -->
+
 	  </div>
 	  <!-- End of Details -->
 	  <div class="col s12 m9">
@@ -140,7 +145,8 @@
 	<a href="./spa_fight.html" class="modal-action waves-effect waves-green btn-flat nav-link" id="hide-btn">隐藏到后台</a>
   </div>
 </div>
-
+{% endfor %}
+{% endif %}
 
 
 
