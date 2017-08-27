@@ -294,23 +294,36 @@ exports.handleLOLBind = function(socket){
         });
     });
 }
-
+/**个人中心 */
 exports.handlePersonalCenterRequest = function(socket){
-    socket.on('personalCenterRequest', function(request){
+    socket.on('pesonalCenterRequest', function(request){
+        console.log('result:'+JSON.stringify(request));
         //dbUtil.getPersonalCenterInfoByUserId();
+        dbUtil.getPersonalCenterInfoByUserId(request.userId,function(queryResult){
+            var feedback = {};
+            if(queryResult != null && queryResult != undefined){
+                feedback.errorCode = 0,
+                feedback.type = 'PESONALCENTERRESULT',
+                feedback.text = '个人中心加载成功'
+                var data = {};
+                //填充data
+                data.userId = queryResult.user_Id;
+                //data.XXX = queryResult.XXX;
+                data.userAccount=queryResult.user_account;
+                data.name=queryResult.user_nickname;
+                data.payAccountId=queryResult.bullup_payment_account_id;
+                data.paymentType=queryResult.bullup_payment_type;
+                data.paymentAccount=queryResult.bullup_account;
+                feedback.extension = data;
+            }else{
+                feedback.errorCode = 1,
+                feedback.type = 'PESONALCENTERRESULT',
+                feedback.text = '个人中心加载失败',
+                feedback.extension = null
+            }
+            socket.emit('feedback', feedback);
 
-        var feedback = {};
-        if(true){
-            feedback.errorCode = 0,
-            feedback.type = 'PESONALCENTERRESULT',
-            feedback.text = '个人中心加载成功'
-            //feedback.extension = data;
-        }else{
-            feedback.errorCode = 1,
-            feedback.type = 'PESONALCENTERRESULT',
-            feedback.text = '个人中心加载失败',
-            feedback.extension = null
-        }
+        });
     });
 
 }
