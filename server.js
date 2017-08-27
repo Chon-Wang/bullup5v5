@@ -2,7 +2,7 @@ var io = require('socket.io')();
 var logger = require('./util/logutil');
 
 // 代理
-var userProxy = require('./proxy/userproxy.js');
+var userProxy = require('./proxy/userproxy.js'); 
 var teamProxy = require('./proxy/teamProxy.js');
 var socketProxy = require('./proxy/socketproxy.js');
 var battleProxy = require('./proxy/battleProxy.js');
@@ -32,12 +32,16 @@ io.on('connection', function (socket) {
     userProxy.handlePersonalCenterRequest(socket);
 
     teamProxy.handleTeamEstablish(socket);
+  
+    teamProxy.handleRoomEstablish(socket);
 
-    teamProxy.handleTeamForm(io, socket);
+    teamProxy.handleTeamEstablish(io, socket);
 
     teamProxy.handleVersusLobbyRefresh(socket);
 
     teamProxy.handleTeamDetails(socket);
+
+    teamProxy.handleRefreshFormedBattleRoom(socket);
 
     battleProxy.handleBattleInvite(socket);
 

@@ -25,7 +25,7 @@ socket.on('feedback', function (feedback) {
             userInfo = handleRegistResult(feedback);
             break;
 
-        case 'ESTABLISHTEAMRESULT':
+        case 'ESTABLISHROOMRESULT':
             handleRoomEstablishmentResult(feedback);
             break;
 
@@ -53,7 +53,15 @@ socket.on('feedback', function (feedback) {
             break;
 
         case 'LOLBINDRESULT':
-            handleLOLBINDRESULT(feedback);
+            handleLOLBindResult(feedback);
+            break;
+
+        case 'ESTABLISHTEAMRESULT':
+            handleTeamEstablishResult(feedback);
+            break;
+        
+        case 'REFRESHFORMEDBATTLEROOMRESULT':
+            handleRefreshFormedBattleRoomResult(feedback);
             break;
        
 
@@ -76,7 +84,44 @@ socket.on('message', function(message){
 
 // 监听服务端队伍信息更新
 socket.on('teamInfoUpdate', function (data) {
-    teamInfo = data;
+    roomInfo = data;
+    //console.log(JSON.stringify(roomInfo));
+    //更新房间信息
+    var roomInfoFrameHtml = douniu.loadSwigView('swig_myroom_frame.html', {});
+    var roomInfoHtml = douniu.loadSwigView('swig_myroom_info.html', {
+        room: roomInfo
+    });
+    var teamates = roomInfo.participants;
+    var teamatesHtml = douniu.loadSwigView('swig_myroom_teamate.html', {
+        teamates : teamates
+    });
+    $('.content').html(roomInfoFrameHtml);
+    $('#team_info').html(roomInfoHtml);
+    $('#teamates_info').html(teamatesHtml);
+    
+    if(userInfo.name == roomInfo.participants[0].name){
+        //房主更新friendList
+        $.getScript('/js/invite_friend.js');
+        $('#invite_friend_btn').sideNav({
+            menuWidth: 400, // Default is 300
+            edge: 'right', // Choose the horizontal origin
+            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+            draggable: true, // Choose whether you can drag to open on touch screens,
+            onOpen: function(el) {},
+            onClose: function(el) {}
+        });
+    }else{
+        //普通对员只显示队伍信息，没有好友邀请栏
+        $('#invite_friend_btn').css('display', 'none');
+        $('#confirm_create_team_btn').css('display', 'none');
+    }
+
+    $('#message_center_nav').click();
+    // {"roomName":"嵇昊雨1503584960077","captain":{"name":"嵇昊雨","userId":30,"avatarId":1},"participants":[{"name":"嵇昊雨","userId":30,"avatarId":1,"strength":{"kda":"0.0","averageGoldEarned":0,"averageTurretsKilled":0,"averageDamage":0,"averageDamageTaken":0,"averageHeal":0,"score":2000}},{"name":"嵇昊雨","userId":30,"avatarId":1,"strength":{"kda":"0.0","averageGoldEarned":0,"averageTurretsKilled":0,"averageDamage":0,"averageDamageTaken":0,"averageHeal":0,"score":2000}}],"status":"ESTABLISHING","gameMode":"battle","battleDesc":"不服来战","rewardType":"bullupScore","rewardAmount":"10","mapSelection":"map-selection-1","winningCondition":"push-crystal"}
+
+    // {"name":"嵇昊雨","userId":30,"avatarId":1,"wealth":0,"online":true,"status":"IDLE","friendList":{"郭景明":{"name":"郭景明","userId":29,"avatarId":1,"online":"true","status":"idle"},"嵇昊雨":{"name":"嵇昊雨","userId":30,"avatarId":1,"online":"true","status":"idle"}},"relationMap":{"currentTeamId":null,"currentGameId":null},"strength":{"kda":"0.0","averageGoldEarned":0,"averageTurretsKilled":0,"averageDamage":0,"averageDamageTaken":0,"averageHeal":0,"score":2000}}
+
+    //var temp = douniu.loadSwigView("./swig_menu.html", { logged_user: userInfo });
 });
 
 socket.on('teamForm', function () {
@@ -172,7 +217,7 @@ function handleRankList(rankList){
     $('ul.tabs').tabs();
 }
 
-function handleLOLBINDRESULT(feedback){
+function handleLOLBindResult(feedback){
     alert(feedback.extension.tips);
 }
 
@@ -216,6 +261,72 @@ function handleRoomEstablishmentResult(feedback){
         onClose: function(el) {}
     });
 
+    $("#confirm_create_team_btn").click(function(){
+		console.log(roomInfo);
+		socket.emit('establishTeam', roomInfo);
+	});
+
+}
+
+function handleTeamEstablishResult(feedback){
+    if(feedback.errorCode == 0){
+        alert(feedback.text);
+        teamInfo = feedback.extension.teamInfo;
+        var formedTeams = feedback.extension.formedTeams;
+        delete formedTeams[teamInfo.roomName];
+        var battle_teams = douniu.loadSwigView('swig_battle.html', {
+			teams: formedTeams
+		});
+        //页面跳转到对战大厅
+        $('.content').html(battle_teams);
+		$('#team-detail-modal').modal();
+		$('#waiting-modal').modal();
+        $.getScript('./js/close_modal.js');
+        $.getScript('./js/refresh_formed_room.js');
+		var pages = {
+			totalPage: 10,
+	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+	 		currentPage: 1
+		};
+		//
+		var pagination = douniu.loadSwigView('swig_pagination.html', pages);
+		//		console.log(pagination);
+		$('#pagination-holder').html(pagination);
+
+
+    }else{
+        alert(feedback.text);
+    }
+}
+
+function handleRefreshFormedBattleRoomResult(feedback){
+    if(feedback.errorCode == 0){
+        //alert(feedback.text);
+        var formedTeams = feedback.extension.formedTeams;
+        delete formedTeams[teamInfo.roomName];
+        var battle_teams = douniu.loadSwigView('swig_battle.html', {
+			teams: formedTeams
+		});
+        //页面跳转到对战大厅
+        $('.content').html(battle_teams);
+		$('#team-detail-modal').modal();
+		$('#waiting-modal').modal();
+        $.getScript('./js/close_modal.js');
+        $.getScript('./js/refresh_formed_room.js');
+		var pages = {
+			totalPage: 10,
+	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+	 		currentPage: 1
+		};
+		//
+		var pagination = douniu.loadSwigView('swig_pagination.html', pages);
+		//		console.log(pagination);
+		$('#pagination-holder').html(pagination);
+
+
+    }else{
+        alert(feedback.text);
+    }   
 }
 
 function handleInviteFromFriend(message){
@@ -225,6 +336,7 @@ function handleInviteFromFriend(message){
     $("#message_center_nav").click();
     //console.log("messageInfo:  " + JSON.stringify(messageInfo));
 }
+
 
 function  handlePersonalCenterResult(feedback){
     //判断是否成功
@@ -239,3 +351,4 @@ function  handlePersonalCenterResult(feedback){
     var personalCenterHtml = douniu.loadSwigView('./swig_personal.html', data);
     $('#main-view').html(personalCenterHtml);
 }
+
