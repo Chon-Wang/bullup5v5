@@ -1,6 +1,6 @@
 {% if messages %}
     {% for message in messages %}
-        {% if message.type == 'invitedFromFriend' %}
+        {% if message.messageType == 'invitedFromFriend' %}
             <li>
                 <div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>{{ message.messageText }}</div>
                 <div class="collapsible-body">
@@ -16,7 +16,7 @@
                 </div>
             </li>
         {% endif %}
-        {% if message.type == 'inviteBattle' %}
+        {% if message.messageType == 'inviteBattle' %}
             <li>
                 <div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>{{ message.messageText }}</div>
                 <div class="collapsible-body">
