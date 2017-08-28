@@ -77,13 +77,9 @@ socket.on('message', function(message){
         case 'invitedFromFriend':
             handleInviteFromFriend(message);
             break;
-<<<<<<< HEAD
         case 'invitedBattle':
             handleBattleInviteRequest(message);
             break;
-=======
-        //case 'battleInvite'
->>>>>>> 2b3742048ae7eb3c9228ab35615b62f2e9d3bbba
     }
 
 });
@@ -426,7 +422,6 @@ function  handlePersonalCenterResult(feedback){
     }
    
 }
-<<<<<<< HEAD
 
 function handleBattleInviteRequest(message){
     messageInfo.push(message);
@@ -434,5 +429,3 @@ function handleBattleInviteRequest(message){
     $("#message_center_nav").click();
 }
 
-=======
->>>>>>> 2b3742048ae7eb3c9228ab35615b62f2e9d3bbba

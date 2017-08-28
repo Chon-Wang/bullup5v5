@@ -25,12 +25,7 @@ exports.handleBattleInvite = function (socket) {
             message.messageText = '对战请求';
             message.name = challengerTeam.captain.name;
             //向host team发送挑战队伍信息
-<<<<<<< HEAD
             dstSocket.emit('message', message);
-=======
-            var message = {};
-            dstSocket.emit('battleRequest', challengerTeam);
->>>>>>> 2b3742048ae7eb3c9228ab35615b62f2e9d3bbba
         } else {
             //失败向发出请求的用户返回失败信息
             socket.emti('feeback', {
