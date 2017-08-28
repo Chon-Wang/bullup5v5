@@ -19,7 +19,7 @@ exports.handleBattleInvite = function (socket) {
             var captainId = hostTeam.captain.userId;
             //获取对战请求中host team的socket
             var dstSocket = socketProxy.mapUserIdToSocket(captainId);
-            var massage = {};
+            var message = {};
             message.type = 'inviteBattle';
             message.team = challengerTeam;
             message.messageText = '对战请求';

@@ -77,7 +77,7 @@ socket.on('message', function(message){
         case 'invitedFromFriend':
             handleInviteFromFriend(message);
             break;
-        case 'invitedBattle':
+        case 'inviteBattle':
             handleBattleInviteRequest(message);
             break;
     }
