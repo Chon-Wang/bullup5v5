@@ -44,7 +44,7 @@ socket.on('feedback', function (feedback) {
 
         case 'INVITEBATTLERESULT':
             // 这里应该有一个自己的处理函数但是目前处理方式相同所以暂时用这个
-            handleFeedback(feedback);
+            handlePersonalCenterResult(feedback);
             break;
 
         case 'STRENGTHRANKRESULT':
@@ -359,20 +359,27 @@ function handleInviteFromFriend(message){
     //弹出消息中心
     $("#message_center_nav").click();
     //console.log("messageInfo:  " + JSON.stringify(messageInfo));
-}
+}  
 
 
 function  handlePersonalCenterResult(feedback){
     //判断是否成功
     if(feedback.errorCode == 0){
+        var data = feedback.extension;
+        console.log('data='+JSON.stringify(data));
+         //取数据
+        //渲染
+        var personalCenterHtml = douniu.loadSwigView('./swig_personal_basic.html',{
+            player:{
+                player:data.name
+            }
 
+        });
+        $('#main-view').html(personalCenterHtml);
     }else{
-
+        
+    
+    alert('加载页面失败');
     }
-    //取数据
-    var data = feedback.extension;
-    //渲染
-    var personalCenterHtml = douniu.loadSwigView('./swig_personal.html', data);
-    $('#main-view').html(personalCenterHtml);
+   
 }
-
