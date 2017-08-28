@@ -14,9 +14,8 @@ socketProxy.init();
 battleProxy.init();
 
 
-io.on('connection', function (socket) {
+io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
-
     userProxy.handleLogin(socket);
 
     userProxy.handleRegister(socket);
@@ -31,7 +30,7 @@ io.on('connection', function (socket) {
 
     userProxy.handlePersonalCenterRequest(socket);
 
-    teamProxy.handleTeamEstablish(socket);
+  //  teamProxy.handleTeamEstablish(socket);
   
     teamProxy.handleRoomEstablish(socket);
 
