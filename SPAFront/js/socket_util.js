@@ -42,10 +42,10 @@ socket.on('feedback', function (feedback) {
             //console.log(JSON.stringify(teamDetails, null, '\t'));
             break;
 
-        case 'INVITEBATTLERESULT':
-            // 这里应该有一个自己的处理函数但是目前处理方式相同所以暂时用这个
-            handlePersonalCenterResult(feedback);
-            break;
+        // case 'INVITEBATTLERESULT':
+        //     // 这里应该有一个自己的处理函数但是目前处理方式相同所以暂时用这个
+        //     handlePersonalCenterResult(feedback);
+        //     break;
 
         case 'STRENGTHRANKRESULT':
             var rankList = handleFeedback(feedback);
@@ -77,6 +77,7 @@ socket.on('message', function(message){
         case 'invitedFromFriend':
             handleInviteFromFriend(message);
             break;
+        //case 'battleInvite'
     }
 
 });

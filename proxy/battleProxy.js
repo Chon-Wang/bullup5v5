@@ -21,6 +21,7 @@ exports.handleBattleInvite = function (socket) {
             var dstSocket = socketProxy.mapUserIdToSocket(captainId);
 
             //向host team发送挑战队伍信息
+            var message = {};
             dstSocket.emit('battleRequest', challengerTeam);
         } else {
             //失败向发出请求的用户返回失败信息
