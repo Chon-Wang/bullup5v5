@@ -288,7 +288,6 @@ function handleTeamEstablishResult(feedback){
         $.getScript('./js/refresh_formed_room.js');
         $(".team_detail_btn").unbind();
         $(".team_detail_btn").click(function(){
-            
             var btnId = $(this).attr('id');
             var roomName = btnId.substring(0, btnId.indexOf('_'));
             var room = null;
@@ -301,8 +300,18 @@ function handleTeamEstablishResult(feedback){
             var teamDetailsHtml = douniu.loadSwigView('swig_team_detail.html', {
                 team: room
             });
-            var containerId = "#" + roomName + "_team_detail_container";
-            $(containerId).html(teamDetailsHtml);
+            $('#team_detail_container').html(teamDetailsHtml);
+            location.hash = "#team-detail-modal";
+            ///////////untest
+            $('#invite-battle-btn').unbind();
+            $('#invite-battle-btn').click(function(){
+                var battleInfo = {};
+                battleInfo.hostTeamName = $('#team_details_team_name').html();
+                battleInfo.challengerTeamName = teamInfo.roomName;
+                battleInfo.userId = userInfo.userId;
+                socket.emit('battleInvite', battleInfo);
+            });
+            //////////
         });
 		var pages = {
 			totalPage: 10,
@@ -337,6 +346,33 @@ function handleRefreshFormedBattleRoomResult(feedback){
 		$('#waiting-modal').modal();
         $.getScript('./js/close_modal.js');
         $.getScript('./js/refresh_formed_room.js');
+        $(".team_detail_btn").unbind();
+        $(".team_detail_btn").click(function(){
+            var btnId = $(this).attr('id');
+            var roomName = btnId.substring(0, btnId.indexOf('_'));
+            var room = null;
+            for(var team in formedTeams){
+                if(formedTeams[team].roomName == roomName){
+                    room = formedTeams[team];
+                    break;
+                }
+            }
+            var teamDetailsHtml = douniu.loadSwigView('swig_team_detail.html', {
+                team: room
+            });
+            $('#team_detail_container').html(teamDetailsHtml);
+            location.hash = "#team-detail-modal";
+            ///////////untest
+            $('#invite-battle-btn').unbind();
+            $('#invite-battle-btn').click(function(){
+                var battleInfo = {};
+                battleInfo.hostTeamName = $('#team_details_team_name').html();
+                battleInfo.challengerTeamName = teamInfo.roomName;
+                battleInfo.userId = userInfo.userId;
+                socket.emit('battleInvite', battleInfo);
+            });
+            //////////
+        });
 		var pages = {
 			totalPage: 10,
 	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
