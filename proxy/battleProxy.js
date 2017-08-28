@@ -19,9 +19,13 @@ exports.handleBattleInvite = function (socket) {
             var captainId = hostTeam.captain.userId;
             //获取对战请求中host team的socket
             var dstSocket = socketProxy.mapUserIdToSocket(captainId);
-
+            var massage = {};
+            message.type = 'inviteBattle';
+            message.team = challengerTeam;
+            message.messageText = '对战请求';
+            message.name = challengerTeam.captain.name;
             //向host team发送挑战队伍信息
-            dstSocket.emit('battleRequest', challengerTeam);
+            dstSocket.emit('message', message);
         } else {
             //失败向发出请求的用户返回失败信息
             socket.emti('feeback', {

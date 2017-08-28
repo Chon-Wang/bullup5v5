@@ -77,6 +77,9 @@ socket.on('message', function(message){
         case 'invitedFromFriend':
             handleInviteFromFriend(message);
             break;
+        case 'invitedBattle':
+            handleBattleInviteRequest(message);
+            break;
     }
 
 });
@@ -374,5 +377,11 @@ function  handlePersonalCenterResult(feedback){
     //渲染
     var personalCenterHtml = douniu.loadSwigView('./swig_personal.html', data);
     $('#main-view').html(personalCenterHtml);
+}
+
+function handleBattleInviteRequest(message){
+    messageInfo.push(message);
+    //弹出消息中心
+    $("#message_center_nav").click();
 }
 
