@@ -143,8 +143,10 @@ socket.on('battleInfo', function (battle) {
 socket.on('lolRoomEstablish', function (lolRoom) {
     if (userInfo.userId == lolRoom.creatorId) {
         // 如果用户是创建者，则创建房间
+        alert('请创建房间' + lolRoom.roomName);
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
+        alert('请等待');
     }
 });
 

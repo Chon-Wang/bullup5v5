@@ -22,6 +22,7 @@ exports.handleBattleInvite = function (socket) {
             var message = {};
             message.messageType = 'inviteBattle';
             message.team = challengerTeam;
+            message.hostTeam = hostTeam;
             message.messageText = '对战请求';
             message.name = challengerTeam.captain.name;
             //向host team发送挑战队伍信息
@@ -39,12 +40,12 @@ exports.handleBattleInvite = function (socket) {
 }
 
 exports.handleBattleInviteResult = function (io, socket) {
-    socket.on('battleInviteResult', function (feedback) {
+    socket.on('inviteBattleResult', function (feedback) {
         // 如果接受了邀请
         if (feedback.errorCode == 0) {
             // 向两方队伍中的所有人进行广播
-            var challengerTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.challengerTeamName);
-            var hostTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.hostTeamName);
+            var challengerTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.challengerTeam.roomName);
+            var hostTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.hostTeam.roomName);
             var currentTime = require('moment')().format('YYYYMMDDHHmmss');
 
             // 更新队伍状态
