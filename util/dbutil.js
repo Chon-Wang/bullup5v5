@@ -26,7 +26,7 @@ exports.findUserByAccount = function(account, callback) {
 }
 
 /**
- * 通过id获取用户
+ * 通过id获取用户及  账单
  * @param userId
  */
 exports.findUserById = function(userId, callback) {
@@ -355,3 +355,30 @@ exports.addStrengthInfo = function(bindInfo, callback){
         callback(res);
     });
 }
+
+exports.getPersonalCenterInfoByUserId=function(userId, callback){
+    console.log("id="+userId);
+    async.waterfall([
+        function(callback){
+            connection.query('select * from `user_base` where user_id=?', [userId], function (err, results, fields) {
+                if (err) throw err;
+                callback(null, results[0]);
+            });
+        }, function(payment_history,callback){
+            connection.query('select * from bullup_payment_history where user_id=?',[userId],function(err, results, fields){
+                console.log(userId)
+                if(err) throw err;
+                //payment_history.userId=results[0].user_id;
+                payment_history.paymentHistory = results;
+                callback(null,payment_history);
+            });
+        }
+    ],function(err,res){
+        callback(res);
+    });   
+}
+
+
+//exports.getPersonalCenterInfoByUserId(29, function(res){
+ //   console.log(res);
+//});
