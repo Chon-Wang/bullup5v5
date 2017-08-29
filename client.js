@@ -123,6 +123,11 @@ setTimeout(
     }, 1000
 );
 
+//guojingming
+//asdasdasdad
+//asdasdadad
+//dfgdfgd
+
 // setTimeout(
 //     function () {
 //         testCase.testInviteFriend(socket, userInfo, 'colinyoung', teamInfo);
