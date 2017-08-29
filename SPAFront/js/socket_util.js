@@ -140,6 +140,9 @@ socket.on('battleInfo', function (battle) {
     battleInfo = battle;
     var battleRoomHtml = douniu.loadSwigView("./spa_fight.html", {});
     $('#main-view').html(battleRoomHtml);
+    $('#waiting-modal').css('display', 'none');    
+    $('#team-detail-modal').css('display', 'none');    
+    $('.modal-overlay').remove();
 });
 
 socket.on('lolRoomEstablish', function (lolRoom) {
