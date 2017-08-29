@@ -138,6 +138,8 @@ socket.on('battleRequest', function (battleRequest) {
 
 socket.on('battleInfo', function (battle) {
     battleInfo = battle;
+    var battleRoomHtml = douniu.loadSwigView("./spa_fight.html", {});
+    $('#main-view').html(battleRoomHtml);
 });
 
 socket.on('lolRoomEstablish', function (lolRoom) {
