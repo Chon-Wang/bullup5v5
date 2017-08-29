@@ -142,22 +142,6 @@ setTimeout(
 //     3000
 // );
 
-setTimeout(
-    function () {
-        testCase.testFormTeam(socket, userInfo, teamInfo);
-    },
-    2000
-);
-
-setTimeout(
-    function () {
-        testCase.testTeamDetails(socket, {
-            teamName: teamInfo.name,
-            userId: userInfo.userId
-        })
-    },
-    3000
-);
 
 setTimeout(
     function () {
