@@ -300,6 +300,7 @@ exports.handlePersonalCenterRequest = function(socket){
         console.log('result:'+JSON.stringify(request));
         //dbUtil.getPersonalCenterInfoByUserId();
         dbUtil.getPersonalCenterInfoByUserId(request.userId,function(queryResult){
+            console.log("queryResult"+JSON.stringify(queryResult));
             var feedback = {};
             if(queryResult != null && queryResult != undefined){
                 feedback.errorCode = 0,
@@ -307,14 +308,23 @@ exports.handlePersonalCenterRequest = function(socket){
                 feedback.text = '个人中心加载成功'
                 var data = {};
                 //填充data
-                data.userId = queryResult.user_Id;
+                data.userId = queryResult.userInfo[0].user_id;
+                
+                console.log('id..'+queryResult.user_id);
                 //data.XXX = queryResult.XXX;
-                data.userAccount=queryResult.user_account;
-                data.name=queryResult.user_nickname;
-                data.payAccountId=queryResult.bullup_payment_account_id;
-                data.paymentType=queryResult.bullup_payment_type;
-                data.paymentAccount=queryResult.bullup_account;
+                data.userAccount=queryResult.userInfo[0].user_account;
+                data.name=queryResult.userInfo[0].user_nickname;
+                data.payAccountId=queryResult.Id.bullup_payment_account_id;
+                data.paymentType=queryResult.paymentHistory.bullup_paymet_type;
+                data.paymentAccount=queryResult.paymentHistory.bullup_account;
+                data.lolInfoId=queryResult.info[0].lol_info_id;
+                data.UserlolAccount=queryResult.info[0].user_lol_account;
+                data.UserlolNickname=queryResult.info[0].user_lol_nickname;
+                data.UserlolArea=queryResult.info[0].user_lol_area;
+                
+                
                 feedback.extension = data;
+              //  console.log('feedback:'+JSON.stringify(data));
             }else{
                 feedback.errorCode = 1,
                 feedback.type = 'PESONALCENTERRESULT',
@@ -322,6 +332,7 @@ exports.handlePersonalCenterRequest = function(socket){
                 feedback.extension = null
             }
             socket.emit('feedback', feedback);
+            console.log('feedback111:'+JSON.stringify(feedback));
 
         });
     });

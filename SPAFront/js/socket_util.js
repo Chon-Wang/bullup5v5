@@ -412,7 +412,8 @@ function  handlePersonalCenterResult(feedback){
         //渲染
         var personalCenterHtml = douniu.loadSwigView('./swig_personal_basic.html',{
             player:{
-                player:data.name
+               name:data.UserlolNickname,
+               server:data.UserlolArea
             }
 
         });

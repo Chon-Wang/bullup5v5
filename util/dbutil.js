@@ -355,26 +355,47 @@ exports.addStrengthInfo = function(bindInfo, callback){
         callback(res);
     });
 }
-
+/**个人中心数据处理 */
 exports.getPersonalCenterInfoByUserId=function(userId, callback){
     console.log("id="+userId);
     async.waterfall([
         function(callback){
+            var userPersonalInfo={};
             connection.query('select * from `user_base` where user_id=?', [userId], function (err, results, fields) {
                 if (err) throw err;
-                callback(null, results[0]);
+                userPersonalInfo.userInfo=results;
+                callback(null, userPersonalInfo);
             });
-        }, function(payment_history,callback){
+        }, function(userPersonalInfo,callback){
             connection.query('select * from bullup_payment_history where user_id=?',[userId],function(err, results, fields){
-                console.log(userId)
+                console.log("userId"+userPersonalInfo.userId);
                 if(err) throw err;
                 //payment_history.userId=results[0].user_id;
-                payment_history.paymentHistory = results;
-                callback(null,payment_history);
+                userPersonalInfo.paymentHistory = results;
+                console.log(JSON.stringify(userPersonalInfo.paymentHistory));
+                callback(null,userPersonalInfo);
+            });
+        },
+        function(userPersonalInfo,callback){
+            //var lolInfoId={};
+            connection.query('select lol_info_id from lol_bind where user_id=?',[userId],function(err, results, fields){
+                console.log('id:'+userId);
+                userPersonalInfo.Id=results[0].lol_info_id;
+                console.log('pid'+userPersonalInfo.Id);
+                callback(null,userPersonalInfo);
+            });
+        },
+        function(userPersonalInfo,callback){
+           // var lolInfo={};
+            connection.query('select *from lol_info where lol_info_id=?',[userPersonalInfo.Id],function(err, results, fields){
+                userPersonalInfo.info=results;
+               console.log(JSON.stringify("lolInfo:"+userPersonalInfo));
+               callback(null,userPersonalInfo); 
             });
         }
     ],function(err,res){
         callback(res);
+       // console.log(res);
     });   
 }
 

@@ -7,9 +7,10 @@ $(document).ready(function(){
         //var userInfo={};
         if(userInfo==null){
             alert('请你登陆');
+            //location.href = '#log_modal';
         }else{
             socket.emit('pesonalCenterRequest',userInfo);
         }
         
-    });0
+    });
 });
