@@ -45,6 +45,7 @@ $(".message_accept_btn").on('click', function(e){
             socket.emit('inviteBattleResult', inviteBattleResult);
             //删除消息
             messageInfo.splice(Number.parseInt(messageIndexString), 1);
+            $('#message_center_nav').click();
             break;
         }
     }

@@ -1,20 +1,20 @@
 <div class="row">
 	<div class="col s12 m4">
 		<ul class="collapsible" id="my_collapsible" data-collapsible="expandable">
-			{% if fight.own_team %}
-				{% for parti in fight.own_team.participants %}
+			{% if blueSide %}
+				{% for player in blueSide.participants %}
 					<li>
 					<div class="collapsible-header left-align">
-						<img src="./media/imgs/timg-2.jpeg" class="candi-img"> {{ parti.name }}
+						<img src="./media/user_icon/{{ player.avatarId }}.png" class="candi-img"> {{ player.name }}
 					</div>
 					<div class="collapsible-body">
 					<span>
-					发育 {{ parti.strength.growth }}
-					KDA {{ parti.strength.kda }}
-					金钱 {{ parti.strength.averageGoldEarned }}
-					推塔 {{ parti.strength.averageTurretsKilled }}
-					生存 {{ parti.strength.averageLiving }}
-					承受伤害 {{ parti.strength.averageDamageTaken }}
+						战力 {{ player.strength.score }}
+						KDA {{ player.strength.kda }}
+						伤害 {{ player.strength.averageDamage }}
+						承受伤害 {{ player.strength.averageDamageTaken }}
+						金钱 {{ player.strength.averageGoldEarned }}
+						推塔 {{ player.strength.averageTurretsKilled }}
 					</span>
 					</div>
 				</li>
@@ -32,20 +32,20 @@
 	
 	<div class="col s12 m4">
 		<ul class="collapsible" id="component_collapsible" data-collapsible="expandable">
-		{% if fight.rival_team %}
-				{% for parti in fight.rival_team.participants %}
+		{% if redSide %}
+			{% for player in redSide.participants %}
 					<li>
 					<div class="collapsible-header left-align">
-						<img src="./media/imgs/timg-2.jpeg" class="candi-img"> {{ parti.name }}
+						<img src="./media/user_icon/{{ player.avatarId }}.png" class="candi-img"> {{ player.name }}
 					</div>
 					<div class="collapsible-body">
 					<span>
-					发育 {{ parti.strength.growth }}
-					KDA {{ parti.strength.kda }}
-					金钱 {{ parti.strength.averageGoldEarned }}
-					推塔 {{ parti.strength.averageTurretsKilled }}
-					生存 {{ parti.strength.averageLiving }}
-					承受伤害 {{ parti.strength.averageDamageTaken }}
+						战力 {{ player.strength.score }}
+						KDA {{ player.strength.kda }}
+						伤害 {{ player.strength.averageDamage }}
+						承受伤害 {{ player.strength.averageDamageTaken }}
+						金钱 {{ player.strength.averageGoldEarned }}
+						推塔 {{ player.strength.averageTurretsKilled }}
 					</span>
 					</div>
 				</li>
