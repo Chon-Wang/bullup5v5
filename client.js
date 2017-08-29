@@ -10,7 +10,8 @@ var teamInfo = null;
 var inviteInfo = null;
 var versusLobbyInfo = null;
 var battleInfo = null;
-
+//
+//
 socket.on('success', function (data) {
     logger.listenerLog('success');
     console.log(data);
