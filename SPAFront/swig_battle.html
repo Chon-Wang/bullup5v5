@@ -1,11 +1,9 @@
 
 <div class="row">
   <!-- button will fade away -->
-  <a class="waves-effect waves-light btn right" id="refresh_formed_battle_room">刷新房间</a>
-
-  <!-- <a class="nav-link waves-effect waves-light btn right" id="my_room" href="./spa_myroom.html">我的房间</a> -->
+  <a class="nav-link waves-effect waves-light btn right" id="refresh_formed_battle_room">刷新房间</a>
 </div>
-<!-- 
+
 {% if teams %}
   <!-- cycle through two teams, put  -->
   {% for team in teams %}
@@ -19,7 +17,7 @@
           <div class="row">
             <!-- teaser -->
             <div class="col s2">
-              <img class="battle-teaser" src="./media/imgs/timg-2.jpeg">
+              <img class="battle-teaser" src="./media/user_icon/{{ team.captain.avatarId }}.png">
             </div>
             <div class="col s10">
               <div class="row">
@@ -27,7 +25,7 @@
 				  {{team.roomName}}
 				</span>
                 <div class="chip right ">
-									{{ team.participants|length }}V{{ team.participants|length }}
+                  {{ team.participantCount }}V{{ team.participantCount }}
                 </div>
               </div>
             </div>
@@ -36,11 +34,12 @@
         </div>
 
         <div class="card-action">
-          <a href="#team-detail-modal">详情</a>
+					<a class="team_detail_btn" id="{{ team.roomName }}_team_detail_btn" href="#team-detail-modal">详情</a>
+					<!-- <a id="battle_team_details_btn">详情</a> -->
           <a href="#">收藏</a>
 
           <div class="chip right">
-            <i class="fa fa-gamepad" aria-hidden="true"></i> {{ team.winningCondition }}
+            <i class="fa fa-gamepad" aria-hidden="true"></i>{% if team.winningCondition=='push-crystal' %}推掉水晶{% endif %}
           </div>
           <div class="chip right">
             <i class="fa fa-money" aria-hidden="true"></i> {{ team.rewardAmount }}
@@ -61,13 +60,20 @@
 <div class="row center-align" id="pagination-holder">
 </div>
 
-
+<!-- {% if teams %} -->
+<!-- cycle through two teams, put  -->
+<!-- {% for team in teams %} -->
 <!-- team detail modal Structure -->
+<!-- <div id="{{ team.roomName }}_team-detail-modal" name="{{ team.roomName }}_team-detail-modal-name" class="modal"> -->
 <div id="team-detail-modal" class="modal">
-  <div class="modal-content">
+		<!-- <div id="team-detail-modal" class="modal"> -->
+	<div class="modal-content">
 	<div class="row">
 	  <!-- Where Details go -->
-	  <div class="col s12 m2" id ="team_detail_container">
+	  <!-- <div class="col s12 m2" id ="{{ team.roomName }}_team_detail_container"> -->
+		<div class="col s12 m2" id ="team_detail_container">
+			<!-- team details -->
+
 	  </div>
 	  <!-- End of Details -->
 	  <div class="col s12 m9">
@@ -77,9 +83,9 @@
 	</div>
   </div>
   <div class="modal-footer">
-	<a href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-btn">邀请战斗</a>
+	<a href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-battle-btn">邀请战斗</a>
   </div>
-</div> -->
+</div>
 
 <!-- Modal Structure -->
 <div id="waiting-modal" class="modal">
@@ -142,8 +148,7 @@
 	<a href="./spa_fight.html" class="modal-action waves-effect waves-green btn-flat nav-link" id="hide-btn">隐藏到后台</a>
   </div>
 </div>
-
-
-
+<!-- {% endfor %}
+{% endif %}-->
 
 

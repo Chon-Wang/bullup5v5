@@ -31,6 +31,29 @@ $(".message_accept_btn").on('click', function(e){
             //console.log(JSON.stringify(messageInfo[Number.parseInt(messageIndexString)]));
             break;
         }
+
+        case 'inviteBattle':{
+            var inviteBattleResult = {
+                errorCode: 0,
+                type: 'INVITEBATTLERESULT',
+                text: '',
+                extension: {
+                    hostName: message.host.name,
+                    hostId: message.host.userId,
+                    teamName: message.team.name,
+                    userInfo: {
+                        name: userInfo.name,
+                        userId: userInfo.userId,
+                        avatarId: userInfo.avatarId,
+                        strength: userInfo.strength
+                    }
+                }
+            }
+            socket.emit('inviteBattleResult', inviteBattleResult);
+            //删除消息
+            messageInfo.splice(Number.parseInt(messageIndexString), 1);
+            break;
+        }
     }
 
 });

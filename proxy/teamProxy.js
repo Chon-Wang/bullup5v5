@@ -42,7 +42,7 @@ exports.handleRefreshFormedBattleRoom = function(socket){
                 formedTeams: exports.formedTeams
             }
         }
-
+        socket.emit('feedback', feedback);
     });
 
 }

@@ -42,10 +42,10 @@ socket.on('feedback', function (feedback) {
             //console.log(JSON.stringify(teamDetails, null, '\t'));
             break;
 
-        case 'INVITEBATTLERESULT':
-            // 这里应该有一个自己的处理函数但是目前处理方式相同所以暂时用这个
-            handlePersonalCenterResult(feedback);
-            break;
+        // case 'INVITEBATTLERESULT':
+        //     // 这里应该有一个自己的处理函数但是目前处理方式相同所以暂时用这个
+        //     handlePersonalCenterResult(feedback);
+        //     break;
 
         case 'STRENGTHRANKRESULT':
             var rankList = handleFeedback(feedback);
@@ -76,6 +76,9 @@ socket.on('message', function(message){
     switch(message.messageType){
         case 'invitedFromFriend':
             handleInviteFromFriend(message);
+            break;
+        case 'inviteBattle':
+            handleBattleInviteRequest(message);
             break;
     }
 
@@ -140,8 +143,10 @@ socket.on('battleInfo', function (battle) {
 socket.on('lolRoomEstablish', function (lolRoom) {
     if (userInfo.userId == lolRoom.creatorId) {
         // 如果用户是创建者，则创建房间
+        alert('请创建房间' + lolRoom.roomName);
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
+        alert('请等待');
     }
 });
 
@@ -274,6 +279,9 @@ function handleTeamEstablishResult(feedback){
         teamInfo = feedback.extension.teamInfo;
         var formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
+        for(var team in formedTeams){
+            formedTeams[team].participantCount = formedTeams[team].participants.length;
+        }
         var battle_teams = douniu.loadSwigView('swig_battle.html', {
 			teams: formedTeams
 		});
@@ -283,6 +291,33 @@ function handleTeamEstablishResult(feedback){
 		$('#waiting-modal').modal();
         $.getScript('./js/close_modal.js');
         $.getScript('./js/refresh_formed_room.js');
+        $(".team_detail_btn").unbind();
+        $(".team_detail_btn").click(function(){
+            var btnId = $(this).attr('id');
+            var roomName = btnId.substring(0, btnId.indexOf('_'));
+            var room = null;
+            for(var team in formedTeams){
+                if(formedTeams[team].roomName == roomName){
+                    room = formedTeams[team];
+                    break;
+                }
+            }
+            var teamDetailsHtml = douniu.loadSwigView('swig_team_detail.html', {
+                team: room
+            });
+            $('#team_detail_container').html(teamDetailsHtml);
+            location.hash = "#team-detail-modal";
+            ///////////untest
+            $('#invite-battle-btn').unbind();
+            $('#invite-battle-btn').click(function(){
+                var battleInfo = {};
+                battleInfo.hostTeamName = $('#team_details_team_name').html();
+                battleInfo.challengerTeamName = teamInfo.roomName;
+                battleInfo.userId = userInfo.userId;
+                socket.emit('battleInvite', battleInfo);
+            });
+            //////////
+        });
 		var pages = {
 			totalPage: 10,
 	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -304,6 +339,9 @@ function handleRefreshFormedBattleRoomResult(feedback){
         //alert(feedback.text);
         var formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
+        for(var team in formedTeams){
+            formedTeams[team].participantCount = formedTeams[team].participants.length;
+        }
         var battle_teams = douniu.loadSwigView('swig_battle.html', {
 			teams: formedTeams
 		});
@@ -313,6 +351,33 @@ function handleRefreshFormedBattleRoomResult(feedback){
 		$('#waiting-modal').modal();
         $.getScript('./js/close_modal.js');
         $.getScript('./js/refresh_formed_room.js');
+        $(".team_detail_btn").unbind();
+        $(".team_detail_btn").click(function(){
+            var btnId = $(this).attr('id');
+            var roomName = btnId.substring(0, btnId.indexOf('_'));
+            var room = null;
+            for(var team in formedTeams){
+                if(formedTeams[team].roomName == roomName){
+                    room = formedTeams[team];
+                    break;
+                }
+            }
+            var teamDetailsHtml = douniu.loadSwigView('swig_team_detail.html', {
+                team: room
+            });
+            $('#team_detail_container').html(teamDetailsHtml);
+            location.hash = "#team-detail-modal";
+            ///////////untest
+            $('#invite-battle-btn').unbind();
+            $('#invite-battle-btn').click(function(){
+                var battleInfo = {};
+                battleInfo.hostTeamName = $('#team_details_team_name').html();
+                battleInfo.challengerTeamName = teamInfo.roomName;
+                battleInfo.userId = userInfo.userId;
+                socket.emit('battleInvite', battleInfo);
+            });
+            //////////
+        });
 		var pages = {
 			totalPage: 10,
 	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -360,3 +425,10 @@ function  handlePersonalCenterResult(feedback){
     }
    
 }
+
+function handleBattleInviteRequest(message){
+    messageInfo.push(message);
+    //弹出消息中心
+    $("#message_center_nav").click();
+}
+
