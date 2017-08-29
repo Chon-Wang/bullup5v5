@@ -82,7 +82,8 @@ exports.handleBattleInviteResult = function (io, socket) {
 
             // 向该对局中所有的用户广播对局信息
             io.sockets.in(battle.battleName).emit('battleInfo', battle);
-
+            io.sockets.broadcast.in(battle.battleName).emit('battleInfo', battle);
+            io.in(battle.battleName).emit('battleInfo', battle);
             // 向对局中所有用户广播要建立的lol房间信息
             io.sockets.in(battle.battleName).emit('lolRoomEstablish', {
                 roomName: 'BULLUP' + (new Date).valueOf(),
