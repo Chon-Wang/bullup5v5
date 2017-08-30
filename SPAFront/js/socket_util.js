@@ -138,6 +138,16 @@ socket.on('battleRequest', function (battleRequest) {
 
 socket.on('battleInfo', function (battle) {
     battleInfo = battle;
+    var battleRoomHtml = douniu.loadSwigView("./swig_fight.html", {
+        blueSide: battleInfo.blueSide,
+        redSide: battleInfo.redSide,
+
+
+    });
+    $('#main-view').html(battleRoomHtml);
+    $('#waiting-modal').css('display', 'none');    
+    $('#team-detail-modal').css('display', 'none');    
+    $('.modal-overlay').remove();
 });
 
 socket.on('lolRoomEstablish', function (lolRoom) {

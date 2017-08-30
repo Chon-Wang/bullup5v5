@@ -82,12 +82,14 @@ exports.handleBattleInviteResult = function (io, socket) {
 
             // 向该对局中所有的用户广播对局信息
             io.sockets.in(battle.battleName).emit('battleInfo', battle);
-
+            io.in(battle.battleName).emit('battleInfo', battle);
             // 向对局中所有用户广播要建立的lol房间信息
+            console.log("创建者");
+            console.log(challengerTeam.captain);
             io.sockets.in(battle.battleName).emit('lolRoomEstablish', {
                 roomName: 'BULLUP' + (new Date).valueOf(),
                 password: Math.floor(Math.random() * 1000), // 4位随机数
-                creatorId: challengerTeam.captain
+                creatorId: challengerTeam.captain.userId
             });
             
         } else if (feedback.errorCode == 1) {
