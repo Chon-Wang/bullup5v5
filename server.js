@@ -46,6 +46,7 @@ io.on('connection', function(socket) {
 
     battleProxy.handleLOLRoomEstablished(io, socket);
 
+    
 });
 
 io.on('disconnect', function (socket) {
