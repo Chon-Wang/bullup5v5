@@ -223,7 +223,7 @@ exports.getWealthRank = function(userId, callback) {
                     }
                     (usersInfo[wealthInfo.user_id]) = {};
                     (usersInfo[wealthInfo.user_id]).user_id = wealthInfo.user_id;
-                    (usersInfo[wealthInfo.user_id]).user_nickname = row[0].user_nickname;
+                    (usersInfo[wealthInfo.user_id]).user_nickname = row.user_nickname;
                     (usersInfo[wealthInfo.user_id]).user_wealth = wealthInfo.bullup_currency_amount;
                     errCb();
                 });
