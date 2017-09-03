@@ -234,7 +234,7 @@
 			<div class="row">
 			  <div class="input-field col s6">
 				<i class="fa fa-user prefix" aria-hidden="true"></i>
-				<input type="text" class="validate" id="login_username">
+				<input type="text" class="validate" id="login_username"  placeholder="">
 				<label for="icon_prefix">用户名</label>
 			  </div>
 			  <div class="input-field col s6">
@@ -258,43 +258,43 @@
 		<h4>新用户注册</h4>
 		<div class="row">
 		  <div class="row">
-			<div class="input-field col s12">
+			<div class="input-field col s6">
 			  <i class="fa fa-user prefix" aria-hidden="true"></i>
 			  <input id="usr_name" type="text" class="validate">
 			  <label for="usr_name">用户名</label>
 			</div>
 
-			<div class="input-field col s12">
+			<div class="input-field col s6">
 			  <i class="fa fa-key prefix" aria-hidden="true"></i>
 			  <input id="usr_pwd" type="password" class="validate">
 			  <label for="usr_pwd">密码</label>
 			</div>
 
-			<div class="input-field col s12">
+			<div class="input-field col s6">
 			  <i class="fa fa-key prefix" aria-hidden="true"></i>
 			  <input id="usr_repwd" type="password" class="validate">
 			  <label for="usr_repwd">确认密码</label>
 			</div>
 
-			<div class="input-field col s12">
+			<div class="input-field col s6">
 			  <i class="fa fa-user prefix" aria-hidden="true"></i>
 			  <input id="usr_nick" type="text" class="validate">
 			  <label for="usr_nick">用户昵称</label>
 			</div>
 
-			<div class="input-field col s12">
+			<div class="input-field col s6">
 			  <i class="fa fa-phone prefix" aria-hidden="true"></i>
 			  <input type="tel" id="usr_tel" class="validate">
 			  <label for="usr_tel">手机号</label>
 			</div>
 
-			<div class="input-field col s12">
+			<div class="input-field col s6">
 			  <i class="fa fa-envelope prefix" aria-hidden="true"></i>
 			  <input type="email" id="usr_email" class="validate">
 			  <label for="usr_email">邮箱</label>
 			</div>
 			
-			<p>
+			<p style="margin-left:15px;margin-top:20px;">
 			  <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
 			  <label for="filled-in-box" class="agree-check">我同意用户协议</label>
 			</p>
@@ -427,34 +427,49 @@
 	</div>
 
 	 <!-- Modal Structure -->
-	 <div id="modal1" class="modal">
+	 <div id="modal1" class="modal" style="background:#455a64;">
 			<div class="row">
-					<form class="col s12">
+					<form class="col s6">
 						<div class="row">
-							<div class="input-field col s6">
-								<input placeholder="占位提示" id="first_name" type="text" class="validate">
-								<label for="first_name">个人昵称</label>
-							</div>
-							<div class="input-field col s6">
-								<input id="last_name" type="text" class="validate">
-								<label for="last_name">爱好</label>
-							</div>
+								<div class="input-field col s6">
+										<input placeholder="占位提示" id="first_name" type="text" class="validate">
+										<label for="first_name">个人昵称</label>
+									</div>
+									<div class="input-field col s6">
+											<input placeholder="占位提示" id="first_name" type="text" class="validate">
+											<label for="first_name">爱好</label>
+										</div>
 						</div>
 					
+							
+									
+					
 						<div class="row">
-							<div class="input-field col s12">
-								<input id="password" type="password" class="validate">
-								<label for="password">年龄</label>
-							</div>
+								<div class="input-field col s6">
+										<input placeholder="占位提示" id="first_name" type="text" class="validate">
+										<label for="first_name">年龄</label>
+									</div>
 						</div>
 						<div class="row">
-							<div class="input-field col s12">
-								<input id="email" type="email" class="validate">
-								<label for="email">邮件</label>
-							</div>
+								<div class="input-field col s6">
+										<input placeholder="占位提示" id="first_name" type="text" class="validate">
+										<label for="first_name">邮件</label>
+									</div>
 						</div>
+						<form action="#" >
+								<div class="file-field input-field" style="padding-left: 10px;">
+									<div class="btn">
+										<span>更改头像</span>
+										<input type="file">
+									</div>
+									<div class="file-path-wrapper">
+										<input class="file-path validate" type="text">
+									</div>
+								</div>
+								<button style="margin-left: 10px;" class="btn waves-effect waves-light" type="submit" name="action">提交
+							</form>
 
-						<button class="btn waves-effect waves-light" type="submit" name="action">提交
+					
 							
 							</button>
 				
@@ -567,10 +582,19 @@
 		 fullWidth: true
 	   });
 
-	   autoplay()   
+		 autoplay()
+			var time =null;
+			$(".carousel-slider").hover(function () {
+				console.log(1);
+				clearTimeout(time);
+			},function (){
+				clearTimeout(time);
+				time = setTimeout(autoplay, 2000);
+			});  
 	   function autoplay() {
-		 $('.carousel').carousel('next');
-		 setTimeout(autoplay, 4500);
+			clearTimeout(time);
+			time = setTimeout(autoplay, 4500);
+		 	$('.carousel').carousel('next');
 	   }
 		 });
 		 
@@ -602,10 +626,15 @@
 })
 //弹出popo
 function poroto_w() {
+
    $('#modalpopo .modal-content  h4').text("sdwdwdwdwd")
 	 $('#modalpopo .ceneter_w').text("s123123123")
    $('#modalpopo').modal('open'); 
 }
+
+	
+
+
 
 
 	</script>
