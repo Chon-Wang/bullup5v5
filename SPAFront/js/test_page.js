@@ -5,9 +5,9 @@ $(document).ready(function(){
         var battleRoomHtml = douniu.loadSwigView("./swig_fight.html", {
             blueSide: testData.blueSide,
             redSide: testData.redSide,
-        });
+       });
         //样式参考
-        //var battleRoomHtml = douniu.loadSwigView("./spa_fight.html", {});
+    //    var battleRoomHtml = douniu.loadSwigView("./spa_fight.html", {});
 
         $('#main-view').html(battleRoomHtml);
         $('#waiting-modal').css('display', 'none');    

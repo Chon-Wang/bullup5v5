@@ -152,10 +152,24 @@ socket.on('battleInfo', function (battle) {
 socket.on('lolRoomEstablish', function (lolRoom) {
     if (userInfo.userId == lolRoom.creatorId) {
         // 如果用户是创建者，则创建房间
-        alert('请创建房间' + lolRoom.roomName);
+        //alert('请创建房间' + lolRoom.roomName);
+        function poroto_w() {
+            
+               $('#modalpopo .modal-content  h4').text("提示：")
+                 $('#modalpopo .ceneter_w').text("请创建房间！")
+                 $('#modalpopo').modal('open'); 
+            }
+            poroto_w();
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
-        alert('请等待');
+       //alert('请等待');
+       function poroto_w() {
+        
+           $('#modalpopo .modal-content  h4').text("提示：")
+             $('#modalpopo .ceneter_w').text("请等待！")
+             $('#modalpopo').modal('open'); 
+        }
+        poroto_w();
     }
 });
 
@@ -169,7 +183,14 @@ socket.on('lolRoomEstablished', function () {
 function handleLoginResult(feedback) {
     if (feedback.errorCode == 0) {
         // 登录成功
-        alert(feedback.text);
+        //alert(feedback.text);
+        function poroto_w() {
+            
+               $('#modalpopo .modal-content  h4').text("提示：")
+                 $('#modalpopo .ceneter_w').text("登录成功！")
+                 $('#modalpopo').modal('open'); 
+            }
+            poroto_w();
         userInfo = feedback.extension;
         //console.log(JSON.stringify(userInfo));
         //跳转
@@ -190,7 +211,14 @@ function handleLoginResult(feedback) {
         });
     } else if (feedback.errorCode == 1) {
         // 登录失败
-        alert(feedback.text);
+       // alert(feedback.text);
+       function poroto_w() {
+        
+           $('#modalpopo .modal-content  h4').text("提示：")
+             $('#modalpopo .ceneter_w').text("登录失败！")
+             $('#modalpopo').modal('open'); 
+        }
+        poroto_w();
     }
 }
 
@@ -246,7 +274,14 @@ function handleRoomEstablishmentResult(feedback){
     if(feedback.errorCode == 0){
         alert(feedback.text);
     }else{
-        alert("服务器错误,创建失败");
+       // alert("服务器错误,创建失败");
+       function poroto_w() {
+        
+           $('#modalpopo .modal-content  h4').text("提示：")
+             $('#modalpopo .ceneter_w').text("服务器错误,创建失败！")
+             $('#modalpopo').modal('open'); 
+        }
+        poroto_w();
         return;
     }
     roomInfo = feedback.extension;
@@ -431,15 +466,22 @@ function  handlePersonalCenterResult(feedback){
                gold:data.UserlolInfo_gold,
                tower:data.UserlolInfo_tower,
                damage:data.UserlolInfo_damage,
-               taken:data.UserlolInfo_damage_taken
+               taken:data.UserlolInfo_damage_taken,
+               cap:data.UserStrengthRank[0].strengthRank,
+               wealth:data.UserWealthRank[0].wealthRank
             }
 
         });
         $('#main-view').html(personalCenterHtml);
     }else{
+    //alert('加载页面失败');
+    function poroto_w() {
         
-    
-    alert('加载页面失败');
+           $('#modalpopo .modal-content  h4').text("提示：")
+             $('#modalpopo .ceneter_w').text("加载页面失败！")
+             $('#modalpopo').modal('open'); 
+        }
+        poroto_w();
     }
    
 }
