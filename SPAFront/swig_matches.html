@@ -1,6 +1,6 @@
 {% if matches %}
 	{% for match in matches  %}
-	<li class="collection-item avatar match-item" id="{{ loop.index }}_match">
+	<li class="collection-item avatar match-item" id="{{ loop.index }}_match" style="background:#455a64">
 		<img src="./media/lol_champions/{{ match.championEnglishName }}.png" alt="" class="circle">
 		<span class="title champion-name">{{ match.name }}</span>
 		{% if match.win == '胜利' %}

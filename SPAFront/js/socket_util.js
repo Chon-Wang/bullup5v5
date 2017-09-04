@@ -138,11 +138,10 @@ socket.on('battleRequest', function (battleRequest) {
 
 socket.on('battleInfo', function (battle) {
     battleInfo = battle;
+    console.log(JSON.stringify(battleInfo));
     var battleRoomHtml = douniu.loadSwigView("./swig_fight.html", {
         blueSide: battleInfo.blueSide,
         redSide: battleInfo.redSide,
-
-
     });
     $('#main-view').html(battleRoomHtml);
     $('#waiting-modal').css('display', 'none');    
@@ -423,7 +422,16 @@ function  handlePersonalCenterResult(feedback){
         var personalCenterHtml = douniu.loadSwigView('./swig_personal_basic.html',{
             player:{
                name:data.UserlolNickname,
-               server:data.UserlolArea
+               server:data.UserlolArea,
+               wins:data.UserlolInfo_wins,
+               k:data.UserlolInfo_k,
+               d:data.UserlolInfo_d,
+               a:data.UserlolInfo_a,
+               minion:data.UserlolInfo_minion,
+               gold:data.UserlolInfo_gold,
+               tower:data.UserlolInfo_tower,
+               damage:data.UserlolInfo_damage,
+               taken:data.UserlolInfo_damage_taken
             }
 
         });
