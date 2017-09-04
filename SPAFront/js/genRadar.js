@@ -67,3 +67,11 @@ function drawRadarWithData(my_data, rival_data, canvas_name) {
 	window.myRadar = new Chart(document.getElementById(canvas_name), my_config);
 
 }
+			}
+			}
+		};
+	}
+
+	window.myRadar = new Chart(document.getElementById(canvas_name), my_config);
+
+}
