@@ -138,11 +138,10 @@ socket.on('battleRequest', function (battleRequest) {
 
 socket.on('battleInfo', function (battle) {
     battleInfo = battle;
+    console.log(JSON.stringify(battleInfo));
     var battleRoomHtml = douniu.loadSwigView("./swig_fight.html", {
         blueSide: battleInfo.blueSide,
         redSide: battleInfo.redSide,
-
-
     });
     $('#main-view').html(battleRoomHtml);
     $('#waiting-modal').css('display', 'none');    
