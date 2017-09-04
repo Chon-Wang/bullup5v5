@@ -35,7 +35,7 @@
 		{% for player in wealthRankList %}
 		  <li class="collection-item avatar">
 			<img src="./media/user_icon/{{ player.icon_id }}.png" alt="" class="circle">
-			<span class="title">{{ player.user_nickname }}</span>
+			<span class="title">{{player.user_nickname }}</span>
 			<p>{{ player.user_wealth }}
 			</p>
 			<div class="secondary-content rank-number right">{{loop.index}}</div>

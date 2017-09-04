@@ -18,7 +18,7 @@
   <!-- 战斗力 -->
   <div class="col s6 m2">
 
-    <label class="personal-title">战斗力</label>
+    <label class="personal-title">战斗力排行</label>
 
     <div class="personal-value">
       {{ player.cap }}
@@ -38,7 +38,7 @@
   <!-- 财富 -->
   <div class="col s6 m2">
     <label class="personal-title">
-	  财富($)
+	  财富排行($)
 	</label>
     <div class="personal-value">
       {{ player.wealth }}
@@ -54,8 +54,30 @@
       {{ player.rank }}
     </div>
   </div>
+<!--雷达图-->
+  <div class="col s6 m2">
+    <label class="personal-title">
+    
+  </label>
+    <div class="personal-value">
+      {{ player.wins}}
+      {{player.k}}
+      {{player.d}}
+      {{player.a}}
+      {{player.minion}}
+      {{player.gold}}
+      {{player.tower}}
+      {{player.damage}}
+      {{player.taken}}
+    </div>
+  </div>
+
+
 {% else %}
   <div class="row">
 	<h3>用户不存在</h3>
   </div>
 {% endif %}
+
+
+
