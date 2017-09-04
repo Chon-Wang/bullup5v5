@@ -223,7 +223,7 @@ exports.getWealthRank = function(userId, callback) {
                     }
                     (usersInfo[wealthInfo.user_id]) = {};
                     (usersInfo[wealthInfo.user_id]).user_id = wealthInfo.user_id;
-                    (usersInfo[wealthInfo.user_id]).user_nickname = row.user_nickname;
+                    (usersInfo[wealthInfo.user_id]).user_nickname = row[0].user_nickname;
                     (usersInfo[wealthInfo.user_id]).user_wealth = wealthInfo.bullup_currency_amount;
                     errCb();
                 });
@@ -375,19 +375,36 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 console.log(JSON.stringify(userPersonalInfo.paymentHistory));
                 callback(null,userPersonalInfo);
             });
+        
         },
         function(userPersonalInfo,callback){
+            connection.query('select bullup_strength_wins,bullup_strength_k,bullup_strength_d,bullup_strength_a,bullup_strength_minion,bullup_strength_gold,bullup_strength_tower,bullup_strength_damage,bullup_strength_damage_taken from bullup_strength where user_id=?',[userId],function(err,results, fields){
+                if(err) throw err;
+                userPersonalInfo.lolInfo_wins=results[0].bullup_strength_wins;
+                userPersonalInfo.lolInfo_strength_k=results[0].bullup_strength_k;
+                userPersonalInfo.lolInfo_strength_d=results[0].bullup_strength_d;
+                userPersonalInfo.lolInfo_strength_a=results[0].bullup_strength_a;
+                userPersonalInfo.lolInfo_strength_minion=results[0].bullup_strength_minion;
+                userPersonalInfo.lolInfo_strength_gold=results[0].bullup_strength_gold;
+                userPersonalInfo.lolInfo_strength_tower=results[0].bullup_strength_tower;
+                userPersonalInfo.lolInfo_strength_damage=results[0].bullup_strength_damage;
+                userPersonalInfo.lolInfo_strength_damage_taken=results[0].bullup_strength_damage_taken;
+                callback(null,userPersonalInfo); 
+            });
+        
+        },function(userPersonalInfo,callback){
             //var lolInfoId={};
             connection.query('select lol_info_id from lol_bind where user_id=?',[userId],function(err, results, fields){
+                if(err) throw err;
                 console.log('id:'+userId);
                 userPersonalInfo.Id=results[0].lol_info_id;
                 console.log('pid'+userPersonalInfo.Id);
                 callback(null,userPersonalInfo);
             });
-        },
-        function(userPersonalInfo,callback){
-           // var lolInfo={};
-            connection.query('select *from lol_info where lol_info_id=?',[userPersonalInfo.Id],function(err, results, fields){
+        },function(userPersonalInfo,callback){
+           // if(err) throw err;
+            // var lolInfo={};
+            connection.query('select * from lol_info where lol_info_id=?',[userPersonalInfo.Id],function(err, results, fields){
                 userPersonalInfo.info=results;
                console.log(JSON.stringify("lolInfo:"+userPersonalInfo));
                callback(null,userPersonalInfo); 

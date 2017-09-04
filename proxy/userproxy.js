@@ -321,8 +321,15 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserlolAccount=queryResult.info[0].user_lol_account;
                 data.UserlolNickname=queryResult.info[0].user_lol_nickname;
                 data.UserlolArea=queryResult.info[0].user_lol_area;
-                
-                
+                data.UserlolInfo_wins=queryResult.lolInfo_wins;
+                data.UserlolInfo_k=queryResult.lolInfo_strength_k;
+                data.UserlolInfo_d=queryResult.lolInfo_strength_d;
+                data.UserlolInfo_a=queryResult.lolInfo_strength_a;
+                data.UserlolInfo_minion=queryResult.lolInfo_strength_minion;
+                data.UserlolInfo_gold=queryResult.lolInfo_strength_gold;
+                data.UserlolInfo_tower=queryResult.lolInfo_strength_tower;
+                data.UserlolInfo_damage=queryResult.lolInfo_strength_damage;
+                data.userInfo_damage_taken=queryResult.lolInfo_strength_damage_taken;
                 feedback.extension = data;
               //  console.log('feedback:'+JSON.stringify(data));
             }else{
