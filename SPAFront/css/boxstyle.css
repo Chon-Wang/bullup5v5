@@ -9,21 +9,28 @@
 .chatbox {
 	width: 600px;
 	min-width: 390px;
-	height: 650px;
 	background: #dae3e0;
 	padding: 25px;
 	margin: 20px;
 	box-shadow: 0 3px #ccc;
 	border-radius: 15px;
+	height:650px;
+	overflow: hidden;
+	
+
 }
+
 
 .chatlogs {
 	padding: 10px;
 	width: 100%;
-	height: 480px;
+	height: auto;
 	overflow-x:hidden;
 	overflow-y:scroll;
 	border-bottom: 0px solid #333;
+}
+.dps{
+	min-height: 100px;
 }
 
 .chatlogs::-webkit-scrollbar {
@@ -41,6 +48,16 @@
 	align-items: flex-start;
 	margin-bottom:10px;
 }
+.w_rigth{
+	
+    width: 100%;
+	padding-left: 10%;
+	padding-right: 2%;
+}
+
+.matop{
+	margin-top: 80px;
+}
 
 .chat .user-photo {
 	width: 60px;
@@ -55,7 +72,7 @@
 }
 
 .chat .chat-message {
-	width: 70%;
+	width: 88%;
 	padding: 15px;
 	margin: 5px 10px 0;
 	border-radius: 10px;
@@ -239,5 +256,8 @@
 
 .chat-form button:hover {
 	background: #c7b3e5;
+}
+.hjua{
+	line-height: 30px;
 }
 
