@@ -7,6 +7,9 @@ $().ready(function(){
 	//==============
 	//	test data
 	//==============
+	$('#router_test_page').click(function () {
+		$.getScript('/js/jiaz.js');
+	})
 	var starter_data = {
 		tournaments:[
 			{

@@ -409,6 +409,28 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                console.log(JSON.stringify("lolInfo:"+userPersonalInfo));
                callback(null,userPersonalInfo); 
             });
+        },function(userPersonalInfo,callback){
+            //个人战斗力排行
+            connection.query('select bullup_strength_score from bullup_strength where user_id=?',[userId],function(err,results,fields){
+                let temp = results[0].bullup_strength_score;
+                //console.log(temp);
+                connection.query('select count(*) as strengthRank from bullup_strength where bullup_strength_score>=?',[temp],function(err,results2,fields){
+                    userPersonalInfo.strengthRank=results2;
+                    console.log(JSON.stringify("strengthRank:"+userPersonalInfo.strengthRank));
+                    callback(null,userPersonalInfo);
+                })
+            })
+        },function(userPersonalInfo,callback){
+            //个人财富排行
+            connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
+                let temp2 = results[0].bullup_currency_amount;
+                console.log(temp2);
+                connection.query('select count(*) as wealthRank from bullup_wealth where bullup_currency_amount>=?',[temp2],function(err,results2,fields){
+                    userPersonalInfo.wealthRank=results2;
+                    console.log(JSON.stringify("wealthRank:"+userPersonalInfo.wealthRank));
+                    callback(null,userPersonalInfo);
+                })
+            })
         }
     ],function(err,res){
         callback(res);
