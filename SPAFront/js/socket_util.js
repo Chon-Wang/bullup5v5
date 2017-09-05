@@ -346,6 +346,7 @@ function handleTeamEstablishResult(feedback){
                     break;
                 }
             }
+
             var teamDetailsHtml = douniu.loadSwigView('swig_team_detail.html', {
                 team: room
             });
