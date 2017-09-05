@@ -5,45 +5,29 @@
   </a>
 </div>
 
+
+
 <!-- 召唤师名 所属服务器 -->
 <div class="col s6 m2">
-  <label class="personal-title">
-   
-  </label>
-  <div class="personal-server chip">
-   
+    <label class="personal-title">
+      {{ player.name }}
+    </label>
+    <div class="personal-server chip">
+      {{ player.server }}
+    </div>
   </div>
-</div>
-
-<!-- 战斗力 -->
-<div class="col s6 m2">
-
-  <label class="personal-title">战斗力排行</label>
-
-  <div class="personal-value">
-    {{ player.cap }}
-  </div>
-</div>
 
 <!-- 胜率 -->
-<div class="col s6 m2">
+<!-- <div class="col s6 m2">
   <label class="personal-title">
     胜率
   </label>
   <div class="personal-value">
     {{ player.winning_rate }}
   </div>
-</div>
+</div> -->
 
-<!-- 财富 -->
-<div class="col s6 m2">
-  <label class="personal-title">
-    {{ player.wealth}}
-  </label>
-  <div class="personal-value">
-    {{ player.wealthRank }}
-  </div>
-</div>
+
 <!--雷达图-->
 <!-- Personal Info -->
 <div class="row" id="personal_basic">
@@ -72,23 +56,24 @@
 
 <!-- 财富 -->
 <div class="col s6 m2">
-    <label class="personal-title">财富</label>
+    <label class="personal-title">
+      财富
+    </label>
     <div class="personal-value">
-        {{playe.wealth}}
+     {{ player.wealth }}
     </div>
-</div>
+  </div>
 <!-- 排行 -->
 <div class="col s6 m2">
     <label class="personal-title"> 战斗力排行</label>
     <div class="personal-value">
-        {{playe.cap}}
+        {{ player.cap }}
     </div>
+</div>
 <div class="col s6 m2">
-    <label class="personal-title">
-       财富排行
-</label>
+    <label class="personal-title">财富排行</label>
     <div class="personal-value">
-        {{playe.wealthRank}}
+        {{ player.wealthRank }}
     </div>
 </div>
 
