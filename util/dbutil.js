@@ -360,13 +360,15 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
     console.log("id="+userId);
     async.waterfall([
         function(callback){
+            //个人信息
             var userPersonalInfo={};
             connection.query('select * from `user_base` where user_id=?', [userId], function (err, results, fields) {
                 if (err) throw err;
                 userPersonalInfo.userInfo=results;
                 callback(null, userPersonalInfo);
             });
-        }, function(userPersonalInfo,callback){
+            //消费记录
+        },function(userPersonalInfo,callback){
             connection.query('select * from bullup_payment_history where user_id=?',[userId],function(err, results, fields){
                 console.log("userId"+userPersonalInfo.userId);
                 if(err) throw err;
@@ -375,9 +377,8 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 console.log(JSON.stringify(userPersonalInfo.paymentHistory));
                 callback(null,userPersonalInfo);
             });
-        
-        },
-        function(userPersonalInfo,callback){
+            //个人能力数据
+        },function(userPersonalInfo,callback){
             connection.query('select bullup_strength_wins,bullup_strength_k,bullup_strength_d,bullup_strength_a,bullup_strength_minion,bullup_strength_gold,bullup_strength_tower,bullup_strength_damage,bullup_strength_damage_taken from bullup_strength where user_id=?',[userId],function(err,results, fields){
                 if(err) throw err;
                 userPersonalInfo.lolInfo_wins=results[0].bullup_strength_wins;
@@ -391,7 +392,6 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 userPersonalInfo.lolInfo_strength_damage_taken=results[0].bullup_strength_damage_taken;
                 callback(null,userPersonalInfo); 
             });
-        
         },function(userPersonalInfo,callback){
             //var lolInfoId={};
             connection.query('select lol_info_id from lol_bind where user_id=?',[userId],function(err, results, fields){
