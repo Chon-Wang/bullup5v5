@@ -59,6 +59,7 @@
 }
 
 .starter-btn {
+	line-height: 83px;
 	position: relative;
 	font-size: 25px;
 	display: flex;
