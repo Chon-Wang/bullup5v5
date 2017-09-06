@@ -163,7 +163,6 @@ socket.on('lolRoomEstablish', function (lolRoom) {
         // 如果不是创建者，则显示等待蓝方队长建立房间
        //alert('请等待');
        function poroto_w() {
-        
            $('#modalpopo .modal-content  h4').text("提示：")
              $('#modalpopo .ceneter_w').text("请等待！")
              $('#modalpopo').modal('open'); 
@@ -173,6 +172,16 @@ socket.on('lolRoomEstablish', function (lolRoom) {
 });
 
 socket.on('lolRoomEstablished', function () {
+    //游戏开始 刷新时钟
+
+});
+
+socket.on('battleResult', function(resultPacket){
+    //读取数据
+
+    //页面跳转到结果详情页
+
+
 });
 
 /**
@@ -444,7 +453,8 @@ function handleInviteFromFriend(message){
     //弹出消息中心
     $("#message_center_nav").click();
     //console.log("messageInfo:  " + JSON.stringify(messageInfo));
-}  
+} 
+
 function  handlePersonalCenterResult(feedback){
     //判断是否成功
     if(feedback.errorCode == 0){
@@ -492,5 +502,9 @@ function handleBattleInviteRequest(message){
     messageInfo.push(message);
     //弹出消息中心
     $("#message_center_nav").click();
+}
+
+function handleBattleResult(){
+
 }
 

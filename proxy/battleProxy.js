@@ -98,7 +98,7 @@ exports.handleBattleInviteResult = function (io, socket) {
 
             dstSocket.emit('feedback', feedback);
         }
-    })
+    });
 }
 
 /**
@@ -107,8 +107,32 @@ exports.handleBattleInviteResult = function (io, socket) {
  * @param socket
  */
 exports.handleLOLRoomEstablished = function (io, socket) {
-    socket.on('lolRoomEstablished', function (battleInfo) {
+    socket.on('lolRoomEstablished', function (roomPacket) {
+        //检查数据包中的人员是否能对应上
+
+        //通知客户端游戏已开始
         io.sockets.in(battleInfo.battleName).emit('lolRoomEstablished');
-    })
+    });
+}
+
+exports.handleBattleResult = function (io, socket){
+    socket.on('lolBattleResult', function (lolResultPacket) {
+        if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM'){
+            if(lolResultPacket.win == 'yes'){
+                //寻找该玩家所在的队伍
+
+                //管理服务端的全局变量 队伍和对局
+
+                //组织通知双方队伍胜负结果的数据包
+                var resultPacket = {};
+            
+                //广播结果数据包
+                io.sockets.in(battleInfo.battleName).emit('battleResult', resultPacket);
+
+                //对局中所有的socket离开所有的socketRoom
+                io.sockets.in(battleInfo.battleName).leaveAll();
+            }
+        }
+    });
 }
 

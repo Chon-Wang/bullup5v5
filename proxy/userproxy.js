@@ -220,11 +220,13 @@ exports.handleRankRequest = function (socket){
 }
 
 exports.handleLOLBind = function(socket){
-    socket.on('lolBindRequest',function(request){
-        var userId = request.userId;
-        var lolAccount = request.lolAccount;
-        var lolNickname = request.lolNickname;
-        var lolArea = request.lolArea;
+    socket.on('lolLoginResult',function(loginPacket){
+        
+        var userId = socketUserMap[socket.id];
+        var lolAccount = loginPacket.accountId;
+        var lolNickname = loginPacket.nickname;
+        var lolArea = "US";
+
         async.waterfall([
             function(callback){
                 console.log(userId);
