@@ -4,6 +4,9 @@
   <head>
 	<meta charset="UTF-8">
 	<title>swig test</title>
+	<link href="css/style.css" rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="css/font.css" type="text/css"/>
+	<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
 	<link href="./font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="./css/materialize.min.css" rel="stylesheet">
 	<link href="./css/mhome.css" rel="stylesheet">
@@ -21,9 +24,12 @@
 	<link href="/css/spa_fight.css" rel="stylesheet"/>
 	<link rel="stylesheet" href="./flipclock/flipclock.css">
 	<link href="./css/materialize.min.css" rel="stylesheet">
-
-
 	<link rel="stylesheet" href="./css/spa_fight.css">
+	<link rel="stylesheet" href="./css/date.css">
+	
+	
+	
+
 
   </head>
 
@@ -120,7 +126,7 @@
 		<li><a class="btn-floating red" href="#create_room_modal"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
 		<li><a class="btn-floating blue"><i class="fa fa-home" aria-hidden="true"></i></a></li>
 		<li><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-		<li><a class="btn-floating green"><i class="fa fa-arrow-up" aria-hidden="true"></i></a></li>
+		<li><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
 	  </ul>
 	</div>
 
@@ -336,23 +342,47 @@
 								<div class="chip">99$</div>
 									<div class="chip">199$</div>
 						</div>
-						<div class="input-field col s6">
-							<input id="last_name" type="text" class="validate account">
-							<label for="last_name">银行卡号</label>
+						<div class="input-field col s6" style="width:80%;">
+							<input  style="width:60%;float:left;" value="card number" id="last_name" type="text" class="validate account">
+							<input style="width:30%;margin-left:10%;float:left;" placeholder="code" id="first_name" type="text" class="validate">
 						</div>
 					</div>
 				
-					<div class="row">
-						<div class="input-field col s6">
-								<input id="birthdate" type="text" class="datepicker picker__input" readonly="" tabindex="-1" aria-haspopup="true" aria-expanded="false" aria-readonly="false" aria-owns="birthdate_root">
-							<label for="password">有效期</label>
-						</div>
+					<div class="input-field col s12" style="width:20%;float:left;">
+						<select>
+							
+							<option value="1">1月</option>
+							<option value="2">2月</option>
+							<option value="3">3月</option>
+							<option value="3">4月</option>
+							<option value="3">5月</option>
+							<option value="3">6月</option>
+							<option value="3">7月</option>
+							<option value="3">8月</option>
+							<option value="3">9月</option>
+							<option value="3">10月</option>
+							<option value="3">11月</option>
+							<option value="3">12月</option>
+						</select>
+					
 					</div>
-					<div class="row">
-						<div class="input-field col s6">
-							<input id="email" type="email" class="validate" maxlength="3" >
-							<label for="email">安全码</label>
-						</div>
+					<div class="input-field col s12" style="width:20%;float:left;">
+						<select>
+							
+							<option value="1">2017年</option>
+							<option value="2">2018年</option>
+							<option value="3">2019年</option>
+							<option value="3">2020年</option>
+							<option value="3">2021年</option>
+							<option value="3">2022年</option>
+							<option value="3">2023年</option>
+							<option value="3">2024</option>
+							<option value="3">2025</option>
+							<option value="3">2026</option>
+							<option value="3">2027</option>
+							<option value="3">2028</option>
+						</select>
+					
 					</div>
 					
 				</form>
@@ -386,15 +416,15 @@
 
 
 	<!-- notification center Modal Structure -->
-	<div id="message_sheet" class="modal bottom-sheet">
+	<div id="message_sheet" class="modal bottom-sheet" style="background-color: #455a64;">
 	  <div class="modal-content" id="message_modal_content">
-		<h4>消息中心</h4>
+		<h4 style="color:#fff;">消息中心</h4>
 		<ul id="message_center" class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
 		<!--swig_messages.html-->
 		</ul>
 	  </div>
-	  <div class="modal-footer">
-		<a id="message_center_btn" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
+	  <div class="modal-footer" style="background-color: #455a64;">
+		<a id="message_center_btn" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i style="color:#fff;" class="fa fa-trash" aria-hidden="true"></i></a>
 	  </div>
 	</div>
 
@@ -489,7 +519,7 @@
 		<!-- 创建赛事 -->
 		<div class="modal" id="create_koom_modal" style="
     background-color: #455a64;color:#fff;">
-			<div class="modal-content">
+			<div class="modal-content" style="height:468px;">
 			<h4 style="color:#fff;">创建赛事</h4>
 			<div class="input-field col s12">
 					<select>
@@ -509,35 +539,30 @@
 						</select>
 				
 					</div>
-					<div style="float:left;">
-							<p>可比赛时间</p>
-						<input type="text"  style="width:25%;float:left;">
-					
-						<input type="text"  style="width:25%;float:left;margin-left:50px;">
-						</div>
-					
-					<div style="float:left;">
-						<p>可比赛时间</p>
-					<input type="date" class="datepicker" style="width:25%;float:left;">
-					<p style="color: #fff;
-					float: left;
-					position: absolute;
-					left: 209px;
-					top: 248px;">-</p>
-					<input type="date" class="datepicker" style="width:25%;float:left;margin-left:50px;">
+					<div>
+						<p>战斗力范围</p>
+						<input style="width:25%;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
+						<p style="color:#fff;float: left;margin-left: 14px;
+						margin-top: 16px;">——</p>
+						<input style="width:26%;margin-left:20px;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
 					</div>
-					<div style="float:left;">
-							<p>可报名时间</p>
-						<input type="date" class="datepicker" style="width:25%;float:left;">
-						<p style="color: #fff;
-						float: left;
-						position: absolute;
-						left: 209px;
-						top: 248px;">-</p>
-						<input type="date" class="datepicker" style="width:25%;float:left;margin-left:50px;">
-						</div>
-			
+				
+					
+					<div style="float:left;width:60%;">
+						<p>可比赛时间</p>
+						<input id="endTime" class="kbtn" />
+					</div>
+					<div style="float:left;width:60%;">
+						<p>结束时间</p>
+						<input id="endTime2" class="kbtn" />
+					</div>
+
+				
+					
 			</div>
+			<div style="padding-left:20px;padding-bottom:20px;">
+			<a class="waves-effect waves-light btn">完成</a>
+		</div>
 		</div>
 		<!-- 弹出弹出 -->
 
@@ -552,7 +577,8 @@
 							</button>
 		</div>
 	</div>
-	</div>			
+	</div>		
+	<div id="datePlugin"></div>	
 	<script src="./js/jquery-2.2.4.js"></script>
 	<script src="./js/materialize.min.js"></script>
 	<script src="./js/socket_util.js"></script>
@@ -574,6 +600,9 @@
 	<script src="./js/personal_center.js"></script>
 	<script src="./js/test_page.js"></script>
 	<script src="./flipclock/flipclock.js"></script>
+	<script src="./js/date.js"></script>
+
+
 	<!-- test data script -->
 	<!-- comment this out and replace these data with those from database -->
 	<script src="./js/testData.js"></script>
@@ -646,8 +675,12 @@ $('.waves-light').click(function(){
 	$('#modalpopo').modal('close');
 })
 
-
-
+//时间分钟组件
+$(function(){
+	$('#beginTime').date();
+	$('#endTime').date({theme:"datetime"});
+	$('#endTime2').date({theme:"datetime"});
+});
 
 
 	</script>

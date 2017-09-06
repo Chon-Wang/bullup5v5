@@ -7,13 +7,16 @@ $().ready(function(){
 	//==============
 	//	test data
 	//==============
+	
+
+
 	$('#router_test_page').click(function () {
 		$.getScript('/js/jiaz.js');
 	})
-	// $("#router_personal").click(function () {
-	// 	$.getScript('/js/leidt.js');
+	$("#router_personal").click(function () {
+		$.getScript('/js/leidt.js');
 		
-	// })
+	})
 	
 	var starter_data = {
 		tournaments:[
@@ -118,7 +121,7 @@ $().ready(function(){
 
 	$('#router_tournament').on('click', function(e){
 		e.preventDefault();
-
+ 
 		var tournaments_data = [];
 
 		douniu.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');
@@ -135,4 +138,7 @@ $().ready(function(){
 function loadStarter(starter_data){
 	douniu.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
 }
+
+
+
 
