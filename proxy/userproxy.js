@@ -332,6 +332,8 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserInfo_damage_taken=queryResult.lolInfo_strength_damage_taken;
                 data.UserStrengthRank=queryResult.strengthRank;
                 data.UserWealthRank=queryResult.wealthRank;
+                data.UserWealth=queryResult.wealth;
+                data.UserStrength=queryResult.lolInfo_strength_score;
                 feedback.extension = data;
               //  console.log('feedback:'+JSON.stringify(data));
             }else{

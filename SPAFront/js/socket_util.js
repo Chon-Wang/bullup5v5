@@ -1,7 +1,6 @@
 var io = require('socket.io-client');
 var socket = io.connect('http://127.0.0.1:3000');
 
-
 var userInfo = null;
 var teamInfo = null;
 var roomInfo = null;
@@ -446,15 +445,13 @@ function handleInviteFromFriend(message){
     $("#message_center_nav").click();
     //console.log("messageInfo:  " + JSON.stringify(messageInfo));
 }  
-
-
 function  handlePersonalCenterResult(feedback){
     //判断是否成功
     if(feedback.errorCode == 0){
         var data = feedback.extension;
         console.log('data='+JSON.stringify(data));
-         //取数据
-        //渲染
+        //radar.setData(data);
+
         var personalCenterHtml = douniu.loadSwigView('./swig_personal_basic.html',{
             player:{
                name:data.UserlolNickname,
@@ -467,12 +464,16 @@ function  handlePersonalCenterResult(feedback){
                gold:data.UserlolInfo_gold,
                tower:data.UserlolInfo_tower,
                damage:data.UserlolInfo_damage,
-               taken:data.UserlolInfo_damage_taken,
+               taken:data.UserInfo_damage_taken,
                cap:data.UserStrengthRank[0].strengthRank,
-               wealth:data.UserWealthRank[0].wealthRank
+               wealthRank:data.UserWealthRank[0].wealthRank,
+               wealth:data.UserWealth,
+               strength:data.UserStrength
+                
             }
 
         });
+
         $('#main-view').html(personalCenterHtml);
     }else{
     //alert('加载页面失败');

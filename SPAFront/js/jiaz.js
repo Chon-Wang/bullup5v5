@@ -18,3 +18,7 @@ var my_data = [9.5, 88, 39, 20, 30, 88];
 var component_data = [99, 18, 99, 67, 99, 89];
 
 drawRadarWithData(my_data, component_data, 'teams-radar-chart');
+
+
+
+
