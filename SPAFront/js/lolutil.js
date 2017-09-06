@@ -2,7 +2,7 @@ var request = require('request');
 var async = require('async');
 var lolcfg = require('./lolcfg.js');
 
-var apiKey =  "RGAPI-77c09c22-dd80-4c03-95d9-954ac50aa923";
+var apiKey =  "RGAPI-e8274376-f5d9-42e2-8c8f-04b921632ae4";
 
 function getItemsStaticData(callback){
     var options = {
