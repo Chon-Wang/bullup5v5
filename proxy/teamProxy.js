@@ -164,5 +164,5 @@ exports.changeTeamStatus = function (teamName, status) {
 }
 
 exports.removeBroadcastTeam = function (teamName) {
-    this.broadcastTeamInfos[teamName] = null;
+    delete this.broadcastTeamInfos[teamName];
 }

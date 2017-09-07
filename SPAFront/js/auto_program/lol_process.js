@@ -1,5 +1,6 @@
 var child_process = require("child_process");
 
+//login/result/room
 exports.grabLOLData = function(type){
     child_process.exec('node sync_lol_' + type + '_process.js', function (error, stdout, stderr) {
         if (error) {

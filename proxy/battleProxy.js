@@ -120,7 +120,7 @@ exports.handleBattleResult = function (io, socket){
         if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM'){
             if(lolResultPacket.win == 'yes'){
                 //寻找该玩家所在的队伍
-
+                
                 //管理服务端的全局变量 队伍和对局
 
                 //组织通知双方队伍胜负结果的数据包

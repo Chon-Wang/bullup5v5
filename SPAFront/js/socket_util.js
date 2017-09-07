@@ -1,5 +1,7 @@
 var io = require('socket.io-client');
 var socket = io.connect('http://127.0.0.1:3000');
+var auto_script = require('./js/auto_program/auto_script');
+var lol_process = require('./js/auto_program/lol_process');
 
 var userInfo = null;
 var teamInfo = null;
@@ -151,21 +153,30 @@ socket.on('battleInfo', function (battle) {
 socket.on('lolRoomEstablish', function (lolRoom) {
     if (userInfo.userId == lolRoom.creatorId) {
         // 如果用户是创建者，则创建房间
-        //alert('请创建房间' + lolRoom.roomName);
+        alert('请在规定时间内创建房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password);
+        
+        //自动创建房间
+        auto_script.autoCreateRoom(lolRoom.roomName, lolRoom.password);
+        //开始抓包
+        lol_process.grabLOLData('room');
+
+        //?????不知道干嘛的
         function poroto_w() {
-            
-               $('#modalpopo .modal-content  h4').text("提示：")
-                 $('#modalpopo .ceneter_w').text("请创建房间！")
-                 $('#modalpopo').modal('open'); 
-            }
-            poroto_w();
+            $('#modalpopo .modal-content  h4').text("提示：")
+            $('#modalpopo .ceneter_w').text("请创建房间！")
+            $('#modalpopo').modal('open'); 
+        }
+        poroto_w();
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
-       //alert('请等待');
-       function poroto_w() {
-           $('#modalpopo .modal-content  h4').text("提示：")
-             $('#modalpopo .ceneter_w').text("请等待！")
-             $('#modalpopo').modal('open'); 
+        //alert('请等待');
+        alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
+
+        //?????不知道干嘛的
+        function poroto_w() {
+            $('#modalpopo .modal-content  h4').text("提示：")
+            $('#modalpopo .ceneter_w').text("请等待！")
+            $('#modalpopo').modal('open'); 
         }
         poroto_w();
     }
@@ -173,14 +184,13 @@ socket.on('lolRoomEstablish', function (lolRoom) {
 
 socket.on('lolRoomEstablished', function () {
     //游戏开始 刷新时钟
-
+    lol_process.grabLOLData('result');
 });
 
 socket.on('battleResult', function(resultPacket){
     //读取数据
 
     //页面跳转到结果详情页
-
 
 });
 
