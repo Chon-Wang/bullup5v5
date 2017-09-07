@@ -219,6 +219,7 @@ exports.handleRankRequest = function (socket){
     });
 }
 
+
 exports.handleLOLBind = function(socket){
     socket.on('lolLoginResult',function(loginPacket){
         

@@ -153,98 +153,103 @@ exports.findFriendListByUserId = function(userId, callback) {
     })
 }
 
+//-----------------------------------------------expired-----------------------------------------------//
+// exports.getStrengthScoreRank = function(userId, callback) {
+//     async.waterfall([
+//         function(callback){
+//             connection.query('select user_id,bullup_strength_score from bullup_strength order by bullup_strength_score desc limit 100', function(err, row) {
+//                 if (err){ 
+//                     throw err;
+//                 }
+//                 callback(null, row);
+//             });
+//         },
+//         function(usersStrengthInfo, callback){
+//             var usersInfo = {};
+//             async.eachSeries(usersStrengthInfo, function(strengthInfo, errCb){
+//                 connection.query('select user_nickname from user_base where user_id = ?', [strengthInfo.user_id], function(err, row) {
+//                     if (err){ 
+//                         throw err;
+//                     }
+//                     (usersInfo[strengthInfo.user_id]) = {};
+//                     (usersInfo[strengthInfo.user_id]).user_id = strengthInfo.user_id;
+//                     (usersInfo[strengthInfo.user_id]).user_nickname = row[0].user_nickname;
+//                     (usersInfo[strengthInfo.user_id]).user_strength = strengthInfo.bullup_strength_score;
+//                     errCb();
+//                 });
+//             },function(errCb){
+//                 callback(null, usersInfo);
+//             });
+//         }, function(usersStrengthInfo, callback){
+//             var res = usersStrengthInfo;
+//             async.eachSeries(usersStrengthInfo, function(strengthInfo, errCb){
+//                 connection.query('select icon_id from bullup_profile where user_id = ?', [strengthInfo.user_id], function(err, row) {
+//                     if (err){ 
+//                         throw err;
+//                     }
+//                     (res[strengthInfo.user_id]).icon_id = row[0].icon_id;
+//                     errCb();
+//                 });
+//             },function(errCb){
+//                 callback(null, res);
+//             });
+//         }
+//     ], function(err,result){
+//         if (err) console.log(err);
+//         callback(result)
+//     });
+// }
 
-exports.getStrengthScoreRank = function(userId, callback) {
-    async.waterfall([
-        function(callback){
-            connection.query('select user_id,bullup_strength_score from bullup_strength order by bullup_strength_score desc limit 100', function(err, row) {
-                if (err){ 
-                    throw err;
-                }
-                callback(null, row);
-            });
-        },
-        function(usersStrengthInfo, callback){
-            var usersInfo = {};
-            async.eachSeries(usersStrengthInfo, function(strengthInfo, errCb){
-                connection.query('select user_nickname from user_base where user_id = ?', [strengthInfo.user_id], function(err, row) {
-                    if (err){ 
-                        throw err;
-                    }
-                    (usersInfo[strengthInfo.user_id]) = {};
-                    (usersInfo[strengthInfo.user_id]).user_id = strengthInfo.user_id;
-                    (usersInfo[strengthInfo.user_id]).user_nickname = row[0].user_nickname;
-                    (usersInfo[strengthInfo.user_id]).user_strength = strengthInfo.bullup_strength_score;
-                    errCb();
-                });
-            },function(errCb){
-                callback(null, usersInfo);
-            });
-        }, function(usersStrengthInfo, callback){
-            var res = usersStrengthInfo;
-            async.eachSeries(usersStrengthInfo, function(strengthInfo, errCb){
-                connection.query('select icon_id from bullup_profile where user_id = ?', [strengthInfo.user_id], function(err, row) {
-                    if (err){ 
-                        throw err;
-                    }
-                    (res[strengthInfo.user_id]).icon_id = row[0].icon_id;
-                    errCb();
-                });
-            },function(errCb){
-                callback(null, res);
-            });
-        }
-    ], function(err,result){
-        if (err) console.log(err);
-        callback(result)
-    });
-}
 
-exports.getWealthRank = function(userId, callback) {
-    async.waterfall([
-        function(callback){
-            connection.query('select user_id,bullup_currency_amount from bullup_wealth order by bullup_currency_amount desc limit 100', function(err, row) {
-                if (err){ 
-                    throw err;
-                }
-                callback(null, row);
-            });
-        },
-        function(usersWealthInfo, callback){
-            var usersInfo = {};
-            async.eachSeries(usersWealthInfo, function(wealthInfo, errCb){
-                connection.query('select user_nickname from user_base where user_id = ?', [wealthInfo.user_id], function(err, row) {
-                    if (err){ 
-                        throw err;
-                    }
-                    (usersInfo[wealthInfo.user_id]) = {};
-                    (usersInfo[wealthInfo.user_id]).user_id = wealthInfo.user_id;
-                    (usersInfo[wealthInfo.user_id]).user_nickname = row[0].user_nickname;
-                    (usersInfo[wealthInfo.user_id]).user_wealth = wealthInfo.bullup_currency_amount;
-                    errCb();
-                });
-            },function(errCb){
-                callback(null, usersInfo);
-            });
-        }, function(usersWealthInfo, callback){
-            var res = usersWealthInfo;
-            async.eachSeries(usersWealthInfo, function(wealthInfo, errCb){
-                connection.query('select icon_id from bullup_profile where user_id = ?', [wealthInfo.user_id], function(err, row) {
-                    if (err){ 
-                        throw err;
-                    }
-                    (res[wealthInfo.user_id]).icon_id = row[0].icon_id;
-                    errCb();
-                });
-            },function(errCb){
-                callback(null, res);
-            });
-        }
-    ], function(err,result){
-        if (err) console.log(err);
-        callback(result)
-    });
-}
+//-----------------------------------------------expired-----------------------------------------------//
+// exports.getWealthRank = function(userId, callback) {
+//     async.waterfall([
+//         function(callback){
+//             connection.query('select user_id,bullup_currency_amount from bullup_wealth order by bullup_currency_amount desc limit 100', function(err, row) {
+//                 if (err){ 
+//                     throw err;
+//                 }
+//                 callback(null, row);
+//             });
+//         },
+//         function(usersWealthInfo, callback){
+//             var usersInfo = {};
+//             async.eachSeries(usersWealthInfo, function(wealthInfo, errCb){
+//                 connection.query('select user_nickname from user_base where user_id = ?', [wealthInfo.user_id], function(err, row) {
+//                     if (err){ 
+//                         throw err;
+//                     }
+//                     (usersInfo[wealthInfo.user_id]) = {};
+//                     (usersInfo[wealthInfo.user_id]).user_id = wealthInfo.user_id;
+//                     (usersInfo[wealthInfo.user_id]).user_nickname = row[0].user_nickname;
+//                     (usersInfo[wealthInfo.user_id]).user_wealth = wealthInfo.bullup_currency_amount;
+//                     errCb();
+//                 });
+//             },function(errCb){
+//                 callback(null, usersInfo);
+//             });
+//         }, function(usersWealthInfo, callback){
+//             var res = usersWealthInfo;
+//             async.eachSeries(usersWealthInfo, function(wealthInfo, errCb){
+//                 connection.query('select icon_id from bullup_profile where user_id = ?', [wealthInfo.user_id], function(err, row) {
+//                     if (err){ 
+//                         throw err;
+//                     }
+//                     (res[wealthInfo.user_id]).icon_id = row[0].icon_id;
+//                     errCb();
+//                 });
+//             },function(errCb){
+//                 callback(null, res);
+//             });
+//         }
+//     ], function(err,result){
+//         if (err) console.log(err);
+//         callback(result)
+//     });
+// }
+
+
+
 
 exports.validateBindInfo = function(userId, lolAccount, lolArea, callback){
     async.waterfall([

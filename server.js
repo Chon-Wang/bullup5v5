@@ -1,5 +1,6 @@
 var io = require('socket.io')();
 var logger = require('./util/logutil');
+var timmer = require('./timer');
 
 // 代理
 var userProxy = require('./proxy/userproxy.js'); 
@@ -13,7 +14,6 @@ teamProxy.init();
 socketProxy.init();
 battleProxy.init();
 
-
 io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
     userProxy.handleLogin(socket);
@@ -23,7 +23,7 @@ io.on('connection', function(socket) {
     userProxy.handleInviteFriend(socket);
 
     userProxy.handleRankRequest(socket);
-
+    
     userProxy.handleUserInviteResult(io, socket);
 
     //
@@ -51,6 +51,7 @@ io.on('connection', function(socket) {
     //
     battleProxy.handleBattleResult(io, socket);
 });
+
 
 io.on('disconnect', function (socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' disconnected!');
