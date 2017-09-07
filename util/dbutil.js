@@ -617,4 +617,4 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
  //   console.log(res);
 //});
 
-exports.updateRankList();
+//exports.updateRankList();
