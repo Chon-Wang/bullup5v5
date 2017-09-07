@@ -1,6 +1,6 @@
 var io = require('socket.io')();
 var logger = require('./util/logutil');
-//var timmer = require('./timer');
+var timmer = require('./timer');
 
 // 代理
 var userProxy = require('./proxy/userproxy.js'); 
@@ -59,6 +59,7 @@ io.on('disconnect', function (socket) {
 
 });
 
-//timmer.autoUpdateRankList();
+//一天更新一次排行榜
+timmer.autoUpdateRankList(24 * 3600);
 
 io.listen(3000);
