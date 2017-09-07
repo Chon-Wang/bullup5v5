@@ -23,7 +23,7 @@ io.on('connection', function(socket) {
     userProxy.handleInviteFriend(socket);
 
     userProxy.handleRankRequest(socket);
-    
+
     userProxy.handleUserInviteResult(io, socket);
 
     //
@@ -58,5 +58,7 @@ io.on('disconnect', function (socket) {
     socketProxy.remove(socket);
 
 });
+
+timmer.autoUpdateRankList();
 
 io.listen(3000);
