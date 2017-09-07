@@ -26,6 +26,7 @@ io.on('connection', function(socket) {
 
     userProxy.handleUserInviteResult(io, socket);
 
+    //
     userProxy.handleLOLBind(socket); 
 
     userProxy.handlePersonalCenterRequest(socket);
@@ -44,9 +45,11 @@ io.on('connection', function(socket) {
 
     battleProxy.handleBattleInviteResult(io, socket);
 
+    //
     battleProxy.handleLOLRoomEstablished(io, socket);
 
-    
+    //
+    battleProxy.handleBattleResult(io, socket);
 });
 
 io.on('disconnect', function (socket) {
