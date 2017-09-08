@@ -80,9 +80,10 @@ exports.handleBattleInviteResult = function (io, socket) {
                 socketProxy.userJoin(hostTeam.participants[i].userId, battle.battleName);
             }
 
+            teamProxy.printfAllTeamsInfo();
             // 向该对局中所有的用户广播对局信息
             io.sockets.in(battle.battleName).emit('battleInfo', battle);
-            io.in(battle.battleName).emit('battleInfo', battle);
+            //io.in(battle.battleName).emit('battleInfo', battle);
             // 向对局中所有用户广播要建立的lol房间信息
             console.log("创建者");
             console.log(challengerTeam.captain);
@@ -120,7 +121,7 @@ exports.handleBattleResult = function (io, socket){
         if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM'){
             if(lolResultPacket.win == 'yes'){
                 //寻找该玩家所在的队伍
-
+                
                 //管理服务端的全局变量 队伍和对局
 
                 //组织通知双方队伍胜负结果的数据包

@@ -10,7 +10,11 @@
 	  <label class="rank-title">财富排名</label>
 	  <div class="rank-value">
 		<!-- 财富排名 -->
+		{% if wealthUserInfo %}
+			{{wealthUserInfo.bullup_wealth_rank}}
+		{% else %}
 		---请先登录---
+		{%endif %}
 	  </div>
 	</div>
 
@@ -18,7 +22,11 @@
 	  <label class="rank-title">战斗力排名</label>
 	  <div class="rank-value">
 		<!-- 战斗力排名 -->
+		{% if strengthUserInfo %}
+			{{strengthUserInfo.bullup_strength_rank}}
+		{% else %}
 		---请先登录---
+		{%endif %}
 	  </div>
 	</div>
   </div>
@@ -34,9 +42,9 @@
 	  <ul class="collection">
 		{% for player in wealthRankList %}
 		  <li class="collection-item avatar">
-			<img src="./media/user_icon/{{ player.icon_id }}.png" alt="" class="circle">
+			<img src="./media/user_icon/{{ player.user_icon_id }}.png" alt="" class="circle">
 			<span class="title">{{player.user_nickname }}</span>
-			<p>{{ player.user_wealth }}
+			<p>{{ player.bullup_wealth_sum }}
 			</p>
 			<div class="secondary-content rank-number right">{{loop.index}}</div>
 		  </li>
@@ -53,9 +61,9 @@
 	  <ul class="collection">
 		{% for player in strengthRankList %}
 		  <li class="collection-item avatar">
-			<img src="./media/user_icon/{{ player.icon_id }}.png" alt="" class="circle">
+			<img src="./media/user_icon/{{ player.user_icon_id }}.png" alt="" class="circle">
 			<span class="title">{{ player.user_nickname }}</span>
-			<p>{{ player.user_strength }}
+			<p>{{ player.bullup_strength_score }}
 			</p>
 			<div class="secondary-content rank-number right">{{loop.index}}</div>
 		  </li>

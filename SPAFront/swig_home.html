@@ -27,29 +27,22 @@
 	<link rel="stylesheet" href="./css/spa_fight.css">
 	<link rel="stylesheet" href="./css/date.css">
 	
-	
-	
-
-
   </head>
 
   <body>
-		<style>
-	.selected {
-    background-color: #26a69a;
-    color: #fff;
-}
-.qies{
-	float: left;
-	margin-left: 10px;
-}
-
-	
-
-		</style>
+	<style>
+		.selected {
+			background-color: #26a69a;
+			color: #fff;
+		}
+		.qies{
+			float: left;
+			margin-left: 10px;
+		}
+	</style>
 	
 	
-	<ul id="dropdown_menu" class="dropdown-content grey darken-4">
+	<ul id="system_menu" class="dropdown-content grey darken-4">
 	  
 	</ul>
 	<div class="navbar-fixed">
@@ -74,7 +67,7 @@
 			<li><a id="router_chat">聊天室</a></li>
 			<li><a id="message_center_nav" href="#message_sheet" id="router_message">消息中心</a></li>
 			<!-- Dropdown Trigger -->
-			<li><a class="dropdown-button" href="#!" data-activates="dropdown_menu">系统菜单</a></li>
+			<li><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
 			<div style="float:left;width:100px;position: relative">
 			<p class="zuix" style="position: absolute;left:30px;top:0px;cursor: pointer;"><img src="media/imgs/zx.png" width="15" height="15"></p>
 			<p class="g_bi" style="position: absolute;right:20px;top:0px;cursor: pointer;"><img src="media/imgs/gb.png" width="15" height="15"></p>
@@ -400,7 +393,6 @@
 					</div>
 					<div class="input-field col s12" style="width:20%;float:left;">
 						<select>
-							
 							<option value="1">2017年</option>
 							<option value="2">2018年</option>
 							<option value="3">2019年</option>
@@ -648,74 +640,72 @@
 
 
 	<script>
-     $().ready(function(){
-	   var temp = douniu.loadSwigView("./swig_menu.html", null);
-	   $('#dropdown_menu').html(temp);
+    $().ready(function(){
+	  var temp = douniu.loadSwigView("./swig_menu.html", null);
+	  $('#system_menu').html(temp);
 
-	   $('.carousel.carousel-slider').carousel({
-		 fullWidth: true
-	   });
+		$('.carousel.carousel-slider').carousel({
+			fullWidth: true
+		});
 
-		 autoplay()
-			var time =null;
-			$(".carousel-slider").hover(function () {
-				console.log(1);
-				clearTimeout(time);
-			},function (){
-				clearTimeout(time);
-				time = setTimeout(autoplay, 2000);
-			});  
-	   function autoplay() {
+		autoplay();
+		var time =null;
+		$(".carousel-slider").hover(function () {
+			console.log(1);
 			clearTimeout(time);
-			time = setTimeout(autoplay, 4500);
-		 	$('.carousel').carousel('next');
-	   }
-		 });
+		},function (){
+			clearTimeout(time);
+			time = setTimeout(autoplay, 2000);
+		});  
+		function autoplay() {
+				clearTimeout(time);
+				time = setTimeout(autoplay, 4500);
+				$('.carousel').carousel('next');
+			}
+		});
 		 
-		 $(document).ready(function(){
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal').modal();
-	});
+		$(document).ready(function(){
+			// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+			$('.modal').modal();
+		});
 		// 有效期时间组件
-	$('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15 // Creates a dropdown of 15 years to control year
-  });
+		$('.datepicker').pickadate({
+			selectMonths: true, // Creates a dropdown to control month
+			selectYears: 15 // Creates a dropdown of 15 years to control year
+		});
       
-	// 价格$
-	$('.chip').click(function () {
-		var iox = $(this).index();
-		var clasvlue = $('.chip').eq(iox).text()
-		$("#first_name").val(clasvlue)
-		$('.ois').addClass('active')
-    $('.chip').eq(iox).addClass("selected").siblings().removeClass('selected')
+		// 价格$
+		$('.chip').click(function () {
+			var iox = $(this).index();
+			var clasvlue = $('.chip').eq(iox).text();
+			$("#first_name").val(clasvlue);
+			$('.ois').addClass('active');
+			$('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
+		})
 
-	})
+		//银行卡号输入js配置
+		$(document).ready(function(){
+			$('.account').bankInput(); 
+			$('.account').bankInput({min:4,max:25,deimiter:'   '}); 
+			$('.account').bankList(); 
+		});
+		//弹出popo
+		function poroto_w() {
+			$('#modalpopo .modal-content  h4').text("sdwdwdwdwd")
+			$('#modalpopo .ceneter_w').text("s123123123")
+			$('#modalpopo').modal('open'); 
+		}
+		$('.waves-light').click(function(){
+			$('#modalpopo').modal('close');
+		});
 
-//银行卡号输入js配置
-	$(document).ready(function(){
-		$('.account').bankInput(); 
-		$('.account').bankInput({min:4,max:25,deimiter:'   '}); 
-		$('.account').bankList(); 
-})
-//弹出popo
-function poroto_w() {
-
-   $('#modalpopo .modal-content  h4').text("sdwdwdwdwd")
-	 $('#modalpopo .ceneter_w').text("s123123123")
-	 $('#modalpopo').modal('open'); 
-}
-$('.waves-light').click(function(){
-	$('#modalpopo').modal('close');
-})
-
-$(function(){
-	$('#beginTime').date();
-	$('#endTime').date({theme:"datetime"});
-	$('#endTime2').date({theme:"datetime"});
-});
+		$(function(){
+			$('#beginTime').date();
+			$('#endTime').date({theme:"datetime"});
+			$('#endTime2').date({theme:"datetime"});
+		});
 
 	</script>
-  </body>
+</body>
 
 </html>
