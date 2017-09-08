@@ -80,9 +80,10 @@ exports.handleBattleInviteResult = function (io, socket) {
                 socketProxy.userJoin(hostTeam.participants[i].userId, battle.battleName);
             }
 
+            teamProxy.printfAllTeamsInfo();
             // 向该对局中所有的用户广播对局信息
             io.sockets.in(battle.battleName).emit('battleInfo', battle);
-            io.in(battle.battleName).emit('battleInfo', battle);
+            //io.in(battle.battleName).emit('battleInfo', battle);
             // 向对局中所有用户广播要建立的lol房间信息
             console.log("创建者");
             console.log(challengerTeam.captain);

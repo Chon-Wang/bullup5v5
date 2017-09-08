@@ -1,7 +1,7 @@
 var io = require('socket.io-client');
 var socket = io.connect('http://127.0.0.1:3000');
 //var auto_script = require('./js/auto_program/auto_script');
-var lol_process = require('../../auto_program/lol_process');
+var lol_process = require('./js/auto_program/lol_process');
 
 
 var userInfo = null;
@@ -204,12 +204,11 @@ function handleLoginResult(feedback) {
         // 登录成功
         //alert(feedback.text);
         function poroto_w() {
-            
-               $('#modalpopo .modal-content  h4').text("提示：")
-                 $('#modalpopo .ceneter_w').text("登录成功！")
-                 $('#modalpopo').modal('open'); 
-            }
-            poroto_w();
+            $('#modalpopo .modal-content  h4').text("提示：")
+            $('#modalpopo .ceneter_w').text("登录成功！")
+            $('#modalpopo').modal('open'); 
+        }
+        poroto_w();
         userInfo = feedback.extension;
         //console.log(JSON.stringify(userInfo));
         //跳转

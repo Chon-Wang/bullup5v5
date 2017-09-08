@@ -166,3 +166,12 @@ exports.changeTeamStatus = function (teamName, status) {
 exports.removeBroadcastTeam = function (teamName) {
     delete this.broadcastTeamInfos[teamName];
 }
+
+exports.printfAllTeamsInfo = function(){
+    console.log("Formed Team :");
+    console.log(this.formedTeams);
+    console.log("Unformed Team :");
+    console.log(this.unformedTeams);
+    console.log("Broadcast Team :");
+    console.log(this.broadcastTeamInfos);
+}

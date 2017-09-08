@@ -1,5 +1,4 @@
 $().ready(function(){
-
 	/* ----------------------------------------------
 	 * navbar router region
 	 * ----------------------------------------------
@@ -7,9 +6,6 @@ $().ready(function(){
 	//==============
 	//	test data
 	//==============
-	
-
-
 	$('#router_test_page').click(function () {
 		$.getScript('/js/jiaz.js');
 	})
@@ -44,6 +40,7 @@ $().ready(function(){
 	$('#router_starter').on('click', function(e){
 		e.preventDefault();
 		loadStarter(starter_data);
+		console.log(userInfo);
 	});
 	
 	// $('#router_battle').on('click', function(e){
