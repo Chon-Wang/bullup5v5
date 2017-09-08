@@ -1,7 +1,8 @@
 var io = require('socket.io-client');
 var socket = io.connect('http://127.0.0.1:3000');
-// var auto_script = require('./js/auto_script');
-// var lol_process = require('./js/lol_process');
+//var auto_script = require('./js/auto_program/auto_script');
+var lol_process = require('../../auto_program/lol_process');
+
 
 var userInfo = null;
 var teamInfo = null;
@@ -504,4 +505,5 @@ function handleBattleInviteRequest(message){
 function handleBattleResult(){
 
 }
+
 
