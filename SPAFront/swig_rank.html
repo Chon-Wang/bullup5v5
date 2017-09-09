@@ -10,11 +10,7 @@
 	  <label class="rank-title">财富排名</label>
 	  <div class="rank-value">
 		<!-- 财富排名 -->
-		{% if wealthUserInfo %}
-			{{wealthUserInfo.bullup_wealth_rank}}
-		{% else %}
 		---请先登录---
-		{%endif %}
 	  </div>
 	</div>
 
@@ -22,11 +18,7 @@
 	  <label class="rank-title">战斗力排名</label>
 	  <div class="rank-value">
 		<!-- 战斗力排名 -->
-		{% if strengthUserInfo %}
-			{{strengthUserInfo.bullup_strength_rank}}
-		{% else %}
 		---请先登录---
-		{%endif %}
 	  </div>
 	</div>
   </div>	
@@ -48,8 +40,6 @@
 			<span class="title" style="color: #fff;">{{player.user_nickname }}</span>
 			<p style="color: #fff;">{{ player.user_wealth }}
 			</div>
-
-		 
 			</p>
 			<div  class="secondary-content rank-number right">
 				{{loop.index}}
