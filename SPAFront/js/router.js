@@ -6,9 +6,9 @@ $().ready(function(){
 	//==============
 	//	test data
 	//==============
-	$('#router_test_page').click(function () {
-		$.getScript('/js/jiaz.js');
-	})
+	// $('#router_test_page').click(function () {
+	// 	$.getScript('/js/jiaz.js');
+	// })
 	$("#router_personal").click(function () {
 		$.getScript('/js/leidt.js');
 		

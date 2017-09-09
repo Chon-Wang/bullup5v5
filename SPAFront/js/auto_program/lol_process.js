@@ -1,32 +1,5 @@
 var child_process = require("child_process");
 
-exports.grabLOLData = function(type){
-    child_process.exec('node sync_lol_' + type + '_process.js', function (error, stdout, stderr) {
-        if (error) {
-            console.log(error.stack);
-            console.log('Error code: '+error.code);
-            console.log('Signal received: '+error.signal);
-        }
-        if(stderr){
-            console.log('sync_lol_process stderr: ' + stderr);
-        }
-        stdout = JSON.parse(stdout);
-        var packet;
-        if(stdout.UserInfo != undefined){
-            packet = processLoginPacket(stdout);
-            socket.emit('lolLoginResult', packet);
-        }else if(stdout.actions != undefined){
-            packet = processRoomPacket(stdout);
-            socket.emit('lolRoomEstablished', packet);
-        }else if(stdout.gameMode != undefined){
-            packet = processResultPacket(stdout);
-            socket.emit('lolBattleResult', packet);
-        }
-        //console.log(packet); 
-    });
-}
-
-
 function processLoginPacket(stdout){
     var loginPacket = {};
     loginPacket.head = "user";
@@ -83,4 +56,32 @@ function processResultPacket(stdout){
 	}
     return resultPacket;
 }
+
+
+exports.grabLOLData = function(type){
+    child_process.exec('node ./js/auto_program/sync_lol_' + type + '_process.js', function (error, stdout, stderr) {
+        if (error) {
+            console.log(error.stack);
+            console.log('Error code: '+error.code);
+            console.log('Signal received: '+error.signal);
+        }
+        if(stderr){
+            console.log('sync_lol_process stderr: ' + stderr);
+        }
+        stdout = JSON.parse(stdout);
+        var packet;
+        if(stdout.UserInfo != undefined){
+            packet = processLoginPacket(stdout);
+            socket.emit('lolLoginResult', packet);
+        }else if(stdout.actions != undefined){
+            packet = processRoomPacket(stdout);
+            socket.emit('lolRoomEstablished', packet);
+        }else if(stdout.gameMode != undefined){
+            packet = processResultPacket(stdout);
+            socket.emit('lolBattleResult', packet);
+        }
+        //console.log(packet); 
+    });
+}
+
 

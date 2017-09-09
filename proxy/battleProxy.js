@@ -121,11 +121,12 @@ exports.handleBattleResult = function (io, socket){
         if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM_GAME'){
             if(lolResultPacket.win == 'yes'){
                 //寻找该玩家所在的队伍
-                var userLOLAccountId = lolResultPacket;
+                var userLOLAccountId = lolResultPacket.accountId;
                 var userId = socketProxy.mapSocketToUserId(socket.id);
                 var winTeam = {};
                 var loseTeam = {};
                 var finishedBattle = {};
+                var battles = exports.battles;
                 for(var battleIndex in battles){
                     var battle = battles[battleIndex];
 

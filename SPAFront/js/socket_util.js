@@ -175,7 +175,7 @@ socket.on('lolRoomEstablished', function () {
 socket.on('battleResult', function(resultPacket){
     //读取数据
     var winTeam = resultPacket.winTeam;
-    var battleResultData;
+    var battleResultData = {};
     var flag = false;
     for(var paticipantIndex in winTeam){
         if(winTeam[paticipantIndex].userId == userInfo.userId){
@@ -186,18 +186,47 @@ socket.on('battleResult', function(resultPacket){
     if(flag){
     //赢了        
         battleResultData.own_team = resultPacket.winTeam;
+        battleResultData.win = 1;
         battleResultData.rival_team = resultPacket.loseTeam;
     }else{
     //输了
         battleResultData.own_team = resultPacket.loseTeam;
+        battleResultData.win = 0;
         battleResultData.rival_team = resultPacket.winTeam;
     }
     battleResultData.wealth_change = resultPacket.rewardAmount;
+    console.log(JSON.stringify(battleResultData));
     var battleResHtml = douniu.loadSwigView('./swig_battleres.html', {
         battle_res: battleResultData
     });
     //页面跳转到结果详情页
     $('#main-view').html(battleResHtml);
+    //添加确认按钮单击事件
+    $('#confirm_battle_result').on('click', function(e){
+        e.preventDefault();
+        var starter_data = {
+            tournaments:[
+                {
+                    name:'S7 Championship',
+                    description: 'Starting at October'
+                },
+                {
+                    name:'MSI Championship',
+                    description: 'Starting at May'
+                }
+                
+            ],
+            news:[
+                {
+                    title: 'New champion coming soon'
+                },
+                {
+                    title: 'Arcade 2017 Overview'
+                }
+            ]
+        };
+		douniu.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
+	});
 });
 
 /**

@@ -40,8 +40,7 @@
 				</a>
 			  </div>
 
-			  <span class="title">{{ battle_res.own_team[memberIndex].name }}</span>
-				<!-- <div>{{ battle_res.own_team[memberIndex].kdanumber }}</div> -->
+			  <span class="title">{{ memberIndex.name }}</span>
 				<div>1/0/0</div>
 			</li>
 			
@@ -122,8 +121,7 @@
 				</a>
 				</div>
 
-				<span class="title">{{ battle_res.rival_team[memberIndex].name }}</span>
-				<!-- <div>{{ battle_res.rival_team[memberIndex].kdanumber }}</div> -->
+				<span class="title">{{ memberIndex.name }}</span>
 				<div>1/0/0</div>
 			</li>
 			
@@ -137,5 +135,5 @@
 
 <!-- button for confirm and return to home -->
 <div class="row center-align">
-  <a class="waves-effect waves-light btn battleres-btn">确认</a>
+  <a class="waves-effect waves-light btn battleres-btn" id="confirm_battle_result">确认</a>
 </div>
