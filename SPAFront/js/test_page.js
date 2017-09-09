@@ -12,19 +12,6 @@ $(document).ready(function(){
         // $('#waiting-modal').css('display', 'none');    
         // $('#team-detail-modal').css('display', 'none');    
         // $('.modal-overlay').remove();
-        var fs = require('fs');
-        var child_process = require('child_process');
-        var jsonObj = {};
-        jsonObj.roomName = "sdfsdf15424123";
-        jsonObj.password = "123";
-        fs.writeFileSync("C:/Users/Public/Bullup/createRoom.txt", JSON.stringify(jsonObj), null);
-        
-        child_process.exec('node C:/Users/Public/Bullup/auto_program/auto_script.js', (err, stdout, stderr) => {
-            console.log('err ' + err);
-            console.log('stdout ' + stdout);
-            console.log('stderr ' + stderr);
-        });
-
         //child_process.execSync('node F:/NodeWorkspace/auto_program/auto_script.js');
 
     });
