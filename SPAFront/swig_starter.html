@@ -48,7 +48,7 @@
 					<span class="line line-left"></span>
 		赛事
 			<div class="biu" >
-				<div id="yzhou2">
+				<div id="events">
 						<img src="media/imgs/wang_xi.png" class="iamges_s">
 				</div>
 		</div>
@@ -57,7 +57,7 @@
   <a href="#fight-bet-modal" class="starter-btn waves-effect biu2" id="starter-fight-btn">
 	约战
 		<div class="biu" >
-				<div id="yzhou">
+				<div id="live">
 						<img src="media/imgs/wang_xi.png" class="iamges_s">
 				</div>
 		</div>
@@ -66,7 +66,7 @@
   <a class="starter-btn waves-effect" id="starter-personal-btn">
 		排行榜
 		<div class="biu" >
-				<div id="yzhou3">
+				<div id="rank">
 						<img src="media/imgs/wang_xi.png" class="iamges_s">
 				</div>
 		</div>
@@ -74,7 +74,7 @@
   <a class="starter-btn waves-effect" id="starter-chatroom-btn">
 		聊天室
 		<div class="biu" >
-				<div id="yzhou4">
+				<div id="chatroom">
 						<img src="media/imgs/wang_xi.png" class="iamges_s">
 				</div>
 		</div>
@@ -148,7 +148,7 @@
 	//烟雾特效
 	function wcjihe (id){
     var yzhou = document.getElementById(id);
-    console.log(yzhou);
+
     var img = yzhou.getElementsByTagName('img')[0];
     var chong = 0;
     var tm = null;
@@ -161,8 +161,8 @@
     },
     20)
 }
-wcjihe("yzhou");
-wcjihe("yzhou2");
-wcjihe("yzhou3");
-wcjihe("yzhou4");
+wcjihe("events");
+wcjihe("live");
+wcjihe("rank");
+wcjihe("chatroom");
 </script>

@@ -95,7 +95,7 @@
 
 
 }
-#yzhou{
+#events{
 	overflow: scroll;
 	position: absolute;
 	top:1px;height: 496px;
@@ -106,7 +106,7 @@
 	left: -50px;
 	
 }
-#yzhou2{
+#live{
 	overflow: scroll;
 	position: absolute;
 	top:1px;height: 496px;
@@ -117,7 +117,7 @@
 	left: -50px;
 	
 }
-#yzhou3{
+#rank{
 	overflow: scroll;
 	position: absolute;
 	top:1px;height: 496px;
@@ -128,7 +128,7 @@
 	left: -50px;
 	
 }
-#yzhou4{
+#chatroom{
 	overflow: scroll;
 	position: absolute;
 	top:1px;height: 496px;

@@ -21,24 +21,30 @@
 		---请先登录---
 	  </div>
 	</div>
-  </div>
+  </div>	
   
   <div class="col s12">
-    <ul class="tabs tabs-fixed-width">
-      <li class="tab col s3"><a class="active" href="#wealth_list">财富排行</a></li>
-      <li class="tab col s3"><a href="#cap_list">战斗力排行</a></li>
+    <ul class="tabs tabs-fixed-width" style="background: none;">
+      <li class="tab col s3"><a style="color:rgba(238,110,115,0.7)!important;" class="active" href="#wealth_list">财富排行</a></li>
+      <li class="tab col s3"><a style="color:rgba(238,110,115,0.7)!important;" href="#cap_list">战斗力排行</a></li>
     </ul>
   </div>
   <div id="wealth_list" class="col s12">
     {% if wealthRankList %}
-	  <ul class="collection">
+	  <ul class="collection" style="margin-top: 30px;;border-right: none;border-left:none;">
 		{% for player in wealthRankList %}
-		  <li class="collection-item avatar">
+		  <li class="collection-item avatar dw_crown" style="background: none;">
+			<p class="crown"></p>
+			<div class="t_name">
 			<img src="./media/user_icon/{{ player.icon_id }}.png" alt="" class="circle">
-			<span class="title">{{player.user_nickname }}</span>
-			<p>{{ player.user_wealth }}
+			<span class="title" style="color: #fff;">{{player.user_nickname }}</span>
+			<p style="color: #fff;">{{ player.user_wealth }}
+			</div>
 			</p>
-			<div class="secondary-content rank-number right">{{loop.index}}</div>
+			<div  class="secondary-content rank-number right">
+				{{loop.index}}
+				
+			</div>
 		  </li>
 		{% endfor %}
 	  </ul>
@@ -50,12 +56,15 @@
 
   <div id="cap_list" class="col s12">
 	{% if strengthRankList %}
-	  <ul class="collection">
+	  <ul class="collection" style="margin-top: 30px;;border-right: none;border-left:none;">
 		{% for player in strengthRankList %}
-		  <li class="collection-item avatar">
+		  <li class="collection-item avatar dw_crown"  style="background: none;">
+			<p class="crown"></p>
+			<div class="t_name">
 			<img src="./media/user_icon/{{ player.icon_id }}.png" alt="" class="circle">
-			<span class="title">{{ player.user_nickname }}</span>
-			<p>{{ player.user_strength }}
+			<span style="color: #fff;" class="title">{{ player.user_nickname }}</span>
+			<p style="color: #fff;" >{{ player.user_strength }}
+			</div>
 			</p>
 			<div class="secondary-content rank-number right">{{loop.index}}</div>
 		  </li>
