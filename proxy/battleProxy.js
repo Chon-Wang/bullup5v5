@@ -121,17 +121,58 @@ exports.handleBattleResult = function (io, socket){
         if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM'){
             if(lolResultPacket.win == 'yes'){
                 //寻找该玩家所在的队伍
-                
+                var userLOLAccountId = lolResultPacket;
+                var userId = socketProxy.mapSocketToUserId(socket.id);
+                var winTeam = {};
+                var loseTeam = {};
+                var finishedBattle = {};
+                for(var battleIndex in battles){
+                    var battle = battles[battleIndex];
+
+                    var blueSide = battle.blueSide;
+                    var blueSidePaticipants = blueSide.participants;
+                    var redSide = battle.redSide;
+                    var redSidePaticipants = redSide.participants;
+
+                    for(var bluePaticipantIndex in blueSidePaticipants){
+                        var bluePaticipant = blueSidePaticipants[bluePaticipantIndex];
+                        if(bluePaticipant.userId == userId){
+                            winTeam = blueSidePaticipants;
+                            loseTeam = redSidePaticipants;
+                            finishedBattle = battle;
+                            break;
+                        }
+                    }
+                    for(var redPaticipantIndex in redSidePaticipants){
+                        var redPaticipant = redSidePaticipants[redPaticipantIndex];
+                        if(redPaticipant.userId == userId){
+                            winTeam = redSidePaticipants;
+                            loseTeam = blueSidePaticipants;
+                            finishedBattle = battle;
+                            break;
+                        }
+                    }
+
+                    if(winTeam[0] != undefined){
+                        break;
+                    }
+                }
                 //管理服务端的全局变量 队伍和对局
 
                 //组织通知双方队伍胜负结果的数据包
+
                 var resultPacket = {};
+                resultPacket.rewardType = finishedBattle.blueSide.rewardType;
+                resultPacket.rewardAmount = finishedBattle.blueSide.rewardType;
+                resultPacket.roomName = finishedBattle.blueSide.rewardType;
+                resultPacket.winTeam = winTeam;
+                resultPacket.loseTeam = loseTeam;
             
                 //广播结果数据包
-                io.sockets.in(battleInfo.battleName).emit('battleResult', resultPacket);
+                io.sockets.in(finishedBattle.battleName).emit('battleResult', resultPacket);
 
                 //对局中所有的socket离开所有的socketRoom
-                io.sockets.in(battleInfo.battleName).leaveAll();
+                //io.sockets.in(finishedBattle.battleName).leaveAll();
             }
         }
     });

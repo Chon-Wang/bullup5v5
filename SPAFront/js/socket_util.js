@@ -1,6 +1,6 @@
 var io = require('socket.io-client');
 var socket = io.connect('http://127.0.0.1:3000');
-//var auto_script = require('./js/auto_program/auto_script');
+var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process');
 
 
@@ -157,29 +157,13 @@ socket.on('lolRoomEstablish', function (lolRoom) {
         alert('请在规定时间内创建房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password);
         
         //自动创建房间
-        auto_script.autoCreateRoom(lolRoom.roomName, lolRoom.password);
+        auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
         //开始抓包
         lol_process.grabLOLData('room');
-
-        //?????不知道干嘛的
-        function poroto_w() {
-            $('#modalpopo .modal-content  h4').text("提示：")
-            $('#modalpopo .ceneter_w').text("请创建房间！")
-            $('#modalpopo').modal('open'); 
-        }
-        poroto_w();
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
         //alert('请等待');
         alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
-
-        //?????不知道干嘛的
-        function poroto_w() {
-            $('#modalpopo .modal-content  h4').text("提示：")
-            $('#modalpopo .ceneter_w').text("请等待！")
-            $('#modalpopo').modal('open'); 
-        }
-        poroto_w();
     }
 });
 
@@ -190,6 +174,25 @@ socket.on('lolRoomEstablished', function () {
 
 socket.on('battleResult', function(resultPacket){
     //读取数据
+    var winTeam = resultPacket.winTeam;
+    var battleResultData;
+    var flag = false;
+    for(var paticipantIndex in winTeam){
+        if(winTeam[paticipantIndex].userId == userInfo.userId){
+            flag = true;
+            break;
+        }
+    }
+    if(flag){
+    //赢了        
+        battleResultData.own_team = resultPacket.winTeam;
+        battleResultData.rival_team = resultPacket.loseTeam;
+    }else{
+    //输了
+        battleResultData.own_team = resultPacket.loseTeam;
+        battleResultData.rival_team = resultPacket.winTeam;
+    }
+    battleResultData.wealth_change = resultPacket.rewardAmount;
 
     //页面跳转到结果详情页
 
