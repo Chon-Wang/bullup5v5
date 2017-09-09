@@ -13,6 +13,5 @@ $(document).ready(function(){
         // $('#team-detail-modal').css('display', 'none');    
         // $('.modal-overlay').remove();
         //child_process.execSync('node F:/NodeWorkspace/auto_program/auto_script.js');
-
     });
 });
