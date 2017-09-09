@@ -6,16 +6,19 @@ $(document).ready(function(){
         //var userInfo={};
         if(userInfo==null){
            // alert('请你登陆');
-            function poroto_w(){
-                     $('#modalpopo .modal-content  h4').text("提示：")
-                     $('#modalpopo .ceneter_w').text("您没有登陆，请登录！")
-                     $('#modalpopo').modal('open'); 
-                }
-                poroto_w();
+             function poroto_w(){
+                      $('#modalpopo .modal-content  h4').text("提示：")
+                      $('#modalpopo .ceneter_w').text("您没有登陆，请登录！")
+                      $('#modalpopo').modal('open'); 
+                 }
+                 poroto_w();
             //location.href = '#log_modal';
         }else{
             socket.emit('pesonalCenterRequest',userInfo);
-        }
+           
+            
+
+        } 
         
     });
 });
