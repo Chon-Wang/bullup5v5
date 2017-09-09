@@ -5,24 +5,22 @@
 	 CSS: materialize.min.css \ font-awesome.min.css \ battleres.css
 	 JS: jquery-2.2.4.js \ materialize.min.js
    -->
-
-<div class="row">
-  <h3 class="res-title center-align">
-	<!-- battle result text -->
-	<h3 class="res-title center-align">
-	  {% if battle_res.win == 1 %}
-		胜利
-	  {% else %}
-		失败
-	  {% endif %}
-	</h3>
-  </h3>
-</div>
-
-<!-- row for result details -->
-<div class="row">
-
 {% if battle_res %}
+		<div class="row">
+		<h3 class="res-title center-align">
+		<!-- battle result text -->
+		<h3 class="res-title center-align">
+			{% if battle_res.win == 1 %}
+			胜利
+			{% else %}
+			失败
+			{% endif %}
+		</h3>
+		</h3>
+	</div>
+
+	<!-- row for result details -->
+	<div class="row">
 	<!-- own team -->	
 	{% if battle_res.own_team %}
 	  <div class="col s4">

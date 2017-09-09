@@ -118,7 +118,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
 
 exports.handleBattleResult = function (io, socket){
     socket.on('lolBattleResult', function (lolResultPacket) {
-        if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM'){
+        if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM_GAME'){
             if(lolResultPacket.win == 'yes'){
                 //寻找该玩家所在的队伍
                 var userLOLAccountId = lolResultPacket;
@@ -163,8 +163,8 @@ exports.handleBattleResult = function (io, socket){
 
                 var resultPacket = {};
                 resultPacket.rewardType = finishedBattle.blueSide.rewardType;
-                resultPacket.rewardAmount = finishedBattle.blueSide.rewardType;
-                resultPacket.roomName = finishedBattle.blueSide.rewardType;
+                resultPacket.rewardAmount = finishedBattle.blueSide.rewardAmount;
+                resultPacket.roomName = finishedBattle.blueSide.roomName;
                 resultPacket.winTeam = winTeam;
                 resultPacket.loseTeam = loseTeam;
             

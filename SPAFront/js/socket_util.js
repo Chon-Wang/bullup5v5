@@ -193,9 +193,11 @@ socket.on('battleResult', function(resultPacket){
         battleResultData.rival_team = resultPacket.winTeam;
     }
     battleResultData.wealth_change = resultPacket.rewardAmount;
-
+    var battleResHtml = douniu.loadSwigView('./swig_battleres.html', {
+        battle_res: battleResultData
+    });
     //页面跳转到结果详情页
-
+    $('#main-view').html(battleResHtml);
 });
 
 /**
