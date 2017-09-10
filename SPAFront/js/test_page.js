@@ -3,7 +3,7 @@ var child_process = require("child_process");
 
 $(document).ready(function(){
     $("#router_test_page").click(function(e){
-        lolProcess.grabLOLData('result');
+        // lolProcess.grabLOLData('result', socket);
         // function processResultPacket(stdout){
         //     var resultPacket = {};
         //     resultPacket.head = "result";

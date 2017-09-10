@@ -159,17 +159,19 @@ socket.on('lolRoomEstablish', function (lolRoom) {
         //自动创建房间
         auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
         //开始抓包
-        lol_process.grabLOLData('room');
+        lol_process.grabLOLData('room', socket);
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
         //alert('请等待');
         alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
+        lol_process.grabLOLData('room', socket);
     }
 });
 
 socket.on('lolRoomEstablished', function () {
+    alert('游戏已开始');
     //游戏开始 刷新时钟
-    lol_process.grabLOLData('result');
+    lol_process.grabLOLData('result', socket);
 });
 
 socket.on('battleResult', function(resultPacket){
