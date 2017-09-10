@@ -246,7 +246,8 @@ function handleLoginResult(feedback) {
         }
         poroto_w();
         userInfo = feedback.extension;
-        //console.log(JSON.stringify(userInfo));
+        // console.log("User info");
+        // console.log(userInfo);
         //跳转
         var temp = douniu.loadSwigView("./swig_menu.html", { logged_user: userInfo });
         // 关闭

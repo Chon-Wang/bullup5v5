@@ -112,13 +112,37 @@ exports.handleLOLRoomEstablished = function (io, socket) {
         //检查数据包中的人员是否能对应上
 
         //通知客户端游戏已开始
-        io.sockets.in(battleInfo.battleName).emit('lolRoomEstablished');
+        // for(var battle in  exports.battles){
+        //     if(battle.status == 'unready'){
+        //         var flag = false;
+        //         var myTeam = roomPacket.myTeam;
+        //         var theirTeam = roomPacket.theirTeam;
+        //         var blueSide = battle.blueSide;
+        //         var redSide = battle.redSide;
+        //         if(myTeam[0].team == 1){
+        //             //myTeam is blueTeam;
+        //             for(var paticipant in blueSide.)
+        //         }else{
+
+        //         }
+
+
+                
+        //         if(flag){
+        //             if(battle.status == 'unready'){
+        //                 battle.status = 'ready';
+        //             }
+        //             io.sockets.in(battleInfo.battleName).emit('lolRoomEstablished');
+        //         }
+        //     }
+        // }
     });
 }
 
 exports.handleBattleResult = function (io, socket){
     socket.on('lolBattleResult', function (lolResultPacket) {
-        if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM_GAME'){
+        if(true){
+        //if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM_GAME'){
             if(lolResultPacket.win == 'yes'){
                 //寻找该玩家所在的队伍
                 var userLOLAccountId = lolResultPacket.accountId;
