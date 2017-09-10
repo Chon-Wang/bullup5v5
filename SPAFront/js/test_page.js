@@ -1,6 +1,4 @@
-var lolProcess = require('./js/auto_program/lol_process.js');
-//var lolProcess = require('C:/Users/Public/Bullup/auto_program/lol_process.js');
-
+var lolProcess = require('C:/Users/Public/Bullup/auto_program/lol_process.js');
 var child_process = require("child_process");
 
 $(document).ready(function(){
