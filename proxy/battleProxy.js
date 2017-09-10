@@ -112,7 +112,8 @@ exports.handleLOLRoomEstablished = function (io, socket) {
         //检查数据包中的人员是否能对应上
 
         //通知客户端游戏已开始
-        for(var battle in  exports.battles){
+        for(var battleIndex in  exports.battles){
+            var battle = exports.battles[battleIndex];
             if(battle.status == 'unready'){
                 var myTeam = roomPacket.myTeam;
                 var theirTeam = roomPacket.theirTeam;
@@ -121,10 +122,12 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                 var teamFlag = true;
                 if(myTeam[0].team == 1){
                     //看我方 蓝队人员配置是否合法
-                    for(var bullupPaticipant in blueSide){
+                    for(var bullupPaticipantIndex in blueSide.participants){
+                        var bullupPaticipant = blueSide.participants[bullupPaticipantIndex];
                         var memberExsistFlag = false;
                         var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
-                        for(var lolPaticipant in myTeam){
+                        for(var lolPaticipantIndex in myTeam){
+                            var lolPaticipant = myTeam[lolPaticipantIndex];
                             if(lolPaticipant.summonerId == lolAccountId){
                                 memberExsistFlag = true;
                                 break;
@@ -137,11 +140,13 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                     }
                     //看敌方 红队人员配置是否合法
                     if(teamFlag){
-                        for(var bullupPaticipant in redSide){
+                        for(var bullupPaticipantIndex in redSide.participants){
+                            var bullupPaticipant = redSide.participants[bullupPaticipantIndex];
                             var memberExsistFlag = false;
                             var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
-                            for(var lolPaticipant in theirTeam){
-                                if(lolPaticipant.summonerId == lolAccountId){
+                            for(var lolPaticipantIndex in theirTeam){
+                                var lolPaticipant = theirTeam[lolPaticipantIndex];
+                                if(lolPaticipant.summonerId == lolAccountId || lolPaticipant.summonerId=='0'){
                                     memberExsistFlag = true;
                                     break;
                                 }
@@ -154,10 +159,12 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                     }
                 }else{
                     //看敌方 蓝队人员配置是否合法
-                    for(var bullupPaticipant in blueSide){
+                    for(var bullupPaticipantIndex in blueSide.participants){
+                        var bullupPaticipant = blueSide.participants[bullupPaticipantIndex];
                         var memberExsistFlag = false;
                         var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
-                        for(var lolPaticipant in theirTeam){
+                        for(var lolPaticipantIndex in theirTeam){
+                            var lolPaticipant = theirTeam[lolPaticipantIndex];
                             if(lolPaticipant.summonerId == lolAccountId){
                                 memberExsistFlag = true;
                                 break;
@@ -170,10 +177,12 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                     }
                     //看我方 红队人员配置是否合法
                     if(teamFlag){
-                        for(var bullupPaticipant in redSide){
+                        for(var bullupPaticipantIndex in redSide.participants){
+                            var bullupPaticipant = redSide.participants[bullupPaticipantIndex];
                             var memberExsistFlag = false;
                             var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
-                            for(var lolPaticipant in myTeam){
+                            for(var lolPaticipantIndex in myTeam){
+                                var lolPaticipant = myTeam[lolPaticipantIndex];
                                 if(lolPaticipant.summonerId == lolAccountId){
                                     memberExsistFlag = true;
                                     break;
