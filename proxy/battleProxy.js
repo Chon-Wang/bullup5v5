@@ -112,30 +112,89 @@ exports.handleLOLRoomEstablished = function (io, socket) {
         //检查数据包中的人员是否能对应上
 
         //通知客户端游戏已开始
-        // for(var battle in  exports.battles){
-        //     if(battle.status == 'unready'){
-        //         var flag = false;
-        //         var myTeam = roomPacket.myTeam;
-        //         var theirTeam = roomPacket.theirTeam;
-        //         var blueSide = battle.blueSide;
-        //         var redSide = battle.redSide;
-        //         if(myTeam[0].team == 1){
-        //             //myTeam is blueTeam;
-        //             for(var paticipant in blueSide.)
-        //         }else{
-
-        //         }
-
-
-                
-        //         if(flag){
-        //             if(battle.status == 'unready'){
-        //                 battle.status = 'ready';
-        //             }
-        //             io.sockets.in(battleInfo.battleName).emit('lolRoomEstablished');
-        //         }
-        //     }
-        // }
+        for(var battle in  exports.battles){
+            if(battle.status == 'unready'){
+                var myTeam = roomPacket.myTeam;
+                var theirTeam = roomPacket.theirTeam;
+                var blueSide = battle.blueSide;
+                var redSide = battle.redSide;
+                var teamFlag = true;
+                if(myTeam[0].team == 1){
+                    //看我方 蓝队人员配置是否合法
+                    for(var bullupPaticipant in blueSide){
+                        var memberExsistFlag = false;
+                        var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                        for(var lolPaticipant in myTeam){
+                            if(lolPaticipant.summonerId == lolAccountId){
+                                memberExsistFlag = true;
+                                break;
+                            }
+                        }
+                        if(!memberExsistFlag){
+                            teamFlag = false;
+                            break;
+                        }
+                    }
+                    //看敌方 红队人员配置是否合法
+                    if(teamFlag){
+                        for(var bullupPaticipant in redSide){
+                            var memberExsistFlag = false;
+                            var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                            for(var lolPaticipant in theirTeam){
+                                if(lolPaticipant.summonerId == lolAccountId){
+                                    memberExsistFlag = true;
+                                    break;
+                                }
+                            }
+                            if(!memberExsistFlag){
+                                teamFlag = false;
+                                break;
+                            }
+                        }
+                    }
+                }else{
+                    //看敌方 蓝队人员配置是否合法
+                    for(var bullupPaticipant in blueSide){
+                        var memberExsistFlag = false;
+                        var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                        for(var lolPaticipant in theirTeam){
+                            if(lolPaticipant.summonerId == lolAccountId){
+                                memberExsistFlag = true;
+                                break;
+                            }
+                        }
+                        if(!memberExsistFlag){
+                            teamFlag = false;
+                            break;
+                        }
+                    }
+                    //看我方 红队人员配置是否合法
+                    if(teamFlag){
+                        for(var bullupPaticipant in redSide){
+                            var memberExsistFlag = false;
+                            var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                            for(var lolPaticipant in myTeam){
+                                if(lolPaticipant.summonerId == lolAccountId){
+                                    memberExsistFlag = true;
+                                    break;
+                                }
+                            }
+                            if(!memberExsistFlag){
+                                teamFlag = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(teamFlag){
+                    if(battle.status == 'unready'){
+                        battle.status = 'ready';
+                    }
+                    io.sockets.in(battle.battleName).emit('lolRoomEstablished');
+                    break;
+                }
+            }
+        }
     });
 }
 
