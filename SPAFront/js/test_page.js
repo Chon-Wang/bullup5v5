@@ -1,10 +1,10 @@
 var lolProcess = require('./js/auto_program/lol_process.js');
+//var lolProcess = require('C:/Users/Public/Bullup/auto_program/lol_process.js');
+
 var child_process = require("child_process");
 
 $(document).ready(function(){
     $("#router_test_page").click(function(e){
-
-
         lolProcess.grabLOLData('result');
         // function processResultPacket(stdout){
         //     var resultPacket = {};
