@@ -153,6 +153,20 @@ exports.findFriendListByUserId = function(userId, callback) {
     })
 }
 
+exports.findUserLOLAccountInfo = function(userId, callback) {
+    connection.query('select lol_info_id from lol_bind  where user_id = ?', [userId], function(err, rows){
+        if(rows[0] != undefined){
+            var lolInfoId = rows[0].lol_info_id;
+            connection.query('select * from lol_info where lol_info_id = ?', [lolInfoId], function(err, rows){
+                callback(rows[0]);
+            });
+        }else{
+            var blankObj;
+            callback(blankObj);
+        }
+    });
+}
+
 //-----------------------------------------------expired-----------------------------------------------//
 // exports.getStrengthScoreRank = function(userId, callback) {
 //     async.waterfall([
