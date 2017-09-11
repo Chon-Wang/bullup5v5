@@ -202,7 +202,7 @@ exports.changeUserStatus = function (userId, status) {
 
 exports.handleRankRequest = function (socket){
     socket.on('rankRequest', function(request){
-        var userId = socketProxy.mapUserIdToSocket(socket.id);
+        var userId = socketProxy.mapSocketToUserId(socket.id);
         dbUtil.getStrengthScoreRank(userId,function(strengthRankList){
             dbUtil.getWealthRank(userId,function(wealthRankList){
                  socket.emit('feedback', {
@@ -212,12 +212,14 @@ exports.handleRankRequest = function (socket){
                     extension: {
                         "strengthRankList": strengthRankList,
                         "wealthRankList": wealthRankList
+                        
                     }
                 });
             });
         });
     });
 }
+
 
 exports.handleLOLBind = function(socket){
     socket.on('lolLoginResult',function(loginPacket){
