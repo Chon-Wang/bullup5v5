@@ -46,7 +46,8 @@ $(document).ready(function(){
 					name: userInfo.name,
 					userId: userInfo.userId,
 					avatarId: userInfo.avatarId,
-					strength: userInfo.strength
+					strength: userInfo.strength,
+					lolAccountInfo: userInfo.lolAccountInfo
 				}
 			],
 			status: 'ESTABLISHING',
