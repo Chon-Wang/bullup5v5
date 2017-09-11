@@ -49,12 +49,12 @@ exports.handleBattleInviteResult = function (io, socket) {
             var currentTime = require('moment')().format('YYYYMMDDHHmmss');
 
             // 更新队伍状态
-            teamProxy.changeTeamStatus(challengerTeam.name, 'INBATTLE');
-            teamProxy.changeTeamStatus(hostTeam.name, 'INBATTLE');
+            teamProxy.changeTeamStatus(challengerTeam.roomName, 'INBATTLE');
+            teamProxy.changeTeamStatus(hostTeam.roomName, 'INBATTLE');
 
             // 状态改变的队伍不再需要在对战大厅中显示，所以不再广播类表中
-            teamProxy.removeBroadcastTeam(challengerTeam.name);
-            teamProxy.removeBroadcastTeam(challengerTeam.name);
+            teamProxy.removeBroadcastTeam(challengerTeam.roomName);
+            teamProxy.removeBroadcastTeam(hostTeam.roomName);
 
             var battle = {
                 battleName: challengerTeam.captain.name + hostTeam.captain.name + (new Date).valueOf(),
