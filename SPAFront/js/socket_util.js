@@ -414,8 +414,6 @@ function handleTeamEstablishResult(feedback){
 		var pagination = douniu.loadSwigView('swig_pagination.html', pages);
 		//		console.log(pagination);
 		$('#pagination-holder').html(pagination);
-
-
     }else{
         alert(feedback.text);
     }

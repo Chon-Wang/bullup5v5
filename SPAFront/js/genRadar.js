@@ -14,7 +14,6 @@ function drawRadarWithData(my_data, rival_data, canvas_name) {
 	var color = Chart.helpers.color;
 
 	if (my_data.length >= 6 && component_data.length >= 6) {
-
 		var my_config = {
 			type: 'radar',
 			data: {
