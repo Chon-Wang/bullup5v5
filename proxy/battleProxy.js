@@ -112,26 +112,160 @@ exports.handleLOLRoomEstablished = function (io, socket) {
         //检查数据包中的人员是否能对应上
 
         //通知客户端游戏已开始
-        io.sockets.in(battleInfo.battleName).emit('lolRoomEstablished');
+        for(var battleIndex in  exports.battles){
+            var battle = exports.battles[battleIndex];
+            if(battle.status == 'unready'){
+                var myTeam = roomPacket.myTeam;
+                var theirTeam = roomPacket.theirTeam;
+                var blueSide = battle.blueSide;
+                var redSide = battle.redSide;
+                var teamFlag = true;
+                if(myTeam[0].team == 1){
+                    //看我方 蓝队人员配置是否合法
+                    for(var bullupPaticipantIndex in blueSide.participants){
+                        var bullupPaticipant = blueSide.participants[bullupPaticipantIndex];
+                        var memberExsistFlag = false;
+                        var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                        for(var lolPaticipantIndex in myTeam){
+                            var lolPaticipant = myTeam[lolPaticipantIndex];
+                            if(lolPaticipant.summonerId == lolAccountId){
+                                memberExsistFlag = true;
+                                break;
+                            }
+                        }
+                        if(!memberExsistFlag){
+                            teamFlag = false;
+                            break;
+                        }
+                    }
+                    //看敌方 红队人员配置是否合法
+                    if(teamFlag){
+                        for(var bullupPaticipantIndex in redSide.participants){
+                            var bullupPaticipant = redSide.participants[bullupPaticipantIndex];
+                            var memberExsistFlag = false;
+                            var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                            for(var lolPaticipantIndex in theirTeam){
+                                var lolPaticipant = theirTeam[lolPaticipantIndex];
+                                if(lolPaticipant.summonerId == lolAccountId || lolPaticipant.summonerId=='0'){
+                                    memberExsistFlag = true;
+                                    break;
+                                }
+                            }
+                            if(!memberExsistFlag){
+                                teamFlag = false;
+                                break;
+                            }
+                        }
+                    }
+                }else{
+                    //看敌方 蓝队人员配置是否合法
+                    for(var bullupPaticipantIndex in blueSide.participants){
+                        var bullupPaticipant = blueSide.participants[bullupPaticipantIndex];
+                        var memberExsistFlag = false;
+                        var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                        for(var lolPaticipantIndex in theirTeam){
+                            var lolPaticipant = theirTeam[lolPaticipantIndex];
+                            if(lolPaticipant.summonerId == lolAccountId){
+                                memberExsistFlag = true;
+                                break;
+                            }
+                        }
+                        if(!memberExsistFlag){
+                            teamFlag = false;
+                            break;
+                        }
+                    }
+                    //看我方 红队人员配置是否合法
+                    if(teamFlag){
+                        for(var bullupPaticipantIndex in redSide.participants){
+                            var bullupPaticipant = redSide.participants[bullupPaticipantIndex];
+                            var memberExsistFlag = false;
+                            var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                            for(var lolPaticipantIndex in myTeam){
+                                var lolPaticipant = myTeam[lolPaticipantIndex];
+                                if(lolPaticipant.summonerId == lolAccountId){
+                                    memberExsistFlag = true;
+                                    break;
+                                }
+                            }
+                            if(!memberExsistFlag){
+                                teamFlag = false;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if(teamFlag){
+                    if(battle.status == 'unready'){
+                        battle.status = 'ready';
+                    }
+                    io.sockets.in(battle.battleName).emit('lolRoomEstablished');
+                    break;
+                }
+            }
+        }
     });
 }
 
 exports.handleBattleResult = function (io, socket){
     socket.on('lolBattleResult', function (lolResultPacket) {
-        if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM'){
+        if(true){
+        //if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM_GAME'){
             if(lolResultPacket.win == 'yes'){
                 //寻找该玩家所在的队伍
-                
+                var userLOLAccountId = lolResultPacket.accountId;
+                var userId = socketProxy.mapSocketToUserId(socket.id);
+                var winTeam = {};
+                var loseTeam = {};
+                var finishedBattle = {};
+                var battles = exports.battles;
+                for(var battleIndex in battles){
+                    var battle = battles[battleIndex];
+
+                    var blueSide = battle.blueSide;
+                    var blueSidePaticipants = blueSide.participants;
+                    var redSide = battle.redSide;
+                    var redSidePaticipants = redSide.participants;
+
+                    for(var bluePaticipantIndex in blueSidePaticipants){
+                        var bluePaticipant = blueSidePaticipants[bluePaticipantIndex];
+                        if(bluePaticipant.userId == userId){
+                            winTeam = blueSidePaticipants;
+                            loseTeam = redSidePaticipants;
+                            finishedBattle = battle;
+                            break;
+                        }
+                    }
+                    for(var redPaticipantIndex in redSidePaticipants){
+                        var redPaticipant = redSidePaticipants[redPaticipantIndex];
+                        if(redPaticipant.userId == userId){
+                            winTeam = redSidePaticipants;
+                            loseTeam = blueSidePaticipants;
+                            finishedBattle = battle;
+                            break;
+                        }
+                    }
+
+                    if(winTeam[0] != undefined){
+                        break;
+                    }
+                }
                 //管理服务端的全局变量 队伍和对局
 
                 //组织通知双方队伍胜负结果的数据包
+
                 var resultPacket = {};
+                resultPacket.rewardType = finishedBattle.blueSide.rewardType;
+                resultPacket.rewardAmount = finishedBattle.blueSide.rewardAmount;
+                resultPacket.roomName = finishedBattle.blueSide.roomName;
+                resultPacket.winTeam = winTeam;
+                resultPacket.loseTeam = loseTeam;
             
                 //广播结果数据包
-                io.sockets.in(battleInfo.battleName).emit('battleResult', resultPacket);
+                io.sockets.in(finishedBattle.battleName).emit('battleResult', resultPacket);
 
                 //对局中所有的socket离开所有的socketRoom
-                io.sockets.in(battleInfo.battleName).leaveAll();
+                //io.sockets.in(finishedBattle.battleName).leaveAll();
             }
         }
     });

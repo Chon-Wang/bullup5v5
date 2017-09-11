@@ -1,7 +1,7 @@
 var io = require('socket.io-client');
 var socket = io.connect('http://127.0.0.1:3000');
-//var auto_script = require('./js/auto_program/auto_script');
-var lol_process = require('./js/auto_program/lol_process');
+var auto_script = require('./js/auto_program/lol_auto_script');
+var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 
 
 var userInfo = null;
@@ -157,42 +157,78 @@ socket.on('lolRoomEstablish', function (lolRoom) {
         alert('请在规定时间内创建房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password);
         
         //自动创建房间
-        auto_script.autoCreateRoom(lolRoom.roomName, lolRoom.password);
+        auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
         //开始抓包
-        lol_process.grabLOLData('room');
-
-        //?????不知道干嘛的
-        function poroto_w() {
-            $('#modalpopo .modal-content  h4').text("提示：")
-            $('#modalpopo .ceneter_w').text("请创建房间！")
-            $('#modalpopo').modal('open'); 
-        }
-        poroto_w();
+        lol_process.grabLOLData('room', socket);
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
         //alert('请等待');
         alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
-
-        //?????不知道干嘛的
-        function poroto_w() {
-            $('#modalpopo .modal-content  h4').text("提示：")
-            $('#modalpopo .ceneter_w').text("请等待！")
-            $('#modalpopo').modal('open'); 
-        }
-        poroto_w();
+        lol_process.grabLOLData('room', socket);
     }
 });
 
 socket.on('lolRoomEstablished', function () {
+    alert('游戏已开始');
     //游戏开始 刷新时钟
-    lol_process.grabLOLData('result');
+    lol_process.grabLOLData('result', socket);
 });
 
 socket.on('battleResult', function(resultPacket){
     //读取数据
-
+    var winTeam = resultPacket.winTeam;
+    var battleResultData = {};
+    var flag = false;
+    for(var paticipantIndex in winTeam){
+        if(winTeam[paticipantIndex].userId == userInfo.userId){
+            flag = true;
+            break;
+        }
+    }
+    if(flag){
+    //赢了        
+        battleResultData.own_team = resultPacket.winTeam;
+        battleResultData.win = 1;
+        battleResultData.rival_team = resultPacket.loseTeam;
+    }else{
+    //输了
+        battleResultData.own_team = resultPacket.loseTeam;
+        battleResultData.win = 0;
+        battleResultData.rival_team = resultPacket.winTeam;
+    }
+    battleResultData.wealth_change = resultPacket.rewardAmount;
+    console.log(JSON.stringify(battleResultData));
+    var battleResHtml = douniu.loadSwigView('./swig_battleres.html', {
+        battle_res: battleResultData
+    });
     //页面跳转到结果详情页
-
+    $('#main-view').html(battleResHtml);
+    //添加确认按钮单击事件
+    $('#confirm_battle_result').on('click', function(e){
+        e.preventDefault();
+        var starter_data = {
+            tournaments:[
+                {
+                    name:'S7 Championship',
+                    description: 'Starting at October'
+                },
+                {
+                    name:'MSI Championship',
+                    description: 'Starting at May'
+                }
+                
+            ],
+            news:[
+                {
+                    title: 'New champion coming soon'
+                },
+                {
+                    title: 'Arcade 2017 Overview'
+                }
+            ]
+        };
+		douniu.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
+	});
 });
 
 /**
@@ -210,7 +246,8 @@ function handleLoginResult(feedback) {
         }
         poroto_w();
         userInfo = feedback.extension;
-        //console.log(JSON.stringify(userInfo));
+        // console.log("User info");
+        // console.log(userInfo);
         //跳转
         var temp = douniu.loadSwigView("./swig_menu.html", { logged_user: userInfo });
         // 关闭

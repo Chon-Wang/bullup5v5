@@ -61,6 +61,12 @@ exports.handleLogin = function (socket) {
                             userInfo.wealth = wealthInfo.bullup_currency_amount;
                             callback(null, userInfo);
                         });
+                    },
+                    function(userInfo, callback){
+                        dbUtil.findUserLOLAccountInfo(userInfo.userId, function(lolAccountInfo){
+                            userInfo.lolAccountInfo = lolAccountInfo;
+                            callback(null, userInfo);
+                        });
                     }
                 ], function(err, userInfo){
                     var userStrength = userInfo.strengthInfo;
@@ -76,6 +82,7 @@ exports.handleLogin = function (socket) {
                             online: true,
                             status: 'IDLE',
                             friendList: userInfo.friendList,
+                            lolAccountInfo: userInfo.lolAccountInfo,
                             relationMap: {
                                 currentTeamId: null,
                                 currentGameId: null
