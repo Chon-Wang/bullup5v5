@@ -29,7 +29,7 @@ exports.handleBattleInvite = function (socket) {
             dstSocket.emit('message', message);
         } else {
             //失败向发出请求的用户返回失败信息
-            socket.emti('feeback', {
+            socket.emit('feeback', {
                 errorCode: 1,
                 type: 'BATTLEINVITERESULT',
                 text: '邀请对战失败, 请刷新对战大厅',
@@ -88,7 +88,7 @@ exports.handleBattleInviteResult = function (io, socket) {
             console.log("创建者");
             console.log(challengerTeam.captain);
             io.sockets.in(battle.battleName).emit('lolRoomEstablish', {
-                roomName: 'BULLUP' + (new Date).valueOf(),
+                roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
                 password: Math.floor(Math.random() * 1000), // 4位随机数
                 creatorId: challengerTeam.captain.userId
             });

@@ -1,15 +1,18 @@
-$('#starter-fight-btn').on('click', function(){
+$(document).ready(function(){
+    $('#starter-fight-btn').on('click', function(){
 
-});
+    });
 
-$('#starter-match-btn').on('click', function(){
-	
-});
+    $('#starter-match-btn').on('click', function(){
+        
+    });
 
-$('#starter-personal-btn').on('click', function(){
-	
-});
+    $('#starter-rank-btn').on('click', function(){
+        alert("123");
+        socket.emit('rankRequest');
+    });
 
-$('#starter-personal-btn').on('click', function(){
+    $('#starter-chatroom-btn').on('click', function(){
 
+    });
 });

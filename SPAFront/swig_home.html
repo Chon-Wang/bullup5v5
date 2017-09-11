@@ -116,7 +116,7 @@
 	  </a>
 	  <ul>
 		<li><a class="btn-floating red" href="#create_room_modal"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
-		<li><a class="btn-floating blue"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+		<li><a class="btn-floating blue" id="turn_to_room_btn"><i class="fa fa-home" aria-hidden="true"></i></a></li>
 		<li><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 		<li><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
 	  </ul>
@@ -623,6 +623,8 @@
 	<script src="./js/date.js"></script>
 	<script src="./js/gerenly.js"></script>
 	<script src="./js/cjdwly.js"></script>
+	<script src="./js/turn_to_room.js"></script>
+	
 
 	<!-- test data script -->
 	<!-- comment this out and replace these data with those from database -->
@@ -632,7 +634,6 @@
 	<script src="./js/router.js"></script>
 	<!-- 银行格式js -->
 	<script src="./js/bankInput.js"></script>
-
 	<script>
     $().ready(function(){
 	  var temp = douniu.loadSwigView("./swig_menu.html", null);

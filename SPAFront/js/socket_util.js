@@ -9,6 +9,7 @@ var teamInfo = null;
 var roomInfo = null;
 var versusLobbyInfo = null;
 var battleInfo = null;
+var formedTeams = null;
 var messageInfo = [];
 
 
@@ -316,12 +317,11 @@ function handleRoomEstablishmentResult(feedback){
     if(feedback.errorCode == 0){
         alert(feedback.text);
     }else{
-       // alert("服务器错误,创建失败");
-       function poroto_w() {
-        
-           $('#modalpopo .modal-content  h4').text("提示：")
-             $('#modalpopo .ceneter_w').text("服务器错误,创建失败！")
-             $('#modalpopo').modal('open'); 
+        // alert("服务器错误,创建失败");
+        function poroto_w() {
+            $('#modalpopo .modal-content  h4').text("提示：")
+            $('#modalpopo .ceneter_w').text("服务器错误,创建失败！")
+            $('#modalpopo').modal('open'); 
         }
         poroto_w();
         return;
@@ -363,7 +363,7 @@ function handleTeamEstablishResult(feedback){
     if(feedback.errorCode == 0){
         alert(feedback.text);
         teamInfo = feedback.extension.teamInfo;
-        var formedTeams = feedback.extension.formedTeams;
+        formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
         for(var team in formedTeams){
             formedTeams[team].participantCount = formedTeams[team].participants.length;
@@ -422,7 +422,7 @@ function handleTeamEstablishResult(feedback){
 function handleRefreshFormedBattleRoomResult(feedback){
     if(feedback.errorCode == 0){
         //alert(feedback.text);
-        var formedTeams = feedback.extension.formedTeams;
+        formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
         for(var team in formedTeams){
             formedTeams[team].participantCount = formedTeams[team].participants.length;
