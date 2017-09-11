@@ -19,3 +19,15 @@
   
     
 }
+.sign_row{
+    width:640px;
+    margin-top: 50px;
+    }
+.sign_row p{
+    margin-top: 30px!important;
+    
+}
+.sign_col{
+    margin:0 auto;
+    width:640px!important;
+}

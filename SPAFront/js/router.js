@@ -122,7 +122,7 @@ $().ready(function(){
 		var tournaments_data = [];
 
 		douniu.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');
-		
+		$.getScript('/js/eventsly.js');
 	});
 
 	/* ----------------------------------------------
