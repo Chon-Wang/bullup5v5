@@ -9,7 +9,7 @@ $().ready(function(){
 	$('#router_test_page').click(function () {
 		$.getScript('/js/jiaz.js');
 	})
-	$("#router_personal").click(function () {
+	$(".home_gr").click(function () {
 		$.getScript('/js/leidt.js');
 		
 	})
