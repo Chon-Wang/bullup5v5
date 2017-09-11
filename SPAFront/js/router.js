@@ -6,10 +6,10 @@ $().ready(function(){
 	//==============
 	//	test data
 	//==============
-	// $('#router_test_page').click(function () {
-	// 	$.getScript('/js/jiaz.js');
-	// })
-	$("#router_personal").click(function () {
+	$('#router_test_page').click(function () {
+		$.getScript('/js/jiaz.js');
+	})
+	$(".home_gr").click(function () {
 		$.getScript('/js/leidt.js');
 		
 	})
