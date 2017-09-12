@@ -33,7 +33,7 @@ function addFireAnimation (id){
 function autoplay() {
     clearTimeout(time);
     time = setTimeout(autoplay, 4500);
-    $('.carousel').carousel('next');
+    //$('.carousel').carousel('next');
 }
 
 
