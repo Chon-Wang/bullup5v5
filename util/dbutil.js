@@ -629,6 +629,23 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
 }
 
 
+exports.insertFeedback=function(userId,callback){
+    console.log(userId);
+    async.waterfall([
+        function(callback){
+            connection.query('insert into bullup_feedback (user_id) values (?)',[userId],function(err,results, fields){
+                if(err){
+                    connection.rollback();
+                }else{
+                    callback(null,feedbackMessage);
+                }         
+            });
+        }       
+    ],function(err,res){
+        callback(res)
+    });
+}
+
 //exports.getPersonalCenterInfoByUserId(29, function(res){
  //   console.log(res);
 //});

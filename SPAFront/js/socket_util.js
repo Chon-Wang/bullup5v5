@@ -65,7 +65,9 @@ socket.on('feedback', function (feedback) {
         case 'REFRESHFORMEDBATTLEROOMRESULT':
             handleRefreshFormedBattleRoomResult(feedback);
             break;
-       
+       case  'FEEDBACKMESSAGE':
+            feedbackMessage(feedback);
+            break;
 
         case 'PESONALCENTERRESULT':
             handlePersonalCenterResult(feedback);
@@ -544,4 +546,10 @@ function handleBattleResult(){
 
 }
 
-
+function feedbackMessage(feedback){
+    if(feedback.errorCode==1){
+        alert(feedback.text);
+    }else if(feedback.errorCode==0){
+        alert(feedback.text);
+    }
+}

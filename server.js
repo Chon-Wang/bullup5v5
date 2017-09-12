@@ -25,8 +25,9 @@ io.on('connection', function(socket) {
     userProxy.handleRankRequest(socket);
 
     userProxy.handleUserInviteResult(io, socket);
+   
+    userProxy.insertFeedbackMessage(socket);
 
-    //
     userProxy.handleLOLBind(socket); 
 
     userProxy.handlePersonalCenterRequest(socket);

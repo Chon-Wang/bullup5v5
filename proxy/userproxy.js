@@ -362,3 +362,30 @@ exports.handlePersonalCenterRequest = function(socket){
     });
 
 }
+exports.insertFeedbackMessage=function(socket){
+    socket.on('feedbackMessage',function(result){
+        logger.listenerLog('feedbackMessage');
+        dbUtil.insertFeedback(result.feedback_content,function(res){
+            if(res==null){
+                socket.emit('feedback',{
+                    errorCode:1,
+                    text:'反馈失败',
+                    type:'FEEDBACKMESSAGE',
+                    extension:null
+                });
+            }else{
+                    socket.emit('feedback',{
+                        errorCode:0,
+                        text:'反馈成功',
+                        type:'FEEDBACKMESSAGE',
+                        extension:{
+                        Msgname:result.name,
+                        Msgemail:email,
+                        Msgtextarea1:textarea1
+                        }
+                    });
+                
+            }
+        });
+    })
+}
