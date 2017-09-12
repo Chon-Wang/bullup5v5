@@ -144,7 +144,7 @@
 					<!-- Winning Condition -->
 					<select id="map-selection">
 					  <option id="map-selection-1" value="">召唤师峡谷</option>
-					  <option disabled value="">嚎哭深渊（敬请期待）</option>
+					  <option id="map-selection-2" value="">嚎哭深渊</option>
 					</select>
 					<label>地图</label>
 				  </div>
@@ -557,7 +557,6 @@
 							<option value="2">选项 2</option>
 							<option value="3">选项 3</option>
 						</select>
-				
 					</div>
 					<div>
 						<p>战斗力范围</p>
@@ -566,8 +565,6 @@
 						margin-top: 16px;">——</p>
 						<input style="width:26%;margin-left:20px;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
 					</div>
-				
-					
 					<div style="float:left;width:60%;">
 						<p>可比赛时间</p>
 						<input id="endTime" class="kbtn" />
@@ -576,9 +573,6 @@
 						<p>结束时间</p>
 						<input id="endTime2" class="kbtn" />
 					</div>
-
-				
-					
 			</div>
 			<div style="padding-left:20px;padding-bottom:20px;">
 			<a class="waves-effect waves-light btn">完成</a>
@@ -624,7 +618,7 @@
 	<script src="./js/gerenly.js"></script>
 	<script src="./js/cjdwly.js"></script>
 	<script src="./js/turn_to_room.js"></script>
-	
+	<script src="./js/bullup_message_box.js"></script>	
 
 	<!-- test data script -->
 	<!-- comment this out and replace these data with those from database -->
@@ -636,27 +630,8 @@
 	<script src="./js/bankInput.js"></script>
 	<script>
     $().ready(function(){
-	  var temp = douniu.loadSwigView("./swig_menu.html", null);
-	  $('#system_menu').html(temp);
-
-		$('.carousel.carousel-slider').carousel({
-			fullWidth: true
-		});
-
-		autoplay();
-		var time =null;
-		$(".carousel-slider").hover(function () {
-			console.log(1);
-			clearTimeout(time);
-		},function (){
-			clearTimeout(time);
-			time = setTimeout(autoplay, 2000);
-		});  
-		function autoplay() {
-				clearTimeout(time);
-				time = setTimeout(autoplay, 4500);
-				$('.carousel').carousel('next');
-			}
+			var temp = bullup.loadSwigView("./swig_menu.html", null);
+			$('#system_menu').html(temp);
 		});
 		 
 		$(document).ready(function(){
@@ -676,7 +651,7 @@
 			$("#first_name").val(clasvlue);
 			$('.ois').addClass('active');
 			$('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
-		})
+		});
 
 		//银行卡号输入js配置
 		$(document).ready(function(){
@@ -685,11 +660,7 @@
 			$('.account').bankList(); 
 		});
 		//弹出popo
-		function poroto_w() {
-			$('#modalpopo .modal-content  h4').text("sdwdwdwdwd")
-			$('#modalpopo .ceneter_w').text("s123123123")
-			$('#modalpopo').modal('open'); 
-		}
+		bullup.alert("提示:", "asdasdada");
 		$('.waves-light').click(function(){
 			$('#modalpopo').modal('close');
 		});

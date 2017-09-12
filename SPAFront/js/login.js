@@ -34,13 +34,7 @@ $().ready(function () {
 			});
 		} else {
 			//alert('两次密码输入不一致!');
-			function poroto_w() {
-                
-                   $('#modalpopo .modal-content  h4').text("提示：")
-                     $('#modalpopo .ceneter_w').text("两次密码输入不一致!")
-                     $('#modalpopo').modal('open'); 
-                }
-                poroto_w();
+			bullup.alert("提示:", "两次密码输入不一致!");
 		}
 	});
 });

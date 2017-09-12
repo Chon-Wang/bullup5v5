@@ -1,10 +1,10 @@
 var inviteSelectedFriendBtnEvent = false;
 
 $("#invite_friend_btn").click(function(){
-    var friendListHeadHtml = douniu.loadSwigView('swig_friend_list_head.html', {
+    var friendListHeadHtml = bullup.loadSwigView('swig_friend_list_head.html', {
         user: userInfo
     });
-    var friendListHtml = douniu.loadSwigView('swig_friend_list.html', {
+    var friendListHtml = bullup.loadSwigView('swig_friend_list.html', {
         user: userInfo
     });
     $("#user_view").html(friendListHeadHtml);

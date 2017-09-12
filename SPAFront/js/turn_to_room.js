@@ -2,7 +2,7 @@ $(document).ready(function(){
     $("#turn_to_room_btn").click(function(){
         if(battleInfo != null){
             //回到对战页面
-            var battleRoomHtml = douniu.loadSwigView("./swig_fight.html", {
+            var battleRoomHtml = bullup.loadSwigView("./swig_fight.html", {
                 blueSide: battleInfo.blueSide,
                 redSide: battleInfo.redSide,
             });
@@ -15,7 +15,7 @@ $(document).ready(function(){
             for(var team in formedTeams){
                 formedTeams[team].participantCount = formedTeams[team].participants.length;
             }
-            var battle_teams = douniu.loadSwigView('swig_battle.html', {
+            var battle_teams = bullup.loadSwigView('swig_battle.html', {
                 teams: formedTeams
             });
             //页面跳转到对战大厅
@@ -35,7 +35,7 @@ $(document).ready(function(){
                         break;
                     }
                 }
-                var teamDetailsHtml = douniu.loadSwigView('swig_team_detail.html', {
+                var teamDetailsHtml = bullup.loadSwigView('swig_team_detail.html', {
                     team: room
                 });
                 $('#team_detail_container').html(teamDetailsHtml);
@@ -57,19 +57,19 @@ $(document).ready(function(){
                  currentPage: 1
             };
             //
-            var pagination = douniu.loadSwigView('swig_pagination.html', pages);
+            var pagination = bullup.loadSwigView('swig_pagination.html', pages);
             //		console.log(pagination);
             $('#pagination-holder').html(pagination);
         }else if(roomInfo != null){
             //回到房间页面
-            var roomInfoFrameHtml = douniu.loadSwigView('swig_myroom_frame.html', {});
-            var roomInfoHtml = douniu.loadSwigView('swig_myroom_info.html', {
+            var roomInfoFrameHtml = bullup.loadSwigView('swig_myroom_frame.html', {});
+            var roomInfoHtml = bullup.loadSwigView('swig_myroom_info.html', {
                 room: roomInfo
             });
             var teamates = [];
             var captain = roomInfo.captain;
             teamates.push(captain);
-            var teamatesHtml = douniu.loadSwigView('swig_myroom_teamate.html', {
+            var teamatesHtml = bullup.loadSwigView('swig_myroom_teamate.html', {
                 teamates : teamates
             });
             $('.content').html(roomInfoFrameHtml);

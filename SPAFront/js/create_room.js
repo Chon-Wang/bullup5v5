@@ -15,15 +15,7 @@ $(document).ready(function(){
 
 	$("#confirm_create_room_btn").click(function(){
 		if(userInfo == null){
-			//alert("请先登录");
-			function poroto_w() {
-                
-                   $('#modalpopo .modal-content  h4').text("提示：")
-                     $('#modalpopo .ceneter_w').text("您没有登陆，请登录！")
-                     $('#modalpopo').modal('open'); 
-                }
-                poroto_w();
-
+			bullup.alert('提示', '请您先登录');
 			return;
 		}
 		var room = {

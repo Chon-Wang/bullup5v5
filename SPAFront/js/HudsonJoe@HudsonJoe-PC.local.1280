@@ -12,7 +12,7 @@ function change_page(pageNumber, dataAmount, dataInterface, pageRef, targetId){
 	var resData = dataInterface(pageNumber, dataAmount);
 
 	//render template with result data
-	var template = douniu.loadSwigView(pageRef, resData);
+	var template = bullup.loadSwigView(pageRef, resData);
 
 	//load template into webpage
 	$('#'+targetId).html(template);
