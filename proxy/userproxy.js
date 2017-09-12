@@ -364,12 +364,13 @@ exports.handlePersonalCenterRequest = function(socket){
 }
 exports.insertFeedbackMessage=function(socket){
     socket.on('feedbackMessage',function(result){
+        console.log('result:'+JSON.stringify(result)); 
         logger.listenerLog('feedbackMessage');
-        dbUtil.insertFeedback(result.feedback_content,function(res){
-            if(res==null){
+        dbUtil.insertFeedback(result.textarea1,result.name,result.email,function(res){
+            if(result.textarea1==""||result.name==""||result.email==""){
                 socket.emit('feedback',{
                     errorCode:1,
-                    text:'反馈失败',
+                    text:'反馈失败,请输入反馈信息',
                     type:'FEEDBACKMESSAGE',
                     extension:null
                 });
@@ -380,8 +381,8 @@ exports.insertFeedbackMessage=function(socket){
                         type:'FEEDBACKMESSAGE',
                         extension:{
                         Msgname:result.name,
-                        Msgemail:email,
-                        Msgtextarea1:textarea1
+                        Msgemail:result.name,
+                        Msgtextarea1:result.textarea1
                         }
                     });
                 
