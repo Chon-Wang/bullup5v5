@@ -5,7 +5,11 @@
 		用户昵称
 		</label>
 		<p class="ranl_nameme" >
-			杀个希江祭天
+			{% if wealthUserInfo %}
+			{{wealthUserInfo.user_nickname}}
+		{% else %}
+		---请先登录---
+		{%endif %}
 		</p>
 	</div>
 	
@@ -26,7 +30,7 @@
 	  <div class="rank-value">
 		<!-- 战斗力排名 -->
 		{% if strengthUserInfo %}
-			{{strengthUserInfo.bullup_strength_rank}}
+		{{strengthUserInfo.bullup_strength_rank}}
 		{% else %}
 		---请先登录---
 		{%endif %}

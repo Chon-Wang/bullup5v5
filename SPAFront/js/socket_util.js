@@ -545,7 +545,7 @@ function handleBattleInviteRequest(message){
 function handleBattleResult(){
 
 }
-
+//反馈结果
 function feedbackMessage(feedback){
     if(feedback.errorCode==1){
         alert(feedback.text);
