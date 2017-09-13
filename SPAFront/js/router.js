@@ -53,7 +53,7 @@ $().ready(function(){
 
 	// 	//render swig_battle.html with page number 1
 	// 	//render template
-	// 	var battle_teams = douniu.loadSwigView('swig_battle.html', {
+	// 	var battle_teams = bullup.loadSwigView('swig_battle.html', {
 	// 		teams: teams
 	// 	});
 	// 	//load template to content div
@@ -67,7 +67,7 @@ $().ready(function(){
 	//  		currentPage: 1
 	// 	};
 	// 	//
-	// 	var pagination = douniu.loadSwigView('swig_pagination.html', pages);
+	// 	var pagination = bullup.loadSwigView('swig_pagination.html', pages);
 	// 	//		console.log(pagination);
 	// 	$('#pagination-holder').html(pagination);
 	// });
@@ -81,7 +81,7 @@ $().ready(function(){
 	// 	//get total page numbers of rank list
 
 	// 	//render page with first page data
-	// 	var rank_list = douniu.loadSwigView('swig_rank.html', {
+	// 	var rank_list = bullup.loadSwigView('swig_rank.html', {
 	// 		ranked_list: rank_lists
 	// 	});
 
@@ -92,7 +92,7 @@ $().ready(function(){
 
 	// $('#router_personal').on('click', function(e){
 	// 	//e.preventDefault();
-	// 	var spaPersonalHtml = douniu.loadSwigView('spa_personal.html', {});
+	// 	var spaPersonalHtml = bullup.loadSwigView('spa_personal.html', {});
 	// 	//
 	// 	$('.content').html(spaPersonalHtml);
 	// });
@@ -100,7 +100,7 @@ $().ready(function(){
 	$('#router_dataquery').on('click', function(e){
 		e.preventDefault();
 
-		var dataquery = douniu.loadSwigView('swig_dataquery.html', {});
+		var dataquery = bullup.loadSwigView('swig_dataquery.html', {});
 		$('.content').html(dataquery);
 		
 		$('.datepicker').pickadate({
@@ -121,7 +121,7 @@ $().ready(function(){
  
 		var tournaments_data = [];
 
-		douniu.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');douniu.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');
+		bullup.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');bullup.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');
 		$.getScript('/js/await.js');
 
 		
@@ -135,7 +135,7 @@ $().ready(function(){
 
 
 function loadStarter(starter_data){
-	douniu.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
+	bullup.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
 }
 
 

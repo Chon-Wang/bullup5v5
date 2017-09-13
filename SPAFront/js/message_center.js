@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $("#message_center_nav").on('click', function(e){      
         //console.log(' messages : ' + messageInfo);
-        var messagesHtml = douniu.loadSwigView('./swig_messages.html',{
+        var messagesHtml = bullup.loadSwigView('./swig_messages.html',{
             messages: messageInfo
         });
         $("#message_center").html(messagesHtml);

@@ -1,17 +1,17 @@
-var douniu = {};
-douniu.loadView = function (pageRef, containerId, callbackName) {
+var bullup = {};
+bullup.loadView = function (pageRef, containerId, callbackName) {
 
 	$(containerId).load(pageRef, function (response, status) {
 		if (status == 'error') {
 			console.warn('Could not load' + fileName);
-		} else if (typeof douniu[callbackName] === 'function') {
-			douniu[callbackName]($(this));
+		} else if (typeof bullup[callbackName] === 'function') {
+			bullup[callbackName]($(this));
 		}
 	});
 };
 
 // load template file with url stored in pageRef
-douniu.loadSwigView = function (pageRef, data) {
+bullup.loadSwigView = function (pageRef, data) {
 	var swig = require('swig');
 	return swig.renderFile(pageRef, data || {});
 };
@@ -22,7 +22,7 @@ $(document).ready(function () {
 		// prevent default event
 		e.preventDefault();
 		var pageRef = $(this).attr('href');
-		//        douniu.loadView(pageRef, '.content', null);
+		//        bullup.loadView(pageRef, '.content', null);
 		callPage(pageRef);
 	});
 
