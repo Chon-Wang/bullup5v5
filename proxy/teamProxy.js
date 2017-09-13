@@ -160,7 +160,7 @@ exports.handleTeamDetails = function (socket) {
  * @param status 新状态
  */
 exports.changeTeamStatus = function (teamName, status) {
-    this.formedTeams.status = status;
+    this.formedTeams[teamName].status = status;
 }
 
 exports.removeBroadcastTeam = function (teamName) {

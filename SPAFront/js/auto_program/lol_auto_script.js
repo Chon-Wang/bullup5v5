@@ -13,6 +13,3 @@ exports.autoCreateLOLRoom = function(roomName, password){
         console.log('stderr ' + stderr);
     });
 }
-
-
-

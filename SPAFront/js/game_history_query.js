@@ -6,19 +6,26 @@ $().ready(function () {
         var summonerName = $('#query_summoner_name').val();
         e.preventDefault();
         lolapi.getMatchDetailsBySummonerName(summonerName, '2017/8/1', '2017/8/4', function(matchDetails){
-            var frame = bullup.loadSwigView("swig_queryres.html", {});
-            var leftTemplate = bullup.loadSwigView("swig_matches.html",matchDetails);
-            globalMatchDetails = matchDetails;
-            $('.content').html(frame);
-            $('#user-matches').html(leftTemplate);
-            $('.match-item').on('click', function(e){
-                var htmlId = $(this).attr('id');
-                var index = String(htmlId).substring(0, 1);
-                var rightTemplate = bullup.loadSwigView("swig_match_detail.html", {
-                    match: matchDetails.matches[index - 1],
+            if(summonerName == ""){
+                alert("请输入召唤师的名字");
+            }else if(matchDetails == null || matchDetails == undefined){
+                alert("召唤师不存在或Key已经过期！");
+                return;
+            }else{
+                var frame = bullup.loadSwigView("swig_queryres.html", {});
+                var leftTemplate = bullup.loadSwigView("swig_matches.html",matchDetails);
+                globalMatchDetails = matchDetails;
+                $('.content').html(frame);
+                $('#user-matches').html(leftTemplate);
+                $('.match-item').on('click', function(e){
+                    var htmlId = $(this).attr('id');
+                    var index = String(htmlId).substring(0, 1);
+                    var rightTemplate = bullup.loadSwigView("swig_match_detail.html", {
+                        match: matchDetails.matches[index - 1],
+                    });
+                    $('#match_wrapper').html(rightTemplate); 
                 });
-                $('#match_wrapper').html(rightTemplate); 
-            });
+            }
         });
     });
 });

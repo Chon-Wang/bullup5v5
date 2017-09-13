@@ -95,7 +95,7 @@
 
 
 }
-#events{
+#starter_competition_div{
 	overflow: scroll;
 	position: absolute;
 	top:1px;height: 496px;
@@ -106,7 +106,7 @@
 	left: -50px;
 	
 }
-#live{
+#starter_battle_div{
 	overflow: scroll;
 	position: absolute;
 	top:1px;height: 496px;
@@ -117,7 +117,7 @@
 	left: -50px;
 	
 }
-#rank{
+#starter_rank_div{
 	overflow: scroll;
 	position: absolute;
 	top:1px;height: 496px;
@@ -128,7 +128,7 @@
 	left: -50px;
 	
 }
-#chatroom{
+#starter_chatroom_div{
 	overflow: scroll;
 	position: absolute;
 	top:1px;height: 496px;
