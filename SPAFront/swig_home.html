@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
+
+<head>
 	<meta charset="UTF-8">
 	<title>swig test</title>
 	<link href="css/style.css" rel='stylesheet' type='text/css' />
-	<link rel="stylesheet" href="css/font.css" type="text/css"/>
+	<link rel="stylesheet" href="css/font.css" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
 	<link href="./font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<link href="./css/materialize.min.css" rel="stylesheet">
@@ -17,670 +18,617 @@
 	<link rel="stylesheet" type="text/css" href="./css/boxstyle.css">
 	<link rel="stylesheet" type="text/css" href="./css/friendbox.css">
 	<link rel="stylesheet" type="text/css" href="./css/searchbox.css">
-	<link href="/css/starter.css" rel="stylesheet"/>
-	<link href="/css/tournament.css" rel="stylesheet"/>
-	<link href="/css/myroom.css" rel="stylesheet"/>
-	<link href="/css/spa_fight.css" rel="stylesheet"/>
+	<link href="/css/starter.css" rel="stylesheet" />
+	<link href="/css/tournament.css" rel="stylesheet" />
+	<link href="/css/myroom.css" rel="stylesheet" />
+	<link href="/css/spa_fight.css" rel="stylesheet" />
 	<link rel="stylesheet" href="./flipclock/flipclock.css">
 	<link href="./css/materialize.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="./css/spa_fight.css">
 	<link rel="stylesheet" href="./css/date.css">
-  </head>
+</head>
 
-  <body>
+<body>
 	<style>
 		.selected {
 			background-color: #26a69a;
 			color: #fff;
 		}
-		.qies{
+
+		.qies {
 			float: left;
 			margin-left: 10px;
 		}
 	</style>
 
-	
+
 	<ul id="system_menu" class="dropdown-content grey darken-4">
-	  
+
 	</ul>
 	<div class="navbar-fixed">
-	  <nav>
-		<div class="nav-wrapper grey darken-4" style="-webkit-app-region:drag;">
+		<nav>
+			<div class="nav-wrapper grey darken-4" style="-webkit-app-region:drag;">
 
-		  <a href="#!" class="brand-logo"><img src="./media/imgs/bullup-noborder.png" width="54" height="40"></a>
-		  <div class="nav-brand"  style="margin-left: 75px;">
-			斗牛电竞
-		  </div>
-		  <div class="nav-weblink">
-			http://bullesport.com
-		  </div>
- 
-		  <ul class="right hide-on-med-and-down wang_ul">
-			<li><a class="nav-link" id="router_starter">主页</a></li>
-			<li><a id="router_test_page">测试</a></li>
-			<li><a id="router_tournament">赛事</a></li>
-			<li><a id="router_dataquery">数据查询</a></li>
-			<li><a id="router_rank">排行榜</a></li>
-	
-			<li><a id="router_index">个人中心</a></li>
-			<li><a id="router_chat">聊天室</a></li>
-			<li><a id="message_center_nav" href="#message_sheet" id="router_message">消息中心</a></li>
-			<!-- Dropdown Trigger -->
-			<li><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
-			<div style="float:left;width:100px;position: relative">
-			<p class="zuix" style="position: absolute;left:30px;top:0px;cursor: pointer;"><img src="media/imgs/zx.png" width="15" height="15"></p>
-			<p class="g_bi" style="position: absolute;right:20px;top:0px;cursor: pointer;"><img src="media/imgs/gb.png" width="15" height="15"></p>
-			
+				<a href="#!" class="brand-logo"><img src="./media/imgs/bullup-noborder.png" width="54" height="40"></a>
+				<div class="nav-brand" style="margin-left: 75px;">
+					斗牛电竞
+				</div>
+				<div class="nav-weblink">
+					http://bullesport.com
+				</div>
+
+				<ul class="right hide-on-med-and-down wang_ul">
+					<li><a class="nav-link" id="router_starter">主页</a></li>
+					<li><a id="router_test_page">测试</a></li>
+					<li><a id="router_tournament">赛事</a></li>
+					<li><a id="router_dataquery">数据查询</a></li>
+					<li><a id="router_rank">排行榜</a></li>
+
+					<li><a id="router_index">个人中心</a></li>
+					<li><a id="router_chat">聊天室</a></li>
+					<li><a id="message_center_nav" href="#message_sheet" id="router_message">消息中心</a></li>
+					<!-- Dropdown Trigger -->
+					<li><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
+					<div style="float:left;width:100px;position: relative">
+						<p class="zuix" style="position: absolute;left:30px;top:0px;cursor: pointer;"><img src="media/imgs/zx.png" width="15" height="15"></p>
+						<p class="g_bi" style="position: absolute;right:20px;top:0px;cursor: pointer;"><img src="media/imgs/gb.png" width="15" height="15"></p>
+
+					</div>
+
+				</ul>
 			</div>
-
-		  </ul>
-		</div>
-	  </nav>
+		</nav>
 	</div>
 
 	<div class="content" id="main-view">
-	  <!-- load view in this container -->
-	  
+		<!-- load view in this container -->
+
 	</div>
 
 	<!-- side nav bar -->
-	
+
 	<ul id="user-slide-out" class="side-nav">
-		
-			<a style="float:right;margin-top:40px;" class="waves-effect waves-light btn ds_wang" href="#modal1">修改个人信息</a>
-			
-	  <li>
-		<div class="user-view">
-			
-		  <div class="background">
-			<img src="./media/imgs/usr_bg.jpg">
-		  </div>
-		  <a href="#!user"><img class="circle" src="./media/imgs/timg.jpeg"></a>
-		  <a href="#!name"><span class="white-text name">John Doe</span></a>
-		  <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-		</div>
-	  </li>
-	  <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-	  <li><a href="#!">Second Link</a></li>
-	  <li>
-		<div class="divider"></div>
-	  </li>
-	  <li><a class="subheader">Subheader</a></li>
-	  <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+
+		<a style="float:right;margin-top:40px;" class="waves-effect waves-light btn ds_wang" href="#modal1">修改个人信息</a>
+
+		<li>
+			<div class="user-view">
+
+				<div class="background">
+					<img src="./media/imgs/usr_bg.jpg">
+				</div>
+				<a href="#!user"><img class="circle" src="./media/imgs/timg.jpeg"></a>
+				<a href="#!name"><span class="white-text name">John Doe</span></a>
+				<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+			</div>
+		</li>
+		<li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+		<li><a href="#!">Second Link</a></li>
+		<li>
+			<div class="divider"></div>
+		</li>
+		<li><a class="subheader">Subheader</a></li>
+		<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
 	</ul>
 
 
 	<div class="fixed-action-btn vertical">
-	  <a class="btn-floating btn-large red">
+		<a class="btn-floating btn-large red">
 		<i class="fa fa-plus" aria-hidden="true"></i>
 	  </a>
-	  <ul>
-		<li><a class="btn-floating red" href="#create_room_modal"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
-		<li><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true"></i></a></li>
-		<li><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-		<li><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
-	  </ul>
+		<ul>
+			<li><a class="btn-floating red" href="#create_room_modal"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
+			<li><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true"></i></a></li>
+			<li><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+			<li><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
+		</ul>
 	</div>
 
 	<!-- modal structure -->
 	<div class="modal" id="create_room_modal">
-	  <div class="modal-content">
-		<h4>创建房间</h4>
-		<div class="row">
-		  <form class="col s12">
+		<div class="modal-content">
+			<h4>创建房间</h4>
 			<div class="row">
-			  <!-- first column -->
-			  <div class="col s6">
+				<form class="col s12">
+					<div class="row">
+						<!-- first column -->
+						<div class="col s6">
 
-				<!-- Battle Declaration -->
-				<div class="input-field col s12">
-				  <input id="battle_desc" type="text" class="validate" value="">
-				  <label for="battle_desc">房间描述</label>
-				</div>
+							<!-- Battle Declaration -->
+							<div class="input-field col s12">
+								<input id="battle_desc" type="text" class="validate" value="">
+								<label for="battle_desc">房间描述</label>
+							</div>
 
-				<!-- winning condition -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<!-- Winning Condition -->
-					<select id="map-selection">
+							<!-- winning condition -->
+							<div class="row">
+								<div class="input-field col s12">
+									<!-- Winning Condition -->
+									<select id="map-selection">
 					  <option id="map-selection-1" value="">召唤师峡谷</option>
 					  <option disabled value="">嚎哭深渊（敬请期待）</option>
 					</select>
-					<label>地图</label>
-				  </div>
-				</div>
+									<label>地图</label>
+								</div>
+							</div>
 
-				<div class="map-container">
-				  <img src="./media/imgs/rift_map.jpg" class="room_map">
-				</div>
+							<div class="map-container">
+								<img src="./media/imgs/rift_map.jpg" class="room_map">
+							</div>
 
-			  </div>
+						</div>
 
 
-			  <!-- second column -->
-			  <div class="col s6">
+						<!-- second column -->
+						<div class="col s6">
 
-				<!-- winning condition -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<!-- Winning Condition -->
-					<select id="winning_condition">
+							<!-- winning condition -->
+							<div class="row">
+								<div class="input-field col s12">
+									<!-- Winning Condition -->
+									<select id="winning_condition">
 						<option value="">推掉基地</option>
 						<option value="" disabled>1血1塔100刀(敬请期待)</option>
 					</select>
-					<label>胜利条件</label>
-				  </div>
-				</div>
+									<label>胜利条件</label>
+								</div>
+							</div>
 
 
-				<!-- Game Mode -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<select id="game_mode">
+							<!-- Game Mode -->
+							<div class="row">
+								<div class="input-field col s12">
+									<select id="game_mode">
 					  <option value="battle">自主约战</option>
 					  <option value="match">自由匹配</option>
 					</select>
-					<label>游戏模式</label>
-				  </div>
-				</div>
+									<label>游戏模式</label>
+								</div>
+							</div>
 
-				<!-- Reward Type -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<select id="reward_type">
+							<!-- Reward Type -->
+							<div class="row">
+								<div class="input-field col s12">
+									<select id="reward_type">
 					  <option value="bullupScore">积分</option>
 					  <option value="dolla" disabled>美金(暂未开放)</option>
 					</select>
-					<label>下注类型</label>
-				  </div>
-				</div>
+									<label>下注类型</label>
+								</div>
+							</div>
 
-				<!-- Reward Amount -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<select id="reward_amount">
+							<!-- Reward Amount -->
+							<div class="row">
+								<div class="input-field col s12">
+									<select id="reward_amount">
 					  <option value="10">10</option>
 						<option value="50">50</option>
 						<option value="100">100</option>
 					</select>
-					<label>下注数额</label>
-				  </div>
-				</div>
+									<label>下注数额</label>
+								</div>
+							</div>
 
-				<!-- Room Created Time -->
-				<!-- <div class="row">
+							<!-- Room Created Time -->
+							<!-- <div class="row">
 					 <div class="input-field col s12">
 					 <input disabled id="created_time" type="text" class="validate">
 					 <label for="created_time">创建时间</label>
 					 </div>
 					 </div> -->
 
-				<!--  -->
-				<!-- Create button -->
-				<div class="row">
-				  <a id="confirm_create_room_btn" class="waves-effect waves-light btn right">创建</a>
-				</div>
+							<!--  -->
+							<!-- Create button -->
+							<div class="row">
+								<a id="confirm_create_room_btn" class="waves-effect waves-light btn right">创建</a>
+							</div>
 
-			  </div>
+						</div>
+					</div>
+				</form>
 			</div>
-		  </form>
 		</div>
-	  </div>
 	</div>
 
 	<!-- end of create room modal -->
 
 	<!-- Modal Structure -->
 	<div id="log_modal" class="modal">
-	  <div class="modal-content">
-		<h4>登录</h4>
-		<div class="row">
-		  <div class="col s12">
+		<div class="modal-content">
+			<h4>登录</h4>
 			<div class="row">
-			  <div class="input-field col s6">
-				<i class="fa fa-user prefix" aria-hidden="true"></i>
-				<input type="text" class="validate" id="login_username"  placeholder="">
-				<label for="icon_prefix">用户名</label>
-			  </div>
-			  <div class="input-field col s6">
-				<i class="fa fa-key prefix" aria-hidden="true"></i>
-				<input type="password" class="validate" id="login_password">
-				<label for="icon_telephone">密码</label>
-			  </div>
-			</div>
+				<div class="col s12">
+					<div class="row">
+						<div class="input-field col s6">
+							<i class="fa fa-user prefix" aria-hidden="true"></i>
+							<input type="text" class="validate" id="login_username" placeholder="">
+							<label for="icon_prefix">用户名</label>
+						</div>
+						<div class="input-field col s6">
+							<i class="fa fa-key prefix" aria-hidden="true"></i>
+							<input type="password" class="validate" id="login_password">
+							<label for="icon_telephone">密码</label>
+						</div>
+					</div>
 
-			<button class="btn waves-effect waves-light right teal lighten-2" id="login_btn">登录
+					<button class="btn waves-effect waves-light right teal lighten-2" id="login_btn">登录
 			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
 			</button>
-		  </div>
+				</div>
+			</div>
 		</div>
-	  </div>
 	</div>
 
 	<!--  sign modal  -->
 	<div id="sign_modal" class="modal">
-	  <div class="modal-content">
-		<h4>新用户注册</h4>
-		<div class="row">
-		  <div class="row">
-			<div class="input-field col s6">
-			  <i class="fa fa-user prefix" aria-hidden="true"></i>
-			  <input id="usr_name" type="text" class="validate">
-			  <label for="usr_name">用户名</label>
-			</div>
+		<div class="modal-content">
+			<h4>新用户注册</h4>
+			<div class="row">
+				<div class="row">
+					<div class="input-field col s6">
+						<i class="fa fa-user prefix" aria-hidden="true"></i>
+						<input id="usr_name" type="text" class="validate">
+						<label for="usr_name">用户名</label>
+					</div>
 
-			<div class="input-field col s6">
-			  <i class="fa fa-key prefix" aria-hidden="true"></i>
-			  <input id="usr_pwd" type="password" class="validate">
-			  <label for="usr_pwd">密码</label>
-			</div>
+					<div class="input-field col s6">
+						<i class="fa fa-key prefix" aria-hidden="true"></i>
+						<input id="usr_pwd" type="password" class="validate">
+						<label for="usr_pwd">密码</label>
+					</div>
 
-			<div class="input-field col s6">
-			  <i class="fa fa-key prefix" aria-hidden="true"></i>
-			  <input id="usr_repwd" type="password" class="validate">
-			  <label for="usr_repwd">确认密码</label>
-			</div>
+					<div class="input-field col s6">
+						<i class="fa fa-key prefix" aria-hidden="true"></i>
+						<input id="usr_repwd" type="password" class="validate">
+						<label for="usr_repwd">确认密码</label>
+					</div>
 
-			<div class="input-field col s6">
-			  <i class="fa fa-user prefix" aria-hidden="true"></i>
-			  <input id="usr_nick" type="text" class="validate">
-			  <label for="usr_nick">用户昵称</label>
-			</div>
+					<div class="input-field col s6">
+						<i class="fa fa-user prefix" aria-hidden="true"></i>
+						<input id="usr_nick" type="text" class="validate">
+						<label for="usr_nick">用户昵称</label>
+					</div>
 
-			<div class="input-field col s6">
-			  <i class="fa fa-phone prefix" aria-hidden="true"></i>
-			  <input type="tel" id="usr_tel" class="validate">
-			  <label for="usr_tel">手机号</label>
-			</div>
+					<div class="input-field col s6">
+						<i class="fa fa-phone prefix" aria-hidden="true"></i>
+						<input type="tel" id="usr_tel" class="validate">
+						<label for="usr_tel">手机号</label>
+					</div>
 
-			<div class="input-field col s6">
-			  <i class="fa fa-envelope prefix" aria-hidden="true"></i>
-			  <input type="email" id="usr_email" class="validate">
-			  <label for="usr_email">邮箱</label>
-			</div>
-			
-			<p style="margin-left:15px;margin-top:20px;">
-			  <input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
-			  <label for="filled-in-box" class="agree-check">我同意用户协议</label>
-			</p>
-		  </div>
+					<div class="input-field col s6">
+						<i class="fa fa-envelope prefix" aria-hidden="true"></i>
+						<input type="email" id="usr_email" class="validate">
+						<label for="usr_email">邮箱</label>
+					</div>
 
-		  <button class="btn waves-effect waves-light right orange lighten-1" id="register_btn">注册
+					<p style="margin-left:15px;margin-top:20px;">
+						<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+						<label for="filled-in-box" class="agree-check">我同意用户协议</label>
+					</p>
+				</div>
+
+				<button class="btn waves-effect waves-light right orange lighten-1" id="register_btn">注册
 			<i class="fa fa-paper-plane" aria-hidden="true"></i>
 		  </button>
+			</div>
 		</div>
-	  </div>
 	</div>
 
 
 
-	 
-		 <!-- Modal 充值 -->
-		 <div id="recharge" class="modal">
+
+	<!-- Modal 充值 -->
+	<div id="recharge" class="modal">
+
+		<div>
+			<input id="money" type="text" class="validate" placeholder="请输入充值金额">
+
+		</div>
+		<div class="qies">
+			<div class="chip ">19</div>
+			<div class="chip">29</div>
+			<div class="chip">39</div>
+			<div class="chip">49</div>
+			<div class="chip">89</div>
+			<div class="chip">99</div>
+			<div class="chip">199</div>
+		</div>
+		<div>
+
+		</div>
+
+		<div class="row">
+
+			<form action="" id="payment-form">
+				<div class="form-row">
+
+					<label for="card-element">
+      				<input /> 
+							</label>
+					<div id="card-element">
+						<!-- a Stripe Element will be inserted here. -->
+					</div>
+					<!-- Used to display Element errors -->
+					<div id="card-errors" role="alert"></div>
+				</div>
+				<!-- <a id="charge_btn   " class="btn an_n" >提交</a>  -->
+				<div>
+
+				</div>
+				<button id="charge_btn" class="btn an_n" style="margin:20px;">Submit Payment</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- link modal -->
+
+
+	<!-- Modal Structure -->
+	<div id="link_modal" class="modal">
+		<div class="modal-content">
+			<h4>绑定英雄联盟账号</h4>
 			<div class="row">
 				<form class="col s12">
 					<div class="row">
-						<div class="input-field col s6">
-							<input id="first_name" type="text" class="validate">
-							<label class="ois" for="first_name">输入金额</label>
-							
-						</div>
-						<div class="qies">
-						<div class="chip ">19$</div>
-						<div class="chip">29$</div>
-						<div class="chip">39$</div>
-						<div class="chip">49$</div>
-							<div class="chip">89$</div>
-								<div class="chip">99$</div>
-									<div class="chip">199$</div>
-						</div>
-
-						<div class="row">
-							<div class="input-field col s6">
-								<input placeholder="占位提示" id="first_name" type="text" class="validate">
-								<label for="first_name">姓名</label>
-							</div>
-							<div class="input-field col s6">
-								<input id="last_name" type="text" class="validate">
-								<label for="last_name">地址</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="password" type="password" class="validate">
-								<label for="password">手机</label>
-							</div>
-						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="email" type="email" class="validate">
-								<label for="email">邮箱</label>
-							</div>
-						</div>
 						<div class="input-field col s12">
-							<select>
-								<option value="" disabled selected>区号</option>
-								<option value="1">选项 1</option>
-								<option value="2">选项 2</option>
-								<option value="3">选项 3</option>
-							</select>
-							
-						</div>
-						<div class="input-field col s6" style="width:80%;">
-							<input  style="width:60%;float:left;" value="card number" id="last_name" type="text" class="validate account">
-							<input style="width:30%;margin-left:10%;float:left;" placeholder="code" id="first_name" type="text" class="validate">
+							<i class="fa fa-user prefix" aria-hidden="true"></i>
+							<input id="bind_lol_account_text" type="text" class="validate" />
+							<label for="bind_lol_account_text">英雄联盟用户名</label>
 						</div>
 					</div>
-				
-					<div class="input-field col s12" style="width:20%;float:left;">
-						<select>
-							
-							<option value="1">1月</option>
-							<option value="2">2月</option>
-							<option value="3">3月</option>
-							<option value="3">4月</option>
-							<option value="3">5月</option>
-							<option value="3">6月</option>
-							<option value="3">7月</option>
-							<option value="3">8月</option>
-							<option value="3">9月</option>
-							<option value="3">10月</option>
-							<option value="3">11月</option>
-							<option value="3">12月</option>
-						</select>
-					
-					</div>
-					<div class="input-field col s12" style="width:20%;float:left;">
-						<select>
-							<option value="1">2017年</option>
-							<option value="2">2018年</option>
-							<option value="3">2019年</option>
-							<option value="3">2020年</option>
-							<option value="3">2021年</option>
-							<option value="3">2022年</option>
-							<option value="3">2023年</option>
-							<option value="3">2024</option>
-							<option value="3">2025</option>
-							<option value="3">2026</option>
-							<option value="3">2027</option>
-							<option value="3">2028</option>
-						</select>
-					
-					</div>
-					
-				</form>
-				<a class="waves-effect waves-light btn an_n" >提交</a>
-			</div>
-		 </div>
-		 <!-- link modal -->
 
-		 
-	<!-- Modal Structure -->
-	<div id="link_modal" class="modal">
-	  <div class="modal-content">
-		<h4>绑定英雄联盟账号</h4>
-		<div class="row">
-		  <form class="col s12">
-			<div class="row">
-			  <div class="input-field col s12">
-				<i class="fa fa-user prefix" aria-hidden="true"></i>
-				<input id="bind_lol_account_text" type="text" class="validate" />
-				<label for="bind_lol_account_text">英雄联盟用户名</label>
-			  </div>
-			</div>
-
-			<button id="bind_lol_btn" class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">绑定
+					<button id="bind_lol_btn" class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">绑定
 			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
 			</button>
-		  </form>
+				</form>
+			</div>
 		</div>
-	  </div>
 	</div>
 
 
 	<!-- notification center Modal Structure -->
 	<div id="message_sheet" class="modal bottom-sheet" style="background-color: #455a64;">
-	  <div class="modal-content" id="message_modal_content">
-		<h4 style="color:#fff;">消息中心</h4>
-		<ul id="message_center" class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
-		<!--swig_messages.html-->
-		</ul>
-	  </div>
-	  <div class="modal-footer" style="background-color: #455a64;">
-		<a id="message_center_btn" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i style="color:#fff;" class="fa fa-trash" aria-hidden="true"></i></a>
-	  </div>
+		<div class="modal-content" id="message_modal_content">
+			<h4 style="color:#fff;">消息中心</h4>
+			<ul id="message_center" class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
+				<!--swig_messages.html-->
+			</ul>
+		</div>
+		<div class="modal-footer" style="background-color: #455a64;">
+			<a id="message_center_btn" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i style="color:#fff;" class="fa fa-trash" aria-hidden="true"></i></a>
+		</div>
 	</div>
 
 	<!--  -->
 	<div id="fight-bet-modal" class="modal">
-      <div class="modal-content">
-		<h4>约战选择积分</h4>
-		<div class="row">
-		  <div class="col s4 bet-holder">
-			10
-		  </div>
-		  <div class="col s4 bet-holder">
-			50
-		  </div>
-		  <div class="col s4 bet-holder">
-			100
-		  </div>
+		<div class="modal-content">
+			<h4>约战选择积分</h4>
+			<div class="row">
+				<div class="col s4 bet-holder">
+					10
+				</div>
+				<div class="col s4 bet-holder">
+					50
+				</div>
+				<div class="col s4 bet-holder">
+					100
+				</div>
+			</div>
 		</div>
-      </div>
 	</div>
 
 	<div id="match-bet-modal" class="modal">
-      <div class="modal-content">
-		<h4>匹配选择积分</h4>
-		<div class="row">
-		  <div class="col s4 bet-holder">
-			10
-		  </div>
-		  <div class="col s4 bet-holder">
-			50
-		  </div>
-		  <div class="col s4 bet-holder">
-			100
-		  </div>
+		<div class="modal-content">
+			<h4>匹配选择积分</h4>
+			<div class="row">
+				<div class="col s4 bet-holder">
+					10
+				</div>
+				<div class="col s4 bet-holder">
+					50
+				</div>
+				<div class="col s4 bet-holder">
+					100
+				</div>
+			</div>
 		</div>
-      </div>
 	</div>
 
-	 <!-- Modal Structure -->
-	 <div id="modal1" class="modal" style="background:#455a64;">
-			<div class="row">
-					<form class="col s6">
-						<div class="row">
-								<div class="input-field col s6">
-										<input placeholder="占位提示" id="first_name" type="text" class="validate">
-										<label for="first_name">个人昵称</label>
-									</div>
-									<div class="input-field col s6">
-											<input placeholder="占位提示" id="first_name" type="text" class="validate">
-											<label for="first_name">爱好</label>
-										</div>
+	<!-- Modal Structure -->
+	<div id="modal1" class="modal" style="background:#455a64;">
+		<div class="row">
+			<form class="col s6">
+				<div class="row">
+					<div class="input-field col s6">
+						<input placeholder="占位提示" id="first_name" type="text" class="validate">
+						<label for="first_name">个人昵称</label>
+					</div>
+					<div class="input-field col s6">
+						<input placeholder="占位提示" id="first_name" type="text" class="validate">
+						<label for="first_name">爱好</label>
+					</div>
+				</div>
+
+
+
+
+				<div class="row">
+					<div class="input-field col s6">
+						<input placeholder="占位提示" id="first_name" type="text" class="validate">
+						<label for="first_name">年龄</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s6">
+						<input placeholder="占位提示" id="first_name" type="text" class="validate">
+						<label for="first_name">邮件</label>
+					</div>
+				</div>
+				<form action="#">
+					<div class="file-field input-field" style="padding-left: 10px;">
+						<div class="btn">
+							<span>更改头像</span>
+							<input type="file">
 						</div>
-					
-							
-									
-					
-						<div class="row">
-								<div class="input-field col s6">
-										<input placeholder="占位提示" id="first_name" type="text" class="validate">
-										<label for="first_name">年龄</label>
-									</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text">
 						</div>
-						<div class="row">
-								<div class="input-field col s6">
-										<input placeholder="占位提示" id="first_name" type="text" class="validate">
-										<label for="first_name">邮件</label>
-									</div>
-						</div>
-						<form action="#" >
-								<div class="file-field input-field" style="padding-left: 10px;">
-									<div class="btn">
-										<span>更改头像</span>
-										<input type="file">
-									</div>
-									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text">
-									</div>
-								</div>
-								<button style="margin-left: 10px;" class="btn waves-effect waves-light" type="submit" name="action">提交
+					</div>
+					<button style="margin-left: 10px;" class="btn waves-effect waves-light" type="submit" name="action">提交
 							</form>
 
 					
 							
 							</button>
-				
-					</form>
-				</div>
 
-
-	
+				</form>
 		</div>
-		
-  <!-- Modal Trigger -->
 
-		<!-- 邀请组队 -->
-		<div id="modal32" class="modal bottom-sheet">
-				<div class="modal-content">
-						<h4>邀请列表</h4>
-						<ul class="collection">
-							<li class="collection-item avatar">
-								<img src="media/imgs/2.jpg" alt="" class="circle">
-								<span class="title" style="margin-top:10px;">啊冷呀</span>
-							
-								<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
-							</li>
-							<li class="collection-item avatar">
-									<img src="media/imgs/2.jpg" alt="" class="circle">
-									<span class="title" style="margin-top:10px;">啊冷呀</span>
-								
-									<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
-								</li>
-								<li class="collection-item avatar">
-										<img src="media/imgs/2.jpg" alt="" class="circle">
-										<span class="title" style="margin-top:10px;">啊冷呀</span>
-									
-										<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
-									</li>
-									<li class="collection-item avatar">
-											<img src="media/imgs/2.jpg" alt="" class="circle">
-											<span class="title" style="margin-top:10px;">啊冷呀</span>
-										
-											<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
-										</li>
-										<li class="collection-item avatar">
-												<img src="media/imgs/2.jpg" alt="" class="circle">
-												<span class="title" style="margin-top:10px;">啊冷呀</span>
-											
-												<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
-											</li>
-						
-						</ul>
-					</div>
+
+
+	</div>
+
+	<!-- Modal Trigger -->
+
+	<!-- 邀请组队 -->
+	<div id="modal32" class="modal bottom-sheet">
+		<div class="modal-content">
+			<h4>邀请列表</h4>
+			<ul class="collection">
+				<li class="collection-item avatar">
+					<img src="media/imgs/2.jpg" alt="" class="circle">
+					<span class="title" style="margin-top:10px;">啊冷呀</span>
+
+					<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
+				</li>
+				<li class="collection-item avatar">
+					<img src="media/imgs/2.jpg" alt="" class="circle">
+					<span class="title" style="margin-top:10px;">啊冷呀</span>
+
+					<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
+				</li>
+				<li class="collection-item avatar">
+					<img src="media/imgs/2.jpg" alt="" class="circle">
+					<span class="title" style="margin-top:10px;">啊冷呀</span>
+
+					<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
+				</li>
+				<li class="collection-item avatar">
+					<img src="media/imgs/2.jpg" alt="" class="circle">
+					<span class="title" style="margin-top:10px;">啊冷呀</span>
+
+					<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
+				</li>
+				<li class="collection-item avatar">
+					<img src="media/imgs/2.jpg" alt="" class="circle">
+					<span class="title" style="margin-top:10px;">啊冷呀</span>
+
+					<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
+				</li>
+
+			</ul>
 		</div>
-		<!-- 创建赛事 -->
-		<div class="modal" id="create_koom_modal" style="
+	</div>
+	<!-- 创建赛事 -->
+	<div class="modal" id="create_koom_modal" style="
     background-color: #455a64;color:#fff;">
-			<div class="modal-content" style="height:468px;">
+		<div class="modal-content" style="height:468px;">
 			<h4 style="color:#fff;">创建赛事</h4>
 			<div class="input-field col s12">
-					<select>
+				<select>
 						<option value="" disabled selected>赛事名称</option>
 						<option value="1">选项 1</option>
 						<option value="2">选项 2</option>
 						<option value="3">选项 3</option>
 					</select>
-			
-				</div>
-				<div class="input-field col s12">
-						<select>
+
+			</div>
+			<div class="input-field col s12">
+				<select>
 							<option value="" disabled selected>最大报名人数</option>
 							<option value="1">选项 1</option>
 							<option value="2">选项 2</option>
 							<option value="3">选项 3</option>
 						</select>
-				
-					</div>
-					<div>
-						<p>战斗力范围</p>
-						<input style="width:25%;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
-						<p style="color:#fff;float: left;margin-left: 14px;
-						margin-top: 16px;">——</p>
-						<input style="width:26%;margin-left:20px;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
-					</div>
-				
-					
-					<div style="float:left;width:60%;">
-						<p>可比赛时间</p>
-						<input id="endTime" class="kbtn" />
-					</div>
-					<div style="float:left;width:60%;">
-						<p>结束时间</p>
-						<input id="endTime2" class="kbtn" />
-					</div>
 
-				
-					
 			</div>
-			<div style="padding-left:20px;padding-bottom:20px;">
+			<div>
+				<p>战斗力范围</p>
+				<input style="width:25%;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
+				<p style="color:#fff;float: left;margin-left: 14px;
+						margin-top: 16px;">——</p>
+				<input style="width:26%;margin-left:20px;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
+			</div>
+
+
+			<div style="float:left;width:60%;">
+				<p>可比赛时间</p>
+				<input id="endTime" class="kbtn" />
+			</div>
+			<div style="float:left;width:60%;">
+				<p>结束时间</p>
+				<input id="endTime2" class="kbtn" />
+			</div>
+
+
+
+		</div>
+		<div style="padding-left:20px;padding-bottom:20px;">
 			<a class="waves-effect waves-light btn">完成</a>
 		</div>
-		</div>
-		<!-- 弹出弹出 -->
+	</div>
+	<!-- 弹出弹出 -->
 
-<div id="modalpopo" class="modal" style="background: #455a64;">
+	<div id="modalpopo" class="modal" style="background: #455a64;">
 		<div class="modal-content">
 			<h4 style="color: #fff;">模态标题</h4>
 			<p class="ceneter_w" style="color: #fff;">一堆文本</p>
 		</div>
 		<div class="modal-footer" style="background: #455a64;">
-		 <button style="background: #26a69a;" class="btn waves-effect waves-light" type="submit" name="action">确定
+			<button style="background: #26a69a;" class="btn waves-effect waves-light" type="submit" name="action">确定
 							
 							</button>
 		</div>
 	</div>
 
-		
-		
-		
-	</div>	
-		<!-- Modal Structure -->
-		<div id="fankui" class="modal modal-fixed-footer fankui_size" style="githeight: 50%;background:#455a64;" >
+
+
+
+	</div>
+	<!-- Modal Structure -->
+	<div id="fankui" class="modal modal-fixed-footer fankui_size" style="githeight: 50%;background:#455a64;">
+		<div class="row">
+			<form class="col s12">
+				<div class="input-field col s8">
+					<input style="color:#fff;" id="last_named" type="text" class="validate">
+					<label for="last_named" style="color:#fff;">姓名</label>
+				</div>
+
 				<div class="row">
-						<form class="col s12">
-								<div class="input-field col s8">
-										<input style="color:#fff;" id="last_named" type="text" class="validate">
-										<label for="last_named" style="color:#fff;" >姓名</label>
-									</div>
-						
-							<div class="row"> 
-								<div class="input-field col s8">
-									<input style="color:#fff;" id="emails" type="email" class="validate">
-									<label for="emails" style="color:#fff;" >联系方式</label>
-								</div>
-							</div>
-						  <div class="row">
-									
-									 <form class="col s12">
-											<div class="row">
-													<div class="input-field col s8">
-														<textarea maxlength="200" style="color:#fff;"  id="textarea1" class="materialize-textarea" length="80"></textarea>
-														<label for="textarea1" style="color:#fff;" >输入反馈内容</label>
-													<span class="character-counter" style="color:#fff;float: right; font-size: 12px; height: 1px;"></span></div>
-												</div>
-										
-									</form>
-									<a class="waves-effect waves-light btn" style="margin-left:10px;" id="feedbackInput">提交反馈</a>
-								</div>
-											
-						</form>
+					<div class="input-field col s8">
+						<input style="color:#fff;" id="emails" type="email" class="validate">
+						<label for="emails" style="color:#fff;">联系方式</label>
 					</div>
-			</div>
-							
-	<div id="datePlugin"></div>	
+				</div>
+				<div class="row">
+
+					<form class="col s12">
+						<div class="row">
+							<div class="input-field col s8">
+								<textarea maxlength="200" style="color:#fff;" id="textarea1" class="materialize-textarea" length="80"></textarea>
+								<label for="textarea1" style="color:#fff;">输入反馈内容</label>
+								<span class="character-counter" style="color:#fff;float: right; font-size: 12px; height: 1px;"></span></div>
+						</div>
+
+					</form>
+					<a class="waves-effect waves-light btn" style="margin-left:10px;" id="feedbackInput">提交反馈</a>
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+	<div id="datePlugin"></div>
 	<script src="./js/jquery-2.2.4.js"></script>
 	<script src="./js/materialize.min.js"></script>
 	<script src="./js/socket_util.js"></script>
@@ -696,107 +644,180 @@
 	<script src="./js/Chart.bundle.js"></script>
 	<script src="./js/genRadar.js"></script>
 	<script src="./js/close_modal.js"></script>
-	<script src="./js/bind_lol.js"></script>	
-	<script src="./js/create_room.js"></script>	
-	<script src="./js/message_center.js"></script>	
+	<script src="./js/bind_lol.js"></script>
+	<script src="./js/create_room.js"></script>
+	<script src="./js/message_center.js"></script>
 	<script src="./js/personal_center.js"></script>
 	<script src="./js/test_page.js"></script>
 	<script src="./flipclock/flipclock.js"></script>
 	<script src="./js/date.js"></script>
 	<script src="./js/gerenly.js"></script>
 	<script src="./js/cjdwly.js"></script>
-<<<<<<< HEAD
- <script src="./js/feedback_message.js"></script>
-=======
-	
-
->>>>>>> c4256ca39aeb4c4cd888234f3be3596b1f3df612
-
-	
-	
-
-	<!-- test data script -->
-	<!-- comment this out and replace these data with those from database -->
-	<script src="./js/testData.js"></script>
-
-	<!-- router -->
-	<script src="./js/router.js"></script>
-	<!-- 银行格式js -->
-	<script src="./js/bankInput.js"></script>
+	<script src="./js/feedback_message.js"></script>
+	<!-- <script src="./js/chat.js"></script> -->
+	<script src="https://js.stripe.com/v3/"></script>
 
 
-	<script>
-    $().ready(function(){
-	  var temp = bullup.loadSwigView("./swig_menu.html", null);
-	  $('#system_menu').html(temp);
 
-		$('.carousel.carousel-slider').carousel({
-			fullWidth: true
-		});
 
-		autoplay();
-		var time =null;
-		$(".carousel-slider").hover(function () {
-			console.log(1);
-			clearTimeout(time);
-		},function (){
-			clearTimeout(time);
-			time = setTimeout(autoplay, 2000);
-		});  
-		function autoplay() {
-				clearTimeout(time);
-				time = setTimeout(autoplay, 4500);
-				$('.carousel').carousel('next');
+		<!-- test data script -->
+		<!-- comment this out and replace these data with those from database -->
+		<script src="./js/testData.js"></script>
+		<!-- router -->
+		<script src="./js/router.js"></script>
+		<!-- 银行格式js -->
+		<script src="./js/bankInput.js"></script>
+
+
+		<script>
+			$().ready(function () {
+				var temp = bullup.loadSwigView("./swig_menu.html", null);
+				$('#system_menu').html(temp);
+
+				$('.carousel.carousel-slider').carousel({
+					fullWidth: true
+				});
+
+				autoplay();
+				var time = null;
+				$(".carousel-slider").hover(function () {
+					console.log(1);
+					clearTimeout(time);
+				}, function () {
+					clearTimeout(time);
+					time = setTimeout(autoplay, 2000);
+				});
+				function autoplay() {
+					clearTimeout(time);
+					time = setTimeout(autoplay, 4500);
+					$('.carousel').carousel('next');
+				}
+			});
+
+			$(document).ready(function () {
+				// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+				$('.modal').modal();
+			});
+			// 有效期时间组件
+			$('.datepicker').pickadate({
+				selectMonths: true, // Creates a dropdown to control month
+				selectYears: 15 // Creates a dropdown of 15 years to control year
+			});
+
+			// 价格$
+			$('.chip').click(function () {
+				var iox = $(this).index();
+				var clasvlue = $('.chip').eq(iox).text();
+				$("#money").val(clasvlue);
+				$('.ois').addClass('active');
+				$('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
+			})
+
+			// //银行卡号输入js配置
+			// $(document).ready(function () {
+			// 	$('.account').bankInput();
+			// 	$('.account').bankInput({ min: 4, max: 25, deimiter: '   ' });
+			// 	$('.account').bankList();
+			// });
+			//弹出popo
+			function poroto_w() {
+				$('#modalpopo .modal-content  h4').text("sdwdwdwdwd")
+				$('#modalpopo .ceneter_w').text("s123123123")
+				$('#modalpopo').modal('open');
 			}
-		});
-		 
-		$(document).ready(function(){
-			// the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-			$('.modal').modal();
-		});
-		// 有效期时间组件
-		$('.datepicker').pickadate({
-			selectMonths: true, // Creates a dropdown to control month
-			selectYears: 15 // Creates a dropdown of 15 years to control year
-		});
-      
-		// 价格$
-		$('.chip').click(function () {
-			var iox = $(this).index();
-			var clasvlue = $('.chip').eq(iox).text();
-			$("#first_name").val(clasvlue);
-			$('.ois').addClass('active');
-			$('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
-		})
+			$('.waves-light').click(function () {
+				$('#modalpopo').modal('close');
+			});
 
-		//银行卡号输入js配置
-		$(document).ready(function(){
-			$('.account').bankInput(); 
-			$('.account').bankInput({min:4,max:25,deimiter:'   '}); 
-			$('.account').bankList(); 
-		});
-		//弹出popo
-		function poroto_w() {
-			$('#modalpopo .modal-content  h4').text("sdwdwdwdwd")
-			$('#modalpopo .ceneter_w').text("s123123123")
-			$('#modalpopo').modal('open'); 
-		}
-		$('.waves-light').click(function(){
-			$('#modalpopo').modal('close');
-		});
+			$(function () {
+				$('#beginTime').date();
+				$('#endTime').date({ theme: "datetime" });
+				$('#endTime2').date({ theme: "datetime" });
+			});
 
-		$(function(){
-			$('#beginTime').date();
-			$('#endTime').date({theme:"datetime"});
-			$('#endTime2').date({theme:"datetime"});
-		});
+			$(document).ready(function () {
 
-		$(document).ready(function() {
-		
-    $('input#input_text, textarea#textarea1').characterCounter();
-  });
-        
-	</script>
+				$('input#input_text, textarea#textarea1').characterCounter();
+			});
+
+		</script>
+		<script>
+			var stripe = Stripe('pk_test_GlgMOKkINe1WfFze6Lko39rB');
+			var elements = stripe.elements();
+			var style = {
+				base: {
+					color: '#FFFFFF',
+					lineHeight: '24px',
+					fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+					fontSmoothing: 'antialiased',
+					fontSize: '16px',
+					'::placeholder': {
+						color: '#FFFFFF'
+					}
+				},
+				invalid: {
+					color: '#FFFFFF',
+					iconColor: '#FFFFFF'
+				}
+			};
+			// Create an instance of the card Element
+			var card = elements.create('card', { style: style });
+
+			// Add an instance of the card Element into the `card-element` <div>
+			card.mount('#card-element');
+			card.addEventListener('change', function (event) {
+				var displayError = document.getElementById('card-errors');
+				if (event.error) {
+					displayError.textContent = event.error.message;
+				} else {
+					displayError.textContent = '';
+				}
+			});
+			var form = document.getElementById('payment-form');
+			form.addEventListener('submit', function (event) {
+				event.preventDefault();
+
+				stripe.createToken(card).then(function (result) {
+					if (result.error) {
+						// Inform the user if there was an error
+						var errorElement = document.getElementById('card-errors');
+						errorElement.textContent = result.error.message;
+					} else {
+						// Send the token to your server
+						stripeTokenHandler(result.token);
+					}
+				});
+			});
+			function stripeTokenHandler(token) {
+				// Insert the token ID into the form so it gets submitted to the server
+				var form = document.getElementById('payment-form');
+				var hiddenInput = document.createElement('input');
+				hiddenInput.setAttribute('type', 'hidden');
+				hiddenInput.setAttribute('name', 'stripeToken');
+				hiddenInput.setAttribute('id', 'stripeToken');
+				hiddenInput.setAttribute('value', token.id);
+				form.appendChild(hiddenInput);
+				// var addInput = document.createElement('input');
+				// addInput.setAttribute()
+				$('#charge_btn').on('click', function (e) {
+					console.log('被点击')
+					var $number = document.getElementById('money').value;
+					var amount = $number * 100;
+					var $card = token.id;
+					//communicate with the server
+					console.log($card);
+					console.log(amount);
+					socket.emit('payment', {
+						token: $card,
+						money: amount
+					});
+					$('#recharge').modal('close');
+				});
+
+			}
+
+		</script>
+
 </body>
 
 </html>

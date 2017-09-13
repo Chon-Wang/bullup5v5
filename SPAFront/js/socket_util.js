@@ -72,6 +72,10 @@ socket.on('feedback', function (feedback) {
         case 'PESONALCENTERRESULT':
             handlePersonalCenterResult(feedback);
             break;
+         
+        case 'PAYMENTRESULT' :
+            handleBankInfo(feedback);
+            break;    
         }
 });
 
