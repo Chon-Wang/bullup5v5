@@ -66,7 +66,9 @@ socket.on('feedback', function (feedback) {
         case 'REFRESHFORMEDBATTLEROOMRESULT':
             handleRefreshFormedBattleRoomResult(feedback);
             break;
-       
+       case  'FEEDBACKMESSAGE':
+            feedbackMessage(feedback);
+            break;
 
         case 'PESONALCENTERRESULT':
             handlePersonalCenterResult(feedback);
@@ -484,7 +486,9 @@ function  handlePersonalCenterResult(feedback){
                d:data.UserlolInfo_d,
                a:data.UserlolInfo_a,
                minion:data.UserlolInfo_minion,
+               golds:data.UserInfo_gold_perminiute,
                gold:data.UserlolInfo_gold,
+               heal:data.UserInfo_heal,
                tower:data.UserlolInfo_tower,
                damage:data.UserlolInfo_damage,
                taken:data.UserInfo_damage_taken,
@@ -510,5 +514,11 @@ function handleBattleInviteRequest(message){
 function handleBattleResult(){
 
 }
-
-
+//反馈结果
+function feedbackMessage(feedback){
+    if(feedback.errorCode==1){
+        alert(feedback.text);
+    }else if(feedback.errorCode==0){
+        alert(feedback.text);
+    }
+}

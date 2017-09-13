@@ -11,8 +11,8 @@
 
 
 <!-- 召唤师名 所属服务器 -->
-<div class="col s6 m2">
-    <label class="personal-title">
+<div class="col s6 m2" style=" text-align: center;">
+    <label class="personal-title" style="font-size:16px;">
       {{ player.name }}
     </label>
     <div class="personal-server chip">
@@ -33,12 +33,8 @@
 
 <!--雷达图-->
 <!-- Personal Info -->
-<div class="row" id="personal_basic">
-<div class="col s2 center-align">
-    <a href="#" data-activates="slide-out" class="button-collapse">
-        <img class="personalInfo-teaser" src="./media/imgs/timg-2.jpeg">
-    </a>
-</div>
+<div class="row" id="personal_basic" style="margin-top:25px;">
+
 <!-- 战斗力 -->
 <div class="col s6 m2">
     <label class="personal-title">战斗力</label>
@@ -188,7 +184,7 @@ var config1 = {
     data: {
         datasets: [{
             data: [
-                10, 20, 30
+                '{{player.wins}}','{{player.gold}}','{{player.golds}}'
             ],
             backgroundColor: [
                 window.chartColors.blue,
@@ -197,9 +193,9 @@ var config1 = {
             ],
         }],
         labels: [
-            "中单",
-            "打野",
-            "ADC",
+            "胜场",
+            "金币",
+            "每分钟金币数",
         ]
     },
     options: {
@@ -209,7 +205,7 @@ var config1 = {
         },
         title: {
             display: true,
-            text: '常用位置'
+            text: '经济'
         },
         animation: {
             animateScale: true,
@@ -232,7 +228,7 @@ var config2 = {
     data: {
         datasets: [{
             data: [
-                10, 20, 30
+                '{{player.minion}}', '{{player.tower}}','{{player.a}}'
             ],
             backgroundColor: [
                 color(chartColors.red).alpha(0.5).rgbString(),
@@ -242,9 +238,9 @@ var config2 = {
             label: 'My dataset' // for legend
         }],
         labels: [
-            "刺客",
-            "法师",
-            "肉盾",
+            "补刀",
+            "推塔",
+            "助攻"
         ]
     },
     options: {
@@ -277,16 +273,15 @@ var json = {
      name1:'{{player.k}}',
      name2:'{{player.d}}',
      name3:'{{player.a}}',
-     name4:'{{player.minion}}',
-     name5:'{{player.tower}}',
-     name6:'{{player.damage}}',
-     name7:'{{player.taken}}'
+     name4:'{{player.heal}}',
+     name5:'{{player.damage}}',
+     name6:'{{player.taken}}'
 }
-setData([json.name1,json.name2,json.name3,json.name4,json.name5,json.name6,json.name7]);
+setData([json.name1,json.name2,json.name3,json.name4,json.name5,json.name6]);
 var config3 = {
         type: 'radar',
         data: {
-            labels: ['击杀', '死亡', '助攻', '补刀', '推塔', '造成伤害', '承受伤害'],
+            labels: ['击杀', '死亡', '助攻','治疗', '造成伤害', '承受伤害'],
             datasets: [{
                 label: "能力雷达图",
                 backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),

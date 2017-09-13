@@ -866,6 +866,17 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
      background: url(../media/imgs/tong.png) 0 0 no-repeat;
      background-size:100%;
  }
+ .rank_gr{
+     text-align: center;
+ }
+.rank-title{
+    font-size:14px!important;
+}
+.ranl_nameme{
+    color:#fff;
+    line-height: 35px;
+    font-size: 20px;
+}
 /*--market--*/
 .panel-heading {
     position: relative;
@@ -3237,6 +3248,8 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
 .chart_agile_bottom {
     padding: 0;
 }
+.await_p  p{
+    line-height: 25px!important;
 
-
+}
 }

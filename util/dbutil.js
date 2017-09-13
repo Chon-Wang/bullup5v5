@@ -561,7 +561,7 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
             });
             //个人能力数据
         },function(userPersonalInfo,callback){
-            connection.query('select bullup_strength_wins,bullup_strength_k,bullup_strength_d,bullup_strength_a,bullup_strength_minion,bullup_strength_gold,bullup_strength_tower,bullup_strength_damage,bullup_strength_damage_taken,bullup_strength_score from bullup_strength where user_id=?',[userId],function(err,results, fields){
+            connection.query('select bullup_strength_wins,bullup_strength_k,bullup_strength_d,bullup_strength_a,bullup_strength_minion,bullup_strength_gold,bullup_strength_tower,bullup_strength_gold_perminiute,bullup_strength_damage,bullup_strength_damage_taken,bullup_strength_heal,bullup_strength_score from bullup_strength where user_id=?',[userId],function(err,results, fields){
                 if(err) throw err;
                 userPersonalInfo.lolInfo_wins=results[0].bullup_strength_wins;
                 userPersonalInfo.lolInfo_strength_k=results[0].bullup_strength_k;
@@ -573,6 +573,8 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 userPersonalInfo.lolInfo_strength_damage=results[0].bullup_strength_damage;
                 userPersonalInfo.lolInfo_strength_damage_taken=results[0].bullup_strength_damage_taken;
                 userPersonalInfo.lolInfo_strength_score=results[0].bullup_strength_score;
+                userPersonalInfo.lolInfo_strength_gold_perminiute=results[0].bullup_strength_gold_perminiute;
+                userPersonalInfo.lolInfo_strength_heal=results[0].bullup_strength_heal;
                 callback(null,userPersonalInfo); 
             });
         },function(userPersonalInfo,callback){
@@ -622,10 +624,32 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
         }
     ],function(err,res){
         callback(res);
-       // console.log(res);
+        console.log(res);
     });   
 }
 
+
+exports.insertFeedback=function(textarea1,name,email,callback){
+   // console.log(userId);
+    async.waterfall([
+        function(callback){
+            connection.query('insert into bullup_feedback (user_feedback_content,user_feedback_name,user_feedback_email) values (?,?,?)',[textarea1,name,email],function(err,results, fields){
+              var feedbackMessage={};
+              //feedbackMessage.user_id=userId;
+              feedbackMessage.textarea1=textarea1;
+              feedbackMessage.name=name;
+              feedbackMessage.email=email;
+                if(err){
+                    connection.rollback();
+                }else{
+                    callback(null,feedbackMessage);
+                }         
+            });
+        }       
+    ],function(err,res){
+        callback(res)
+    });
+}
 
 //exports.getPersonalCenterInfoByUserId(29, function(res){
  //   console.log(res);

@@ -341,6 +341,8 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserlolInfo_tower=queryResult.lolInfo_strength_tower;
                 data.UserlolInfo_damage=queryResult.lolInfo_strength_damage;
                 data.UserInfo_damage_taken=queryResult.lolInfo_strength_damage_taken;
+                data.UserInfo_gold_perminiute=queryResult.lolInfo_strength_gold_perminiute;
+                data.UserInfo_heal=queryResult.lolInfo_strength_heal;
                 data.UserStrengthRank=queryResult.strengthRank;
                 data.UserWealthRank=queryResult.wealthRank;
                 data.UserWealth=queryResult.wealth;
@@ -359,4 +361,32 @@ exports.handlePersonalCenterRequest = function(socket){
         });
     });
 
+}
+exports.insertFeedbackMessage=function(socket){
+    socket.on('feedbackMessage',function(result){
+        console.log('result:'+JSON.stringify(result)); 
+        logger.listenerLog('feedbackMessage');
+        dbUtil.insertFeedback(result.textarea1,result.name,result.email,function(res){
+            if(result.textarea1==""||result.name==""||result.email==""){
+                socket.emit('feedback',{
+                    errorCode:1,
+                    text:'反馈失败,请输入反馈信息',
+                    type:'FEEDBACKMESSAGE',
+                    extension:null
+                });
+            }else{
+                    socket.emit('feedback',{
+                        errorCode:0,
+                        text:'反馈成功',
+                        type:'FEEDBACKMESSAGE',
+                        extension:{
+                        Msgname:result.name,
+                        Msgemail:result.name,
+                        Msgtextarea1:result.textarea1
+                        }
+                    });
+                
+            }
+        });
+    })
 }

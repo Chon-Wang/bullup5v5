@@ -1,13 +1,20 @@
-<div class="container">
-  <div class="user_rank row">
+<div class="container" style="margin-top: 40px;">
+  <div class="user_rank row rank_gr">
 	<div class="col s4">
 	  <label class="rank-title">
-		个人排名
-	  </label>
+		用户昵称
+		</label>
+		<p class="ranl_nameme" >
+			{% if wealthUserInfo %}
+			{{wealthUserInfo.user_nickname}}
+		{% else %}
+		---请先登录---
+		{%endif %}
+		</p>
 	</div>
 	
 	<div class="col s4">
-	  <label class="rank-title">财富排名</label>
+	  <label class="rank-title ">财富排名</label>
 	  <div class="rank-value">
 		<!-- 财富排名 -->
 		{% if wealthUserInfo %}
@@ -23,7 +30,7 @@
 	  <div class="rank-value">
 		<!-- 战斗力排名 -->
 		{% if strengthUserInfo %}
-			{{strengthUserInfo.bullup_strength_rank}}
+		{{strengthUserInfo.bullup_strength_rank}}
 		{% else %}
 		---请先登录---
 		{%endif %}

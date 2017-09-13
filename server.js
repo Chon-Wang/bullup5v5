@@ -1,5 +1,6 @@
 var io = require('socket.io')();
 var logger = require('./util/logutil');
+
 var timmer = require('./timer');
 
 // 代理
@@ -25,8 +26,9 @@ io.on('connection', function(socket) {
     userProxy.handleRankRequest(socket);
 
     userProxy.handleUserInviteResult(io, socket);
+   
+    userProxy.insertFeedbackMessage(socket);
 
-    //
     userProxy.handleLOLBind(socket); 
 
     userProxy.handlePersonalCenterRequest(socket);
