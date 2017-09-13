@@ -1,7 +1,7 @@
 var io = require('socket.io')();
 var logger = require('./util/logutil');
 
-
+var adb  =  0;
 var timmer = require('./timer');
 
 // 代理
