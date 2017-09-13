@@ -125,7 +125,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                     for(var bullupPaticipantIndex in blueSide.participants){
                         var bullupPaticipant = blueSide.participants[bullupPaticipantIndex];
                         var memberExsistFlag = false;
-                        var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                        var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account;
                         for(var lolPaticipantIndex in myTeam){
                             var lolPaticipant = myTeam[lolPaticipantIndex];
                             if(lolPaticipant.summonerId == lolAccountId){
@@ -143,7 +143,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                         for(var bullupPaticipantIndex in redSide.participants){
                             var bullupPaticipant = redSide.participants[bullupPaticipantIndex];
                             var memberExsistFlag = false;
-                            var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                            var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account;
                             for(var lolPaticipantIndex in theirTeam){
                                 var lolPaticipant = theirTeam[lolPaticipantIndex];
                                 if(lolPaticipant.summonerId == lolAccountId || lolPaticipant.summonerId=='0'){
@@ -162,7 +162,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                     for(var bullupPaticipantIndex in blueSide.participants){
                         var bullupPaticipant = blueSide.participants[bullupPaticipantIndex];
                         var memberExsistFlag = false;
-                        var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                        var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account;
                         for(var lolPaticipantIndex in theirTeam){
                             var lolPaticipant = theirTeam[lolPaticipantIndex];
                             if(lolPaticipant.summonerId == lolAccountId){
@@ -180,7 +180,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                         for(var bullupPaticipantIndex in redSide.participants){
                             var bullupPaticipant = redSide.participants[bullupPaticipantIndex];
                             var memberExsistFlag = false;
-                            var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account_id;
+                            var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account;
                             for(var lolPaticipantIndex in myTeam){
                                 var lolPaticipant = myTeam[lolPaticipantIndex];
                                 if(lolPaticipant.summonerId == lolAccountId){

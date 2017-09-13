@@ -231,7 +231,7 @@ exports.handleRankRequest = function (socket){
 exports.handleLOLBind = function(socket){
     socket.on('lolLoginResult',function(loginPacket){
         
-        var userId = socketUserMap[socket.id];
+        var userId = socketProxy.socketUserMap[socket.id];
         var lolAccount = loginPacket.accountId;
         var lolNickname = loginPacket.nickname;
         var lolArea = "china";
