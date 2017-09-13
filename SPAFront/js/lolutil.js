@@ -120,9 +120,13 @@ exports.getMatchDetailsBySummonerName = function(name,startTime,endTime,callback
             });
         },
         function(summoner, done){
-            getMatchesListByAccountId(summoner.accountId, startTime, endTime, function(gameList){
-                done(null, summoner, gameList);
-            });
+            if(summoner.accountId == undefined){
+                callback(null);
+            }else{
+                getMatchesListByAccountId(summoner.accountId, startTime, endTime, function(gameList){
+                    done(null, summoner, gameList);
+                });
+            }
         },
         function(summoner, gameList, done){
             var matchDetails = {};

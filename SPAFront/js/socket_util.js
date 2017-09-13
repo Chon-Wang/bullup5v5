@@ -9,6 +9,7 @@ var teamInfo = null;
 var roomInfo = null;
 var versusLobbyInfo = null;
 var battleInfo = null;
+var formedTeams = null;
 var messageInfo = [];
 
 
@@ -241,12 +242,7 @@ function handleLoginResult(feedback) {
     if (feedback.errorCode == 0) {
         // 登录成功
         //alert(feedback.text);
-        function poroto_w() {
-            $('#modalpopo .modal-content  h4').text("提示：")
-            $('#modalpopo .ceneter_w').text("登录成功！")
-            $('#modalpopo').modal('open'); 
-        }
-        poroto_w();
+        bullup.alert("提示:", "登录成功!");
         userInfo = feedback.extension;
         // console.log("User info");
         // console.log(userInfo);
@@ -269,13 +265,7 @@ function handleLoginResult(feedback) {
     } else if (feedback.errorCode == 1) {
         // 登录失败
        // alert(feedback.text);
-       function poroto_w() {
-        
-           $('#modalpopo .modal-content  h4').text("提示：")
-             $('#modalpopo .ceneter_w').text("登录失败！")
-             $('#modalpopo').modal('open'); 
-        }
-        poroto_w();
+       bullup.alert("提示:", "登陆失败!");
     }
 }
 
@@ -318,14 +308,7 @@ function handleRoomEstablishmentResult(feedback){
     if(feedback.errorCode == 0){
         alert(feedback.text);
     }else{
-       // alert("服务器错误,创建失败");
-       function poroto_w() {
-        
-           $('#modalpopo .modal-content  h4').text("提示：")
-             $('#modalpopo .ceneter_w').text("服务器错误,创建失败！")
-             $('#modalpopo').modal('open'); 
-        }
-        poroto_w();
+        bullup.alert("错误", "服务器错误，创建失败");
         return;
     }
     roomInfo = feedback.extension;
@@ -365,7 +348,7 @@ function handleTeamEstablishResult(feedback){
     if(feedback.errorCode == 0){
         alert(feedback.text);
         teamInfo = feedback.extension.teamInfo;
-        var formedTeams = feedback.extension.formedTeams;
+        formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
         for(var team in formedTeams){
             formedTeams[team].participantCount = formedTeams[team].participants.length;
@@ -416,8 +399,6 @@ function handleTeamEstablishResult(feedback){
 		var pagination = bullup.loadSwigView('swig_pagination.html', pages);
 		//		console.log(pagination);
 		$('#pagination-holder').html(pagination);
-
-
     }else{
         alert(feedback.text);
     }
@@ -426,7 +407,7 @@ function handleTeamEstablishResult(feedback){
 function handleRefreshFormedBattleRoomResult(feedback){
     if(feedback.errorCode == 0){
         //alert(feedback.text);
-        var formedTeams = feedback.extension.formedTeams;
+        formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
         for(var team in formedTeams){
             formedTeams[team].participantCount = formedTeams[team].participants.length;
@@ -476,8 +457,6 @@ function handleRefreshFormedBattleRoomResult(feedback){
 		var pagination = bullup.loadSwigView('swig_pagination.html', pages);
 		//		console.log(pagination);
 		$('#pagination-holder').html(pagination);
-
-
     }else{
         alert(feedback.text);
     }   
@@ -517,21 +496,11 @@ function  handlePersonalCenterResult(feedback){
                wealthRank:data.UserWealthRank[0].wealthRank,
                wealth:data.UserWealth,
                strength:data.UserStrength
-                
             }
-
         });
-
         $('#main-view').html(personalCenterHtml);
     }else{
-    //alert('加载页面失败');
-    function poroto_w() {
-        
-           $('#modalpopo .modal-content  h4').text("提示：")
-             $('#modalpopo .ceneter_w').text("加载页面失败！")
-             $('#modalpopo').modal('open'); 
-        }
-        poroto_w();
+        bullup.alert("提示:", "页面加载失败！");
     }
    
 }

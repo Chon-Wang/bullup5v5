@@ -1,70 +1,32 @@
-<div class="row">
-  
-  <div class="col s12 m12">
-	<div class="carousel carousel-slider center" data-indicators="true" id="starter-carousel">
-
-	  <div class="carousel-item red white-text " href="#two!" id="test_carousel_1">
-		<h2>Arcade 2017 Overview</h2>
-		<p class="white-text">This is your second panel</p>
-		<div class="carousel-fixed-item center wang_sty">
-				<a class="btn waves-effect white grey-text darken-text-2 btn_wang ">查看赛事</a>
-			</div>
-	  </div>
-	  <div class="carousel-item amber white-text" href="#two!" id="test_carousel_2">
-		<h2>Second Panel</h2>
-		<p class="white-text">This is your second panel</p>
-		<div class="carousel-fixed-item center wang_sty">
-				<a class="btn waves-effect white grey-text darken-text-2 btn_wang">查看赛事</a>
-			</div>
-	  </div>
-	  <div class="carousel-item green white-text" href="#three!" id="test_carousel_3">
-		<h2>Third Panel</h2>
-		<p class="white-text">This is your third panel</p>
-		<div class="carousel-fixed-item center wang_sty">
-				<a class="btn waves-effect white grey-text darken-text-2 btn_wang">查看赛事</a>
-			</div>
-	  </div>
-	  <div class="carousel-item blue white-text" href="#four!" id="test_carousel_4">
-		<h2>Fourth Panel</h2>
-		<p class="white-text">This is your fourth panel</p>
-		<div class="carousel-fixed-item center wang_sty">
-				<a class="btn waves-effect white grey-text darken-text-2 btn_wang">查看赛事</a>
-			</div>
-	  </div>
-	</div>
-  </div>
-</div><!-- row -->
+<div class="row" id="starter_shuffling_view">
+		<!-- load shuffling view -->
+</div>
 
 <div class="row center-align starter-btns-holder">
-		<a href="#match-bet-modal" class="starter-btn waves-effect " id="starter-match-btn">
-					<span class="line line-top"></span>
-		
-					<span class="line line-right"></span>
-		
-					<span class="line line-bottom"></span>
-		
-					<span class="line line-left"></span>
+	<a href="#match-bet-modal" class="starter-btn waves-effect " id="starter-match-btn">
+		<span class="line line-top"></span>
+		<span class="line line-right"></span>
+		<span class="line line-bottom"></span>
+		<span class="line line-left"></span>
 		赛事
-			<div class="biu" >
-				<div id="events">
-						<img src="media/imgs/wang_xi.png" class="iamges_s">
-				</div>
-		</div>
-		
-	</a>
-  <a href="#fight-bet-modal" class="starter-btn waves-effect biu2" id="starter-fight-btn">
-	约战
 		<div class="biu" >
-				<div id="live">
+			<div id="starter_competition_div">
+					<img src="media/imgs/wang_xi.png" class="iamges_s">
+			</div>
+		</div>
+	</a>
+  <a class="starter-btn waves-effect biu2" id="starter-fight-btn" href="#create_room_modal">
+		约战
+		<div class="biu" >
+				<div id="starter_battle_div">
 						<img src="media/imgs/wang_xi.png" class="iamges_s">
 				</div>
 		</div>
 	</a>
-	
-  <a class="starter-btn waves-effect" id="starter-personal-btn">
+  <a class="starter-btn waves-effect" id="starter-rank-btn">
 		排行榜
 		<div class="biu" >
-				<div id="rank">
+				<div id="starter_rank_div">
 						<img src="media/imgs/wang_xi.png" class="iamges_s">
 				</div>
 		</div>
@@ -72,7 +34,7 @@
   <a class="starter-btn waves-effect" id="starter-chatroom-btn">
 		聊天室
 		<div class="biu" >
-				<div id="chatroom">
+				<div id="starter_chatroom_div">
 						<img src="media/imgs/wang_xi.png" class="iamges_s">
 				</div>
 		</div>
@@ -81,30 +43,28 @@
 
 <div class="row">
   <div class="col s4">
-	<div class="carousel carousel-slider center video-carousel" data-indicators="true">
-	  <div class="carousel-fixed-item center">
-		<a class="btn waves-effect white grey-text darken-text-2">视频中心</a>
-	  </div>
-	  <div class="carousel-item red white-text" href="#one!">
-		<h2>First Panel</h2>
-		<p class="white-text">This is your first panel</p>
-	  </div>
-	  <div class="carousel-item amber white-text" href="#two!">
-		<h2>Second Panel</h2>
-		<p class="white-text">This is your second panel</p>
-	  </div>
-	  <div class="carousel-item green white-text" href="#three!">
-		<h2>Third Panel</h2>
-		<p class="white-text">This is your third panel</p>
-	  </div>
-	</div>
+		<div class="carousel carousel-slider center video-carousel" data-indicators="true">
+			<div class="carousel-fixed-item center">
+				<a class="btn waves-effect white grey-text darken-text-2">视频中心</a>
+			</div>
+			<div class="carousel-item red white-text" href="#one!">
+				<h2>First Panel</h2>
+				<p class="white-text">This is your first panel</p>
+			</div>
+			<div class="carousel-item amber white-text" href="#two!">
+				<h2>Second Panel</h2>
+				<p class="white-text">This is your second panel</p>
+			</div>
+			<div class="carousel-item green white-text" href="#three!">
+				<h2>Third Panel</h2>
+				<p class="white-text">This is your third panel</p>
+			</div>
+		</div>
   </div>
 
   <div class="col s4 starter-tournament-holder">
-	<!-- tournament -->
 	{% if tournaments %}
 	  {% for tournament in tournaments %}
-		<!-- tournament card -->
 		<div class="card horizontal starter-tournament-card">
 		  <div class="card-image">
 			<img src="/media/imgs/trophy.png" class="starter-tournament-image">
@@ -118,49 +78,25 @@
 			  <a href="#">加入</a>
 			</div>
 		  </div>
-		</div><!-- tournament card -->
+		</div>
 	  {% endfor %}
 	{% endif %}
 	<div class="more">
 	  <a href="">more>></a>
 	</div>
-  </div><!-- tournament-holder -->
-  
-  <div class="col s4 starter-collection-holder">
-	<!-- Text View -->
-	<div class="collection news-collection">
-	  {% if news %}
-		{% for n in news %}
-		  <a class="collection-item">{{ n.title }}</a>
-		{% endfor %}
-	  {% endif %}
-	</div>
-
-	<div class="more">
-	  <a href="">more>></a>
-	</div>
   </div>
   
+  <div class="col s4 starter-collection-holder">
+		<div class="collection news-collection">
+			{% if news %}
+			{% for n in news %}
+				<a class="collection-item">{{ n.title }}</a>
+			{% endfor %}
+			{% endif %}
+		</div>
+		<div class="more">
+			<a href="">more>></a>
+		</div>
+  </div>
 </div>
-<script>
-	//烟雾特效
-	function wcjihe (id){
-    var yzhou = document.getElementById(id);
 
-    var img = yzhou.getElementsByTagName('img')[0];
-    var chong = 0;
-    var tm = null;
-    tm = setInterval(function() {
-        yzhou.scrollTop++;
-        if (yzhou.scrollTop >= img.offsetHeight - yzhou.clientHeight) {
-            yzhou.scrollTop = 0;
-        }
-
-    },
-    20)
-}
-wcjihe("events");
-wcjihe("live");
-wcjihe("rank");
-wcjihe("chatroom");
-</script>
