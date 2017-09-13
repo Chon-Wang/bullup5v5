@@ -297,7 +297,7 @@ exports.handleLOLBind = function(socket){
             if(feedback.errorCode == 0){
                 //更新用户战力表
                 var bindInfo = feedback.extension;
-                dbUtil.addStrengthInfo(bindInfo, function(result){
+                dbUtil.updateStrengthInfo(bindInfo, function(result){
                     console.log("result" + result);
                 });
             }
@@ -362,6 +362,7 @@ exports.handlePersonalCenterRequest = function(socket){
     });
 
 }
+
 exports.insertFeedbackMessage=function(socket){
     socket.on('feedbackMessage',function(result){
         console.log('result:'+JSON.stringify(result)); 
