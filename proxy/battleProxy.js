@@ -29,7 +29,7 @@ exports.handleBattleInvite = function (socket) {
             dstSocket.emit('message', message);
         } else {
             //失败向发出请求的用户返回失败信息
-            socket.emti('feeback', {
+            socket.emit('feeback', {
                 errorCode: 1,
                 type: 'BATTLEINVITERESULT',
                 text: '邀请对战失败, 请刷新对战大厅',
@@ -49,12 +49,12 @@ exports.handleBattleInviteResult = function (io, socket) {
             var currentTime = require('moment')().format('YYYYMMDDHHmmss');
 
             // 更新队伍状态
-            teamProxy.changeTeamStatus(challengerTeam.name, 'INBATTLE');
-            teamProxy.changeTeamStatus(hostTeam.name, 'INBATTLE');
+            teamProxy.changeTeamStatus(challengerTeam.roomName, 'INBATTLE');
+            teamProxy.changeTeamStatus(hostTeam.roomName, 'INBATTLE');
 
             // 状态改变的队伍不再需要在对战大厅中显示，所以不再广播类表中
-            teamProxy.removeBroadcastTeam(challengerTeam.name);
-            teamProxy.removeBroadcastTeam(challengerTeam.name);
+            teamProxy.removeBroadcastTeam(challengerTeam.roomName);
+            teamProxy.removeBroadcastTeam(hostTeam.roomName);
 
             var battle = {
                 battleName: challengerTeam.captain.name + hostTeam.captain.name + (new Date).valueOf(),
@@ -88,7 +88,7 @@ exports.handleBattleInviteResult = function (io, socket) {
             console.log("创建者");
             console.log(challengerTeam.captain);
             io.sockets.in(battle.battleName).emit('lolRoomEstablish', {
-                roomName: 'BULLUP' + (new Date).valueOf(),
+                roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
                 password: Math.floor(Math.random() * 1000), // 4位随机数
                 creatorId: challengerTeam.captain.userId
             });

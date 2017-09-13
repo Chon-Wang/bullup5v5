@@ -5,6 +5,7 @@ pageLoader.loadStarterPage = function(){
 	var starter_data = {};
 	//load 
 	bullup.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
+	$.getScript("./js/starter_router.js");
 };
 
 pageLoader.loadTournaments = function(){

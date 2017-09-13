@@ -234,7 +234,7 @@ exports.handleLOLBind = function(socket){
         var userId = socketUserMap[socket.id];
         var lolAccount = loginPacket.accountId;
         var lolNickname = loginPacket.nickname;
-        var lolArea = "US";
+        var lolArea = "china";
 
         async.waterfall([
             function(callback){
