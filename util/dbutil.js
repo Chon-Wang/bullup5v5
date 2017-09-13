@@ -629,11 +629,11 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
 }
 
 
-exports.insertFeedback=function(textarea1,name,email,callback){
+exports.insertFeedback=function(UserId,textarea1,name,email,callback){
    // console.log(userId);
     async.waterfall([
         function(callback){
-            connection.query('insert into bullup_feedback (user_feedback_content,user_feedback_name,user_feedback_email) values (?,?,?)',[textarea1,name,email],function(err,results, fields){
+            connection.query('insert into bullup_feedback (user_id,user_feedback_content,user_feedback_name,user_feedback_email) values (?,?,?,?)',[UserId,textarea1,name,email],function(err,results, fields){
               var feedbackMessage={};
               //feedbackMessage.user_id=userId;
               feedbackMessage.textarea1=textarea1;
