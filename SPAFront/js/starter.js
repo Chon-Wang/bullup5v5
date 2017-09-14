@@ -55,3 +55,10 @@ $(".carousel-slider").hover(function () {
     clearTimeout(time);
     time = setTimeout(autoplay, 2000);
 });  
+function autoplay() {
+    clearTimeout(time);
+    time = setTimeout(autoplay, 4500);
+    $('.carousel').carousel('next');
+}
+
+autoplay();

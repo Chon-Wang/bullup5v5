@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://192.168.2.224:3000');
+var socket = io.connect('http://49.140.79.6:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 
@@ -208,6 +208,13 @@ socket.on('battleResult', function(resultPacket){
     var battleResHtml = bullup.loadSwigView('./swig_battleres.html', {
         battle_res: battleResultData
     });
+    //清空信息
+    roomInfo = null;
+    teamInfo = null;
+    battleInfo = null;
+    formedTeams = null;
+
+
     //页面跳转到结果详情页
     $('#main-view').html(battleResHtml);
     //添加确认按钮单击事件

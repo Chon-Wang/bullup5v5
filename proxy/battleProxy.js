@@ -233,6 +233,9 @@ exports.handleBattleResult = function (io, socket){
                             winTeam = blueSidePaticipants;
                             loseTeam = redSidePaticipants;
                             finishedBattle = battle;
+                            delete teamProxy.formedTeams[blueSide.roomName];
+                            delete teamProxy.formedTeams[redSide.roomName];
+                            delete exports.battles[battleIndex];
                             break;
                         }
                     }
@@ -242,6 +245,9 @@ exports.handleBattleResult = function (io, socket){
                             winTeam = redSidePaticipants;
                             loseTeam = blueSidePaticipants;
                             finishedBattle = battle;
+                            delete teamProxy.formedTeams[blueSide.roomName];
+                            delete teamProxy.formedTeams[redSide.roomName];
+                            delete exports.battles[battleIndex];
                             break;
                         }
                     }
