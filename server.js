@@ -8,12 +8,16 @@ var userProxy = require('./proxy/userproxy.js');
 var teamProxy = require('./proxy/teamProxy.js');
 var socketProxy = require('./proxy/socketproxy.js');
 var battleProxy = require('./proxy/battleProxy.js');
+var paymentProxy = require('./proxy/paymentProxy.js');
+var chatProxy = require('./proxy/chatProxy.js')
 
 // 初始化Proxy, 所有需要保存数据结构的对象都需要初始化, 只能初始化一次
 userProxy.init();
 teamProxy.init();
 socketProxy.init();
 battleProxy.init();
+paymentProxy.init();
+chatProxy.init();
 
 io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
@@ -47,11 +51,17 @@ io.on('connection', function(socket) {
 
     battleProxy.handleBattleInviteResult(io, socket);
 
-    //
     battleProxy.handleLOLRoomEstablished(io, socket);
 
-    //
     battleProxy.handleBattleResult(io, socket);
+
+    paymentProxy.handlePayment(socket);
+
+    paymentProxy.handleBankInfo(socket);
+
+    chatProxy.handleChat(io,socket);
+
+
 });
 
 

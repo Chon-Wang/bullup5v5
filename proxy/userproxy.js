@@ -347,6 +347,7 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserWealthRank=queryResult.wealthRank;
                 data.UserWealth=queryResult.wealth;
                 data.UserStrength=queryResult.lolInfo_strength_score;
+                data.competition_wins=queryResult.competition_wins;
                 feedback.extension = data;
               //  console.log('feedback:'+JSON.stringify(data));
             }else{
@@ -367,7 +368,7 @@ exports.insertFeedbackMessage=function(socket){
     socket.on('feedbackMessage',function(result){
         console.log('result:'+JSON.stringify(result)); 
         logger.listenerLog('feedbackMessage');
-        dbUtil.insertFeedback(result.textarea1,result.name,result.email,function(res){
+        dbUtil.insertFeedback(result.UserId,result.textarea1,result.name,result.email,function(res){
             if(result.textarea1==""||result.name==""||result.email==""){
                 socket.emit('feedback',{
                     errorCode:1,

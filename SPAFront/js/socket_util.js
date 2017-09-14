@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://127.0.0.1:3000');
+var socket = io.connect('http://192.168.2.224:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 
@@ -73,6 +73,10 @@ socket.on('feedback', function (feedback) {
         case 'PESONALCENTERRESULT':
             handlePersonalCenterResult(feedback);
             break;
+         
+        case 'PAYMENTRESULT' :
+            handleBankInfo(feedback);
+            break;   
         }
 });
 
@@ -476,7 +480,6 @@ function  handlePersonalCenterResult(feedback){
         var data = feedback.extension;
         console.log('data='+JSON.stringify(data));
         //radar.setData(data);
-
         var personalCenterHtml = bullup.loadSwigView('./swig_personal_basic.html',{
             player:{
                name:data.UserlolNickname,
@@ -495,7 +498,8 @@ function  handlePersonalCenterResult(feedback){
                cap:data.UserStrengthRank[0].strengthRank,
                wealthRank:data.UserWealthRank[0].wealthRank,
                wealth:data.UserWealth,
-               strength:data.UserStrength
+               strength:data.UserStrength,
+               winning_rate:data.competition_wins
             }
         });
         $('#main-view').html(personalCenterHtml);
@@ -517,8 +521,8 @@ function handleBattleResult(){
 //反馈结果
 function feedbackMessage(feedback){
     if(feedback.errorCode==1){
-        alert(feedback.text);
+        bullup.alert("提示:","反馈失败,请输入反馈信息");
     }else if(feedback.errorCode==0){
-        alert(feedback.text);
+        bullup.alert("提示","反馈成功!");
     }
 }

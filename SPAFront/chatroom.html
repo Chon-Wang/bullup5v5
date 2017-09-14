@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
-  <head>
-	<meta charset="UTF-8"> 
-    <title>Context Menu</title>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Context Menu</title>
 	<script src="./js/jquery-2.2.4.js"></script>
 
 	<!-- kanban -->
@@ -18,7 +19,9 @@
 	<!-- materializecss -->
 	<link href="./css/materialize.min.css" rel="stylesheet">
 	<script src="./js/materialize.min.js"></script>
-	<script src="./js/jquery.qqFace.js"> </script>
+	<script src="./js/jquery.qqFace.js">
+
+	</script>
 
 
 	<!-- Compiled and minified CSS -->
@@ -28,7 +31,7 @@
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script> -->
 
 	<!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 	<!-- font awesome -->
 	<!-- Font Awesome icons -->
@@ -43,111 +46,110 @@
 	<link rel="stylesheet" type="text/css" href="./css/friendbox.css">
 	<link rel="stylesheet" type="text/css" href="./css/searchbox.css">
 	<style>
-		.comment{width:680px; margin:20px auto; position:relative;float:left;} 
-.comment h3{height:28px; line-height:28px} 
-.com_form{width:100%; position:relative} 
-.input{width:99%; height:60px; border:1px solid #ccc} 
-.com_form p{height:28px; line-height:28px; position:relative} 
-span.emotion{width:42px; height:20px; background:url(icon.gif) no-repeat 2px 2px;  
-padding-left:20px; cursor:pointer} 
-span.emotion:hover{background-position:2px -28px} 
-.qqFace{margin-top:4px;background:#fff;padding:2px;border:1px #dfe6f6 solid;} 
-.qqFace table td{padding:0px;} 
-.qqFace table td img{cursor:pointer;border:1px #fff solid;} 
-.qqFace table td img:hover{border:1px #0066cc solid;} 
-#show{width:680px; margin:20px auto};
+		.comment {
+			width: 680px;
+			margin: 20px auto;
+			position: relative;
+			float: left;
+		}
 
+		.comment h3 {
+			height: 28px;
+			line-height: 28px
+		}
+
+		.com_form {
+			width: 100%;
+			position: relative
+		}
+
+		.input {
+			width: 99%;
+			height: 60px;
+			border: 1px solid #ccc
+		}
+
+		.com_form p {
+			height: 28px;
+			line-height: 28px;
+			position: relative
+		}
+
+		span.emotion {
+			width: 42px;
+			height: 20px;
+			background: url(icon.gif) no-repeat 2px 2px;
+			padding-left: 20px;
+			cursor: pointer
+		}
+
+		span.emotion:hover {
+			background-position: 2px -28px
+		}
+
+		.qqFace {
+			margin-top: 4px;
+			background: #fff;
+			padding: 2px;
+			border: 1px #dfe6f6 solid;
+		}
+
+		.qqFace table td {
+			padding: 0px;
+		}
+
+		.qqFace table td img {
+			cursor: pointer;
+			border: 1px #fff solid;
+		}
+
+		.qqFace table td img:hover {
+			border: 1px #0066cc solid;
+		}
+
+		#show {
+			width: 680px;
+			margin: 20px auto
+		}
+
+		
 	</style>
-	</head>
-	
-  <body class="black">
-	
+</head>
+
+<body class="black">
+
 	<!-- Dropdown Structure -->
 	<ul id="dropdown1" class="dropdown-content grey darken-4">
-	  <li><a href="#log_modal">登录</a></li>
-	  <li><a href="#sign_modal">注册</a></li>
-	  <li><a href="#link_modal">绑定账号</a></li>
-	  <li class="divider"></li>
-	  <li><a href="#">最小化</a></li>
-	  <li><a href="#">退出</a></li>
+		<li><a href="#log_modal">登录</a></li>
+		<li><a href="#sign_modal">注册</a></li>
+		<li><a href="#link_modal">绑定账号</a></li>
+		<li class="divider"></li>
+		<li><a href="#">最小化</a></li>
+		<li><a href="#">退出</a></li>
 	</ul>
 
-
-	<!-- chat room -->
-
+	
 	<div class="row">
 	  <div class="col s12 m6" style="width:90%;margin-left: 75px;margin-top:20px;">
 		<div class="chat-page">
 		
 		  <div class ="chatbox" style="width:90%;margin: 0 auto;">
-			<div class="chatlogs">
-			  <!-- chat messages -->
-			  <div class="chat friend">
-				<div class="user-photo">
-				  <img src="./media/imgs/timg-2.jpeg">
-				</div>
-				<p class="chat-message">Hello, Everyone.</p>
-				</div>
-				
-			  <!-- end of this message -->
-
-			 
-
-			</div>
-			<div class="chatlogs dps">
-				
-	
-					<!-- chat messages -->
-					<div class="chat self w_rigth">
-					<div class="user-photo">
-						<img src="./media/imgs/timg.jpeg">
-					</div>
-					<p class="chat-message">Hello, Everyone.</p>
-					</div>
-					<!-- end of this message -->
-	
-				</div>
-				<div class="chatlogs">
-						<!-- chat messages -->
-						<div class="chat friend">
-						<div class="user-photo">
-							<img src="./media/imgs/timg-2.jpeg">
-						</div>
-						<p class="chat-message">Hello, Everyone.</p>
-						</div>
-						
-						<!-- end of this message -->
-		
-					 
-		
-					</div>
-					<div class="chatlogs dps">
+			<div class="vessel">
+					<div class="chat friend" id="messages" style="float:right;">
 							
-				
-								<!-- chat messages -->
-								<div class="chat self w_rigth">
-								<div class="user-photo">
-									<img src="./media/imgs/timg.jpeg">
-								</div>
-								<p class="chat-message">Hello, Everyone.</p>
-								</div>
-								<!-- end of this message -->
-				
-							</div>
-						
-									
-
-			
-			
+					</div>
+					<div class="chat friend" id="friend-messages" style="float:left;">
+	
+					                                                   </div>
+			</div>
 
 			<!-- chat form -->
+			<form>
 			<div class="chat-form">
 			  <textarea class="input" id="saytext" name="saytext"></textarea>
 			</div>
 			<div class="btn-wrap">
-					<a class="waves-effect waves-light btn">按钮</a>
-			
-			 
+					<a class="waves-effect waves-light btn" id="sub_btn">send</a>
 			  <div class="chat-btns">
 
 
@@ -173,144 +175,126 @@ span.emotion:hover{background-position:2px -28px}
 		  </div>
 		</div>
 	  </div>
+</from>
+<!--chat from end -->
 
 
-	<!-- chat room ends here -->
-	
+					<!-- modal structure -->
+					<div id="create_room_modal" class="modal">
+						<div class="modal-content">
+							<h4>创建房间</h4>
+							<div class="row">
+								<form class="col s12">
+									<div class="row">
+										<!-- first column -->
+										<div class="col s6">
+											<!-- Room name -->
+											<div class="input-field col s12">
+												<input id="room_name" type="text" class="validate">
+												<label for="room_name">房间名</label>
+											</div>
 
+											<!-- Battle Declaration -->
+											<div class="input-field col s12">
+												<input id="battle_desc" type="text" class="validate" value="不服来战">
+												<label for="battle_desc">房间描述</label>
+											</div>
 
-	<div class="fixed-action-btn vertical">
-      <a class="btn-floating btn-large red">
-		<i class="fa fa-plus" aria-hidden="true"></i>
-      </a>
-      <ul>
-		<li><a class="btn-floating red" href="#create_room_modal"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
-		<li><a class="btn-floating yellow darken-1"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-		<li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-		<li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-      </ul>
-	</div>
-	
-	
-
-	<!-- modal structure -->
-	<div id="create_room_modal" class="modal">
-	  <div class="modal-content">
-		<h4>创建房间</h4>
-		<div class="row">
-		  <form class="col s12">
-			<div class="row">
-			  <!-- first column -->
-			  <div class="col s6">
-				<!-- Room name -->
-				<div class="input-field col s12">
-				  <input id="room_name" type="text" class="validate">
-				  <label for="room_name" >房间名</label>
-				</div>
-
-				<!-- Battle Declaration -->
-				<div class="input-field col s12">
-				  <input id="battle_desc" type="text" class="validate" value="不服来战">
-				  <label for ="battle_desc">房间描述</label>
-				</div>
-
-				<!-- winning condition -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<!-- Winning Condition -->
-					<select id="map-selection">
+											<!-- winning condition -->
+											<div class="row">
+												<div class="input-field col s12">
+													<!-- Winning Condition -->
+													<select id="map-selection">
 					  <option value="">召唤师峡谷</option>
 					  <option disabled value="">嚎哭深渊（敬请期待）</option>
 					</select>
-					<label>胜利条件</label>
-				  </div>
-				</div>
+													<label>胜利条件</label>
+												</div>
+											</div>
 
-				<div class="map-container">
-				  <img src="./media/imgs/rift_map.jpg" class="room_map">
-				</div>
-				
-			  </div>
+											<div class="map-container">
+												<img src="./media/imgs/rift_map.jpg" class="room_map">
+											</div>
 
-			  <!-- second column -->
-			  <div class="col s6">
-				
-				<!-- winning condition -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<!-- Winning Condition -->
-					<select id="winning_condition">
+										</div>
+
+										<!-- second column -->
+										<div class="col s6">
+
+											<!-- winning condition -->
+											<div class="row">
+												<div class="input-field col s12">
+													<!-- Winning Condition -->
+													<select id="winning_condition">
 					  <option value="">1血1塔100刀</option>
 					  <option value="">推掉基地</option>
 					</select>
-					<label>胜利条件</label>
-				  </div>
-				</div>
+													<label>胜利条件</label>
+												</div>
+											</div>
 
-				<!-- Team Size -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<!-- Winning Condition -->
-					<select id="winning_condition">
+											<!-- Team Size -->
+											<div class="row">
+												<div class="input-field col s12">
+													<!-- Winning Condition -->
+													<select id="winning_condition">
 					  <option value="">1血1塔100刀</option>
 					  <option value="">推掉基地</option>
 					</select>
-					<label>胜利条件</label>
-				  </div>
-				</div>
-				
+													<label>胜利条件</label>
+												</div>
+											</div>
 
-				<!-- Game Mode -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<select id="game_mode">
+
+											<!-- Game Mode -->
+											<div class="row">
+												<div class="input-field col s12">
+													<select id="game_mode">
 					  <option>常规模式</option>
 					  <option>娱乐模式</option>
 					</select>
-					<label>游戏模式</label>
-				  </div>
-				</div>
+													<label>游戏模式</label>
+												</div>
+											</div>
 
-				<!-- Reward Type -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<select id="reward_type">
+											<!-- Reward Type -->
+											<div class="row">
+												<div class="input-field col s12">
+													<select id="reward_type">
 					  <option value="1">礼券</option>
 					  <option vlaue="2">积分</option>
 					  <option vlaue="3">美金</option>
 					</select>
-					<label>下注类型</label>
-				  </div>
-				</div>
+													<label>下注类型</label>
+												</div>
+											</div>
 
-				<div class="row">
-				  <div class="input-field col s12">
-					<input id="reward_amount" type="number" class="validate" value="100">
-					<label for="reward_amount">下注数量</label>
-				  </div>
-				</div>
+											<div class="row">
+												<div class="input-field col s12">
+													<input id="reward_amount" type="number" class="validate" value="100">
+													<label for="reward_amount">下注数量</label>
+												</div>
+											</div>
 
-				<!-- Room Created Time -->
-				<div class="row">
-				  <div class="input-field col s12">
-					<input disabled id="created_time" type="text" class="validate">
-					<label for="created_time">创建时间</label>
-				  </div>
-				</div>
+											<!-- Room Created Time -->
+											<div class="row">
+												<div class="input-field col s12">
+													<input disabled id="created_time" type="text" class="validate">
+													<label for="created_time">创建时间</label>
+												</div>
+											</div>
 
-				<!--  -->
-				
-				
-			  </div>
-			</div>
-		  </form>
-		</div>
-	  </div>
-	</div>
-	
-	<!-- end of create room modal -->
+											<!--  -->
 
-	
+
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<!-- end of create room modal -->
 
 
 
@@ -318,184 +302,187 @@ span.emotion:hover{background-position:2px -28px}
 
 
 
-	
-	<!-- Modal Structure -->
-	<div id="log_modal" class="modal">
-      <div class="modal-content">
-		<h4>登录</h4>
-		<div class="row">
-		  <form class="col s12">
-			<div class="row">
-			  <div class="input-field col s6">
-				<i class="fa fa-user prefix" aria-hidden="true"></i>
-				<input id="icon_prefix" type="text" class="validate">
-				<label for="icon_prefix">用户名</label>
-			  </div>
-			  <div class="input-field col s6">
-				<i class="fa fa-key prefix" aria-hidden="true"></i>
-				<input id="icon_telephone" type="password" class="validate">
-				<label for="icon_telephone">密码</label>
-			  </div>
-			</div>
 
-			<button class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">登录
+
+
+					<!-- Modal Structure -->
+					<div id="log_modal" class="modal">
+						<div class="modal-content">
+							<h4>登录</h4>
+							<div class="row">
+								<form class="col s12">
+									<div class="row">
+										<div class="input-field col s6">
+											<i class="fa fa-user prefix" aria-hidden="true"></i>
+											<input id="icon_prefix" type="text" class="validate">
+											<label for="icon_prefix">用户名</label>
+										</div>
+										<div class="input-field col s6">
+											<i class="fa fa-key prefix" aria-hidden="true"></i>
+											<input id="icon_telephone" type="password" class="validate">
+											<label for="icon_telephone">密码</label>
+										</div>
+									</div>
+
+									<button class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">登录
 			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
 			</button>
-		  </form>
-		</div>
-      </div>
-	</div>
+								</form>
+							</div>
+						</div>
+					</div>
 
-	<div id="sign_modal" class="modal">
-	  <div class="modal-content">
-		<h4>新用户注册</h4>
-		<div class="row">
-		  <form class="col s12">
-			<div class="row">
-			  <div class="input-field col s12">
-				<i class="fa fa-user prefix" aria-hidden="true"></i>
-				<input id="usr_name" type="text" class="validate">
-				<label for="usr_name">用户名</label>
-			  </div>
+					<div id="sign_modal" class="modal">
+						<div class="modal-content">
+							<h4>新用户注册</h4>
+							<div class="row">
+								<form class="col s12">
+									<div class="row">
+										<div class="input-field col s12">
+											<i class="fa fa-user prefix" aria-hidden="true"></i>
+											<input id="usr_name" type="text" class="validate">
+											<label for="usr_name">用户名</label>
+										</div>
 
-			  <div class="input-field col s12">
-				<i class="fa fa-key prefix" aria-hidden="true"></i>
-				<input id="usr_pwd" type="password" class="validate">
-				<label for="usr_pwd">密码</label>
-			  </div>
+										<div class="input-field col s12">
+											<i class="fa fa-key prefix" aria-hidden="true"></i>
+											<input id="usr_pwd" type="password" class="validate">
+											<label for="usr_pwd">密码</label>
+										</div>
 
-			  <div class="input-field col s12">
-				<i class="fa fa-key prefix" aria-hidden="true"></i>
-				<input id="usr_repwd" type="password" class="validate">
-				<label for="usr_repwd">确认密码</label>
-			  </div>
+										<div class="input-field col s12">
+											<i class="fa fa-key prefix" aria-hidden="true"></i>
+											<input id="usr_repwd" type="password" class="validate">
+											<label for="usr_repwd">确认密码</label>
+										</div>
 
-			  <p>
-				<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
-				<label for="filled-in-box" class="agree-check">我同意用户协议</label>
-			  </p>
-			</div>
+										<p>
+											<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+											<label for="filled-in-box" class="agree-check">我同意用户协议</label>
+										</p>
+									</div>
 
-			<button class="btn waves-effect waves-light right orange lighten-1" type="submit" name="action">注册
+									<button class="btn waves-effect waves-light right orange lighten-1" type="submit" name="action">注册
 			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
 			</button>
-		  </form>
-		</div>
-	  </div>
-	</div>
+								</form>
+							</div>
+						</div>
+					</div>
 
 
-	<!-- link modal -->
-	<!-- Modal Structure -->
-	<div id="link_modal" class="modal">
-      <div class="modal-content">
-		<h4>绑定英雄联盟账号</h4>
-		<div class="row">
-		  <form class="col s12">
-			<div class="row">
-			  <div class="input-field col s12">
-				<i class="fa fa-user prefix" aria-hidden="true"></i>
-				<input id="icon_prefix" type="text" class="validate">
-				<label for="icon_prefix">英雄联盟用户名</label>
-			  </div>
-			</div>
+					<!-- link modal -->
+					<!-- Modal Structure -->
+					<div id="link_modal" class="modal">
+						<div class="modal-content">
+							<h4>绑定英雄联盟账号</h4>
+							<div class="row">
+								<form class="col s12">
+									<div class="row">
+										<div class="input-field col s12">
+											<i class="fa fa-user prefix" aria-hidden="true"></i>
+											<input id="icon_prefix" type="text" class="validate">
+											<label for="icon_prefix">英雄联盟用户名</label>
+										</div>
+									</div>
 
-			<button class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">绑定
+									<button class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">绑定
 			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
 			</button>
-		  </form>
-		</div>
-      </div>
-	</div>
+								</form>
+							</div>
+						</div>
+					</div>
 
-	
-	<!-- Modal Structure -->
-	<div id="message_sheet" class="modal bottom-sheet">
-      <div class="modal-content" id="message_modal_content">
-		<h4>消息中心</h4>
-		<ul class="collapsible popout" data-collapsible="accordion">
-		  <li>
-			<div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
-			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-		  </li>
-		  <li>
-			<div class="collapsible-header"><i class="material-icons">place</i>Second</div>
-			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-		  </li>
-		  <li>
-			<div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
-			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
-		  </li>
-		</ul>
-      </div>
-      <div class="modal-footer">
-		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
-      </div>
-	</div>
-	
-			
-		
-	
-	</body>
-	<script>
-			$().ready(function(){
-				/* dropdown menu initialize */
-				$(".dropdown-button").dropdown({
-				constrainWidth: true,
-				hover: true
-				});
-	 
-				$('select').material_select();
-				
-				/* modal initialize */
-				$("#create_room_modal").modal();
-	 
-				/* modal initialize */
-				$("#log_modal").modal();
-	 
-				$("#sign_modal").modal();
-	 
-				$("#message_sheet").modal();
-	 
-				$("#link_modal").modal();
-			});
-			
-			$(function(){
 
-    $('.emotion').qqFace({
+					<!-- Modal Structure
+					<div id="message_sheet" class="modal bottom-sheet">
+						<div class="modal-content" id="message_modal_content">
+							<h4>消息中心</h4>
+							<ul class="collapsible popout" data-collapsible="accordion">
+								<li>
+									<div class="collapsible-header"><i class="material-icons">filter_drama</i>First</div>
+									<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+								</li>
+								<li>
+									<div class="collapsible-header"><i class="material-icons">place</i>Second</div>
+									<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+								</li>
+								<li>
+									<div class="collapsible-header"><i class="material-icons">whatshot</i>Third</div>
+									<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+								</li>
+							</ul>
+						</div>
+						<div class="modal-footer">
+							<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i class="fa fa-trash" aria-hidden="true"></i></a>
+						</div>
+					</div> -->
 
-        id : 'facebox', 
 
-        assign:'saytext', 
 
-        path:'media/arclist/' //表情存放的路径
 
-    });
+</body>
+<script>
+	$().ready(function () {
+		/* dropdown menu initialize */
+		$(".dropdown-button").dropdown({
+			constrainWidth: true,
+			hover: true
+		});
 
-    $(".sub_btn").click(function(){
+		$('select').material_select();
 
-        var str = $("#saytext").val();
+		/* modal initialize */
+		$("#create_room_modal").modal();
 
-        $("#show").html(replace_em(str));
+		/* modal initialize */
+		$("#log_modal").modal();
 
-    });
+		$("#sign_modal").modal();
 
-});
+		$("#message_sheet").modal();
 
-//查看结果
+		$("#link_modal").modal();
+	});
 
-function replace_em(str){
+	$(function () {
 
-    str = str.replace(/\</g,'&lt;');
+		$('.emotion').qqFace({
 
-    str = str.replace(/\>/g,'&gt;');
+			id: 'facebox',
 
-    str = str.replace(/\n/g,'<br/>');
+			assign: 'saytext',
 
-    str = str.replace(/\[em_([0-9]*)\]/g,'<img src="arclist/$1.gif" border="0" />');
+			path: 'media/arclist/' //表情存放的路径
 
-    return str;
+		});
 
-}
-		 </script>
+		$(".sub_btn").click(function () {
+
+			var str = $("#saytext").val();
+
+			$("#show").html(replace_em(str));
+
+		});
+
+	});
+
+	//查看结果
+
+	function replace_em(str) {
+
+		str = str.replace(/\</g, '&lt;');
+
+		str = str.replace(/\>/g, '&gt;');
+
+		str = str.replace(/\n/g, '<br/>');
+
+		str = str.replace(/\[em_([0-9]*)\]/g, '<img src="arclist/$1.gif" border="0" />');
+
+		return str;
+
+	}
+</script>
+<script src="./js/chat.js"></script>
 </html>
