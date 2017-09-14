@@ -628,12 +628,8 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
     });   
 }
 
-<<<<<<< HEAD
-exports.insertFeedback=function(textarea1,name,email,callback){
-=======
 
 exports.insertFeedback=function(UserId,textarea1,name,email,callback){
->>>>>>> 12fb6817fe6b911f8a7b92ffdc53500569b8a2ec
    // console.log(userId);
     async.waterfall([
         function(callback){
