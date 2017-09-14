@@ -76,7 +76,7 @@ socket.on('feedback', function (feedback) {
          
         case 'PAYMENTRESULT' :
             handleBankInfo(feedback);
-            break;    
+            break;   
         }
 });
 
@@ -498,7 +498,8 @@ function  handlePersonalCenterResult(feedback){
                cap:data.UserStrengthRank[0].strengthRank,
                wealthRank:data.UserWealthRank[0].wealthRank,
                wealth:data.UserWealth,
-               strength:data.UserStrength
+               strength:data.UserStrength,
+               winning_rate:data.competition_wins
             }
         });
         $('#main-view').html(personalCenterHtml);
