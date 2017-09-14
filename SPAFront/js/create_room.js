@@ -18,6 +18,11 @@ $(document).ready(function(){
 			bullup.alert('提示', '请您先登录');
 			return;
 		}
+
+		if(roomInfo != null){
+			alert("您已经加入了房间,无法创建新的房间！");
+			return ;
+		}
 		var room = {
 			battleDesc : $("#battle_desc").val(),
 			mapSelection : "map-selection-1",
