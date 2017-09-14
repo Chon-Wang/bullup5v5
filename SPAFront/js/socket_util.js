@@ -241,7 +241,8 @@ socket.on('battleResult', function(resultPacket){
                 }
             ]
         };
-		bullup.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
+        bullup.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
+        $.getScript('./js/starter.js');
 	});
 });
 
