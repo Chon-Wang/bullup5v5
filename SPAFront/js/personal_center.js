@@ -7,6 +7,10 @@ $(document).ready(function(){
         if(userInfo==null){
             bullup.alert("提示:", "您没有登录，请登录!");
             //location.href = '#log_modal';
+         }else if(userInfo.lolAccountInfo==null){
+                bullup.alert("提示:", "您没有绑定账号，请绑定!");
+        }else if(userInfo.status==null){
+            bullup.alert("提示:", "您没有参加游戏，请积极加入游戏!");
         }else{
             socket.emit('pesonalCenterRequest',userInfo);
         }  
