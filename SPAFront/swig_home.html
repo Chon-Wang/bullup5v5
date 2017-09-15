@@ -674,25 +674,6 @@
 			$().ready(function () {
 				var temp = bullup.loadSwigView("./swig_menu.html", null);
 				$('#system_menu').html(temp);
-
-				$('.carousel.carousel-slider').carousel({
-					fullWidth: true
-				});
-
-				autoplay();
-				var time = null;
-				$(".carousel-slider").hover(function () {
-					console.log(1);
-					clearTimeout(time);
-				}, function () {
-					clearTimeout(time);
-					time = setTimeout(autoplay, 2000);
-				});
-				function autoplay() {
-					clearTimeout(time);
-					time = setTimeout(autoplay, 4500);
-					$('.carousel').carousel('next');
-				}
 			});
 
 			$(document).ready(function () {
@@ -704,7 +685,6 @@
 				selectMonths: true, // Creates a dropdown to control month
 				selectYears: 15 // Creates a dropdown of 15 years to control year
 			});
-
 			// 价格$
 			$('.chip').click(function () {
 				var iox = $(this).index();
@@ -713,7 +693,6 @@
 				$('.ois').addClass('active');
 				$('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
 			})
-
 			// //银行卡号输入js配置
 			// $(document).ready(function () {
 			// 	$('.account').bankInput();
@@ -729,96 +708,15 @@
 			$('.waves-light').click(function () {
 				$('#modalpopo').modal('close');
 			});
-
 			$(function () {
 				$('#beginTime').date();
 				$('#endTime').date({ theme: "datetime" });
 				$('#endTime2').date({ theme: "datetime" });
 			});
-
 			$(document).ready(function () {
-
 				$('input#input_text, textarea#textarea1').characterCounter();
 			});
-
 		</script>
-		<script>
-			var stripe = Stripe('pk_test_GlgMOKkINe1WfFze6Lko39rB');
-			var elements = stripe.elements();
-			var style = {
-				base: {
-					color: '#FFFFFF',
-					lineHeight: '24px',
-					fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-					fontSmoothing: 'antialiased',
-					fontSize: '16px',
-					'::placeholder': {
-						color: '#FFFFFF'
-					}
-				},
-				invalid: {
-					color: '#FFFFFF',
-					iconColor: '#FFFFFF'
-				}
-			};
-			// Create an instance of the card Element
-			var card = elements.create('card', { style: style });
-
-			// Add an instance of the card Element into the `card-element` <div>
-			card.mount('#card-element');
-			card.addEventListener('change', function (event) {
-				var displayError = document.getElementById('card-errors');
-				if (event.error) {
-					displayError.textContent = event.error.message;
-				} else {
-					displayError.textContent = '';
-				}
-			});
-			var form = document.getElementById('payment-form');
-			form.addEventListener('submit', function (event) {
-				event.preventDefault();
-
-				stripe.createToken(card).then(function (result) {
-					if (result.error) {
-						// Inform the user if there was an error
-						var errorElement = document.getElementById('card-errors');
-						errorElement.textContent = result.error.message;
-					} else {
-						// Send the token to your server
-						stripeTokenHandler(result.token);
-					}
-				});
-			});
-			function stripeTokenHandler(token) {
-				// Insert the token ID into the form so it gets submitted to the server
-				var form = document.getElementById('payment-form');
-				var hiddenInput = document.createElement('input');
-				hiddenInput.setAttribute('type', 'hidden');
-				hiddenInput.setAttribute('name', 'stripeToken');
-				hiddenInput.setAttribute('id', 'stripeToken');
-				hiddenInput.setAttribute('value', token.id);
-				form.appendChild(hiddenInput);
-				// var addInput = document.createElement('input');
-				// addInput.setAttribute()
-				$('#charge_btn').on('click', function (e) {
-					console.log('被点击')
-					var $number = document.getElementById('money').value;
-					var amount = $number * 100;
-					var $card = token.id;
-					//communicate with the server
-					console.log($card);
-					console.log(amount);
-					socket.emit('payment', {
-						token: $card,
-						money: amount
-					});
-					$('#recharge').modal('close');
-				});
-
-			}
-
-		</script>
-
 </body>
 
 </html>
