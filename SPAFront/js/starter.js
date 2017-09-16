@@ -58,7 +58,12 @@ $(".carousel-slider").hover(function () {
 function autoplay() {
     clearTimeout(time);
     time = setTimeout(autoplay, 4500);
-    $('.carousel').carousel('next');
+    try{
+        $('.carousel').carousel('next');
+    }catch(err){
+
+    }
+    
 }
 
 autoplay();
