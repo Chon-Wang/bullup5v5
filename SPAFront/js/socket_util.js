@@ -503,8 +503,8 @@ function  handlePersonalCenterResult(feedback){
                tower:data.UserlolInfo_tower,
                damage:data.UserlolInfo_damage,
                taken:data.UserInfo_damage_taken,
-               cap:data.UserStrengthRank[0].strengthRank,
-               wealthRank:data.UserWealthRank[0].wealthRank,
+               cap:data.UserStrengthRank,
+               wealthRank:data.UserWealthRank,
                wealth:data.UserWealth,
                strength:data.UserStrength,
                winning_rate:data.competition_wins
