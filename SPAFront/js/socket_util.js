@@ -164,7 +164,7 @@ socket.on('lolRoomEstablish', function (lolRoom) {
         alert('请在规定时间内创建房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password);
         
         //自动创建房间
-        auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
+        //auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
         //开始抓包
         lol_process.grabLOLData('room', socket);
     } else {

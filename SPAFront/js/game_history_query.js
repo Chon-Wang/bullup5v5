@@ -2,7 +2,7 @@ var lolapi = require('./js/lolutil.js');
 
 
 process.on('uncaughtException', function(err) {
-    alert("召唤师不存在或设置的时间段过长！");
+    //alert("召唤师不存在或设置的时间段过长！");
 });
 
 $().ready(function () {
