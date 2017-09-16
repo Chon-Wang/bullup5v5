@@ -4,7 +4,7 @@ var request = require("request");
 
 $(document).ready(function(){
     $("#router_index").click(function(e){
-        alert(1);
+       
         var options = {
             url: 'http://localhost:3001',
         };
