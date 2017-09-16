@@ -165,7 +165,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                         var lolAccountId = bullupPaticipant.lolAccountInfo.user_lol_account;
                         for(var lolPaticipantIndex in theirTeam){
                             var lolPaticipant = theirTeam[lolPaticipantIndex];
-                            if(lolPaticipant.summonerId == lolAccountId){
+                            if(lolPaticipant.summonerId == lolAccountId || lolPaticipant.summonerId=='0'){
                                 memberExsistFlag = true;
                                 break;
                             }
@@ -269,7 +269,7 @@ exports.handleBattleResult = function (io, socket){
             
                 //广播结果数据包
                 io.sockets.in(finishedBattle.battleName).emit('battleResult', resultPacket);
-
+                console.log(finishedBattle.battleName + "结束");
                 //对局中所有的socket离开所有的socketRoom
                 //io.sockets.in(finishedBattle.battleName).leaveAll();
             }
