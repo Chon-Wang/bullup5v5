@@ -256,7 +256,7 @@ function handleLoginResult(feedback) {
     if (feedback.errorCode == 0) {
         // 登录成功
         //alert(feedback.text);
-        bullup.alert("提示:", "登录成功!");
+        alert( "登录成功!");
         userInfo = feedback.extension;
         // console.log("User info");
         // console.log(userInfo);
@@ -279,7 +279,7 @@ function handleLoginResult(feedback) {
     } else if (feedback.errorCode == 1) {
         // 登录失败
        // alert(feedback.text);
-       bullup.alert("提示:", "登陆失败!");
+       alert( "登陆失败!");
     }
 }
 
@@ -322,7 +322,7 @@ function handleRoomEstablishmentResult(feedback){
     if(feedback.errorCode == 0){
         alert(feedback.text);
     }else{
-        bullup.alert("错误", "服务器错误，创建失败");
+        alert( "服务器错误，创建失败");
         return;
     }
     roomInfo = feedback.extension;
@@ -514,7 +514,7 @@ function  handlePersonalCenterResult(feedback){
         });
         $('#main-view').html(personalCenterHtml);
     }else{
-        bullup.alert("提示:", "页面加载失败！");
+        alert( "页面加载失败！");
     }
    
 }
@@ -531,8 +531,8 @@ function handleBattleResult(){
 //反馈结果
 function feedbackMessage(feedback){
     if(feedback.errorCode==1){
-        bullup.alert("提示:","反馈失败,请输入反馈信息");
+        alert("反馈失败,请输入反馈信息");
     }else if(feedback.errorCode==0){
-        bullup.alert("提示","反馈成功!");
+        alert("反馈成功!");
     }
 }
