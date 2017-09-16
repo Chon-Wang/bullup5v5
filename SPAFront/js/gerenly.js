@@ -4,7 +4,7 @@ $().ready(function(){
         e.preventDefault();
         bullup.loadTemplateIntoTarget('swig_index.html', {}, 'main-view');
         $.getScript('/js/zymly.js');
-      
+        $.getScript('/js/payment.js');
         
 	    });
         
