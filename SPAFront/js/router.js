@@ -29,6 +29,7 @@ $().ready(function(){
 		e.preventDefault();
 		var tournaments_data = [];
 		bullup.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');
+		$.getScript('/js/await.js');
 	});
 });
 
