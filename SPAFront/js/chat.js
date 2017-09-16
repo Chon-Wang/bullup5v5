@@ -3,7 +3,7 @@
 $('#sub_btn').on('click', function () {		
 	
 			console.log('进入聊天室');
-			// $('#saytext').text('');
+			// $('#saytext').text('')
 			var $Msg = document.getElementById('saytext').value;
 			var $chatName=userInfo.name; 
 			//communicate with the server
