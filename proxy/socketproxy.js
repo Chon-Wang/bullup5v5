@@ -1,6 +1,33 @@
 exports.init = function() {
     this.userSocketMap = {};
     this.socketUserMap = {};
+
+    //用于设置最大重发次数的阈值
+    this.maxResendTimes = 15;
+
+    //多少ms重发一次
+    this.timeInterval = 500;
+
+    //用于存储需要发送到客户端的消息
+    this.socketEmitQueue = {};
+    /* 
+        socket.id:{
+            socketObj: socket,
+            dataQueue:[
+                {
+                    header: 'feedback',
+                    data: feedback,
+                    createTimeStamp:  15041042140,
+                    sendTimes: 2,
+                    status: unrecieved
+                }
+            ]
+        }
+    */
+
+
+    //用于存储需要广播的消息
+    this.broadcastEmitQueue = [];
 }
 /**
  * 添加用户id和socket的映射
@@ -62,10 +89,62 @@ exports.userJoin = function (userId, roomName) {
 }
 
 
-// exports.portableSocketEmit = function(socket){
+//----------------------------------------------------------//
+//将需要发送到客户端的消息放置到相应的消息队列里
+exports.portableSocketEmit = function(socket, head, data){
+    var index = socket.id;
+    if(exports.socketEmitQueue.index != undefined){
+        socketEmitQueue.index.dataQueue.push({
+            'header': head,
+            'data': data,
+            'createTimeStamp': 0,
+            'sendTimes': 0,
+            'status': 'unrecieved'
+        });
+    }else{
+        socketEmitQueue.index = {};
+        socketEmitQueue.index.socketObj = socket;
+        socketEmitQueue.index.dataQueue = [];
+        socketEmitQueue.index.dataQueue.push({
+            'header': head,
+            'data': data,
+            'createTimeStamp': 0,
+            'sendTimes': 0,
+            'status': 'unrecieved'
+        });
+    }
+}
 
-// }
+exports.portableSocketsEmit = function(sockets, head, data){
 
-// exports.portableSocketsEmit = function(){
+}
 
-// }
+exports.portableEmit = function(){
+    if (exports.socketEmitQueue != undefined && 
+        exports.broadcastEmitQueue != undefined && 
+        exports.maxResendTimes != undefined && 
+        exports.timeInterval != undefined){
+        
+        // socket.id:{
+        //     socketObj: socket,
+        //     dataQueue:[
+        //         {
+        //             header: 'feedback',
+        //             data: feedback,
+        //             createTimeStamp:  15041042140,
+        //             sendTimes: 2,
+        //             status: unrecieved
+        //         }
+        //     ]
+        // }
+        for(socketId in socketEmitQueue){
+            var socketObj = socketEmitQueue[socketId].socketObj;
+            var dataQueue = socketEmitQueue[socketId].dataQueue;
+
+        }
+
+    }else{
+        exports.init();
+    }
+}
+//----------------------------------------------------------//
