@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://127.0.0.1:3000');
+var socket = io.connect('http://67.216.196.197:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 
@@ -183,15 +183,6 @@ socket.on('lolRoomEstablished', function () {
     alert('游戏已开始');
 });
 
-socket.on('chatMsg', function(msg){
-    if(msg.chatId==userInfo.userId){
-        $('#messages').append($('<li class="chat-message " style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;background:  #b3ade9;color: #fff;float:right;" >').text(msg.chatName+':'+" "+msg.chatMsg));
-    }else{
-        $('#messages').append($('<li class="friend-messages"  style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;;background: #009fab;color: #fff;float:left;"  >').text(msg.chatName+':'+" "+msg.chatMsg));
-    }
-});
-    
-
 socket.on('battleResult', function(resultPacket){
     //读取数据
     var winTeam = resultPacket.winTeam;
@@ -265,7 +256,7 @@ function handleLoginResult(feedback) {
     if (feedback.errorCode == 0) {
         // 登录成功
         //alert(feedback.text);
-        alert( "登录成功!");
+        bullup.alert("提示:", "登录成功!");
         userInfo = feedback.extension;
         // console.log("User info");
         // console.log(userInfo);
@@ -288,7 +279,7 @@ function handleLoginResult(feedback) {
     } else if (feedback.errorCode == 1) {
         // 登录失败
        // alert(feedback.text);
-       alert( "登陆失败!");
+       bullup.alert("提示:", "登陆失败!");
     }
 }
 
@@ -331,7 +322,7 @@ function handleRoomEstablishmentResult(feedback){
     if(feedback.errorCode == 0){
         alert(feedback.text);
     }else{
-        alert( "服务器错误，创建失败");
+        bullup.alert("错误", "服务器错误，创建失败");
         return;
     }
     roomInfo = feedback.extension;
@@ -514,9 +505,8 @@ function  handlePersonalCenterResult(feedback){
                tower:data.UserlolInfo_tower,
                damage:data.UserlolInfo_damage,
                taken:data.UserInfo_damage_taken,
-               cap:data.UserStrengthRank,
-               wealthRank:data.UserWealthRank,
-               icon_id:data.User_icon_id,
+               cap:data.UserStrengthRank[0].strengthRank,
+               wealthRank:data.UserWealthRank[0].wealthRank,
                wealth:data.UserWealth,
                strength:data.UserStrength,
                winning_rate:data.competition_wins
@@ -524,7 +514,7 @@ function  handlePersonalCenterResult(feedback){
         });
         $('#main-view').html(personalCenterHtml);
     }else{
-        alert( "页面加载失败！");
+        bullup.alert("提示:", "页面加载失败！");
     }
    
 }
@@ -541,8 +531,8 @@ function handleBattleResult(){
 //反馈结果
 function feedbackMessage(feedback){
     if(feedback.errorCode==1){
-        alert("反馈失败,请输入反馈信息");
+        bullup.alert("提示:","反馈失败,请输入反馈信息");
     }else if(feedback.errorCode==0){
-        alert("反馈成功!");
+        bullup.alert("提示","反馈成功!");
     }
 }

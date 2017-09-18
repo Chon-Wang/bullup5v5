@@ -135,10 +135,13 @@
 		
 		  <div class ="chatbox" style="width:90%;margin: 0 auto;">
 			<div class="vessel">
-				<div class="chat friend">
-							<ul id="messages"></ul>
-						</div>
-						</div>
+					<div class="chat friend" id="messages" style="float:right;">
+							
+					</div>
+					<div class="chat friend" id="friend-messages" style="float:left;">
+	
+					                                                   </div>
+			</div>
 
 			<!-- chat form -->
 			<form>
@@ -457,9 +460,9 @@
 
 		$(".sub_btn").click(function () {
 
-			// var str = $("#saytext").val();
+			var str = $("#saytext").val();
 
-			// $("#show").html(replace_em(str));
+			$("#show").html(replace_em(str));
 
 		});
 
@@ -481,5 +484,5 @@
 
 	}
 </script>
-<!-- <script src="./js/chat.js"></script> -->
+<script src="./js/chat.js"></script>
 </html>
