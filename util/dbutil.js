@@ -549,10 +549,16 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
         //          });
         //      });
          },function(userPersonalInfo,callback){
-             connection.query('select bullup_strength_rank,bullup_wealth_rank from bullup_rank',[userId],function(err,results,fields){
+             connection.query('select bullup_strength_rank,bullup_wealth_rank,user_icon_id from bullup_rank',[userId],function(err,results,fields){
                 if (err) throw err;
                 userPersonalInfo.strengthRank=results[0].bullup_strength_rank;
                 userPersonalInfo.wealthRank=results[0].bullup_wealth_rank;
+                callback(null,userPersonalInfo);
+             });
+         },function(userPersonalInfo,callback){
+             connection.query('select icon_id from bullup_profile  where user_id=?',[userId],function(err,results,fields){
+                if (err) throw err;
+                userPersonalInfo.icon_id=results[0].icon_id;
                 callback(null,userPersonalInfo);
              });
          }

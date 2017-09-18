@@ -345,6 +345,7 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserInfo_heal=queryResult.lolInfo_strength_heal;
                 data.UserStrengthRank=queryResult.strengthRank;
                 data.UserWealthRank=queryResult.wealthRank;
+                data.User_icon_id=queryResult.icon_id;
                 data.UserWealth=queryResult.wealth;
                 data.UserStrength=queryResult.lolInfo_strength_score;
                 data.competition_wins=queryResult.competition_wins;

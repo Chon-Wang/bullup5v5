@@ -78,12 +78,16 @@
 	  <!-- End of Details -->
 	  <div class="col s12 m9">
 		<!--  Radar Chart of two teams                  -->
-		<canvas id="team-detail-chart"></canvas>
+		<canvas id="team-detail-chart" style="margin-left:50px;"></canvas>
+		
 	  </div>
 	</div>
   </div>
   <div class="modal-footer">
-	<a href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-battle-btn">邀请战斗</a>
+
+	<a style="background: #26a69a;color: #fff;" href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-battle-btn">邀请战斗</a>
+	<a class="waves-effect waves-light btn" style="float:left;">返回</a>
+	
   </div>
 </div>
 
@@ -151,4 +155,62 @@
 <!-- {% endfor %}
 {% endif %}-->
 
+<script>
+  window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+};
 
+var chartColors = window.chartColors;
+var color = Chart.helpers.color;
+var arr;
+function setData (data) {
+    arr = data;
+}
+var $a =  $('#a1').val();
+console.log($a);
+var json = {
+     name1:250,
+     name2:250,
+     name3:250,
+     name4:250,
+     name5:250,
+     name6:250
+}
+setData([json.name1,json.name2,json.name3,json.name4,json.name5,json.name6]);
+var config3 = {
+        type: 'radar',
+        data: {
+            labels: ['击杀', '死亡', '助攻','治疗', '造成伤害', '承受伤害'],
+            datasets: [{
+                label: "能力雷达图",
+                backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                borderColor: window.chartColors.red,
+                pointBackgroundColor: chartColors.red,
+                data: arr
+            }, ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: '能力'
+            },
+            scale: {
+                ticks: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    var arr = config3.data.datasets[0]; 
+    console.log(arr.data);
+var radar = document.getElementById("team-detail-chart");
+window.myRadar = new Chart(radar, config3);
+  
+</script>

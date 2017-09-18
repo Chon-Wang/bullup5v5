@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://67.216.196.197:3000');
+var socket = io.connect('http://127.0.0.1:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 
@@ -516,6 +516,7 @@ function  handlePersonalCenterResult(feedback){
                taken:data.UserInfo_damage_taken,
                cap:data.UserStrengthRank,
                wealthRank:data.UserWealthRank,
+               icon_id:data.User_icon_id,
                wealth:data.UserWealth,
                strength:data.UserStrength,
                winning_rate:data.competition_wins
