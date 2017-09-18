@@ -18,6 +18,7 @@ $(document).ready(function(){
         //     return resultPacket;
         // }
         
+        
         // child_process.exec('node ./js/auto_program/sync_lol_result_process.js', function (error, stdout, stderr) {
         //     if (error) {
         //         console.log(error.stack);

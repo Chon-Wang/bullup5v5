@@ -60,3 +60,12 @@ exports.mapSocketToUserId = function(socketId) {
 exports.userJoin = function (userId, roomName) {
     this.userSocketMap[userId].join(roomName);
 }
+
+
+// exports.portableSocketEmit = function(socket){
+
+// }
+
+// exports.portableSocketsEmit = function(){
+
+// }
