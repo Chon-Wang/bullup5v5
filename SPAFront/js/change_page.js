@@ -8,5 +8,4 @@ $('.change_page_btn').on('click', function(e){
 
 	//reload page
 	
-	
 });

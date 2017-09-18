@@ -114,7 +114,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
         //通知客户端游戏已开始
         for(var battleIndex in  exports.battles){
             var battle = exports.battles[battleIndex];
-            if(battle.status == 'unready'){
+            if(battle.status == 'unready'){ 
                 var myTeam = roomPacket.myTeam;
                 var theirTeam = roomPacket.theirTeam;
                 var blueSide = battle.blueSide;

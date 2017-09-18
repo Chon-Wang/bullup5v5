@@ -517,38 +517,51 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                console.log(JSON.stringify("lolInfo:"+userPersonalInfo));
                callback(null,userPersonalInfo); 
             });
-        },function(userPersonalInfo,callback){
-            //个人战斗力排行
-            connection.query('select bullup_strength_score from bullup_strength where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
-                let temp = results[0].bullup_strength_score;
-                //console.log(temp);
-                connection.query('select count(*) as strengthRank from bullup_strength where bullup_strength_score>=?',[userId],function(err,results2,fields){
-                    userPersonalInfo.strengthRank=results2;
-                    console.log(JSON.stringify("strengthRank:"+userPersonalInfo.strengthRank));
-                    callback(null,userPersonalInfo);
-                });
+        // },function(userPersonalInfo,callback){
+        //     //个人战斗力排行
+        //     connection.query('select bullup_strength_score from bullup_strength where user_id=?',[userId],function(err,results,fields){
+        //         if(err) throw err;
+        //         let temp = results[0].bullup_strength_score;
+        //         //console.log(temp);
+        //         connection.query('select count(*) as strengthRank from bullup_strength where bullup_strength_score>=?',[userId],function(err,results2,fields){
+        //             userPersonalInfo.strengthRank=results2;
+        //             console.log(JSON.stringify("strengthRank:"+userPersonalInfo.strengthRank));
+        //             callback(null,userPersonalInfo);
+        //         });
+        //     });
+         },function(userPersonalInfo,callback){
+             connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
+            if(err) throw err;
+                 userPersonalInfo.wealth=results[0].bullup_currency_amount;
+                 callback(null,userPersonalInfo);
             });
-        },function(userPersonalInfo,callback){
-            connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
-                userPersonalInfo.wealth=results[0].bullup_currency_amount;
+        // },function(userPersonalInfo,callback){
+        //      //个人财富排行
+        //      connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
+        //          if(err) throw err;
+        //          let temp2 = results[0].bullup_currency_amount;
+        //          console.log(temp2);
+        //          connection.query('select count(*) as wealthRank from bullup_wealth where bullup_currency_amount>=?',[temp2],function(err,results2,fields){
+        //              if(err) throw err;
+        //              userPersonalInfo.wealthRank=results2;
+        //              console.log(JSON.stringify("wealthRank:"+userPersonalInfo.wealthRank));
+        //              callback(null,userPersonalInfo);
+        //          });
+        //      });
+         },function(userPersonalInfo,callback){
+             connection.query('select bullup_strength_rank,bullup_wealth_rank,user_icon_id from bullup_rank',[userId],function(err,results,fields){
+                if (err) throw err;
+                userPersonalInfo.strengthRank=results[0].bullup_strength_rank;
+                userPersonalInfo.wealthRank=results[0].bullup_wealth_rank;
                 callback(null,userPersonalInfo);
-            });
-        },function(userPersonalInfo,callback){
-            //个人财富排行
-            connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
-                let temp2 = results[0].bullup_currency_amount;
-                console.log(temp2);
-                connection.query('select count(*) as wealthRank from bullup_wealth where bullup_currency_amount>=?',[temp2],function(err,results2,fields){
-                    if(err) throw err;
-                    userPersonalInfo.wealthRank=results2;
-                    console.log(JSON.stringify("wealthRank:"+userPersonalInfo.wealthRank));
-                    callback(null,userPersonalInfo);
-                });
-            });
-        }
+             });
+         },function(userPersonalInfo,callback){
+             connection.query('select icon_id from bullup_profile  where user_id=?',[userId],function(err,results,fields){
+                if (err) throw err;
+                userPersonalInfo.icon_id=results[0].icon_id;
+                callback(null,userPersonalInfo);
+             });
+         }
     ],function(err,res){
         callback(res);
         console.log(res);
@@ -583,8 +596,9 @@ exports.insertFeedback=function(UserId,textarea1,name,email,callback){
  * @param getBankInfo 收集信息
  */
 exports.insertBankInfo = function(bankInfo, callback) {
-    connection.query('insert into bullup_bankcard_info(user_id,bullup_bank_cardnumber,Bullup_bank_expiremonth,Bullup_bank_expireyear,Bullup_bank_country,Bullup_bank_firstname,Bullup_bank_lastname,Bullup_bank_areacode,Bullup_bank_phone,Bullup_bank_money,Bullup_bank_email,Bullup_bank_companyname,Bullup_bank_streetaddress,Bullup_bank_apt_suite_bldg,Bullup_bank_zipcode) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-     [bankInfo.userId,bankInfo.cardnumber,bankInfo.exptremonth,bankInfo.exptreyear,bankInfo.country,bankInfo.firstname,bankInfo.lastname,bankInfo.areacode,bankInfo.phone,bankInfo.money,bankInfo.email,bankInfo.companyname,bankInfo.streetaddress,bankInfo.apt_suite_bldg,bankInfo.zipcode], function (err, results){
+    var month =bankInfo.exptremonth+1;
+    connection.query('insert into bullup_bankcard_info(user_id,bullup_bank_cardnumber,Bullup_bank_cvc,Bullup_bank_expiremonth,Bullup_bank_expireyear,Bullup_bank_country,Bullup_bank_firstname,Bullup_bank_lastname,Bullup_bank_areacode,Bullup_bank_phone,Bullup_bank_money,Bullup_bank_email,Bullup_bank_companyname,Bullup_bank_streetaddress,Bullup_bank_apt_suite_bldg,Bullup_bank_zipcode) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+     [bankInfo.userId,bankInfo.cardnumber,bankInfo.cvc,month,bankInfo.exptreyear,bankInfo.country,bankInfo.firstname,bankInfo.lastname,bankInfo.areacode,bankInfo.phone,bankInfo.money,bankInfo.email,bankInfo.companyname,bankInfo.streetaddress,bankInfo.apt_suite_bldg,bankInfo.zipcode], function (err, results){
         if (err) throw err;                                                                                                                                                                                                                             
         callback(results);
     });

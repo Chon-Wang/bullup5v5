@@ -14,8 +14,12 @@
 .play_cj{
     margin:45px auto;
     width: 200px;
-
-   
-  
-    
+}
+.style tr{
+    line-height: 50px;
+}
+.check{
+    position: absolute;
+    left:170px;
+    top: 6px;
 }

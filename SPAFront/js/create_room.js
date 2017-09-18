@@ -15,7 +15,7 @@ $(document).ready(function(){
 
 	$("#confirm_create_room_btn").click(function(){
 		if(userInfo == null){
-			bullup.alert('提示', '请您先登录');
+			alert('请您先登录');
 			return;
 		}
 
