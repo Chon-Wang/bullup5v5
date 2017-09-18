@@ -1,8 +1,8 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://67.216.196.197:3000');
+var socket = io.connect('http://49.140.79.6:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
-
+var radar_chart = require('./js/generate_radar.js');
 
 var userInfo = null;
 var teamInfo = null;

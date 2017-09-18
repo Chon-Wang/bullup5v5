@@ -59,8 +59,6 @@ io.on('connection', function(socket) {
     paymentProxy.handleBankInfo(socket);
 
     chatProxy.handleChat(io,socket);
-
-
 });
 
 
