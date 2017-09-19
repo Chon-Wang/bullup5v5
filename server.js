@@ -60,7 +60,7 @@ io.on('connection', function(socket) {
 
     chatProxy.handleChat(io,socket);
 
-
+    socketProxy.handleReceivedTokenData(socket);
 });
 
 
