@@ -534,16 +534,11 @@
 	<div class="modal" id="create_koom_modal" style="
     background-color: #455a64;color:#fff;">
 		<div class="modal-content" style="height:468px;">
-			<h4 style="color:#fff;">创建赛事</h4>
-			<div class="input-field col s12">
-				<select>
-						<option value="" disabled selected>赛事名称</option>
-						<option value="1">选项 1</option>
-						<option value="2">选项 2</option>
-						<option value="3">选项 3</option>
-					</select>
-
-			</div>
+			
+			<div class="input-field col s6">
+					<input id="last_name" type="text" class="validate">
+					<label for="last_name">赛事名称</label>
+				  </div>
 			<div class="input-field col s12">
 				<select>
 							<option value="" disabled selected>最大报名人数</option>
@@ -555,12 +550,32 @@
 			</div>
 			<div>
 				<p>战斗力范围</p>
+				<div class="input-field col s4" style="width:15.5%;float: left;">
+						<select>
+						  <option value="" disabled selected>战斗力范围</option>
+						  <option value="1">选项 1</option>
+						  <option value="2">选项 2</option>
+						  <option value="3">选项 3</option>
+						</select>
+					
+					  </div>
+					  <p style="color:#fff;float: left;margin-left: 14px;margin-top: 35px;">——</p>
+					  <div class="input-field col s4" style="width:15.5%;float: left;margin-left:18px;">
+							<select>
+							  <option value="" disabled selected>战斗力范围</option>
+							  <option value="1">选项 1</option>
+							  <option value="2">选项 2</option>
+							  <option value="3">选项 3</option>
+							</select>
+						
+						  </div>
+				<div style="float:left;">
 				<input style="width:25%;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
-				<p style="color:#fff;float: left;margin-left: 14px;
-						margin-top: 16px;">——</p>
+				<p style="color:#fff;float: left;margin-left: 14px;margin-top: 16px;">——</p>
 				<input style="width:26%;margin-left:20px;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
 			</div>
-
+			</div>
+			
 
 			<div style="float:left;width:60%;">
 				<p>可比赛时间</p>
@@ -574,6 +589,36 @@
 
 
 		</div>
+		<div class="input-field col s12" style="width:40%;margin-left:25px;float:left;">
+				<select>
+				  <option value="" disabled selected>个人赛报名费</option>
+				  <option value="1">选项 1</option>
+				  <option value="2">选项 2</option>
+				  <option value="3">选项 3</option>
+				</select>
+			
+			  </div>
+			  <div class="row">
+					<form class="col s12">
+					  <div class="row">
+						<div class="input-field col s12">
+						  <textarea id="textarea1" class="materialize-textarea"></textarea>
+						  <label for="textarea1">赛事规则</label>
+						</div>
+					  </div>
+					</form>
+				  </div>
+		<div class="row">
+				<form class="col s12">
+				  <div class="row">
+					<div class="input-field col s12">
+					  <textarea id="textarea2" class="materialize-textarea"></textarea>
+					  <label for="textarea1">赛事说明</label>
+					</div>
+				  </div>
+				</form>
+			  </div>
+					
 		<div style="padding-left:20px;padding-bottom:20px;">
 			<a class="waves-effect waves-light btn">完成</a>
 		</div>

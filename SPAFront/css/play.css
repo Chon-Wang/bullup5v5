@@ -23,3 +23,32 @@
     left:170px;
     top: 6px;
 }
+.challenge{
+    background: #EE7600!important;
+}
+.inthegame{
+    background: #F44336!important;
+    color:#fff!important;
+}
+.consent{
+    height: 38px!important;
+    line-height: 38px!important;
+
+}
+.turndown{
+    height: 38px!important;
+    line-height: 38px!important;
+    background: #F44336 !important;
+}
+.underway{
+    background: #F44336 !important;
+}
+.await{
+    background: #B8860B !important;
+}
+.awaygame{
+    background: #EE7600!important;
+}
+.finish{
+    background: #EE0000!important;
+}
