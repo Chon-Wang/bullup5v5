@@ -3,7 +3,7 @@ exports.init = function() {
     this.socketUserMap = {};
 
     //用于设置最大重发次数的阈值
-    this.maxResendTimes = 15;
+    this.maxResendTimes = 150;
 
     //多少ms重发一次
     this.timeInterval = 500;
@@ -66,8 +66,8 @@ exports.portableSocketEmit = function(socket, head, data){
     var index = socket.id;
     var token = Math.random().toString(36).substring(7) + socket.id; 
     data.token = token;
-    if(this.socketEmitQueue.index != undefined){
-        socketEmitQueue.index.dataQueue[String(token)] = {
+    if(exports.socketEmitQueue[index] != undefined){
+        exports.socketEmitQueue[index].dataQueue[String(token)] = {
             'header': head,
             'data': data,
             'createTimeStamp': 0,
@@ -75,10 +75,10 @@ exports.portableSocketEmit = function(socket, head, data){
             'status': 'unrecieved'
         };
     }else{
-        this.socketEmitQueue.index = {};
-        this.socketEmitQueue.index.socketObj = socket;
-        this.socketEmitQueue.index.dataQueue = [];
-        this.socketEmitQueue.index.dataQueue[String(token)] = {
+        exports.socketEmitQueue[index] = {};
+        exports.socketEmitQueue[index].socketObj = socket;
+        exports.socketEmitQueue[index].dataQueue = {};
+        exports.socketEmitQueue[index].dataQueue[String(token)] = {
             'header': head,
             'data': data,
             'createTimeStamp': 0,
@@ -93,10 +93,10 @@ exports.portableSocketsEmit = function(sockets, head, data){
 }
 
 exports.portableEmit = function(){
-    if (this.socketEmitQueue != undefined && 
-        this.broadcastEmitQueue != undefined && 
-        this.maxResendTimes != undefined && 
-        this.timeInterval != undefined){
+    if (exports.socketEmitQueue != undefined && 
+        exports.broadcastEmitQueue != undefined && 
+        exports.maxResendTimes != undefined && 
+        exports.timeInterval != undefined){
         // socket.id:{
         //     socketObj: socket,
         //     dataQueue: {
@@ -110,20 +110,21 @@ exports.portableEmit = function(){
         //     }
         // }
 
-        for(socketId in this.socketEmitQueue){
-            var socketObj = this.socketEmitQueue[socketId].socketObj;
-            var dataQueue = this.socketEmitQueue[socketId].dataQueue;
+        for(socketId in exports.socketEmitQueue){
+            var socketObj = exports.socketEmitQueue[socketId].socketObj;
+            var dataQueue = exports.socketEmitQueue[socketId].dataQueue;
             var data;
             for(dataToken in dataQueue){
                 data = dataQueue[dataToken];
                 data.sendTimes = data.sendTimes+1;
-                if(data.sendTimes >= this.maxResendTimes){
+                if(data.sendTimes >= exports.maxResendTimes){
                     //重发次数达到或超过最大重发次数则删除该条消息
-                    delete socketEmitQueue[socketId].dataQueue[dataToken];
+                    delete exports.socketEmitQueue[socketId].dataQueue[dataToken];
                 }
                 break;
             }
             if(data != undefined){
+                console.log('send to ' + socketObj.id);
                 socketObj.emit(data.header, data.data);
             }else{
                 continue;
@@ -137,7 +138,11 @@ exports.portableEmit = function(){
 exports.handleReceivedTokenData = function(socket){
     socket.on('tokenData', function(tokenData){
         //从未发送的消息队列中删除该项
-        delete this.socketEmitQueue[socket.id].dataQueue[tokenData.dataToken];
+        delete exports.socketEmitQueue[socket.id].dataQueue[tokenData];
     });
+}
+
+exports.startPortableEmiter = function(){
+    setInterval(exports.portableEmit, exports.timeInterval);
 }
 //----------------------------------------------------------//
