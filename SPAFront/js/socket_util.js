@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://127.0.0.1:3000');
+var socket = io.connect('http://49.140.79.6:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 var radar_chart = require('./js/generate_radar.js');
@@ -14,12 +14,18 @@ var messageInfo = [];
 
 
 socket.on('success', function (data) {
+
+    socket.emit('tokenData', data.token);
+
     logger.listenerLog('success');
     console.log(data);
 });
 
 
 socket.on('feedback', function (feedback) {
+
+    socket.emit('tokenData', feedback.token);
+
     switch (feedback.type) {
         case 'LOGINRESULT':
             handleLoginResult(feedback);
@@ -81,7 +87,7 @@ socket.on('feedback', function (feedback) {
 });
 
 socket.on('message', function(message){
-    
+    socket.emit('tokenData', message.token);
     switch(message.messageType){
         case 'invitedFromFriend':
             handleInviteFromFriend(message);
@@ -96,6 +102,9 @@ socket.on('message', function(message){
 
 // 监听服务端队伍信息更新
 socket.on('teamInfoUpdate', function (data) {
+
+    socket.emit('tokenData', data.token);
+
     roomInfo = data;
     //console.log(JSON.stringify(roomInfo));
     //更新房间信息
@@ -136,16 +145,11 @@ socket.on('teamInfoUpdate', function (data) {
     //var temp = bullup.loadSwigView("./swig_menu.html", { logged_user: userInfo });
 });
 
-socket.on('teamForm', function () {
-    //TODO 切换到对战大厅
-    socket.emit('versusLobbyRefresh');
-});
-
-socket.on('battleRequest', function (battleRequest) {
-    // TODO 提示用户有对战邀请, 点击查看对方详情
-});
 
 socket.on('battleInfo', function (battle) {
+
+    socket.emit('tokenData', battle.token);
+
     battleInfo = battle;
     console.log(JSON.stringify(battleInfo));
     var battleRoomHtml = bullup.loadSwigView("./swig_fight.html", {
@@ -159,6 +163,9 @@ socket.on('battleInfo', function (battle) {
 });
 
 socket.on('lolRoomEstablish', function (lolRoom) {
+
+    socket.emit('tokenData', lolRoom.token);
+
     if (userInfo.userId == lolRoom.creatorId) {
         //开始抓包
         lol_process.grabLOLData('room', socket);
@@ -177,13 +184,19 @@ socket.on('lolRoomEstablish', function (lolRoom) {
     }
 });
 
-socket.on('lolRoomEstablished', function () {
+socket.on('lolRoomEstablished', function (data) {
+
+    socket.emit('tokenData', data.token);    
+
     //游戏开始 刷新时钟
     lol_process.grabLOLData('result', socket);
     alert('游戏已开始');
 });
 
 socket.on('battleResult', function(resultPacket){
+
+    socket.emit('tokenData', resultPacket.token);  
+
     //读取数据
     var winTeam = resultPacket.winTeam;
     var battleResultData = {};
@@ -253,7 +266,6 @@ socket.on('battleResult', function(resultPacket){
  * @param {*} feedback 
  */
 function handleLoginResult(feedback) {
-    socket.emit('tokenData', feedback.token)
     if (feedback.errorCode == 0) {
         // 登录成功
         //alert(feedback.text);
