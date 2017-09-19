@@ -22,13 +22,11 @@ exports.addUser = function (user) {
 exports.handleLogin = function (socket) {
     socket.on('login', function (data) {
         logger.listenerLog('login');
-        
-        console.log('开始查数据库....');
 
         dbUtil.findUserByAccount(data.userName, function (user) {
             if (!user || user.user_password != data.password) {
                 // 登录失败
-                socket.emit('feedback', {
+                socketProxy.stableSocketsEmit(socket, 'feedback', {
                     errorCode: 1,
                     text: '登录失败，请检验用户名密码！',
                     type: 'LOGINRESULT',
@@ -106,8 +104,6 @@ exports.handleLogin = function (socket) {
                     }else{
                         feedback.extension.strength = undefined;
                     }
-                    
-                    console.log('查完数据库了....');
                     exports.addUser(feedback.extension);
 
                     socketProxy.stableSocketEmit(socket, 'feedback', feedback);
@@ -129,7 +125,7 @@ exports.handleRegister = function (socket) {
         dbUtil.findUserByAccount(userInfo.userAccount, function (user) {
             if (user) {
                 // 如果该用户存在
-                socket.emit('feedback', {
+                socketProxy.stableSocketsEmit(socket, 'feedback', {
                     errorCode: 1,
                     text: '该用户已经注册',
                     type: 'REGISTERRESULT',
@@ -137,7 +133,7 @@ exports.handleRegister = function (socket) {
                 });
             } else {
                 dbUtil.addUser(userInfo, function (userAddRes) {
-                    socket.emit('feedback', {
+                    socketProxy.stableSocketsEmit(socket, 'feedback', {
                         errorCode: 0,
                         text: '注册成功',
                         type: 'REGISTERRESULT',
@@ -164,9 +160,9 @@ exports.handleInviteFriend = function (socket) {
         logger.listenerLog('message');
         if (socketProxy.isUserOnline(inviteMessage.userId)) {
             var dstSocket = socketProxy.mapUserIdToSocket(inviteMessage.userId);
-            dstSocket.emit('message', inviteMessage);
+            socketProxy.stableSocketEmit(dstSocket, 'message', inviteMessage);
         } else {
-            socket.emit('feedback', {
+            socketProxy.stableSocketsEmit(socket, 'feedback', {
                 errorCode: 1,
                 type: 'INVITERESULT',
                 text: inviteMessage.userName + '邀请失败,该用户已经下线'
@@ -198,14 +194,14 @@ exports.handleUserInviteResult = function (io, socket) {
             //    socket.emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
 
             // 向房间内的所有用户广播当前队伍信息
-            io.sockets.in(teamName).emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
+            socketProxy.stableSocketsEmit(io.sockets.in(teamName), 'teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
         } else if (feedback.errorCode == 1) {
             // 用户拒绝邀请
             var hostId = feedback.extension.hostId;
 
             // 向发起者发送拒绝信息
             var dstSocket = socketProxy.mapUserIdToSocket(hostId);
-            dstSocket.emit('feedback', feedback);
+            socketProxy.stableSocketEmit(dstSocket, 'feedback', feedback);
         }
     });
 }
@@ -219,7 +215,7 @@ exports.handleRankRequest = function (socket){
         var userId = socketProxy.mapSocketToUserId(socket.id);
         dbUtil.getStrengthScoreRank(userId,function(strengthRankList){
             dbUtil.getWealthRank(userId,function(wealthRankList){
-                 socket.emit('feedback', {
+                socketProxy.stableSocketsEmit(socket, 'feedback', {
                     errorCode: 0,
                     text: '获取排名成功',
                     type: 'STRENGTHRANKRESULT',
@@ -308,7 +304,7 @@ exports.handleLOLBind = function(socket){
                     console.log("result" + result);
                 });
             }
-            socket.emit('feedback', feedback);
+            socketProxy.stableSocketsEmit(socket, 'feedback', feedback);
         });
     });
 }
@@ -363,7 +359,7 @@ exports.handlePersonalCenterRequest = function(socket){
                 feedback.text = '个人中心加载失败',
                 feedback.extension = null
             }
-            socket.emit('feedback', feedback);
+            socketProxy.stableSocketsEmit(socket, 'feedback', feedback);
             console.log('feedback111:'+JSON.stringify(feedback));
 
         });
@@ -377,14 +373,14 @@ exports.insertFeedbackMessage=function(socket){
         logger.listenerLog('feedbackMessage');
         dbUtil.insertFeedback(result.UserId,result.textarea1,result.name,result.email,function(res){
             if(result.textarea1==""||result.name==""||result.email==""){
-                socket.emit('feedback',{
+                socketProxy.stableSocketsEmit(socket, 'feedback',{
                     errorCode:1,
                     text:'反馈失败,请输入反馈信息',
                     type:'FEEDBACKMESSAGE',
                     extension:null
                 });
             }else{
-                    socket.emit('feedback',{
+                    socketProxy.stableSocketsEmit(socket, 'feedback',{
                         errorCode:0,
                         text:'反馈成功',
                         type:'FEEDBACKMESSAGE',

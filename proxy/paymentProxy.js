@@ -48,14 +48,14 @@ exports.handleBankInfo = function (socket) {
         logger.listenerLog('changeInfo');
         dbUtil.insertBankInfo(bank,function(res){
             if (!res) {
-                socket.emit('feedback', {
+                socketProxy.stableSocketEmit(socket, 'feedback', {
                     errorCode: 1,
                     text: '修改失败，请稍后重试',
                     type: 'PAYMENTRESULT',
                     extension: null
                 });
             } else {
-                 socket.emit('feedback', {
+                socketProxy.stableSocketEmit(socket, 'feedback', {
                     errorCode: 0,
                     text: '修改成功',
                     type: 'PAYMENTRESULT',

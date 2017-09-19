@@ -21,7 +21,7 @@ exports.handleRoomEstablish = function(socket) {
         // 将该socket放入teamname命名的room中
         socket.join(room.roomName);
         // 返回回馈信息
-        socket.emit('feedback', {
+        socketProxy.stableSocketsEmit(socket, 'feedback', {
             errorCode: 0,
             type: 'ESTABLISHROOMRESULT',
             text: '创建成功',
@@ -42,7 +42,7 @@ exports.handleRefreshFormedBattleRoom = function(socket){
                 formedTeams: exports.formedTeams
             }
         }
-        socket.emit('feedback', feedback);
+        socketProxy.stableSocketsEmit(socket, 'feedback', feedback);
     });
 
 }
@@ -107,7 +107,7 @@ exports.handleTeamEstablish = function (io, socket) {
             }
         };
         // 告诉该队伍中的所有用户队伍已经形成
-        io.sockets.in(teamInfo.roomName).emit('feedback', feedback);
+        socketProxy.stableSocketsEmit(io.sockets.in(teamInfo.roomName), 'feedback', feedback);
     });
 }
 
@@ -118,7 +118,7 @@ exports.handleTeamEstablish = function (io, socket) {
 exports.handleVersusLobbyRefresh = function(socket) {
     socket.on('versusLobbyRefresh', function () {
         logger.listenerLog('versusLobbyRefresh');
-        socket.emit('feedback', {
+        socketProxy.stableSocketsEmit(socket, 'feedback', {
             errorCode: 0,
             type: 'VERSUSLOBBYINFO',
             text: '对战大厅更新数据',
@@ -137,14 +137,14 @@ exports.handleTeamDetails = function (socket) {
         var team = exports.formedTeams[teamInfo.teamName];
         
         if (team && team.status == 'PUBLISHING') {
-            socket.emit('feedback', {
+            socketProxy.stableSocketsEmit(socket, 'feedback', {
                 errorCode: 0,
                 type: 'TEAMDETAILS',
                 text: '队伍详情',
                 extension: team,
             })
         } else {
-            socket.emit('feedback', {
+            socketProxy.stableSocketsEmit(socket, 'feedback', {
                 errorCode: 1,
                 type: 'TEAMDETAILS',
                 text: '查看队伍详情失败, 请刷新对战大厅',
