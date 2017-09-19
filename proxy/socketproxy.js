@@ -65,27 +65,26 @@ exports.userJoin = function (userId, roomName) {
 exports.portableSocketEmit = function(socket, head, data){
     var index = socket.id;
     var token = Math.random().toString(36).substring(7) + socket.id; 
-    if(exports.socketEmitQueue.index != undefined){
-        socketEmitQueue.index.dataQueue.push({
+    data.token = token;
+    if(this.socketEmitQueue.index != undefined){
+        socketEmitQueue.index.dataQueue[String(token)] = {
             'header': head,
             'data': data,
             'createTimeStamp': 0,
             'sendTimes': 0,
-            'status': 'unrecieved',
-            'token': token
-        });
+            'status': 'unrecieved'
+        };
     }else{
-        socketEmitQueue.index = {};
-        socketEmitQueue.index.socketObj = socket;
-        socketEmitQueue.index.dataQueue = [];
-        socketEmitQueue.index.dataQueue.push({
+        this.socketEmitQueue.index = {};
+        this.socketEmitQueue.index.socketObj = socket;
+        this.socketEmitQueue.index.dataQueue = [];
+        this.socketEmitQueue.index.dataQueue[String(token)] = {
             'header': head,
             'data': data,
             'createTimeStamp': 0,
             'sendTimes': 0,
-            'status': 'unrecieved',
-            'token': token
-        });
+            'status': 'unrecieved'
+        };
     }
 }
 
@@ -111,9 +110,9 @@ exports.portableEmit = function(){
         //     }
         // }
 
-        for(socketId in socketEmitQueue){
-            var socketObj = socketEmitQueue[socketId].socketObj;
-            var dataQueue = socketEmitQueue[socketId].dataQueue;
+        for(socketId in this.socketEmitQueue){
+            var socketObj = this.socketEmitQueue[socketId].socketObj;
+            var dataQueue = this.socketEmitQueue[socketId].dataQueue;
             var data;
             for(dataToken in dataQueue){
                 data = dataQueue[dataToken];
