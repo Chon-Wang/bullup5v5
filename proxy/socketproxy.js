@@ -116,7 +116,7 @@ exports.stableEmit = function(){
         for(socketId in exports.socketEmitQueue){
             var socketObj = exports.socketEmitQueue[socketId].socketObj;
             var dataQueue = exports.socketEmitQueue[socketId].dataQueue;
-            var data;
+            var data = {'blank': true};
             for(dataToken in dataQueue){
                 data = dataQueue[dataToken];
                 data.sendTimes = data.sendTimes+1;
@@ -126,9 +126,10 @@ exports.stableEmit = function(){
                 }
                 break;
             }
-            if(data != undefined){
+            if(data.blank != true){
                 console.log('send to ' + socketObj.id);
                 socketObj.emit(data.header, data.data);
+                delete data;
             }else{
                 continue;
             }
@@ -146,6 +147,6 @@ exports.handleReceivedTokenData = function(socket){
 }
 
 exports.startstableEmiter = function(){
-    setInterval(exports.stableEmit, exports.timeInterval);
+    //setInterval(exports.stableEmit, exports.timeInterval);
 }
 //----------------------------------------------------------//

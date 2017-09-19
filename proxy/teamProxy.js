@@ -28,6 +28,7 @@ exports.handleRoomEstablish = function(socket) {
             text: '创建成功',
             extension: room
         });
+        socketProxy.stableEmit();
     });
 }
 
@@ -108,7 +109,9 @@ exports.handleTeamEstablish = function (io, socket) {
             }
         };
         // 告诉该队伍中的所有用户队伍已经形成
-        socketProxy.stableSocketsEmit(io.sockets.in(teamInfo.roomName), 'feedback', feedback);
+        var sockets = io.sockets.in(teamInfo.roomName);
+        socketProxy.stableSocketsEmit(sockets, 'feedback', feedback);
+        socketProxy.stableEmit();
     });
 }
 
