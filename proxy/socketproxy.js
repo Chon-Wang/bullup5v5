@@ -62,7 +62,7 @@ exports.userJoin = function (userId, roomName) {
 
 //----------------------------------------------------------//
 //将需要发送到客户端的消息放置到相应的消息队列里
-exports.portableSocketEmit = function(socket, head, data){
+exports.stableSocketEmit = function(socket, head, data){
     var index = socket.id;
     var token = Math.random().toString(36).substring(7) + socket.id; 
     data.token = token;
@@ -88,11 +88,14 @@ exports.portableSocketEmit = function(socket, head, data){
     }
 }
 
-exports.portableSocketsEmit = function(sockets, head, data){
-
+exports.stableSocketsEmit = function(sockets, head, data){
+    for(socketId in sockets.sockets){
+        var socket = sockets.sockets[socketId];
+        exports.stableSocketEmit(socket, head, data);
+    }
 }
 
-exports.portableEmit = function(){
+exports.stableEmit = function(){
     if (exports.socketEmitQueue != undefined && 
         exports.broadcastEmitQueue != undefined && 
         exports.maxResendTimes != undefined && 
@@ -142,7 +145,7 @@ exports.handleReceivedTokenData = function(socket){
     });
 }
 
-exports.startPortableEmiter = function(){
-    setInterval(exports.portableEmit, exports.timeInterval);
+exports.startstableEmiter = function(){
+    setInterval(exports.stableEmit, exports.timeInterval);
 }
 //----------------------------------------------------------//

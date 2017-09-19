@@ -22,6 +22,9 @@ exports.addUser = function (user) {
 exports.handleLogin = function (socket) {
     socket.on('login', function (data) {
         logger.listenerLog('login');
+        
+        console.log('开始查数据库....');
+
         dbUtil.findUserByAccount(data.userName, function (user) {
             if (!user || user.user_password != data.password) {
                 // 登录失败
@@ -104,10 +107,11 @@ exports.handleLogin = function (socket) {
                         feedback.extension.strength = undefined;
                     }
                     
+                    console.log('查完数据库了....');
                     exports.addUser(feedback.extension);
 
-                    socketProxy.portableSocketEmit(socket, 'feedback', feedback);
-                    //socketProxy.portableEmit();
+                    socketProxy.stableSocketEmit(socket, 'feedback', feedback);
+                    //socketProxy.stableEmit();
                     //socket.emit('feedback', feedback);
                 });
             }

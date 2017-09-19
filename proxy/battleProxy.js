@@ -82,7 +82,10 @@ exports.handleBattleInviteResult = function (io, socket) {
 
             teamProxy.printfAllTeamsInfo();
             // 向该对局中所有的用户广播对局信息
-            io.sockets.in(battle.battleName).emit('battleInfo', battle);
+            //io.sockets.in(battle.battleName).emit('battleInfo', battle);
+            
+            socketProxy.stableSocketsEmit(io.sockets.in(battle.battleName), 'battleInfo', battle);
+
             //io.in(battle.battleName).emit('battleInfo', battle);
             // 向对局中所有用户广播要建立的lol房间信息
             console.log("创建者");

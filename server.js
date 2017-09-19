@@ -72,7 +72,7 @@ io.on('disconnect', function (socket) {
 
 
 //开启消息推送器
-socketProxy.startPortableEmiter();
+socketProxy.startstableEmiter();
 
 //一天更新一次排行榜
 timmer.autoUpdateRankList(24 * 3600);
