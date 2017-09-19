@@ -372,6 +372,7 @@ function handleRoomEstablishmentResult(feedback){
 }
 
 function handleTeamEstablishResult(feedback){
+    socket.emit('tokenData', feedback.token);
     if(feedback.errorCode == 0){
         alert(feedback.text);
         teamInfo = feedback.extension.teamInfo;
