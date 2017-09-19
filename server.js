@@ -60,7 +60,7 @@ io.on('connection', function(socket) {
 
     chatProxy.handleChat(io,socket);
 
-
+    socketProxy.handleReceivedTokenData(socket);
 });
 
 
@@ -69,6 +69,10 @@ io.on('disconnect', function (socket) {
     socketProxy.remove(socket);
 
 });
+
+
+//开启消息推送器
+socketProxy.startPortableEmiter();
 
 //一天更新一次排行榜
 timmer.autoUpdateRankList(24 * 3600);

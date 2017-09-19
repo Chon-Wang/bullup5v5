@@ -105,7 +105,10 @@ exports.handleLogin = function (socket) {
                     }
                     
                     exports.addUser(feedback.extension);
-                    socket.emit('feedback', feedback);
+
+                    socketProxy.portableSocketEmit(socket, 'feedback', feedback);
+                    //socketProxy.portableEmit();
+                    //socket.emit('feedback', feedback);
                 });
             }
         });
