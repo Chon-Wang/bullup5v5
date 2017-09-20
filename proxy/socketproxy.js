@@ -88,10 +88,12 @@ exports.stableSocketEmit = function(socket, head, data){
     }
 }
 
-exports.stableSocketsEmit = function(sockets, head, data){
+exports.stableSocketsEmit = function(sockets, roomName, head, data){
     for(socketId in sockets.sockets){
         var socket = sockets.sockets[socketId];
-        exports.stableSocketEmit(socket, head, data);
+        if(socket.rooms[roomName] != undefined){
+            exports.stableSocketEmit(socket, head, data);
+        }
     }
 }
 

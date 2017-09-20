@@ -75,6 +75,6 @@ io.on('disconnect', function (socket) {
 socketProxy.startstableEmiter();
 
 //一天更新一次排行榜
-timmer.autoUpdateRankList(24 * 3600);
+//timmer.autoUpdateRankList(24 * 3600);
 
 io.listen(3000);

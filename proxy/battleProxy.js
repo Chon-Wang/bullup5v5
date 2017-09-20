@@ -83,14 +83,14 @@ exports.handleBattleInviteResult = function (io, socket) {
             teamProxy.printfAllTeamsInfo();
             // 向该对局中所有的用户广播对局信息
             
-            socketProxy.stableSocketsEmit(io.sockets.in(battle.battleName), 'battleInfo', battle);
+            socketProxy.stableSocketsEmit(io.sockets.in(battle.battleName), battle.battleName, 'battleInfo', battle);
 
             //io.in(battle.battleName).emit('battleInfo', battle);
             // 向对局中所有用户广播要建立的lol房间信息
             console.log("创建者");
             console.log(challengerTeam.captain);
 
-            socketProxy.stableSocketsEmit(io.sockets.in(battle.battleName), 'lolRoomEstablish', {
+            socketProxy.stableSocketsEmit(io.sockets.in(battle.battleName), battle.battleName, 'lolRoomEstablish', {
                 roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
                 password: Math.floor(Math.random() * 1000), // 4位随机数
                 creatorId: challengerTeam.captain.userId
@@ -202,7 +202,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                     if(battle.status == 'unready'){
                         battle.status = 'ready';
                     }
-                    socketProxy.stableSocketsEmit(io.sockets.in(battle.battleName), 'lolRoomEstablished', {});
+                    socketProxy.stableSocketsEmit(io.sockets.in(battle.battleName), battle.battleName, 'lolRoomEstablished', {});
                     break;
                 }
             }
@@ -271,7 +271,7 @@ exports.handleBattleResult = function (io, socket){
                 resultPacket.loseTeam = loseTeam;
             
                 //广播结果数据包
-                socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), 'battleResult', resultPacket);
+                socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), finishedBattle.battleName, 'battleResult', resultPacket);
                 console.log(finishedBattle.battleName + "结束");
                 //对局中所有的socket离开所有的socketRoom
                 //io.sockets.in(finishedBattle.battleName).leaveAll();

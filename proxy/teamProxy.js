@@ -110,7 +110,7 @@ exports.handleTeamEstablish = function (io, socket) {
         };
         // 告诉该队伍中的所有用户队伍已经形成
         var sockets = io.sockets.in(teamInfo.roomName);
-        socketProxy.stableSocketsEmit(sockets, 'feedback', feedback);
+        socketProxy.stableSocketsEmit(sockets, teamInfo.roomName, 'feedback', feedback);
         socketProxy.stableEmit();
     });
 }
