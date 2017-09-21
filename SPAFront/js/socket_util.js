@@ -497,7 +497,7 @@ function  handlePersonalCenterResult(feedback){
     //判断是否成功
     if(feedback.errorCode == 0){
         var data = feedback.extension;
-        console.log('data='+JSON.stringify(data));
+        //console.log('data='+JSON.stringify(data));
         //radar.setData(data);
         var personalCenterHtml = bullup.loadSwigView('./swig_personal_basic.html',{
             player:{

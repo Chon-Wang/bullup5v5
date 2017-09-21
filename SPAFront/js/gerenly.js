@@ -8,7 +8,7 @@ $().ready(function(){
             $.getScript('/js/zymly.js');
             $.getScript('/js/payment.js');
             options = {
-                url: 'http://67.216.196.197:3001',
+                url: 'http://127.0.0.1:3001',
             };
             request(options, function(error, response, body){
                 var bodyStartIndex = body.indexOf("<body>");

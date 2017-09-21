@@ -58,11 +58,12 @@ $(".carousel-slider").hover(function () {
 function autoplay() {
     clearTimeout(time);
     time = setTimeout(autoplay, 4500);
-    try{
-        $('.carousel').carousel('next');
-    }catch(err){
+    $('.carousel').carousel('next');
+    // try{
+    //     $('.carousel').carousel('next');
+    // }catch(err){
 
-    }
+    // }
     
 }
 
