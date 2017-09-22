@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 /**
  * 用于格式化输出日志的工具
  */
@@ -33,3 +35,13 @@ exports.levelMsgLog = function(level, content) {
 exports.methodLog = function(methodName) {
     console.log('In ' + methodName + ' method!');
 }
+
+//openMode:  read/write/append
+exports.logToFile = function(filePath, openMode, logStr){
+    if(openMode == 'append'){
+        fs.writeFileSync(filePath, logStr,{flag: 'a'});
+    }else if(openMode == 'write'){
+        fs.writeFileSync(filePath, logStr,{flag: 'w'});
+    }
+}
+

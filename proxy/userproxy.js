@@ -107,12 +107,7 @@ exports.handleLogin = function (socket) {
                     exports.addUser(feedback.extension);
 
                     socketProxy.stableSocketEmit(socket, 'feedback', feedback);
-<<<<<<< HEAD
                     socketProxy.stableEmit();
-=======
-                    //socketProxy.stableEmit();
-                    //socketProxy.stableEmit();
->>>>>>> d16b5774140d42f9483bea2092c04479a8f218eb
                     //socket.emit('feedback', feedback);
                 });
             }
