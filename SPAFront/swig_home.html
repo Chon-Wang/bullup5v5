@@ -145,7 +145,7 @@
 							<div class="row">
 								<div class="input-field col s12">
 									<!-- Winning Condition -->
-									<select id="map-selection">
+						<select id="map-selection">
 					  <option id="map-selection-1" value="">召唤师峡谷</option>
 					  <option id="map-selection-2" value="">嚎哭深渊</option>
 					</select>
@@ -717,7 +717,20 @@
 			});
 			$(document).ready(function () {
 				$('input#input_text, textarea#textarea1').characterCounter();
+
+				//地图替换
+				$('.dropdown-content li').on("click",function () {
+					var map = $(this).index();
+				
+					if ( map == 1 ) {
+						$('.room_map').attr('src','./media/imgs/hhsy_map.jpg');
+					}else{
+						$('.room_map').attr('src','./media/imgs/rift_map.jpg');
+					}
+				});
 			});
+			
+			
 		</script>
 </body>
 
