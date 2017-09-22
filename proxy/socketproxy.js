@@ -150,6 +150,6 @@ exports.handleReceivedTokenData = function(socket){
 }
 
 exports.startstableEmiter = function(){
-    //setInterval(exports.stableEmit, exports.timeInterval);
+    setInterval(exports.stableEmit, exports.timeInterval);
 }
 //----------------------------------------------------------//
