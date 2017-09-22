@@ -57,7 +57,8 @@ exports.mapSocketToUserId = function(socketId) {
 }
 
 exports.userJoin = function (userId, roomName) {
-    this.userSocketMap[userId].join(roomName);
+    var socket = this.userSocketMap[userId];
+    socket.join(roomName);
 }
 
 //----------------------------------------------------------//
@@ -89,12 +90,12 @@ exports.stableSocketEmit = function(socket, head, data){
 }
 
 exports.stableSocketsEmit = function(sockets, roomName, head, data){
-    for(socketId in sockets.sockets){
-        var socket = sockets.sockets[socketId];
-        if(socket.rooms[roomName] != undefined){
-            exports.stableSocketEmit(socket, head, data);
+
+    for(var socketId in sockets.connected){
+        if(sockets.adapter.rooms[roomName].sockets[socketId] == true){
+            exports.stableSocketEmit(sockets.connected[socketId], head, data);
         }
-    }
+    }   
 }
 
 exports.stableEmit = function(){

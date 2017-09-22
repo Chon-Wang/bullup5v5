@@ -108,7 +108,6 @@ exports.handleLogin = function (socket) {
 
                     socketProxy.stableSocketEmit(socket, 'feedback', feedback);
                     socketProxy.stableEmit();
-                    //socketProxy.stableEmit();
                     //socket.emit('feedback', feedback);
                 });
             }
