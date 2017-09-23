@@ -17,7 +17,7 @@ $().ready(function(){
 
 	$("#message_sheet").modal();
 
-	$("#link_modal").modal();
+	//$("#link_modal").modal();
 
 	$(".user-collapse").sideNav();
 	
