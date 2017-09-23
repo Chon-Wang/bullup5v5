@@ -5,6 +5,7 @@ $().ready(function(){
         bullup.loadTemplateIntoTarget('chatroom.html', {}, 'main-view');
         $.getScript('./js/chat.js');
 	});
+
         
         $('#return').on('click', function(e){
         e.preventDefault();

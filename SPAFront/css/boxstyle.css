@@ -15,7 +15,7 @@
 	box-shadow: 0 3px #ccc;
 	border-radius: 15px;
 	height:650px;
-	overflow: hidden;
+	
 	
 
 }
@@ -270,5 +270,12 @@
 .roller{
 	
 	
+}
+.pattern{
+	background: #ee6e73;
+	border-radius: 15px;
+}
+.pattern a{
+	color: #fff!important;
 }
 
