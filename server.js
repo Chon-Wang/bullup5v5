@@ -59,15 +59,11 @@ io.on('connection', function(socket) {
     paymentProxy.handleBankInfo(socket);
 
     chatProxy.handleChat(io,socket);
-
-
 });
-
 
 io.on('disconnect', function (socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' disconnected!');
     socketProxy.remove(socket);
-
 });
 
 //一天更新一次排行榜

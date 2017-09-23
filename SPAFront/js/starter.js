@@ -7,15 +7,28 @@ $(document).ready(function(){
         
     });
 
-    $('#starter-rank-btn').on('click', function(){
-        // alert("123");
-        // socket.emit('rankRequest');
+    $('#starter-rank-btn').on('click', function(e){
+        e.preventDefault();
+        socket.emit('rankRequest');
+       
+      // $.getScript('./js/request_rank_list.js');
+       
     });
 
-    $('#starter-chatroom-btn').on('click', function(){
-
+    $('#starter-chatroom-btn').on('click', function(e){
+        e.preventDefault();
+       bullup.loadTemplateIntoTarget('chatroom.html', {}, 'main-view');
+       $.getScript('./js/chat.js');
+         });
+         $('#return').on('click', function(e){
+         e.preventDefault();
+         bullup.loadTemplateIntoTarget('swig_index.html', {}, 'main-view');
+          $.getScript('/js/zymly.js');
+          $.getScript('/js/Withdraw.js');
+         
+	    
     });
-});
+});    
 
 function addFireAnimation (id){
     var yzhou = document.getElementById(id);
