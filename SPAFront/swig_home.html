@@ -89,7 +89,7 @@
 
 	<ul id="user-slide-out" class="side-nav">
 
-		<a style="float:right;margin-top:40px;" class="waves-effect waves-light btn ds_wang" href="#modal1">修改个人信息</a>
+		
 
 		<li>
 			<div class="user-view">
@@ -101,14 +101,42 @@
 				<a href="#!name"><span class="white-text name">John Doe</span></a>
 				<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
 			</div>
+			<a class="waves-effect waves-light btn" href="#coollap">添加好友</a>
 		</li>
-		<li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-		<li><a href="#!">Second Link</a></li>
-		<li>
-			<div class="divider"></div>
-		</li>
-		<li><a class="subheader">Subheader</a></li>
-		<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+		
+		<ul class="collapsible" data-collapsible="accordion">
+			<li>
+			  <div class="collapsible-header"><span class="new badge">4</span>好友</div>
+			  <div class="collapsible-body collap-style" style="background:none;">
+				<div class="collap-rq" >
+				<p class="collap-p" >
+					<img src="./media/imgs/usr_bg.jpg">
+				</p>
+				  <p class="collap-p2">有志者事竟成。</p>
+				</div>
+			</div>
+
+			<div class="collapsible-body collap-style" style="background:none;">
+					<div class="collap-rq" >
+					<p class="collap-p" >
+						<img src="./media/imgs/usr_bg.jpg">
+					</p>
+					  <p class="collap-p2">有志者事竟成。</p>
+					</div>
+				</div>
+
+				<div class="collapsible-body collap-style" style="background:none;">
+						<div class="collap-rq" >
+						<p class="collap-p" >
+							<img src="./media/imgs/usr_bg.jpg">
+						</p>
+						  <p class="collap-p2">有志者事竟成。</p>
+						</div>
+					</div>
+			</li>
+			
+		  </ul>
+		
 	</ul>
 
 
@@ -592,7 +620,16 @@
 							</button>
 		</div>
 	</div>
-
+<!-- 邀请好友弹出 -->
+<div id="coollap" class="modal" style="background-color: #455a64;width:35%;">
+		<div class="row">
+				<div class="input-field col s6">
+				  <input style="color:#fff;" value="" id="first_name2" type="text" class="validate">
+				  <label class="active" for="first_name2">对方ID</label>
+				</div>
+			</div>
+			  <a class="waves-effect waves-light btn collpost" >添加</a>
+	  </div>
 
 
 
