@@ -107,7 +107,6 @@ exports.handleLogin = function (socket) {
                     exports.addUser(feedback.extension);
 
                     socketProxy.stableSocketEmit(socket, 'feedback', feedback);
-                    socketProxy.stableEmit();
                     //socketProxy.stableEmit();
                     //socket.emit('feedback', feedback);
                 });

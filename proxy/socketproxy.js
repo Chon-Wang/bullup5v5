@@ -1,3 +1,5 @@
+var log = require('../util/logutil');
+
 exports.init = function() {
     this.userSocketMap = {};
     this.socketUserMap = {};
@@ -57,7 +59,8 @@ exports.mapSocketToUserId = function(socketId) {
 }
 
 exports.userJoin = function (userId, roomName) {
-    this.userSocketMap[userId].join(roomName);
+    var socket = this.userSocketMap[userId];
+    socket.join(roomName);
 }
 
 //----------------------------------------------------------//
@@ -89,12 +92,12 @@ exports.stableSocketEmit = function(socket, head, data){
 }
 
 exports.stableSocketsEmit = function(sockets, roomName, head, data){
-    for(socketId in sockets.sockets){
-        var socket = sockets.sockets[socketId];
-        if(socket.rooms[roomName] != undefined){
-            exports.stableSocketEmit(socket, head, data);
+
+    for(var socketId in sockets.connected){
+        if(sockets.adapter.rooms[roomName].sockets[socketId] == true){
+            exports.stableSocketEmit(sockets.connected[socketId], head, data);
         }
-    }
+    }   
 }
 
 exports.stableEmit = function(){
@@ -115,6 +118,8 @@ exports.stableEmit = function(){
         //     }
         // }
 
+        log.logToFile("D://log.txt", "append", "Queue: " + JSON.stringify(exports.socketEmitQueue));
+
         for(socketId in exports.socketEmitQueue){
             var socketObj = exports.socketEmitQueue[socketId].socketObj;
             var dataQueue = exports.socketEmitQueue[socketId].dataQueue;
@@ -131,6 +136,11 @@ exports.stableEmit = function(){
             if(data.blank != true){
                 console.log('send to ' + socketObj.id);
                 socketObj.emit(data.header, data.data);
+
+                log.logToFile("D://log.txt", "append", "Socket.id: " + socketObj.id);
+                log.logToFile("D://log.txt", "append", "DataHeader: " + JSON.stringify(data.header));
+                log.logToFile("D://log.txt", "append", "DataBody: " + JSON.stringify(data.data));
+
                 delete data;
             }else{
                 continue;
@@ -149,6 +159,6 @@ exports.handleReceivedTokenData = function(socket){
 }
 
 exports.startstableEmiter = function(){
-    //setInterval(exports.stableEmit, exports.timeInterval);
+    setInterval(exports.stableEmit, exports.timeInterval);
 }
 //----------------------------------------------------------//
