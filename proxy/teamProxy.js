@@ -45,7 +45,7 @@ exports.handleRefreshFormedBattleRoom = function(socket){
             }
         }
         socketProxy.stableSocketEmit(socket, 'feedback', feedback);
-        socketProxy.stableEmit();
+        //socketProxy.stableEmit();
     });
 
 }

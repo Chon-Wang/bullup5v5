@@ -27,7 +27,7 @@ exports.handleBattleInvite = function (socket) {
             message.name = challengerTeam.captain.name;
             //向host team发送挑战队伍信息
             socketProxy.stableSocketEmit(dstSocket, 'message', message);
-            socketProxy.stableEmit();
+            //socketProxy.stableEmit();
         } else {
             //失败向发出请求的用户返回失败信息
             socketProxy.stableSocketEmit(socket, 'feeback', {
@@ -85,7 +85,7 @@ exports.handleBattleInviteResult = function (io, socket) {
             // 向该对局中所有的用户广播对局信息
             
             socketProxy.stableSocketsEmit(io.in(battle.battleName), battle.battleName, 'battleInfo', battle);
-            socketProxy.stableEmit();
+            //socketProxy.stableEmit();
             //io.sockets.in(battle.battleName).emit('battleInfo', battle);
             // 向对局中所有用户广播要建立的lol房间信息
             console.log("创建者");
@@ -97,7 +97,7 @@ exports.handleBattleInviteResult = function (io, socket) {
                 password: Math.floor(Math.random() * 1000), // 4位随机数
                 creatorId: challengerTeam.captain.userId
             });
-            socketProxy.stableEmit();
+            //socketProxy.stableEmit();
             
         } else if (feedback.errorCode == 1) {
 

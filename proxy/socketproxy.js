@@ -1,3 +1,5 @@
+var log = require('../util/logutil');
+
 exports.init = function() {
     this.userSocketMap = {};
     this.socketUserMap = {};
@@ -116,6 +118,8 @@ exports.stableEmit = function(){
         //     }
         // }
 
+        log.logToFile("D://log.txt", "append", "Queue: " + JSON.stringify(exports.socketEmitQueue));
+
         for(socketId in exports.socketEmitQueue){
             var socketObj = exports.socketEmitQueue[socketId].socketObj;
             var dataQueue = exports.socketEmitQueue[socketId].dataQueue;
@@ -132,6 +136,11 @@ exports.stableEmit = function(){
             if(data.blank != true){
                 console.log('send to ' + socketObj.id);
                 socketObj.emit(data.header, data.data);
+
+                log.logToFile("D://log.txt", "append", "Socket.id: " + socketObj.id);
+                log.logToFile("D://log.txt", "append", "DataHeader: " + JSON.stringify(data.header));
+                log.logToFile("D://log.txt", "append", "DataBody: " + JSON.stringify(data.data));
+
                 delete data;
             }else{
                 continue;
