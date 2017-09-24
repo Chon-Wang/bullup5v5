@@ -54,8 +54,8 @@ exports.methodLog = function(methodName) {
 //openMode:  read/write/append
 exports.logToFile = function(filePath, openMode, logStr){
     if(openMode == 'append'){
-        fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] '+ logStr, {flag: 'a'});
+        fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] '+ logStr + '\r\n', {flag: 'a'});
     }else if(openMode == 'write'){
-        fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] '+ logStr, {flag: 'w'});
+        fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] '+ logStr + '\r\n', {flag: 'w'});
     }
 }

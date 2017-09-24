@@ -17,7 +17,6 @@ exports.init = function() {
 exports.handleRoomEstablish = function(socket) {
     socket.on('roomEstablish', function (room) {
         logger.listenerLog('roomEstablish');
-        logger.jsonLog(room);
         exports.unformedTeams[room.roomName] = room;
         // 将该socket放入teamname命名的room中
         socket.join(room.roomName);
@@ -28,7 +27,6 @@ exports.handleRoomEstablish = function(socket) {
             text: '创建成功',
             extension: room
         });
-        //socketProxy.stableEmit();
     });
 }
 

@@ -156,7 +156,6 @@ exports.handleRegister = function (socket) {
  */
 exports.handleInviteFriend = function (socket) {
     socket.on('message', function (inviteMessage) {
-        console.log('invite : ' + inviteMessage);
         logger.listenerLog('message');
         if (socketProxy.isUserOnline(inviteMessage.userId)) {
             var dstSocket = socketProxy.mapUserIdToSocket(inviteMessage.userId);
@@ -241,7 +240,6 @@ exports.handleLOLBind = function(socket){
 
         async.waterfall([
             function(callback){
-                console.log(userId);
                 dbUtil.validateBindInfo(userId, lolAccount, lolArea, function(bindValidityResult){
                     //如果该用户在该大区已绑定了账号  或者该大区的账号已被绑定  则拒绝绑定
                     var feedback = {};
