@@ -149,9 +149,10 @@ socket.on('teamInfoUpdate', function (data) {
 socket.on('battleInfo', function (battle) {
 
     socket.emit('tokenData', battle.token);
+    console.log("TOKEN: " + battle.token);
 
     battleInfo = battle;
-    console.log(JSON.stringify(battleInfo));
+    //console.log(JSON.stringify(battleInfo));
     var battleRoomHtml = bullup.loadSwigView("./swig_fight.html", {
         blueSide: battleInfo.blueSide,
         redSide: battleInfo.redSide,
