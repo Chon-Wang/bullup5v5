@@ -12,6 +12,9 @@ var battleInfo = null;
 var formedTeams = null;
 var messageInfo = [];
 
+var lastSocketStatus = null;
+var lastSocketId = null;
+
 
 socket.on('success', function (data) {
 
@@ -149,6 +152,7 @@ socket.on('teamInfoUpdate', function (data) {
 socket.on('battleInfo', function (battle) {
 
     socket.emit('tokenData', battle.token);
+    console.log("TOKEN: " + battle.token);
 
     battleInfo = battle;
     //console.log(JSON.stringify(battleInfo));
@@ -550,3 +554,24 @@ function feedbackMessage(feedback){
         bullup.alert("提示","反馈成功!");
     }
 }
+
+
+setInterval(()=>{
+    if(socket != undefined){
+        //console.log("ID: " + socket.id + " connected: " + socket.connected);
+        if(lastSocketStatus == true && socket.connected == true){
+            lastSocketId = socket.id;
+            //console.log("lasetid: " + lastSocketId);
+        }
+        if(lastSocketStatus == false && socket.connected == true){
+            socket.emit('reconnected', {
+                'userInfo': userInfo,
+                'newSocketId': socket.id,
+                'lastSocketId': lastSocketId
+            });
+            //console.log("请求重连");
+            //console.log("当前id" + socket.id);
+        }
+        lastSocketStatus = socket.connected;
+    }
+},1000);
