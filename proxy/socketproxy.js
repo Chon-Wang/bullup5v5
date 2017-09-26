@@ -8,7 +8,7 @@ exports.init = function() {
     this.maxResendTimes = 150;
 
     //多少ms重发一次
-    this.timeInterval = 500;
+    this.timeInterval = 300;
 
     //用于存储需要发送到客户端的消息
     this.socketEmitQueue = {};
@@ -33,8 +33,6 @@ exports.init = function() {
 exports.add = function(userId, socket) {
     this.userSocketMap[userId] = socket;
     this.socketUserMap[socket.id] = userId;
-    console.log("userSocketMap: " + this.userSocketMap[userId].id);
-    console.log("socketUserMap: " + this.socketUserMap[socket.id]);
 }
 
 exports.getMapInfo = function(){
@@ -92,10 +90,33 @@ exports.stableSocketEmit = function(socket, head, data){
 }
 
 exports.stableSocketsEmit = function(sockets, roomName, head, data){
-
     for(var socketId in sockets.connected){
         if(sockets.adapter.rooms[roomName].sockets[socketId] == true){
-            exports.stableSocketEmit(sockets.connected[socketId], head, data);
+            var token = Math.random().toString(36).substring(7) + socketId; 
+            var newData = {};
+            newData = JSON.parse(JSON.stringify(data));
+            newData.token = token;
+            if(exports.socketEmitQueue[socketId] != undefined){
+                exports.socketEmitQueue[socketId].dataQueue[String(token)] = {
+                    'header': head,
+                    'data': newData,
+                    'createTimeStamp': 0,
+                    'sendTimes': 0,
+                    'status': 'unrecieved'
+                };
+            }else{
+                exports.socketEmitQueue[socketId] = {};
+                exports.socketEmitQueue[socketId].socketObj = socket;
+                exports.socketEmitQueue[socketId].dataQueue = {};
+                exports.socketEmitQueue[socketId].dataQueue[String(token)] = {
+                    'header': head,
+                    'data': newData,
+                    'createTimeStamp': 0,
+                    'sendTimes': 0,
+                    'status': 'unrecieved'
+                };
+            }
+        
         }
     }   
 }
@@ -105,26 +126,15 @@ exports.stableEmit = function(){
         exports.broadcastEmitQueue != undefined && 
         exports.maxResendTimes != undefined && 
         exports.timeInterval != undefined){
-        // socket.id:{
-        //     socketObj: socket,
-        //     dataQueue: {
-        //         dataToken: {
-        //             header: 'feedback',
-        //             data: feedback,
-        //             createTimeStamp: 15041042140,
-        //             sendTimes: 2,
-        //             status: unrecieved
-        //         }
-        //     }
-        // }
-
-        log.logToFile("D://log.txt", "append", "Queue: " + JSON.stringify(exports.socketEmitQueue));
-
         for(socketId in exports.socketEmitQueue){
+            //log.logToFile("D://log.txt", "append", "Queue: " + JSON.stringify(exports.socketEmitQueue[socketId].dataQueue));
             var socketObj = exports.socketEmitQueue[socketId].socketObj;
             var dataQueue = exports.socketEmitQueue[socketId].dataQueue;
             var data = {'blank': true};
             for(dataToken in dataQueue){
+                if(dataQueue[dataToken] == undefined || dataQueue[dataToken].status == 'recieved'){
+                    continue;
+                }
                 data = dataQueue[dataToken];
                 data.sendTimes = data.sendTimes+1;
                 if(data.sendTimes >= exports.maxResendTimes){
@@ -134,13 +144,7 @@ exports.stableEmit = function(){
                 break;
             }
             if(data.blank != true){
-                console.log('send to ' + socketObj.id);
                 socketObj.emit(data.header, data.data);
-
-                log.logToFile("D://log.txt", "append", "Socket.id: " + socketObj.id);
-                log.logToFile("D://log.txt", "append", "DataHeader: " + JSON.stringify(data.header));
-                log.logToFile("D://log.txt", "append", "DataBody: " + JSON.stringify(data.data));
-
                 delete data;
             }else{
                 continue;
@@ -155,6 +159,7 @@ exports.handleReceivedTokenData = function(socket){
     socket.on('tokenData', function(tokenData){
         //从未发送的消息队列中删除该项
         delete exports.socketEmitQueue[socket.id].dataQueue[tokenData];
+        //exports.socketEmitQueue[socket.id].dataQueue[tokenData].status = 'recieved';
     });
 }
 
