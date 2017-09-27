@@ -62,7 +62,7 @@ io.on('connection', function(socket) {
 
     socketProxy.handleReceivedTokenData(socket);
 
-    socketProxy.handleReconnect(socket);
+    socketProxy.handleReconnect(io, socket);
 });
 
 

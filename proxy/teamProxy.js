@@ -19,7 +19,7 @@ exports.handleRoomEstablish = function(socket) {
         logger.listenerLog('roomEstablish');
         exports.unformedTeams[room.roomName] = room;
         // 将该socket放入teamname命名的room中
-        socket.join(room.roomName);
+        socketProxy.joinRoom(socket, room.roomName);
         // 返回回馈信息
         socketProxy.stableSocketEmit(socket, 'feedback', {
             errorCode: 0,

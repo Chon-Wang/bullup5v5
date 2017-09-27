@@ -189,7 +189,7 @@ exports.handleUserInviteResult = function (io, socket) {
 
             // 更新teamList中team信息, 添加该参与者
             teamProxy.addParticipantToTeam(teamName, participant);
-            socket.join(teamName);
+            socketProxy.joinRoom(socket, teamName);
             //    socket.emit('teamInfoUpdate', teamProxy.mapTeamNameToUnformedTeam(teamName));
 
             // 向房间内的所有用户广播当前队伍信息

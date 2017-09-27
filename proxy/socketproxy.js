@@ -4,6 +4,9 @@ exports.init = function() {
     this.userSocketMap = {};
     this.socketUserMap = {};
 
+    this.socketRoomMap = {};
+    this.roomSocketMap = {};
+
     //用于设置最大重发次数的阈值
     this.maxResendTimes = 150;
 
@@ -57,6 +60,41 @@ exports.mapSocketToUserId = function(socketId) {
 
 exports.userJoin = function (userId, roomName) {
     var socket = this.userSocketMap[userId];
+
+    exports.joinRoom(socket, roomName);
+}
+
+exports.joinRoom = function (socket, roomName) {
+    if(exports.socketRoomMap[socket.id] == undefined){
+        exports.socketRoomMap[socket.id] = [];
+        exports.socketRoomMap[socket.id].push(roomName);
+    }else{
+        var flag = false;
+        for(var index in exports.socketRoomMap[socket.id]){
+            if(exports.socketRoomMap[socket.id][index] == roomName){
+                flag = true;
+                break;
+            }
+        }
+        if(!flag){
+            exports.socketRoomMap[socket.id].push(roomName);
+        }
+    }
+    if(exports.roomSocketMap[roomName] == undefined){
+        exports.roomSocketMap[roomName] = [];
+        exports.roomSocketMap[roomName].push(socket);
+    }else{
+        var flag = false;
+        for(var index in exports.roomSocketMap[roomName]){
+            if(exports.roomSocketMap[roomName][index].id == socket.id){
+                flag = true;
+                break;
+            }
+        }
+        if(!flag){
+            exports.roomSocketMap[roomName].push(socket);
+        }
+    }
     socket.join(roomName);
 }
 
@@ -105,6 +143,7 @@ exports.stableSocketsEmit = function(sockets, roomName, head, data){
                 };
             }else{
                 exports.socketEmitQueue[socketId] = {};
+                //
                 exports.socketEmitQueue[socketId].socketObj = socket;
                 exports.socketEmitQueue[socketId].dataQueue = {};
                 exports.socketEmitQueue[socketId].dataQueue[String(token)] = {
@@ -166,7 +205,7 @@ exports.handleReceivedTokenData = function(socket){
     });
 }
 
-exports.handleReconnect = function(socket){
+exports.handleReconnect = function(io, socket){
     socket.on('reconnected', function(reconnectPacket){
         console.log("reconnect: " + JSON.stringify(reconnectPacket));
         //如果之前用户已经登录
@@ -181,7 +220,7 @@ exports.handleReconnect = function(socket){
                 throw new Error('lastSocketId is null! Socket recover failed!');
             }
             exports.userSocketMap[reconnectPacket.userInfo.userId] = socket;
-            exports.socketUserMap[reconnectPacket.newSocketId] = reconnectPacket.userInfo;
+            exports.socketUserMap[reconnectPacket.newSocketId] = reconnectPacket.userInfo.userId;
             delete exports.socketUserMap[reconnectPacket.lastSocketId];
         } else {
             //如果之前用户未登录
@@ -195,9 +234,29 @@ exports.handleReconnect = function(socket){
         if(exports.socketEmitQueue[reconnectPacket.lastSocketId] == undefined){
             return;
         }
+        //更新消息队列
         exports.socketEmitQueue[reconnectPacket.newSocketId] = exports.socketEmitQueue[reconnectPacket.lastSocketId];
         exports.socketEmitQueue[reconnectPacket.newSocketId].socketObj = socket;
         delete exports.socketEmitQueue[reconnectPacket.lastSocketId];
+        //更新room信息
+        //更新socketRoomMap
+        exports.socketRoomMap[socket.id] = exports.socketRoomMap[reconnectPacket.lastSocketId];
+        delete exports.socketRoomMap[reconnectPacket.lastSocketId];
+        //更新roomSocketMap
+        for(var index in exports.socketRoomMap[socket.id]){
+            var roomName = exports.socketRoomMap[socket.id][index];
+            for(var socketIndex in exports.roomSocketMap[roomName]){
+                if(exports.roomSocketMap[roomName][socketIndex].id == reconnectPacket.lastSocketId){
+                    delete exports.roomSocketMap[roomName][socketIndex];
+                }
+            }
+            exports.roomSocketMap[roomName].push(socket);
+            exports.joinRoom(socket, roomName);
+        }
+        //彻底断开原来的socket
+        if(io.sockets.sockets[reconnectPacket.lastSocketId] != undefined){
+            io.sockets.sockets[reconnectPacket.lastSocketId].disconnect(true);
+        }
     });   
 }
 
