@@ -297,6 +297,39 @@
 
 </body>
 <script>
+	//查看结果
+
+	// function replace_em(str) {
+	// 	console.log(str);
+	// 	str = str.replace(/\</g, '&lt;');
+
+	// 	str = str.replace(/\>/g, '&gt;');
+
+	// 	str = str.replace(/\n/g, '<br/>');
+
+	// 	str = str.replace(/\[em_([0-9]*)\]/g, '<img src="arclist/$1.gif" border="0" />');
+
+	// 	return str;
+
+	// }
+	// $('.emotion').qqFace({
+
+	// 		id: 'facebox',
+
+	// 		assign: 'saytext',
+
+	// 		path: 'media/arclist/' //表情存放的路径
+
+	// 	});
+	// 	$(".sub_btn").on("click",function () {
+	// 		console.log("走这里");
+	// 	});
+	// 	$("#sub_btn").on("click",function () {
+
+	// 		var str = $("#saytext").val();
+	// 		replace_em("[em_1]");
+	// 		$("#messages li").html();
+	// 	});
 	$(document).ready(function () {
 		/* dropdown menu initialize */
 		$(".dropdown-button").dropdown({
@@ -318,27 +351,57 @@
 
 		$("#link_modal").modal();
 
+		// $('#sub_btn').unbind();
 
-		$('.emotion').qqFace({
+function replace_em(str){
+	
+		str = str.replace(/\</g,'&lt;');
+	
+		str = str.replace(/\>/g,'&gt;');
+	
+		str = str.replace(/\n/g,'<br/>');
+	
+		str = str.replace(/\[em_([0-9]*)\]/g,'<img src="media/arclist/$1.gif" border="0" />');
+		console.log(str);
+		return str;
+	}
+$('.emotion').qqFace({
 
-			id: 'facebox',
+		id: 'facebox',
 
-			assign: 'saytext',
+		assign: 'saytext',
 
-			path: 'media/arclist/' //表情存放的路径
+		path: 'media/arclist/' //表情存放的路径
 
-		});
-		$("#sub_btn").click(function(){
-			console.log(123);
-		});
-		$("#sub_btn").click(function () {
+	});
+	// $(".sub_btn").on("click",function () {
 
-			var str = $("#saytext").val();
+	// 	var str = $("#saytext").val();
+		
+	// 	$("#messages li").html();
+	// });
+$('#sub_btn').on('click', function () {		
+	console.log('进入聊天室123');
+	if(userInfo == null){
+		alert("请先登录");
+		return ;
+	}
+	console.log('进入聊天室');
+	
+	// $('#saytext').text('')
+	var $Msg = document.getElementById('saytext').value;
+	var $msg1 = replace_em($Msg);
+	var $chatName=userInfo.name; 
+	//communicate with the server
+	socket.emit('chatMsg', {	
+		chatMsg:$msg1,
+		chatName:$chatName
+	});
+	// var lio = '<li class="friend-messages" style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;;background: #009fab;color: #fff;float:left;"><img src="media/arclist/1.gif" border="0">'+replace_em(str)+'</li>';
+	// $(replace_em($Msg)).append("#messages");		
+	$('#saytext').val('');
+});
 
-			$("#messages li").html(replace_em(str));
-			console.log(replace_em(str));
-
-		});
 	});
 
 	// $(function () {
@@ -347,21 +410,6 @@
 
 	// });
 
-	//查看结果
-
-	function replace_em(str) {
-		console.log(str);
-		str = str.replace(/\</g, '&lt;');
-
-		str = str.replace(/\>/g, '&gt;');
-
-		str = str.replace(/\n/g, '<br/>');
-
-		str = str.replace(/\[em_([0-9]*)\]/g, '<img src="arclist/$1.gif" border="0" />');
-
-		return str;
-
-	}
 </script>
 <!-- <script src="./js/chat.js"></script> -->
 </html>

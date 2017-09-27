@@ -18,7 +18,7 @@ $(document).ready(function(){
     $('#starter-chatroom-btn').on('click', function(e){
         e.preventDefault();
        bullup.loadTemplateIntoTarget('chatroom.html', {}, 'main-view');
-       $.getScript('./js/chat.js');
+    //    $.getScript('./js/chat.js');
          });
          $('#return').on('click', function(e){
          e.preventDefault();
