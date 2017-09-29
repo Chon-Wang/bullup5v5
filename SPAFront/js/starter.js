@@ -61,7 +61,7 @@ $('.carousel.carousel-slider').carousel({
     fullWidth: true
 });
 var time =null;
-$(".carousel-slider").hover(function () {
+$("#starter-carousel").hover(function () {
     console.log(1);
     clearTimeout(time);
 },function (){
@@ -71,7 +71,7 @@ $(".carousel-slider").hover(function () {
 function autoplay() {
     clearTimeout(time);
     time = setTimeout(autoplay, 4500);
-    $('.carousel').carousel('next');
+    $('#starter-carousel').carousel('next');
     // try{
     //     $('.carousel').carousel('next');
     // }catch(err){
@@ -79,5 +79,13 @@ function autoplay() {
     // }
     
 }
+//轮播左右焦点
+$('.ctavi').click(function () {
+    if($(this).hasClass("left-d")){
+        $('#starter-carousel').carousel('prev');
+    }else if($(this).hasClass("right-d")){
+        $('#starter-carousel').carousel('next');
+    }
+});
 
 autoplay();
