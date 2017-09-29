@@ -268,6 +268,7 @@ exports.handleBattleResult = function (io, socket){
                 //广播结果数据包
                 socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), finishedBattle.battleName, 'battleResult', resultPacket);
                 console.log(finishedBattle.battleName + "结束");
+                console.log("");
                 //对局中所有的socket离开所有的socketRoom
                 //io.sockets.in(finishedBattle.battleName).leaveAll();
             }
