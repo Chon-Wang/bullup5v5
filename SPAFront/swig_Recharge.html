@@ -1,15 +1,12 @@
+
 <body>
   <section id="container">
-    <!--header start-->
-    <!--header end-->
-    <!--sidebar start-->
-    <!--sidebar end-->
-    <!--main content start-->
+
+    <form id="rechargeForm" class="col s12">
     <section id="main-content">
       <section class="wrapper">
         <div class="form-w3layouts">
-          <!-- page start-->
-          <!-- page start-->
+
           <div class="col-md-3 market-update-gd" style="cursor: pointer;width:25%;">
             <div class="market-update-block clr-block-3">
               <div class="col-md-4 market-update-right">
@@ -17,71 +14,70 @@
               </div>
               <div class="col-md-8 market-update-left">
                 <h4>余额</h4>
-                <h3>1,500</h3>
-                <!-- <p>Other hand, we denounce</p> --></div>
+                {% if balance %}
+                <h3 id="balance">{{ balance }}</h3>
+                
               <div class="clearfix"></div>
             </div>
           </div>
           
           <div class="panel-body" style="margin-top:20px;">
             <div class="row">
-              <form class="col s12">
+              
                 <div class="row">
                   <div class="input-field col s8">
-                    <input id="bank_money" type="text" class="validate">
+                    <input id="bank_money" type="number" class="validate" min="1" max="{{ balance }}">
                     <label class="ois" for="bank_money">输入金额</label></div>
                 <div class="row">
-                   
+                  {% endif %}   
                 </div>
                
                   <div class="row">
                    
                     <div class="input-field col s4">
-                      <input id="bank_phone" type="text" class="validate" placeholder="phone">
+                      <input id="bank_phone" type="text" class="validate" placeholder="phone" required>
                      </div>
                     
                       <div class="row">
                     <div class="input-field col s4">
-                      <input id="bank_areacode" placeholder="cardcode" type="text" class="validate">
+                      <input id="bank_areacode" placeholder="Areacode" type="text" class="validate" required>
                       
                   </div>
                     </div>
                   </div>
                   
                   <div class="input-field col s6">
-                    <input id="bank_cardnumber" type="text" placeholder="cardnumber" class="validate">
+                    <input id="bank_cardnumber" type="text" placeholder="cardnumber" class="validate" required>
                     </div>
                 </div>
                 <div class="row">
                   <div class="input-field col s4">
-                    <input id="bank_cvc" placeholder="cardcode" type="text" class="validate">
+                    <input id="bank_cvc" placeholder="CVC" type="text" class="validate" required>
                     </div>
                 </div>
                 <div class="row">
                 <div class="input-field col s4">
-                  <input id="bank_country" placeholder="country" type="text" class="validate">
+                  <input id="bank_country" placeholder="country" type="text" class="validate" required>
               </div>
                 </div>
                   <div class="row">
                     <div class="input-field col s4">
-                      <input id="bank_firstname" type="text" class="validate" placeholder="firstname">
+                      <input id="bank_firstname" type="text" class="validate" placeholder="firstname" required>
                      </div>
                   </div>
                   <div class="row">
                    
                     <div class="input-field col s4">
-                      <input id="bank_lastname" type="text" class="validate" placeholder="lastname">
+                      <input id="bank_lastname" type="text" class="validate" placeholder="lastname" required>
                      </div>
                   </div>
                   <div class="row">
                    
                     <div class="input-field col s4">
-                      <input id="bank_email" type="text" class="validate" placeholder="eamil">
+                      <input id="bank_email" type="text" class="validate" placeholder="email" required>
                      </div>
                   </div>
                 <div class="form-w3layouts">
-                  <!-- page start-->
-                  <!-- page start-->
                   <div class="row">
                     <div class="col-lg-12"></div>
                   </div>
@@ -89,14 +85,14 @@
                     <div class="col-lg-12">
                       <section class="panel">
                         <div class="panel-body">
-                          <form class="form-horizontal bucket-form" method="get">
+
                             <div class="form-group">
                               <label class="col-sm-3 control-label col-lg-3" for="inputSuccess"></label>
                               <div class="col-lg-8">
                                 <div class="row">
                                   <div class="col-lg-3">
                                     <label for="">日期</label>
-                                    <input type="date" class="datepicker" id="bank_exptredata"></div>
+                                    <input type="date" class="datepicker" id="bank_exptredata" required></div>
                                 </div>
                               </div>
                             </div>
@@ -111,68 +107,70 @@
                               <div class="col-lg-8">
                               </div>
                             </div>
-                          </form>
+
                         </div>
                       </section>
                       <section class="panel">
                         <div class="panel-body">
-                          <form class="form-horizontal bucket-form" method="get">
+
                             <div class="form-group">
                               <label class="col-sm-3 control-label col-lg-3">Billing Add</label>
                               <div class="col-lg-6">
                                 <div class="input-group m-bot15">
                                   <span class="input-group-addon btn-success">-</span>
-                                  <input type="text" class="form-control" placeholder="Company Name"  id="bank_companyname"></div>
+                                  <input type="text" class="form-control" placeholder="Company Name"  id="bank_companyname" required></div>
                                 <div class="input-group m-bot15">
                                   <span class="input-group-addon btn-success">-</span>
-                                  <input type="text" class="form-control" placeholder="Street Address"  id="bank_streetaddress"></div>
+                                  <input type="text" class="form-control" placeholder="Street Address"  id="bank_streetaddress" required></div>
                                 <div class="input-group m-bot15">
                                   <span class="input-group-addon btn-success">-</span>
-                                  <input type="text" class="form-control" placeholder="Apt,suite,Bldg." id="bank_apt_suite_bldg"></div>
+                                  <input type="text" class="form-control" placeholder="Apt,suite,Bldg." id="bank_apt_suite_bldg" required></div>
                                 <div class="input-group m-bot15">
                                   <span class="input-group-addon btn-success">-</span>
-                                  <input style="width: 30%;" type="text" class="form-control" placeholder="zip Code"  id="bank_zipcode">
+                                  <input style="width: 30%;" type="text" class="form-control" placeholder="zip Code"  id="bank_zipcode" required>
                                   <span style="line-height: 35px;margin-left: 10px;color:#ccc;">Enter ZIP for City and Stare</span></div>
                               </div>
                             </div>
-                          </form>
+                 
                         </div>
                       </section>
                     </div>
                   </div>
-                  <!-- page end--></div>
-              </form>
+                </div>
+              
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <div style="margin: 0 auto;width: 300px;">
-                <div class="yangs" style="width: 100px;height: 40px;background: #26a69a;text-align: center;line-height: 40px;color: #fff;border-radius: 10px;cursor: pointer;float: left;" id="withdraw_btn">Chat Now</div>
+                <div class="yangs" style="width: 100px;height: 40px;background: #26a69a;text-align: center;line-height: 40px;color: #fff;border-radius: 10px;cursor: pointer;float: left;" id="withdraw_btn">提交</div>
                 <div class="yangs" style="width: 100px;height: 40px;background:#B9D3EE ;text-align: center;line-height: 40px;color: #fff;border-radius: 10px;cursor: pointer;float: left;margin-left: 20px;" id="return">return</div></div>
             </div>
           </div>
           <!-- page end--></div>
       </section>
+    </form>
     </section>
     <script>
-   //下拉
-$(document).ready(function() {
-$('select').material_select();
-});
-// 价格$
-$('.chip').click(function() {
-var iox = $(this).index();
-var clasvlue = $('.chip').eq(iox).text();
-$("#first_name").val(clasvlue);
-$('.ois').addClass('active');
-$('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
+      //下拉
+      $(document).ready(function() {
+          $('select').material_select();
+      });
+      // 价格$
+      $('.chip').click(function() {
+          var iox = $(this).index();
+          var clasvlue = $('.chip').eq(iox).text();
+          $("#first_name").val(clasvlue);
+          $('.ois').addClass('active');
+          $('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
+      });
+      //日期选择
+      $('.datepicker').pickadate({
+        selectMonths: true,
+        // Creates a dropdown to control month
+        selectYears: 15 // Creates a dropdown of 15 years to control year
+      });
 
-});
-$('.datepicker').pickadate({
-selectMonths: true,
-// Creates a dropdown to control month
-selectYears: 15 // Creates a dropdown of 15 years to control year
-});
 </script>
 <script src="./js/cjdwly.js"></script>
 <script src="./js/Withdraw.js"></script>

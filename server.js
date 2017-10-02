@@ -9,7 +9,8 @@ var teamProxy = require('./proxy/teamProxy.js');
 var socketProxy = require('./proxy/socketproxy.js');
 var battleProxy = require('./proxy/battleProxy.js');
 var paymentProxy = require('./proxy/paymentProxy.js');
-var chatProxy = require('./proxy/chatProxy.js')
+var chatProxy = require('./proxy/chatProxy.js');
+var adminProxy = require('./proxy/adminProxy.js');
 
 // 初始化Proxy, 所有需要保存数据结构的对象都需要初始化, 只能初始化一次
 userProxy.init();
@@ -18,6 +19,7 @@ socketProxy.init();
 battleProxy.init();
 paymentProxy.init();
 chatProxy.init();
+adminProxy.init();
 
 io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
@@ -35,6 +37,10 @@ io.on('connection', function(socket) {
 
     userProxy.handleLOLBind(socket); 
 
+    //余额
+    userProxy.handleGetBalance(socket);
+    //
+    
     userProxy.handlePersonalCenterRequest(socket);
   
     teamProxy.handleRoomEstablish(socket);
@@ -56,8 +62,33 @@ io.on('connection', function(socket) {
     battleProxy.handleBattleResult(io, socket);
 
     paymentProxy.handlePayment(socket);
-
     paymentProxy.handleBankInfo(socket);
+    //资金流动
+    paymentProxy.handleSearchCashFlow(socket);
+
+    //提现管理
+    adminProxy.handleWithdraw(socket);
+    adminProxy.handleWithdrawAgree(socket);
+    adminProxy.handleWithdrawDisagree(socket);
+
+    //约战管理
+    adminProxy.handleSearchBattleRecord(socket);
+    adminProxy.handleChangeBattleResult(socket) ;
+
+    //账户管理
+    adminProxy.handleAllAccount(socket);
+    adminProxy.handleSuspendAccount(socket);
+    adminProxy.handleUnblockAccount(socket);
+
+    //申诉反馈管理
+    adminProxy.handleSearchFeedback(socket);
+    adminProxy.handleFeedback(socket);
+
+    //充值管理
+    adminProxy.searchAllRechargeInfo(socket);
+
+    //简单统计
+    adminProxy.handleAnalysis(socket);
 
     chatProxy.handleChat(io,socket);
 

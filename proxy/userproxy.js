@@ -67,7 +67,10 @@ exports.handleLogin = function (socket) {
                             userInfo.lolAccountInfo = lolAccountInfo;
                             callback(null, userInfo);
                         });
-                    }
+                    },
+                    // function(userInfo,callback){
+                    // 提现限制
+                    // }
                 ], function(err, userInfo){
                     var userStrength = userInfo.strengthInfo;
                     var feedback = {
@@ -77,6 +80,9 @@ exports.handleLogin = function (socket) {
                         extension: {
                             name: userInfo.userNickname,
                             userId: userInfo.userId,
+                            //----------------------
+                            userRole:user.user_role,
+                            //----------------------
                             avatarId: userInfo.userIconId,
                             wealth: userInfo.wealth,
                             online: true,
@@ -166,6 +172,24 @@ exports.handleInviteFriend = function (socket) {
             });
         }
     })
+}
+
+//查询账户余额
+exports.handleGetBalance = function (socket){
+    socket.on('getBalance', function(data){
+        //console.log('2134');
+        dbUtil.getBalance(data,function(balance){
+            var tempBalance = balance.bullup_currency_amount;
+            socket.emit('feedback', {
+                errorCode: 0,
+                text: '查询余额OK',
+                type: 'GETBALANCERESULT',
+                extension: {
+                    "balance": tempBalance,
+                }
+            });
+        });
+     });
 }
 
 /**
@@ -366,10 +390,10 @@ exports.handlePersonalCenterRequest = function(socket){
 
 exports.insertFeedbackMessage=function(socket){
     socket.on('feedbackMessage',function(result){
-        console.log('result:'+JSON.stringify(result)); 
-        logger.listenerLog('feedbackMessage');
-        dbUtil.insertFeedback(result.UserId,result.textarea1,result.name,result.email,function(res){
-            if(result.textarea1==""||result.name==""||result.email==""){
+        //console.log('result:'+JSON.stringify(result)); 
+        //logger.listenerLog('feedbackMessage');
+        dbUtil.insertFeedback(result,function(res){
+            if(!res){
                 socket.emit('feedback',{
                     errorCode:1,
                     text:'反馈失败,请输入反馈信息',
@@ -377,16 +401,16 @@ exports.insertFeedbackMessage=function(socket){
                     extension:null
                 });
             }else{
-                    socket.emit('feedback',{
-                        errorCode:0,
-                        text:'反馈成功',
-                        type:'FEEDBACKMESSAGE',
-                        extension:{
+                socket.emit('feedback',{
+                    errorCode:0,
+                    text:'反馈成功',
+                    type:'FEEDBACKMESSAGE',
+                    extension:{
                         Msgname:result.name,
                         Msgemail:result.name,
                         Msgtextarea1:result.textarea1
-                        }
-                    });
+                    }
+                });
                 
             }
         });
