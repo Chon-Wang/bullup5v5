@@ -2,7 +2,7 @@ var request = require('request');
 var async = require('async');
 var lolcfg = require('./lolcfg.js');
 
-var apiKey =  "RGAPI-a44d5277-11f4-4a07-aeca-ea3c037488be";
+var apiKey =  "RGAPI-7ff17f0a-ea84-473e-ae8a-f1ca75052c6e";
 
 function getItemsStaticData(callback){
     var options = {
@@ -116,92 +116,111 @@ exports.getMatchDetailsBySummonerName = function(name,startTime,endTime,callback
     async.waterfall([
         function(done){
             getSummonerByName(name, function(summoner){
-                done(null, summoner);
+                if(summoner.accountId == undefined){
+                    done("err", null);
+                }else{
+                    done(null, summoner);
+                }
             });
         },
         function(summoner, done){
             getMatchesListByAccountId(summoner.accountId, startTime, endTime, function(gameList){
-                done(null, summoner, gameList);
+                if(gameList.totalGames == undefined){
+                    done("err", null);
+                }else{
+                    done(null, summoner, gameList);
+                }
             });
         },
         function(summoner, gameList, done){
             var matchDetails = {};
             async.eachSeries(gameList.matches, function(match, errCb){
                 getMatchDetailsByGameId(match.gameId, function(details){
-                    matchDetails[match.gameId] = details;
+                    if(details.mapId == undefined){
+                        matchDetails.error = "error";
+                    }else{
+                        matchDetails[match.gameId] = details;
+                    }
                     errCb();
                 });
             }, function(err) {
                 if (err) console.log(err);
                 matchDetails.summoner = summoner;
-                done(null, matchDetails);
+                if(matchDetails.error == "error"){
+                    done("err", null);
+                }else{
+                    done(null, matchDetails);
+                }
             });
         }
     ],function(err,matchDetails){
         var count = 0;
         var result = {};
         result.matches =[];
-       
-        for(var gameId in matchDetails){
-            if(gameId == 'summoner'){
-                continue;
-            }
-            var match = matchDetails[gameId];
-            var mainPlayerParticipantId;
-            result.matches[count] = {};
-            result.matches[count].name = matchDetails.summoner.name;
-            result.matches[count].gameMode = match.gameMode;
-            result.matches[count].gameType = match.gameType;
-            var date = new Date(match.gameCreation);
-            result.matches[count].time = date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay();
-            result.matches[count].paticipants = [];
-
-            var paticipantCount = 0;
-            var paticipantIds = [];
-            for(var index in match.participantIdentities){
-                paticipantIds[paticipantCount] = match.participantIdentities[index].player.participantId;
-                if(result.matches[count].name == match.participantIdentities[index].player.summonerName){
-                    mainPlayerParticipantId = match.participantIdentities[index].participantId;
+        if(err){
+            callback(null);
+        }else{
+            for(var gameId in matchDetails){
+                if(gameId == 'summoner'){
+                    continue;
                 }
-                paticipantCount++;
-            }
+                var match = matchDetails[gameId];
+                var mainPlayerParticipantId;
+                result.matches[count] = {};
+                result.matches[count].name = matchDetails.summoner.name;
+                result.matches[count].gameMode = match.gameMode;
+                result.matches[count].gameType = match.gameType;
+                var date = new Date(match.gameCreation);
+                result.matches[count].time = date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay();
+                result.matches[count].paticipants = [];
 
-            paticipantCount = 0;
-            for(var index in match.participants){
-                if(match.participants[index].participantId == mainPlayerParticipantId){
-                    result.matches[count].championId = match.participants[index].championId;
-                    result.matches[count].championChineseName = lolcfg.getChampionChineseNameById(match.participants[index].championId);
-                    result.matches[count].championEnglishName = lolcfg.getChampionEnglishNameById(match.participants[index].championId);
-                    if(match.participants[index].stats.win){
-                        result.matches[count].win = '胜利';
-                    }else{
-                        result.matches[count].win = '失败';
+                var paticipantCount = 0;
+                var paticipantIds = [];
+                for(var index in match.participantIdentities){
+                    paticipantIds[paticipantCount] = match.participantIdentities[index].player.participantId;
+                    if(result.matches[count].name == match.participantIdentities[index].player.summonerName){
+                        mainPlayerParticipantId = match.participantIdentities[index].participantId;
                     }
-                    result.matches[count].kda = match.participants[index].stats.kills + '/' + match.participants[index].stats.deaths + '/' + match.participants[index].stats.assists;
-
+                    paticipantCount++;
                 }
-                result.matches[count].paticipants[paticipantCount] = {};
-                result.matches[count].paticipants[paticipantCount].name = match.participantIdentities[match.participants[index].participantId - 1].player.summonerName;
-                result.matches[count].paticipants[paticipantCount].kda = match.participants[index].stats.kills + '/' + match.participants[index].stats.deaths + '/' + match.participants[index].stats.assists;
-                result.matches[count].paticipants[paticipantCount].kdaScore = ((match.participants[index].stats.kills + match.participants[index].stats.assists) / (match.participants[index].stats.deaths + 1.2)).toFixed(1);
-                result.matches[count].paticipants[paticipantCount].damage = match.participants[index].stats.totalDamageDealtToChampions;
-                result.matches[count].paticipants[paticipantCount].damageTaken = match.participants[index].stats.totalDamageTaken;
-                result.matches[count].paticipants[paticipantCount].goldEarned = match.participants[index].stats.goldEarned;
-                result.matches[count].paticipants[paticipantCount].championEnglishName = lolcfg.getChampionEnglishNameById(match.participants[index].championId);
-                result.matches[count].paticipants[paticipantCount].items = {};
-                result.matches[count].paticipants[paticipantCount].items['item0'] = match.participants[index].stats.item0;
-                result.matches[count].paticipants[paticipantCount].items['item1'] = match.participants[index].stats.item1;
-                result.matches[count].paticipants[paticipantCount].items['item2'] = match.participants[index].stats.item2;
-                result.matches[count].paticipants[paticipantCount].items['item3'] = match.participants[index].stats.item3;
-                result.matches[count].paticipants[paticipantCount].items['item4'] = match.participants[index].stats.item4;
-                result.matches[count].paticipants[paticipantCount].items['item5'] = match.participants[index].stats.item5;
-                result.matches[count].paticipants[paticipantCount].items['item6'] = match.participants[index].stats.item6;
-                paticipantCount++;
+
+                paticipantCount = 0;
+                for(var index in match.participants){
+                    if(match.participants[index].participantId == mainPlayerParticipantId){
+                        result.matches[count].championId = match.participants[index].championId;
+                        result.matches[count].championChineseName = lolcfg.getChampionChineseNameById(match.participants[index].championId);
+                        result.matches[count].championEnglishName = lolcfg.getChampionEnglishNameById(match.participants[index].championId);
+                        if(match.participants[index].stats.win){
+                            result.matches[count].win = '胜利';
+                        }else{
+                            result.matches[count].win = '失败';
+                        }
+                        result.matches[count].kda = match.participants[index].stats.kills + '/' + match.participants[index].stats.deaths + '/' + match.participants[index].stats.assists;
+
+                    }
+                    result.matches[count].paticipants[paticipantCount] = {};
+                    result.matches[count].paticipants[paticipantCount].name = match.participantIdentities[match.participants[index].participantId - 1].player.summonerName;
+                    result.matches[count].paticipants[paticipantCount].kda = match.participants[index].stats.kills + '/' + match.participants[index].stats.deaths + '/' + match.participants[index].stats.assists;
+                    result.matches[count].paticipants[paticipantCount].kdaScore = ((match.participants[index].stats.kills + match.participants[index].stats.assists) / (match.participants[index].stats.deaths + 1.2)).toFixed(1);
+                    result.matches[count].paticipants[paticipantCount].damage = match.participants[index].stats.totalDamageDealtToChampions;
+                    result.matches[count].paticipants[paticipantCount].damageTaken = match.participants[index].stats.totalDamageTaken;
+                    result.matches[count].paticipants[paticipantCount].goldEarned = match.participants[index].stats.goldEarned;
+                    result.matches[count].paticipants[paticipantCount].championEnglishName = lolcfg.getChampionEnglishNameById(match.participants[index].championId);
+                    result.matches[count].paticipants[paticipantCount].items = {};
+                    result.matches[count].paticipants[paticipantCount].items['item0'] = match.participants[index].stats.item0;
+                    result.matches[count].paticipants[paticipantCount].items['item1'] = match.participants[index].stats.item1;
+                    result.matches[count].paticipants[paticipantCount].items['item2'] = match.participants[index].stats.item2;
+                    result.matches[count].paticipants[paticipantCount].items['item3'] = match.participants[index].stats.item3;
+                    result.matches[count].paticipants[paticipantCount].items['item4'] = match.participants[index].stats.item4;
+                    result.matches[count].paticipants[paticipantCount].items['item5'] = match.participants[index].stats.item5;
+                    result.matches[count].paticipants[paticipantCount].items['item6'] = match.participants[index].stats.item6;
+                    paticipantCount++;
+                }
+                count++;
             }
-            count++;
+            //console.log(result);
+            callback(result);
         }
-        //console.log(result);
-        callback(result);
         /*
     //-------------------------------result-data-example----------------------------------/
         {
@@ -247,10 +266,11 @@ exports.getMatchDetailsBySummonerName = function(name,startTime,endTime,callback
 
 //--------------------------------------test--------------------------------------------/
 
-
-getSummonerByName("Who is 55Kai", function(info){
-    console.log("JMGuo's info : " + JSON.stringify(info));
-});
+// exports.getMatchDetailsBySummonerName("Who is 55Kai", "2017/9/1", "2017/9/29", function(data){
+    
+//         var data = data;
+//         console.log(JSON.stringify(data));
+//     });
 
 // getChampionsStaticData(function(obj){
 //     var count = 0;

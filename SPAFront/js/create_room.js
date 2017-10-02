@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	$("#create_room").click(function(){
-		$("#create_room_modal").css("display","block");
+		$("#create_room_modall").css("display","block");
 
 		var dateTime = new Date($.now());
 
@@ -9,14 +9,19 @@ $(document).ready(function(){
 	});
 
 	$("#create_close").click(function(){
-		$("#create_room_modal").css("display", "none");
+		$("#create_room_modall").css("display", "none");
 	});
 
 
 	$("#confirm_create_room_btn").click(function(){
 		if(userInfo == null){
-			bullup.alert('提示', '请您先登录');
+			alert('请您先登录');
 			return;
+		}
+
+		if(roomInfo != null){
+			alert("您已经加入了房间,无法创建新的房间！");
+			return ;
 		}
 		var room = {
 			battleDesc : $("#battle_desc").val(),

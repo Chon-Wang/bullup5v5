@@ -1,15 +1,72 @@
 var lolapi = require('./js/lolutil.js');
 
 
+process.on('uncaughtException', function(err) {
+    //alert("召唤师不存在或设置的时间段过长！");
+});
+
 $().ready(function () {
     $('#query_btn').on('click', function (e) {
-        var summonerName = $('#query_summoner_name').val();
         e.preventDefault();
-        lolapi.getMatchDetailsBySummonerName(summonerName, '2017/8/1', '2017/8/4', function(matchDetails){
-            if(summonerName == ""){
-                alert("请输入召唤师的名字");
-            }else if(matchDetails == null || matchDetails == undefined){
-                alert("召唤师不存在或Key已经过期！");
+        var summonerName = $('#query_summoner_name').val();
+        if(summonerName == ""){
+            alert("请输入召唤师的名字");
+            return;
+        }
+        var startDate = $('#query_start_data').val();
+        if(startDate == ""){
+            alert("请输入起始时间");
+            return;
+        }
+        var endDate = $('#query_end_data').val();
+        if(endDate == ""){
+            alert("请输入终止时间");
+            return;
+        }
+        var strs = startDate.split(",");
+        var year = strs[1];
+        var day = strs[0].split(" ")[0];
+        var month = strs[0].split(" ")[1];
+        switch(month){
+            case 'January': month="1"; break;
+            case 'February': month="2"; break;
+            case 'March': month="3"; break;
+            case 'April': month="4"; break;
+            case 'May': month="5"; break;
+            case 'June': month="6"; break;
+            case 'July': month="7"; break;
+            case 'August': month="8"; break;
+            case 'September': month="9"; break;
+            case 'October': month="10"; break;
+            case 'November': month="11"; break;
+            case 'December': month="12"; break;
+            default: month="1"; break;
+        }
+        startDate = year + "/" + month + "/" + day;
+
+        strs = endDate.split(",");
+        year = strs[1];
+        day = strs[0].split(" ")[0];
+        month = strs[0].split(" ")[1];
+        switch(month){
+            case 'January': month="1"; break;
+            case 'February': month="2"; break;
+            case 'March': month="3"; break;
+            case 'April': month="4"; break;
+            case 'May': month="5"; break;
+            case 'June': month="6"; break;
+            case 'July': month="7"; break;
+            case 'August': month="8"; break;
+            case 'September': month="9"; break;
+            case 'October': month="10"; break;
+            case 'November': month="11"; break;
+            case 'December': month="12"; break;
+            default: month="1"; break;
+        }
+        endDate = year + "/" + month + "/" + day;
+        lolapi.getMatchDetailsBySummonerName(summonerName, startDate, endDate, function(matchDetails){
+            if(matchDetails == null || matchDetails == undefined){
+                alert("召唤师不存在或设置的时间段过长！");
                 return;
             }else{
                 var frame = bullup.loadSwigView("swig_queryres.html", {});

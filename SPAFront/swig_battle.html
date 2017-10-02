@@ -58,6 +58,7 @@
 
 
 <div class="row center-align" id="pagination-holder">
+  
 </div>
 
 <!-- {% if teams %} -->
@@ -78,12 +79,16 @@
 	  <!-- End of Details -->
 	  <div class="col s12 m9">
 		<!--  Radar Chart of two teams                  -->
-		<canvas id="team-detail-chart"></canvas>
+		<canvas id="team-detail-chart" style="margin-left:50px;"></canvas>
+		
 	  </div>
 	</div>
   </div>
   <div class="modal-footer">
-	<a href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-battle-btn">邀请战斗</a>
+
+	<a style="background: #26a69a;color: #fff;" href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-battle-btn">邀请战斗</a>
+	<!-- <a class="waves-effect waves-light btn" style="float:left;">返回</a> -->
+	
   </div>
 </div>
 
@@ -150,5 +155,3 @@
 </div>
 <!-- {% endfor %}
 {% endif %}-->
-
-

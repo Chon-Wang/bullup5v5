@@ -92,7 +92,7 @@
 
 	<ul id="user-slide-out" class="side-nav">
 
-		<a style="float:right;margin-top:40px;" class="waves-effect waves-light btn ds_wang" href="#modal1">修改个人信息</a>
+		
 
 		<li>
 			<div class="user-view">
@@ -104,14 +104,42 @@
 				<a href="#!name"><span class="white-text name">John Doe</span></a>
 				<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
 			</div>
+			<a class="waves-effect waves-light btn" href="#coollap">添加好友</a>
 		</li>
-		<li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-		<li><a href="#!">Second Link</a></li>
-		<li>
-			<div class="divider"></div>
-		</li>
-		<li><a class="subheader">Subheader</a></li>
-		<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+		
+		<ul class="collapsible" data-collapsible="accordion">
+			<li>
+			  <div class="collapsible-header"><span class="new badge">4</span>好友</div>
+			  <div class="collapsible-body collap-style" style="background:none;">
+				<div class="collap-rq" >
+				<p class="collap-p" >
+					<img src="./media/imgs/usr_bg.jpg">
+				</p>
+				  <p class="collap-p2">有志者事竟成。</p>
+				</div>
+			</div>
+
+			<div class="collapsible-body collap-style" style="background:none;">
+					<div class="collap-rq" >
+					<p class="collap-p" >
+						<img src="./media/imgs/usr_bg.jpg">
+					</p>
+					  <p class="collap-p2">有志者事竟成。</p>
+					</div>
+				</div>
+
+				<div class="collapsible-body collap-style" style="background:none;">
+						<div class="collap-rq" >
+						<p class="collap-p" >
+							<img src="./media/imgs/usr_bg.jpg">
+						</p>
+						  <p class="collap-p2">有志者事竟成。</p>
+						</div>
+					</div>
+			</li>
+			
+		  </ul>
+		
 	</ul>
 
 
@@ -119,16 +147,17 @@
 		<a class="btn-floating btn-large red">
 		<i class="fa fa-plus" aria-hidden="true"></i>
 	  </a>
-		<ul>
-			<li><a class="btn-floating red" href="#create_room_modal"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
-			<li><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true"></i></a></li>
-			<li><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-			<li><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
+		<ul class="ulIcon">
+			<li ><span style="color:#fff;" class="icbefore">约战</span><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
+			<li ><span style="color:#fff;" class="icbefore">大厅</span><a id="turn_to_room_btn" class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=" fa fa-hourglass-start" aria-hidden="true"></i></a><li>
+			<li ><span style="color:#fff;" class="icbefore">战力</span><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true" id='home'></i></a></li>
+			<li ><span style="color:#fff;" class="icbefore">好友</span><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+			<li ><span style="color:#fff;" class="icbefore">充值</span><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
 		</ul>
 	</div>
 
 	<!-- modal structure -->
-	<div class="modal" id="create_room_modal">
+	<div class="modal" id="create_room_modall">
 		<div class="modal-content">
 			<h4>创建房间</h4>
 			<div class="row">
@@ -147,7 +176,7 @@
 							<div class="row">
 								<div class="input-field col s12">
 									<!-- Winning Condition -->
-									<select id="map-selection">
+						<select id="map-selection">
 					  <option id="map-selection-1" value="">召唤师峡谷</option>
 					  <option id="map-selection-2" value="">嚎哭深渊</option>
 					</select>
@@ -380,13 +409,14 @@
 						</div>
 					</div>
 
-					<button id="bind_lol_btn" class="btn waves-effect waves-light right teal lighten-2" type="submit" name="action">绑定
-			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+					<a id="bind_lol_account_btn" class="btn waves-effect waves-light right teal lighten-2" name="action"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp绑定</a>
+			  
 			</button>
 				</form>
 			</div>
 		</div>
-	</div>
+	  </div>
+  
 
 
 	<!-- notification center Modal Structure -->
@@ -593,10 +623,16 @@
 							</button>
 		</div>
 	</div>
-
-
-
-
+<!-- 邀请好友弹出 -->
+<div id="coollap" class="modal" style="background-color: #455a64;width:35%;">
+		<div class="row">
+				<div class="input-field col s6">
+				  <input style="color:#fff;" value="" id="first_name2" type="text" class="validate">
+				  <label class="active" for="first_name2">对方ID</label>
+				</div>
+			</div>
+			  <a class="waves-effect waves-light btn collpost" >添加</a>
+	  </div>
 	</div>
 	<!-- 反馈信息 -->
 	<div id="fankui" class="modal modal-fixed-footer fankui_size" style="height: 50%;background:#455a64;">
@@ -681,6 +717,9 @@
 	<script src="./js/feedback_message.js"></script>
 	<script src="./js/turn_to_room.js"></script>
 	<script src="./js/bullup_message_box.js"></script>
+	<script src="./js/bullup_message_box.js"></script>
+	
+
 
 	<!--处理提现-->
 	<!-- <script src="./js/handleWithdraw.js"></script> -->
@@ -713,25 +752,6 @@
 			$().ready(function () {
 				var temp = bullup.loadSwigView("./swig_menu.html", null);
 				$('#system_menu').html(temp);
-
-				$('.carousel.carousel-slider').carousel({
-					fullWidth: true
-				});
-
-				autoplay();
-				var time = null;
-				$(".carousel-slider").hover(function () {
-					console.log(1);
-					clearTimeout(time);
-				}, function () {
-					clearTimeout(time);
-					time = setTimeout(autoplay, 2000);
-				});
-				function autoplay() {
-					clearTimeout(time);
-					time = setTimeout(autoplay, 4500);
-					$('.carousel').carousel('next');
-				}
 			});
 
 			$(document).ready(function () {
@@ -743,7 +763,6 @@
 				selectMonths: true, // Creates a dropdown to control month
 				selectYears: 15 // Creates a dropdown of 15 years to control year
 			});
-
 			// 价格$
 			$('.chip').click(function () {
 				var iox = $(this).index();
@@ -752,7 +771,6 @@
 				$('.ois').addClass('active');
 				$('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
 			})
-
 			// //银行卡号输入js配置
 			// $(document).ready(function () {
 			// 	$('.account').bankInput();
@@ -768,120 +786,30 @@
 			$('.waves-light').click(function () {
 				$('#modalpopo').modal('close');
 			});
-
 			$(function () {
 				$('#beginTime').date();
 				$('#endTime').date({ theme: "datetime" });
 				$('#endTime2').date({ theme: "datetime" });
 			});
-
 			$(document).ready(function () {
-
 				$('input#input_text, textarea#textarea1').characterCounter();
-			});
 
-		</script>
-		<script>
-			var stripe = Stripe('pk_test_GlgMOKkINe1WfFze6Lko39rB');
-			var elements = stripe.elements();
-			var style = {
-				base: {
-					color: '#FFFFFF',
-					lineHeight: '24px',
-					fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-					fontSmoothing: 'antialiased',
-					fontSize: '16px',
-					'::placeholder': {
-						color: '#FFFFFF'
-					}
-				},
-				invalid: {
-					color: '#FFFFFF',
-					iconColor: '#FFFFFF'
-				}
-			};
-			// Create an instance of the card Element
-			var card = elements.create('card', { style: style });
-
-			// Add an instance of the card Element into the `card-element` <div>
-			card.mount('#card-element');
-			card.addEventListener('change', function (event) {
-				var displayError = document.getElementById('card-errors');
-				if (event.error) {
-					displayError.textContent = event.error.message;
-				} else {
-					displayError.textContent = '';
-				}
-			});
-			var form = document.getElementById('payment-form');
-			form.addEventListener('submit', function (event) {
-				event.preventDefault();
-
-				stripe.createToken(card).then(function (result) {
-					if (result.error) {
-						// Inform the user if there was an error
-						var errorElement = document.getElementById('card-errors');
-						errorElement.textContent = result.error.message;
-					} else {
-						// Send the token to your server
-						stripeTokenHandler(result.token);
+				//地图替换
+				$('.dropdown-content li').on("click",function () {
+					var map = $(this).index();
+				
+					if ( map == 1 ) {
+						$('.room_map').attr('src','./media/imgs/hhsy_map.jpg');
+					}else{
+						$('.room_map').attr('src','./media/imgs/rift_map.jpg');
 					}
 				});
 			});
-			function stripeTokenHandler(token) {
-				// Insert the token ID into the form so it gets submitted to the server
-				var form = document.getElementById('payment-form');
-				var hiddenInput = document.createElement('input');
-				hiddenInput.setAttribute('type', 'hidden');
-				hiddenInput.setAttribute('name', 'stripeToken');
-				hiddenInput.setAttribute('id', 'stripeToken');
-				hiddenInput.setAttribute('value', token.id);
-				form.appendChild(hiddenInput);
-				// var addInput = document.createElement('input');
-				// addInput.setAttribute()
-				var $number = document.getElementById('money').value;
-				var amount = $number * 100;
-				var $card = token.id;
-				var $userId = userInfo.userId;
-				var $currency = 'usd';
-
-				var tempDate = new Date();//获取当前时间
-				var year = tempDate.getFullYear();
-				var month = tempDate.getMonth();
-				if(month<12){
-					month = month+1;
-				}else{
-					month = 1;
-				}
-				if(month<10) month = '0'+month;
-				var day = tempDate.getDate();
-				var hour = tempDate.getHours();
-				var minute = tempDate.getMinutes();
-				var $date = hour+":"+minute+"/"+month+"/"+day+"/"+year;
-				//alert($date);
-				//communicate with the server
-				//if(userInfo) alert(userInfo.userId);
-				console.log($card);
-				console.log(amount);
-				
-				if(!$number){
-					alert('信息不能为空，请重新填写！');
-				}else{
-					//alert('qswd');
-					socket.emit('payment', {
-						token: $card,
-						money: amount,
-						userId:$userId,
-						date:$date,
-						currency:$currency
-					});
-					$('#recharge').modal('close');
-				}
-
-			}
-
+			
+			
+			
+			
 		</script>
-
 </body>
 
 </html>

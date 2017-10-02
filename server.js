@@ -1,6 +1,5 @@
 var io = require('socket.io')();
 var logger = require('./util/logutil');
-
 var timmer = require('./timer');
 
 // 代理
@@ -91,15 +90,11 @@ io.on('connection', function(socket) {
     adminProxy.handleAnalysis(socket);
 
     chatProxy.handleChat(io,socket);
-
-
 });
-
 
 io.on('disconnect', function (socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' disconnected!');
     socketProxy.remove(socket);
-
 });
 
 //一天更新一次排行榜

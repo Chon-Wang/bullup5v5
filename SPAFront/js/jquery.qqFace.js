@@ -21,7 +21,7 @@
 		$(this).click(function(e){
 			var strFace, labFace;
 			if($('#'+id).length<=0){
-				strFace = '<div id="'+id+'" style="" class="qqFace">' +
+				strFace = '<div id="'+id+'" style="position:absolute;display:none;z-index:1000;" class="qqFace">' +
 							  '<table border="0" cellspacing="0" cellpadding="0"><tr>';
 				for(var i=1; i<=75; i++){
 					labFace = '['+tip+i+']';
@@ -33,8 +33,8 @@
 			$(this).parent().append(strFace);
 			var offset = $(this).position();
 			var top = offset.top + $(this).outerHeight();
-			$('#'+id).css('top',top);
-			$('#'+id).css('left',offset.left);
+			$('#'+id).css("top:","691px");
+			$('#'+id).css('left', "624.3px");
 			$('#'+id).show();
 			e.stopPropagation();
 		});
@@ -75,12 +75,12 @@ jQuery.fn.extend({
 	}, 
 
 	setCaret: function(){ 
-		if(!$.browser.msie) return; 
-		var initSetCaret = function(){ 
-			var textObj = $(this).get(0); 
-			textObj.caretPos = document.selection.createRange().duplicate(); 
-		}; 
-		$(this).click(initSetCaret).select(initSetCaret).keyup(initSetCaret); 
+		// if(!$.browser.msie) return; 
+		// var initSetCaret = function(){ 
+		// 	var textObj = $(this).get(0); 
+		// 	textObj.caretPos = document.selection.createRange().duplicate(); 
+		// }; 
+		// $(this).click(initSetCaret).select(initSetCaret).keyup(initSetCaret); 
 	}, 
 
 	insertAtCaret: function(textFeildValue){ 

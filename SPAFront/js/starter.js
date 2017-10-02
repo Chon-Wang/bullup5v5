@@ -7,15 +7,28 @@ $(document).ready(function(){
         
     });
 
-    $('#starter-rank-btn').on('click', function(){
-        // alert("123");
-        // socket.emit('rankRequest');
+    $('#starter-rank-btn').on('click', function(e){
+        e.preventDefault();
+        socket.emit('rankRequest');
+       
+      // $.getScript('./js/request_rank_list.js');
+       
     });
 
-    $('#starter-chatroom-btn').on('click', function(){
-
+    $('#starter-chatroom-btn').on('click', function(e){
+        e.preventDefault();
+       bullup.loadTemplateIntoTarget('chatroom.html', {}, 'main-view');
+    //    $.getScript('./js/chat.js');
+         });
+         $('#return').on('click', function(e){
+         e.preventDefault();
+         bullup.loadTemplateIntoTarget('swig_index.html', {}, 'main-view');
+          $.getScript('/js/zymly.js');
+          $.getScript('/js/Withdraw.js');
+         
+	    
     });
-});
+});    
 
 function addFireAnimation (id){
     var yzhou = document.getElementById(id);
@@ -48,10 +61,31 @@ $('.carousel.carousel-slider').carousel({
     fullWidth: true
 });
 var time =null;
-$(".carousel-slider").hover(function () {
+$("#starter-carousel").hover(function () {
     console.log(1);
     clearTimeout(time);
 },function (){
     clearTimeout(time);
     time = setTimeout(autoplay, 2000);
 });  
+function autoplay() {
+    clearTimeout(time);
+    time = setTimeout(autoplay, 4500);
+    $('#starter-carousel').carousel('next');
+    // try{
+    //     $('.carousel').carousel('next');
+    // }catch(err){
+
+    // }
+    
+}
+//轮播左右焦点
+$('.ctavi').click(function () {
+    if($(this).hasClass("left-d")){
+        $('#starter-carousel').carousel('prev');
+    }else if($(this).hasClass("right-d")){
+        $('#starter-carousel').carousel('next');
+    }
+});
+
+autoplay();

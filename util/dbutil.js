@@ -556,7 +556,7 @@ exports.searchCashFlow = function(data,callback){
         },
         function(tempInfo,callback){
             //var tempInfo = {};
-            connection.query('select bullup_bank_money,bullup_bank_cardnumber,bullup_payment_account_id,bullup_bank_wdtime,bullup_bank_state from bullup_bankcard_info where user_id=?',[data.userId],function(err,result){
+            connection.query('select bullup_bank_money,bullup_bank_cardnumber,bullup_withdraw_id,bullup_bank_wdtime,bullup_bank_state from bullup_bankcard_info where user_id=?',[data.userId],function(err,result){
                 if (err) throw err;
                 tempInfo.withdrawInfo = result;
                 callback(null,tempInfo);
@@ -958,38 +958,51 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                console.log(JSON.stringify("lolInfo:"+userPersonalInfo));
                callback(null,userPersonalInfo); 
             });
-        },function(userPersonalInfo,callback){
-            //个人战斗力排行
-            connection.query('select bullup_strength_score from bullup_strength where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
-                let temp = results[0].bullup_strength_score;
-                //console.log(temp);
-                connection.query('select count(*) as strengthRank from bullup_strength where bullup_strength_score>=?',[userId],function(err,results2,fields){
-                    userPersonalInfo.strengthRank=results2;
-                    console.log(JSON.stringify("strengthRank:"+userPersonalInfo.strengthRank));
-                    callback(null,userPersonalInfo);
-                });
+        // },function(userPersonalInfo,callback){
+        //     //个人战斗力排行
+        //     connection.query('select bullup_strength_score from bullup_strength where user_id=?',[userId],function(err,results,fields){
+        //         if(err) throw err;
+        //         let temp = results[0].bullup_strength_score;
+        //         //console.log(temp);
+        //         connection.query('select count(*) as strengthRank from bullup_strength where bullup_strength_score>=?',[userId],function(err,results2,fields){
+        //             userPersonalInfo.strengthRank=results2;
+        //             console.log(JSON.stringify("strengthRank:"+userPersonalInfo.strengthRank));
+        //             callback(null,userPersonalInfo);
+        //         });
+        //     });
+         },function(userPersonalInfo,callback){
+             connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
+            if(err) throw err;
+                 userPersonalInfo.wealth=results[0].bullup_currency_amount;
+                 callback(null,userPersonalInfo);
             });
-        },function(userPersonalInfo,callback){
-            connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
-                userPersonalInfo.wealth=results[0].bullup_currency_amount;
+        // },function(userPersonalInfo,callback){
+        //      //个人财富排行
+        //      connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
+        //          if(err) throw err;
+        //          let temp2 = results[0].bullup_currency_amount;
+        //          console.log(temp2);
+        //          connection.query('select count(*) as wealthRank from bullup_wealth where bullup_currency_amount>=?',[temp2],function(err,results2,fields){
+        //              if(err) throw err;
+        //              userPersonalInfo.wealthRank=results2;
+        //              console.log(JSON.stringify("wealthRank:"+userPersonalInfo.wealthRank));
+        //              callback(null,userPersonalInfo);
+        //          });
+        //      });
+         },function(userPersonalInfo,callback){
+             connection.query('select bullup_strength_rank,bullup_wealth_rank,user_icon_id from bullup_rank',[userId],function(err,results,fields){
+                if (err) throw err;
+                userPersonalInfo.strengthRank=results[0].bullup_strength_rank;
+                userPersonalInfo.wealthRank=results[0].bullup_wealth_rank;
                 callback(null,userPersonalInfo);
-            });
-        },function(userPersonalInfo,callback){
-            //个人财富排行
-            connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
-                let temp2 = results[0].bullup_currency_amount;
-                console.log(temp2);
-                connection.query('select count(*) as wealthRank from bullup_wealth where bullup_currency_amount>=?',[temp2],function(err,results2,fields){
-                    if(err) throw err;
-                    userPersonalInfo.wealthRank=results2;
-                    console.log(JSON.stringify("wealthRank:"+userPersonalInfo.wealthRank));
-                    callback(null,userPersonalInfo);
-                });
-            });
-        }
+             });
+         },function(userPersonalInfo,callback){
+             connection.query('select icon_id from bullup_profile  where user_id=?',[userId],function(err,results,fields){
+                if (err) throw err;
+                userPersonalInfo.icon_id=results[0].icon_id;
+                callback(null,userPersonalInfo);
+             });
+         }
     ],function(err,res){
         callback(res);
         console.log(res);

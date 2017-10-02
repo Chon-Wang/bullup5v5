@@ -224,26 +224,37 @@ socket.on('battleInfo', function (battle) {
 
 socket.on('lolRoomEstablish', function (lolRoom) {
     if (userInfo.userId == lolRoom.creatorId) {
+        //开始抓包
+        lol_process.grabLOLData('room', socket);
         // 如果用户是创建者，则创建房间
         alert('请在规定时间内创建房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password);
         
         //自动创建房间
-        auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
-        //开始抓包
-        lol_process.grabLOLData('room', socket);
+        //auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
+        
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
         //alert('请等待');
-        alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
         lol_process.grabLOLData('room', socket);
+        alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
+        
     }
 });
 
 socket.on('lolRoomEstablished', function () {
-    alert('游戏已开始');
     //游戏开始 刷新时钟
     lol_process.grabLOLData('result', socket);
+    alert('游戏已开始');
 });
+
+socket.on('chatMsg', function(msg){
+    if(msg.chatId==userInfo.userId){
+        $('#messages').append($('<li class="chat-message " style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;background:  #b3ade9;color: #fff;float:right;" >').html(msg.chatName+':'+" "+msg.chatMsg));
+    }else{
+        $('#messages').append($('<li class="friend-messages"  style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;;background: #009fab;color: #fff;float:left;"  >').html(msg.chatName+':'+" "+msg.chatMsg));
+    }
+});
+    
 
 socket.on('battleResult', function(resultPacket){
     //读取数据
@@ -272,6 +283,13 @@ socket.on('battleResult', function(resultPacket){
     var battleResHtml = bullup.loadSwigView('./swig_battleres.html', {
         battle_res: battleResultData
     });
+    //清空信息
+    roomInfo = null;
+    teamInfo = null;
+    battleInfo = null;
+    formedTeams = null;
+
+
     //页面跳转到结果详情页
     $('#main-view').html(battleResHtml);
     //添加确认按钮单击事件
@@ -298,7 +316,8 @@ socket.on('battleResult', function(resultPacket){
                 }
             ]
         };
-		bullup.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
+        bullup.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
+        $.getScript('./js/starter.js');
 	});
 });
 
@@ -310,7 +329,7 @@ function handleLoginResult(feedback) {
     if (feedback.errorCode == 0) {
         // 登录成功
         //alert(feedback.text);
-        bullup.alert("提示:", "登录成功!");
+        alert( "登录成功!");
         userInfo = feedback.extension;
         // console.log("User info");
         // console.log(userInfo);
@@ -335,7 +354,7 @@ function handleLoginResult(feedback) {
     } else if (feedback.errorCode == 1) {
         // 登录失败
        // alert(feedback.text);
-       bullup.alert("提示:", "登陆失败!");
+       alert( "登陆失败!");
     }
 }
 
@@ -414,6 +433,18 @@ function handleGetBalanceResult(feedback){
         });
     $('#main-view').html(balanceHtml);
     $.getScript('/js/zymly.js');
+    //$.getScript('/js/zymly.js');
+    $.getScript('/js/payment.js');
+    options = {
+        url: 'http://127.0.0.1:3001',
+    };
+    request(options, function(error, response, body){
+        var bodyStartIndex = body.indexOf("<body>");
+        var bodyEndIndex = body.indexOf("</body>");
+        var htmlStr = body.substr(0, bodyEndIndex);
+        htmlStr = htmlStr.substr(bodyStartIndex + 6, htmlStr.length - 6);
+        $('#payment').html(htmlStr);
+    });
 }
 
 //处理查到的资金流动记录
@@ -521,7 +552,7 @@ function handleRoomEstablishmentResult(feedback){
     if(feedback.errorCode == 0){
         alert(feedback.text);
     }else{
-        bullup.alert("错误", "服务器错误，创建失败");
+        alert( "服务器错误，创建失败");
         return;
     }
     roomInfo = feedback.extension;
@@ -538,7 +569,7 @@ function handleRoomEstablishmentResult(feedback){
     $('.content').html(roomInfoFrameHtml);
     $('#team_info').html(roomInfoHtml);
     $('#teamates_info').html(teamatesHtml);
-    $('#create_room_modal').modal('close');
+    $('#create_room_modall').modal('close');
     $.getScript('/js/invite_friend.js');
 
     $('#invite_friend_btn').sideNav({
@@ -687,7 +718,7 @@ function  handlePersonalCenterResult(feedback){
     //判断是否成功
     if(feedback.errorCode == 0){
         var data = feedback.extension;
-        console.log('data='+JSON.stringify(data));
+        //console.log('data='+JSON.stringify(data));
         //radar.setData(data);
         var personalCenterHtml = bullup.loadSwigView('./swig_personal_basic.html',{
             player:{
@@ -704,8 +735,9 @@ function  handlePersonalCenterResult(feedback){
                tower:data.UserlolInfo_tower,
                damage:data.UserlolInfo_damage,
                taken:data.UserInfo_damage_taken,
-               cap:data.UserStrengthRank[0].strengthRank,
-               wealthRank:data.UserWealthRank[0].wealthRank,
+               cap:data.UserStrengthRank,
+               wealthRank:data.UserWealthRank,
+               icon_id:data.User_icon_id,
                wealth:data.UserWealth,
                strength:data.UserStrength,
                winning_rate:data.competition_wins
@@ -713,7 +745,7 @@ function  handlePersonalCenterResult(feedback){
         });
         $('#main-view').html(personalCenterHtml);
     }else{
-        bullup.alert("提示:", "页面加载失败！");
+        alert( "页面加载失败！");
     }
    
 }
