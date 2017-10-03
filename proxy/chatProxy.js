@@ -8,7 +8,7 @@ exports.init = function () {
 
 exports.handleChat=function(io,socket){
       socket.on('chatMsg',function(data){
-            
+         
       logger.listenerLog('chatMsg');
       var feeback={};
       feeback.errCode=0;
