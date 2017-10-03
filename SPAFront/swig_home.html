@@ -552,51 +552,79 @@
 		</div>
 	</div>
 	<!-- 创建赛事 -->
-	<div class="modal" id="create_koom_modal" style="
+<!-- 创建赛事 -->
+<div class="modal" id="create_koom_modal" style="
     background-color: #455a64;color:#fff;">
 		<div class="modal-content" style="height:468px;">
-			<h4 style="color:#fff;">创建赛事</h4>
-			<div class="input-field col s12">
-				<select>
-						<option value="" disabled selected>赛事名称</option>
-						<option value="1">选项 1</option>
-						<option value="2">选项 2</option>
-						<option value="3">选项 3</option>
-					</select>
-
+			<div class="input-field col s6">
+				<input id="competition_name" type="text" class="validate" />
+				<label for="competition_name">赛事名称</label>
 			</div>
 			<div class="input-field col s12">
-				<select>
-							<option value="" disabled selected>最大报名人数</option>
-							<option value="1">选项 1</option>
-							<option value="2">选项 2</option>
-							<option value="3">选项 3</option>
-						</select>
-
+				<select id="competition_max_paticipant"> <option value="" disabled="" selected="">最大报名人数</option> <option value="1">50</option> <option value="2">100</option> <option value="3">150</option> </select>
 			</div>
 			<div>
 				<p>战斗力范围</p>
-				<input style="width:25%;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
-				<p style="color:#fff;float: left;margin-left: 14px;
-						margin-top: 16px;">——</p>
-				<input style="width:26%;margin-left:20px;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
+				<div class="input-field col s4" style="width:15.5%;float: left;">
+					<select id="competition_lowest_score"> <option value="" disabled="" selected="">最低战斗力范围</option> <option value="1">500</option> <option value="2">2000</option> <option value="3">5000</option> </select>
+				</div>
+				<p style="color:#fff;float: left;margin-left: 14px;margin-top: 35px;">——</p>
+				<div class="input-field col s4" style="width:15.5%;float: left;margin-left:18px;">
+					<select id="competition_highest_score"> <option value="" disabled="" selected="">最高战斗力范围</option> <option value="1">1000</option> <option value="2">4000</option> <option value="3">6000</option> </select>
+				</div>
+				<div style="float:left;">
+					<input style="width:25%;float: left;" placeholder="最低战斗力范围" id="first_name" type="text" class="validate" />
+					<p style="color:#fff;float: left;margin-left: 14px;margin-top: 16px;">——</p>
+					<input style="width:26%;margin-left:20px;float: left;" placeholder="最高战斗力范围" id="first_name" type="text" class="validate"
+					/>
+				</div>
 			</div>
-
-
 			<div style="float:left;width:60%;">
 				<p>可比赛时间</p>
-				<input id="endTime" class="kbtn" />
+				<input id="competition_start" class="kbtn" />
 			</div>
 			<div style="float:left;width:60%;">
 				<p>结束时间</p>
-				<input id="endTime2" class="kbtn" />
+				<input id="competition_end" class="kbtn" />
 			</div>
-
-
-
+				<div style="float:left;width:60%;">
+				<p>可报名时间</p>
+				<input id="competition_sign_start" class="kbtn" />
+			</div>
+			<div style="float:left;width:60%;">
+				<p>报名结束时间</p>
+				<input id="competition_sign_end" class="kbtn" />
+			</div>
 		</div>
+		<div class="input-field col s12" style="width:40%;margin-left:25px;float:left;">
+			<select id="competition_fee"> <option value="" disabled="" selected="">每场赛报名费</option> <option value="1">10</option> <option value="2">20</option> <option value="3">30</option> </select>
+		</div>
+		<div class="input-field col s12" style="width:40%;margin-left:25px;float:left;">
+			<select id=""> <option value="" disabled="" selected="">挑战模式</option> <option value="1">1v1</option> <option value="2">2v2</option> <option value="3">3v3</option> </select>
+		</div>
+		<div class="row">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s12">
+						<textarea id="competition_rule" class="materialize-textarea"></textarea>
+						<label for="competition_rule">赛事规则</label>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="row">
+			<form class="col s12">
+				<div class="row">
+					<div class="input-field col s12">
+						<textarea id="competition_comment" class="materialize-textarea"></textarea>
+						<label for="competition_comment">赛事说明</label>
+					</div>
+				</div>
+			</form>
+		</div>
+		<input id="competition_createtime" class="kbtn" type="hidden" />
 		<div style="padding-left:20px;padding-bottom:20px;">
-			<a class="waves-effect waves-light btn">完成</a>
+			<a class="waves-effect waves-light btn" id="create_match">完成</a>
 		</div>
 	</div>
 	<!-- 弹出弹出 -->
@@ -701,6 +729,7 @@
 	<script src="./js/date.js"></script>
 	<script src="./js/gerenly.js"></script>
 	<script src="./js/cjdwly.js"></script>
+	<script src="./js/match.js"></script>
 	<!-- <script src="./js/chat.js"></script> -->
 	<script src="https://js.stripe.com/v3/"></script>
 	<script src="./js/feedback_message.js"></script>
@@ -777,8 +806,13 @@
 			});
 			$(function () {
 				$('#beginTime').date();
-				$('#endTime').date({ theme: "datetime" });
-				$('#endTime2').date({ theme: "datetime" });
+				$('#competition_sign_end').date({ theme: "datetime" });
+				$('#competition_sign_start').date({ theme: "datetime" });
+				$('#competition_end').date({ theme: "datetime" });
+				$('#competition_start').date({ theme: "datetime" });
+			// $(document).ready(function () {
+			// 	$('input#input_text, textarea#textarea1').characterCounter();
+			// });
 			});
 			$(document).ready(function () {
 				$('input#input_text, textarea#textarea1').characterCounter();
