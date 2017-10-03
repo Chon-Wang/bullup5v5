@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 	$("#create_room").click(function(){
-		$("#create_room_modal").css("display","block");
+		$("#create_room_modall").css("display","block");
 
 		var dateTime = new Date($.now());
 
@@ -9,7 +9,7 @@ $(document).ready(function(){
 	});
 
 	$("#create_close").click(function(){
-		$("#create_room_modal").css("display", "none");
+		$("#create_room_modall").css("display", "none");
 	});
 
 

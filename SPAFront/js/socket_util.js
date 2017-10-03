@@ -85,7 +85,71 @@ socket.on('feedback', function (feedback) {
          
         case 'PAYMENTRESULT' :
             handleBankInfo(feedback);
-            break;   
+            break;
+        //-------------------------------
+        case 'RECHARGERESULT':
+            handleRechargeResult(feedback);
+            break;
+        
+        case 'WITHDRAWRESULT':
+            handleWithdrawResult(feedback);
+            break;
+        case 'GETBALANCERESULT':
+            handleGetBalanceResult(feedback);
+            //handleGetBalanceResult2(feedback);
+            break;
+        //--------查询提现信息-------------
+        case 'SEARCHWITHDRAWRESULT':
+            handleSearchWithdrawResult(feedback);
+            break;
+        //--------同意提现-----------------
+        case 'SETSTATUSTRUERESULT':
+            handleWithdrawAgreeResult(feedback);
+            break;
+        //--------驳回提现----------------
+        case 'SETSTATUSFALSERESULT':
+            handleWithdrawDisagreeResult(feedback);
+            break;
+        //--------记录------------
+        case 'CASHFLOWRESULT':
+            handleCashFlowSearchResult(feedback);
+            break;
+        //--------查询全部约战记录--------
+        case 'SEARCHBATTLERECORDRESULT':
+            handleSearchBattleRecordResult(feedback);
+            break;
+        //--------修改约战结果-----------
+        case 'CHANGEBATTLERECORDRESULT':
+            hanadleChangeBattleRecordResult(feedback);
+            break;
+        //--------查询全部用户信息--------------
+        case 'SEARCHALLACCOUNTRESULT':
+            handleSearchAllAccountResult(feedback);
+            break;
+        //--------封号结果-------------------
+        case 'SUSPENDACCOUNTRESULT':
+            handleSuspendAccountResult(feedback);
+            break;
+        //--------解封结果-----------------
+        case 'UNBLOCKACCOUNTRESULT':
+            handleUnblockAccountResult(feedback);
+            break;
+        //--------查询全部反馈信息-----------
+        case 'SEARCHFEEDBACKRESULT':
+            handleSearchFeedbackResult(feedback);
+            break;
+        //--------处理反馈------------------
+        case 'HANDLEFEEDBACKRESULT':
+            handleOverFeedbackResult(feedback);
+            break;
+        //--------充值管理结果----------------
+        case 'SEARCHRECHARGEINFORESULT':
+            handleSearchAllRechargeResult(feedback);
+            break;
+        //--------简单统计--------------
+        case 'ANALYSISDATARESULT':
+            handleAnalysisDataResult(feedback);
+            break;
         }
 });
 
@@ -197,6 +261,15 @@ socket.on('lolRoomEstablished', function (data) {
     alert('游戏已开始');
 });
 
+socket.on('chatMsg', function(msg){
+    if(msg.chatId==userInfo.userId){
+        $('#messages').append($('<li class="chat-message " style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;background:  #b3ade9;color: #fff;float:right;" >').html(msg.chatName+':'+" "+msg.chatMsg));
+    }else{
+        $('#messages').append($('<li class="friend-messages"  style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;;background: #009fab;color: #fff;float:left;"  >').html(msg.chatName+':'+" "+msg.chatMsg));
+    }
+});
+    
+
 socket.on('battleResult', function(resultPacket){
 
     socket.emit('tokenData', resultPacket.token);  
@@ -277,8 +350,10 @@ function handleLoginResult(feedback) {
         userInfo = feedback.extension;
         // console.log("User info");
         // console.log(userInfo);
+        //alert(userInfo.userRole);
         //跳转
         var temp = bullup.loadSwigView("./swig_menu.html", { logged_user: userInfo });
+        //var temp2 = bullup.loadSwigView("./swig_home.html", { logged_user: userInfo });
         // 关闭
         $("#log_modal").css("display", "none");
         $('#system_menu').html(temp);
@@ -327,6 +402,161 @@ function handleRankList(rankList){
 function handleLOLBindResult(feedback){
     alert(feedback.extension.tips);
 }
+//处理提现申请及信息入库
+function handleBankInfo(feedback){
+    alert(feedback.text);
+}
+//处理提现
+function handleWithdrawResult(feedback){
+    alert(feedback.text);
+}
+//处理充值
+function handleRechargeResult(feedback){
+    alert(feedback.text);
+    $('#money').val(''); 
+    //$('#cardnumber').val('');
+}
+
+//处理查询到的提现信息
+function handleSearchWithdrawResult(feedback){
+    //这个tempData就是刚才后台打印出的res
+    //json格式
+    var tempData = feedback.extension.data;
+    //这样能取到第一条的某个值
+    //alert(tempData[0].bullup_bank_cardnumber);
+    //将tempData加载到网页中
+    var handleWithHtml = bullup.loadSwigView('swig_admin_handleWithdraw.html',{
+        dataSource:{data:tempData} 
+        //dataSource: tempData,
+    });
+    $('#main-view').html(handleWithHtml);
+}
+//将提现信息改为TRUE
+function handleWithdrawAgreeResult(feedback){
+    alert(feedback.text);
+}
+//将提现信息改为FALSE
+function handleWithdrawDisagreeResult(feedback){
+    alert(feedback.text);
+}
+
+//处理查询到的余额
+function handleGetBalanceResult(feedback){
+    var tempBalance = feedback.extension;
+    var temp2 = tempBalance.balance;
+    //alert(temp2);
+    var balanceHtml = bullup.loadSwigView('swig_index.html',{
+            player:{balance:temp2},
+        });
+    $('#main-view').html(balanceHtml);
+    $.getScript('/js/zymly.js');
+    //$.getScript('/js/zymly.js');
+    $.getScript('/js/payment.js');
+    options = {
+        url: 'http://127.0.0.1:3001',
+    };
+    request(options, function(error, response, body){
+        var bodyStartIndex = body.indexOf("<body>");
+        var bodyEndIndex = body.indexOf("</body>");
+        var htmlStr = body.substr(0, bodyEndIndex);
+        htmlStr = htmlStr.substr(bodyStartIndex + 6, htmlStr.length - 6);
+        $('#payment').html(htmlStr);
+    });
+}
+
+//处理查到的资金流动记录
+function handleCashFlowSearchResult(feedback){
+    var tempInfo = feedback.extension.data;
+    //alert(tempInfo[0]);
+    //alert(tempInfo.rechargeInfo[0].bullup_bill_time);
+    var handleCashFlowHtml = bullup.loadSwigView('swig_basic_table.html',{
+        dataSource:{data:tempInfo} 
+        //dataSource: tempData,
+    });
+    $('#main-view').html(handleCashFlowHtml);
+}
+
+
+//处理查到的约战记录
+function handleSearchBattleRecordResult(feedback){
+    var tempData = feedback.extension.data;
+    //alert(tempData);
+    //alert(tempData[0].bullup_battle_paticipants);
+    var handleBattleRecordHtml = bullup.loadSwigView('swig_admin_handleBattle.html',{
+        dataSource:{data:tempData} 
+        //dataSource: tempData,
+    });
+    $('#main-view').html(handleBattleRecordHtml);
+}
+//处理修改约战记录的结果
+function hanadleChangeBattleRecordResult(feedback){
+    alert(feedback.text);
+}
+
+//处理查到的账户信息
+function handleSearchAllAccountResult(feedback){
+    var tempData = feedback.extension.data;
+    //alert(tempData[0].account);
+    var handleAllAccountHtml = bullup.loadSwigView('swig_admin_handleAccount.html',{
+        dataSource:{data:tempData} 
+        //dataSource: tempData,
+    });
+    $('#main-view').html(handleAllAccountHtml);
+}
+//处理封号
+function handleSuspendAccountResult(feedback){
+    alert(feedback.text);
+}
+//处理解封
+function handleUnblockAccountResult(feedback){
+    alert(feedback.text);
+}
+
+//处理查到的用户反馈数据
+function handleSearchFeedbackResult(feedback){
+    var tempData = feedback.extension.data;
+    //alert(tempData[0].user_account);
+    var handleFeedbackHtml = bullup.loadSwigView('swig_admin_handleFeedback.html',{
+        dataSource:{data:tempData} 
+    });
+    $('#main-view').html(handleFeedbackHtml);
+}
+//处理操作用户反馈
+function handleOverFeedbackResult(feedback){
+    alert(feedback.text);
+}
+
+//充值管理
+function handleSearchAllRechargeResult(feedback){
+    var tempData = feedback.extension.data;
+    //alert(feedback.text);
+    //alert(tempData[0].user_account);
+    var handleRechargeHtml = bullup.loadSwigView('swig_admin_handleRecharge.html',{
+        dataSource:{data:tempData} 
+    });
+    $('#main-view').html(handleRechargeHtml);
+}
+
+//简单统计
+function handleAnalysisDataResult(feedback){
+    var tempData = feedback.extension.data;
+    //alert(tempData.countAllTeam);
+    var p = tempData.eachTeamWinSum;
+    p.sort(function(a,b){ 
+        return parseInt(a['winSum']) < parseInt(b["winSum"]) ? 1 : parseInt(a["winSum"]) == parseInt(b["winSum"]) ? 0 : -1;
+    });
+    var q = tempData.eachTeamBattleSum;
+    q.sort(function(a,b){ 
+        return parseInt(a['battleSum']) < parseInt(b["battleSum"]) ? 1 : parseInt(a["battleSum"]) == parseInt(b["battleSum"]) ? 0 : -1;
+    });
+    //console.log(p);
+    tempData.eachTeamWinSum = p;
+    var analysisDataHtml = bullup.loadSwigView('swig_admin_simpleAnalysis.html',{
+        dataSource:{data:tempData} 
+    });
+    $('#main-view').html(analysisDataHtml);
+}
+    
 
 function handleRegistResult(feedback){
     alert(feedback.text);
@@ -356,7 +586,7 @@ function handleRoomEstablishmentResult(feedback){
     $('.content').html(roomInfoFrameHtml);
     $('#team_info').html(roomInfoHtml);
     $('#teamates_info').html(teamatesHtml);
-    $('#create_room_modal').modal('close');
+    $('#create_room_modall').modal('close');
     $.getScript('/js/invite_friend.js');
 
     $('#invite_friend_btn').sideNav({
@@ -506,7 +736,7 @@ function  handlePersonalCenterResult(feedback){
     //判断是否成功
     if(feedback.errorCode == 0){
         var data = feedback.extension;
-        console.log('data='+JSON.stringify(data));
+        //console.log('data='+JSON.stringify(data));
         //radar.setData(data);
         var personalCenterHtml = bullup.loadSwigView('./swig_personal_basic.html',{
             player:{
@@ -548,11 +778,7 @@ function handleBattleResult(){
 }
 //反馈结果
 function feedbackMessage(feedback){
-    if(feedback.errorCode==1){
-        bullup.alert("提示:","反馈失败,请输入反馈信息");
-    }else if(feedback.errorCode==0){
-        bullup.alert("提示","反馈成功!");
-    }
+    alert(feedback.text);
 }
 
 
