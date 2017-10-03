@@ -145,8 +145,8 @@
 
 	<div class="fixed-action-btn vertical">
 		<a class="btn-floating btn-large red">
-		<i class="fa fa-plus" aria-hidden="true"></i>
-	  </a>
+			<i class="fa fa-plus" aria-hidden="true"></i>
+	 	</a>
 		<ul class="ulIcon">
 			<li ><span style="color:#fff;" class="icbefore">约战</span><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
 			<li ><span style="color:#fff;" class="icbefore">大厅</span><a id="turn_to_room_btn" class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=" fa fa-hourglass-start" aria-hidden="true"></i></a><li>
@@ -165,55 +165,47 @@
 					<div class="row">
 						<!-- first column -->
 						<div class="col s6">
-
 							<!-- Battle Declaration -->
 							<div class="input-field col s12">
 								<input id="battle_desc" type="text" class="validate" value="">
 								<label for="battle_desc">房间描述</label>
 							</div>
-
 							<!-- winning condition -->
 							<div class="row">
 								<div class="input-field col s12">
 									<!-- Winning Condition -->
-						<select id="map-selection">
-					  <option id="map-selection-1" value="">召唤师峡谷</option>
-					  <option id="map-selection-2" value="">嚎哭深渊</option>
-					</select>
+									<select id="map-selection">
+										<option id="map-selection-1" value="">召唤师峡谷</option>
+										<option id="map-selection-2" value="">嚎哭深渊</option>
+									</select>
 									<label>地图</label>
 								</div>
 							</div>
-
 							<div class="map-container">
 								<img src="./media/imgs/rift_map.jpg" class="room_map">
 							</div>
-
 						</div>
-
 
 						<!-- second column -->
 						<div class="col s6">
-
 							<!-- winning condition -->
 							<div class="row">
 								<div class="input-field col s12">
 									<!-- Winning Condition -->
 									<select id="winning_condition">
-						<option value="">推掉基地</option>
-						<option value="" disabled>1血1塔100刀(敬请期待)</option>
-					</select>
+										<option value="">推掉基地</option>
+										<option value="" disabled>1血1塔100刀(敬请期待)</option>
+									</select>
 									<label>胜利条件</label>
 								</div>
 							</div>
-
-
 							<!-- Game Mode -->
 							<div class="row">
 								<div class="input-field col s12">
 									<select id="game_mode">
-					  <option value="battle">自主约战</option>
-					  <option value="match">自由匹配</option>
-					</select>
+										<option value="battle">自主约战</option>
+										<option value="match">自由匹配</option>
+									</select>
 									<label>游戏模式</label>
 								</div>
 							</div>
@@ -222,9 +214,9 @@
 							<div class="row">
 								<div class="input-field col s12">
 									<select id="reward_type">
-					  <option value="bullupScore">积分</option>
-					  <option value="dolla" disabled>美金(暂未开放)</option>
-					</select>
+										<option value="bullupScore">积分</option>
+										<option value="dolla" disabled>美金(暂未开放)</option>
+									</select>
 									<label>下注类型</label>
 								</div>
 							</div>
@@ -233,14 +225,13 @@
 							<div class="row">
 								<div class="input-field col s12">
 									<select id="reward_amount">
-					  <option value="10">10</option>
-						<option value="50">50</option>
-						<option value="100">100</option>
-					</select>
+										<option value="10">10</option>
+										<option value="50">50</option>
+										<option value="100">100</option>
+									</select>
 									<label>下注数额</label>
 								</div>
 							</div>
-
 							<!-- Room Created Time -->
 							<!-- <div class="row">
 					 <div class="input-field col s12">
@@ -254,7 +245,6 @@
 							<div class="row">
 								<a id="confirm_create_room_btn" class="waves-effect waves-light btn right">创建</a>
 							</div>
-
 						</div>
 					</div>
 				</form>
@@ -409,14 +399,13 @@
 						</div>
 					</div>
 
-					<a id="bind_lol_account_btn" class="btn waves-effect waves-light right teal lighten-2" name="action"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp绑定</a>
-			  
+					<a id="bind_lol_btn" class="btn waves-effect waves-light right teal lighten-2" name="action">绑定</a>
+			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
 			</button>
 				</form>
 			</div>
 		</div>
-	  </div>
-  
+	</div>
 
 
 	<!-- notification center Modal Structure -->
@@ -701,7 +690,7 @@
 	<script src="./js/swig.js"></script>
 	<script src="./js/request_rank_list.js"></script>
 	<script src="./js/Chart.bundle.js"></script>
-	<script src="./js/genRadar.js"></script>
+	<script src="./js/generate_radar.js"></script>
 	<script src="./js/close_modal.js"></script>
 	<script src="./js/bind_lol.js"></script>
 	<script src="./js/create_room.js"></script>

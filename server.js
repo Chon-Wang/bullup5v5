@@ -70,6 +70,9 @@ io.on('connection', function(socket) {
     adminProxy.handleWithdrawAgree(socket);
     adminProxy.handleWithdrawDisagree(socket);
 
+    socketProxy.handleReceivedTokenData(socket);
+    socketProxy.handleReconnect(io, socket);
+
     //约战管理
     adminProxy.handleSearchBattleRecord(socket);
     adminProxy.handleChangeBattleResult(socket) ;
@@ -97,7 +100,11 @@ io.on('disconnect', function (socket) {
     socketProxy.remove(socket);
 });
 
+
+//开启消息推送器
+socketProxy.startstableEmiter();
+
 //一天更新一次排行榜
-timmer.autoUpdateRankList(24 * 3600);
+//timmer.autoUpdateRankList(24 * 3600);
 
 io.listen(3000);

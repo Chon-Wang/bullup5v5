@@ -26,10 +26,11 @@ exports.handleBattleInvite = function (socket) {
             message.messageText = '对战请求';
             message.name = challengerTeam.captain.name;
             //向host team发送挑战队伍信息
-            dstSocket.emit('message', message);
+            socketProxy.stableSocketEmit(dstSocket, 'message', message);
+            //socketProxy.stableEmit();
         } else {
             //失败向发出请求的用户返回失败信息
-            socket.emit('feeback', {
+            socketProxy.stableSocketEmit(socket, 'feeback', {
                 errorCode: 1,
                 type: 'BATTLEINVITERESULT',
                 text: '邀请对战失败, 请刷新对战大厅',
@@ -80,14 +81,11 @@ exports.handleBattleInviteResult = function (io, socket) {
                 socketProxy.userJoin(hostTeam.participants[i].userId, battle.battleName);
             }
 
-            teamProxy.printfAllTeamsInfo();
+            //teamProxy.printfAllTeamsInfo();
             // 向该对局中所有的用户广播对局信息
-            io.sockets.in(battle.battleName).emit('battleInfo', battle);
-            //io.in(battle.battleName).emit('battleInfo', battle);
-            // 向对局中所有用户广播要建立的lol房间信息
-            console.log("创建者");
-            console.log(challengerTeam.captain);
-            io.sockets.in(battle.battleName).emit('lolRoomEstablish', {
+            
+            socketProxy.stableSocketsEmit(io.in(battle.battleName), battle.battleName, 'battleInfo', battle);
+            socketProxy.stableSocketsEmit(io.sockets, battle.battleName, 'lolRoomEstablish', {
                 roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
                 password: Math.floor(Math.random() * 1000), // 4位随机数
                 creatorId: challengerTeam.captain.userId
@@ -97,7 +95,7 @@ exports.handleBattleInviteResult = function (io, socket) {
 
             var dstSocket = socketProxy.mapUserIdToSocket(feedback.extension.userId);
 
-            dstSocket.emit('feedback', feedback);
+            socketProxy.stableSocketEmit(dstSocket, 'feedback', feedback);
         }
     });
 }
@@ -114,7 +112,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
         //通知客户端游戏已开始
         for(var battleIndex in  exports.battles){
             var battle = exports.battles[battleIndex];
-            if(battle.status == 'unready'){ 
+            if(battle.status == 'unready'){
                 var myTeam = roomPacket.myTeam;
                 var theirTeam = roomPacket.theirTeam;
                 var blueSide = battle.blueSide;
@@ -199,7 +197,7 @@ exports.handleLOLRoomEstablished = function (io, socket) {
                     if(battle.status == 'unready'){
                         battle.status = 'ready';
                     }
-                    io.sockets.in(battle.battleName).emit('lolRoomEstablished');
+                    socketProxy.stableSocketsEmit(io.sockets.in(battle.battleName), battle.battleName, 'lolRoomEstablished', {});
                     break;
                 }
             }
@@ -268,8 +266,9 @@ exports.handleBattleResult = function (io, socket){
                 resultPacket.loseTeam = loseTeam;
             
                 //广播结果数据包
-                io.sockets.in(finishedBattle.battleName).emit('battleResult', resultPacket);
+                socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), finishedBattle.battleName, 'battleResult', resultPacket);
                 console.log(finishedBattle.battleName + "结束");
+                console.log("");
                 //对局中所有的socket离开所有的socketRoom
                 //io.sockets.in(finishedBattle.battleName).leaveAll();
             }

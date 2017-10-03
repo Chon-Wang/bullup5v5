@@ -1,6 +1,4 @@
 
-var request = require("request");
-
 $().ready(function(){
     $('#router_index').on('click', function(e){
         e.preventDefault();

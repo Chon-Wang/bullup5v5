@@ -2,7 +2,7 @@ var io = require('socket.io-client');
 var socket = io.connect('http://127.0.0.1:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
-
+var radar_chart = require('./js/generate_radar.js');
 
 var userInfo = null;
 var teamInfo = null;
@@ -12,14 +12,23 @@ var battleInfo = null;
 var formedTeams = null;
 var messageInfo = [];
 
+var lastSocketStatus = null;
+var lastSocketId = null;
+
 
 socket.on('success', function (data) {
+
+    socket.emit('tokenData', data.token);
+
     logger.listenerLog('success');
     console.log(data);
 });
 
 
 socket.on('feedback', function (feedback) {
+
+    socket.emit('tokenData', feedback.token);
+
     switch (feedback.type) {
         case 'LOGINRESULT':
             handleLoginResult(feedback);
@@ -145,7 +154,7 @@ socket.on('feedback', function (feedback) {
 });
 
 socket.on('message', function(message){
-    
+    socket.emit('tokenData', message.token);
     switch(message.messageType){
         case 'invitedFromFriend':
             handleInviteFromFriend(message);
@@ -160,6 +169,9 @@ socket.on('message', function(message){
 
 // 监听服务端队伍信息更新
 socket.on('teamInfoUpdate', function (data) {
+
+    socket.emit('tokenData', data.token);
+
     roomInfo = data;
     //console.log(JSON.stringify(roomInfo));
     //更新房间信息
@@ -200,18 +212,14 @@ socket.on('teamInfoUpdate', function (data) {
     //var temp = bullup.loadSwigView("./swig_menu.html", { logged_user: userInfo });
 });
 
-socket.on('teamForm', function () {
-    //TODO 切换到对战大厅
-    socket.emit('versusLobbyRefresh');
-});
-
-socket.on('battleRequest', function (battleRequest) {
-    // TODO 提示用户有对战邀请, 点击查看对方详情
-});
 
 socket.on('battleInfo', function (battle) {
+
+    socket.emit('tokenData', battle.token);
+    console.log("TOKEN: " + battle.token);
+
     battleInfo = battle;
-    console.log(JSON.stringify(battleInfo));
+    //console.log(JSON.stringify(battleInfo));
     var battleRoomHtml = bullup.loadSwigView("./swig_fight.html", {
         blueSide: battleInfo.blueSide,
         redSide: battleInfo.redSide,
@@ -223,6 +231,9 @@ socket.on('battleInfo', function (battle) {
 });
 
 socket.on('lolRoomEstablish', function (lolRoom) {
+
+    socket.emit('tokenData', lolRoom.token);
+
     if (userInfo.userId == lolRoom.creatorId) {
         //开始抓包
         lol_process.grabLOLData('room', socket);
@@ -241,7 +252,10 @@ socket.on('lolRoomEstablish', function (lolRoom) {
     }
 });
 
-socket.on('lolRoomEstablished', function () {
+socket.on('lolRoomEstablished', function (data) {
+
+    socket.emit('tokenData', data.token);    
+
     //游戏开始 刷新时钟
     lol_process.grabLOLData('result', socket);
     alert('游戏已开始');
@@ -257,6 +271,9 @@ socket.on('chatMsg', function(msg){
     
 
 socket.on('battleResult', function(resultPacket){
+
+    socket.emit('tokenData', resultPacket.token);  
+
     //读取数据
     var winTeam = resultPacket.winTeam;
     var battleResultData = {};
@@ -329,7 +346,7 @@ function handleLoginResult(feedback) {
     if (feedback.errorCode == 0) {
         // 登录成功
         //alert(feedback.text);
-        alert( "登录成功!");
+        bullup.alert("提示:", "登录成功!");
         userInfo = feedback.extension;
         // console.log("User info");
         // console.log(userInfo);
@@ -354,7 +371,7 @@ function handleLoginResult(feedback) {
     } else if (feedback.errorCode == 1) {
         // 登录失败
        // alert(feedback.text);
-       alert( "登陆失败!");
+       bullup.alert("提示:", "登陆失败!");
     }
 }
 
@@ -552,9 +569,10 @@ function handleRoomEstablishmentResult(feedback){
     if(feedback.errorCode == 0){
         alert(feedback.text);
     }else{
-        alert( "服务器错误，创建失败");
+        bullup.alert("错误", "服务器错误，创建失败");
         return;
     }
+    //socket.emit('tokenData', feedback.token);
     roomInfo = feedback.extension;
     var roomInfoFrameHtml = bullup.loadSwigView('swig_myroom_frame.html', {});
     var roomInfoHtml = bullup.loadSwigView('swig_myroom_info.html', {
@@ -589,6 +607,7 @@ function handleRoomEstablishmentResult(feedback){
 }
 
 function handleTeamEstablishResult(feedback){
+    socket.emit('tokenData', feedback.token);
     if(feedback.errorCode == 0){
         alert(feedback.text);
         teamInfo = feedback.extension.teamInfo;
@@ -735,9 +754,8 @@ function  handlePersonalCenterResult(feedback){
                tower:data.UserlolInfo_tower,
                damage:data.UserlolInfo_damage,
                taken:data.UserInfo_damage_taken,
-               cap:data.UserStrengthRank,
-               wealthRank:data.UserWealthRank,
-               icon_id:data.User_icon_id,
+               cap:data.UserStrengthRank[0].strengthRank,
+               wealthRank:data.UserWealthRank[0].wealthRank,
                wealth:data.UserWealth,
                strength:data.UserStrength,
                winning_rate:data.competition_wins
@@ -745,7 +763,7 @@ function  handlePersonalCenterResult(feedback){
         });
         $('#main-view').html(personalCenterHtml);
     }else{
-        alert( "页面加载失败！");
+        bullup.alert("提示:", "页面加载失败！");
     }
    
 }
@@ -763,3 +781,24 @@ function handleBattleResult(){
 function feedbackMessage(feedback){
     alert(feedback.text);
 }
+
+
+setInterval(()=>{
+    if(socket != undefined){
+        //console.log("ID: " + socket.id + " connected: " + socket.connected);
+        if(lastSocketStatus == true && socket.connected == true){
+            lastSocketId = socket.id;
+            //console.log("lasetid: " + lastSocketId);
+        }
+        if(lastSocketStatus == false && socket.connected == true){
+            socket.emit('reconnected', {
+                'userInfo': userInfo,
+                'newSocketId': socket.id,
+                'lastSocketId': lastSocketId
+            });
+            //console.log("请求重连");
+            //console.log("当前id" + socket.id);
+        }
+        lastSocketStatus = socket.connected;
+    }
+},1000);
