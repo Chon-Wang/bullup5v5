@@ -96,7 +96,6 @@ exports.addUser = function(userInfo, callback) {
         if(err) console.log(err);
         callback(result);
     });
-    
 }
 
 exports.findUserIconById = function(userId, callback){
