@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://49.140.81.199:3000');
+var socket = io.connect('http://127.0.0.1:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 var radar_chart = require('./js/generate_radar.js');
@@ -572,6 +572,7 @@ function handleRoomEstablishmentResult(feedback){
         bullup.alert("错误", "服务器错误，创建失败");
         return;
     }
+    //socket.emit('tokenData', feedback.token);
     roomInfo = feedback.extension;
     var roomInfoFrameHtml = bullup.loadSwigView('swig_myroom_frame.html', {});
     var roomInfoHtml = bullup.loadSwigView('swig_myroom_info.html', {
