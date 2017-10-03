@@ -70,12 +70,9 @@ io.on('connection', function(socket) {
     adminProxy.handleWithdrawAgree(socket);
     adminProxy.handleWithdrawDisagree(socket);
 
-<<<<<<< HEAD
     socketProxy.handleReceivedTokenData(socket);
-
     socketProxy.handleReconnect(io, socket);
-});
-=======
+
     //约战管理
     adminProxy.handleSearchBattleRecord(socket);
     adminProxy.handleChangeBattleResult(socket) ;
@@ -91,7 +88,6 @@ io.on('connection', function(socket) {
 
     //充值管理
     adminProxy.searchAllRechargeInfo(socket);
->>>>>>> fd787cfaf9db6acd4c30dbede0970837813623e2
 
     //简单统计
     adminProxy.handleAnalysis(socket);
