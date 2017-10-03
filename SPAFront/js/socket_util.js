@@ -196,28 +196,39 @@ socket.on('battleInfo', function (battle) {
 
 socket.on('lolRoomEstablish', function (lolRoom) {
     if (userInfo.userId == lolRoom.creatorId) {
+        //开始抓包
+        lol_process.grabLOLData('room', socket);
         // 如果用户是创建者，则创建房间
         alert('请在规定时间内创建房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password);
 
         //自动创建房间
         //auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
-        //开始抓包
-        lol_process.grabLOLData('room', socket);
+        
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
         //alert('请等待');
-        alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
         lol_process.grabLOLData('room', socket);
+        alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
+        
     }
 });
 
 socket.on('lolRoomEstablished', function () {
-    alert('游戏已开始');
     //游戏开始 刷新时钟
     lol_process.grabLOLData('result', socket);
+    alert('游戏已开始');
 });
 
-socket.on('battleResult', function (resultPacket) {
+socket.on('chatMsg', function(msg){
+    if(msg.chatId==userInfo.userId){
+        $('#messages').append($('<li class="chat-message " style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;background:  #b3ade9;color: #fff;float:right;" >').html(msg.chatName+':'+" "+msg.chatMsg));
+    }else{
+        $('#messages').append($('<li class="friend-messages"  style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;;background: #009fab;color: #fff;float:left;"  >').html(msg.chatName+':'+" "+msg.chatMsg));
+    }
+});
+    
+
+socket.on('battleResult', function(resultPacket){
     //读取数据
     var winTeam = resultPacket.winTeam;
     var battleResultData = {};
@@ -290,7 +301,7 @@ function handleLoginResult(feedback) {
     if (feedback.errorCode == 0) {
         // 登录成功
         //alert(feedback.text);
-        bullup.alert("提示:", "登录成功!");
+        alert( "登录成功!");
         userInfo = feedback.extension;
         // console.log("User info");
         // console.log(userInfo);
@@ -312,8 +323,8 @@ function handleLoginResult(feedback) {
         });
     } else if (feedback.errorCode == 1) {
         // 登录失败
-        // alert(feedback.text);
-        bullup.alert("提示:", "登陆失败!");
+       // alert(feedback.text);
+       alert( "登陆失败!");
     }
 }
 
@@ -355,8 +366,8 @@ function handleRegistResult(feedback) {
 function handleRoomEstablishmentResult(feedback) {
     if (feedback.errorCode == 0) {
         alert(feedback.text);
-    } else {
-        bullup.alert("错误", "服务器错误，创建失败");
+    }else{
+        alert( "服务器错误，创建失败");
         return;
     }
     roomInfo = feedback.extension;
@@ -373,7 +384,7 @@ function handleRoomEstablishmentResult(feedback) {
     $('.content').html(roomInfoFrameHtml);
     $('#team_info').html(roomInfoHtml);
     $('#teamates_info').html(teamatesHtml);
-    $('#create_room_modal').modal('close');
+    $('#create_room_modall').modal('close');
     $.getScript('/js/invite_friend.js');
 
     $('#invite_friend_btn').sideNav({
@@ -522,33 +533,34 @@ function handlePersonalCenterResult(feedback) {
     //判断是否成功
     if (feedback.errorCode == 0) {
         var data = feedback.extension;
-        console.log('data=' + JSON.stringify(data));
+        //console.log('data='+JSON.stringify(data));
         //radar.setData(data);
-        var personalCenterHtml = bullup.loadSwigView('./swig_personal_basic.html', {
-            player: {
-                name: data.UserlolNickname,
-                server: data.UserlolArea,
-                wins: data.UserlolInfo_wins,
-                k: data.UserlolInfo_k,
-                d: data.UserlolInfo_d,
-                a: data.UserlolInfo_a,
-                minion: data.UserlolInfo_minion,
-                golds: data.UserInfo_gold_perminiute,
-                gold: data.UserlolInfo_gold,
-                heal: data.UserInfo_heal,
-                tower: data.UserlolInfo_tower,
-                damage: data.UserlolInfo_damage,
-                taken: data.UserInfo_damage_taken,
-                cap: data.UserStrengthRank,
-                wealthRank: data.UserWealthRank,
-                wealth: data.UserWealth,
-                strength: data.UserStrength,
-                winning_rate: data.competition_wins
+        var personalCenterHtml = bullup.loadSwigView('./swig_personal_basic.html',{
+            player:{
+               name:data.UserlolNickname,
+               server:data.UserlolArea,
+               wins:data.UserlolInfo_wins,
+               k:data.UserlolInfo_k,
+               d:data.UserlolInfo_d,
+               a:data.UserlolInfo_a,
+               minion:data.UserlolInfo_minion,
+               golds:data.UserInfo_gold_perminiute,
+               gold:data.UserlolInfo_gold,
+               heal:data.UserInfo_heal,
+               tower:data.UserlolInfo_tower,
+               damage:data.UserlolInfo_damage,
+               taken:data.UserInfo_damage_taken,
+               cap:data.UserStrengthRank,
+               wealthRank:data.UserWealthRank,
+               icon_id:data.User_icon_id,
+               wealth:data.UserWealth,
+               strength:data.UserStrength,
+               winning_rate:data.competition_wins
             }
         });
         $('#main-view').html(personalCenterHtml);
-    } else {
-        bullup.alert("提示:", "页面加载失败！");
+    }else{
+        alert( "页面加载失败！");
     }
 
 }
@@ -563,11 +575,11 @@ function handleBattleResult() {
 
 }
 //反馈结果
-function feedbackMessage(feedback) {
-    if (feedback.errorCode == 1) {
-        bullup.alert("提示:", "反馈失败,请输入反馈信息");
-    } else if (feedback.errorCode == 0) {
-        bullup.alert("提示", "反馈成功!");
+function feedbackMessage(feedback){
+    if(feedback.errorCode==1){
+        alert("反馈失败,请输入反馈信息");
+    }else if(feedback.errorCode==0){
+        alert("反馈成功!");
     }
 }
 

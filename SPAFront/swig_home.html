@@ -89,7 +89,7 @@
 
 	<ul id="user-slide-out" class="side-nav">
 
-		<a style="float:right;margin-top:40px;" class="waves-effect waves-light btn ds_wang" href="#modal1">修改个人信息</a>
+		
 
 		<li>
 			<div class="user-view">
@@ -101,14 +101,42 @@
 				<a href="#!name"><span class="white-text name">John Doe</span></a>
 				<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
 			</div>
+			<a class="waves-effect waves-light btn" href="#coollap">添加好友</a>
 		</li>
-		<li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-		<li><a href="#!">Second Link</a></li>
-		<li>
-			<div class="divider"></div>
-		</li>
-		<li><a class="subheader">Subheader</a></li>
-		<li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+		
+		<ul class="collapsible" data-collapsible="accordion">
+			<li>
+			  <div class="collapsible-header"><span class="new badge">4</span>好友</div>
+			  <div class="collapsible-body collap-style" style="background:none;">
+				<div class="collap-rq" >
+				<p class="collap-p" >
+					<img src="./media/imgs/usr_bg.jpg">
+				</p>
+				  <p class="collap-p2">有志者事竟成。</p>
+				</div>
+			</div>
+
+			<div class="collapsible-body collap-style" style="background:none;">
+					<div class="collap-rq" >
+					<p class="collap-p" >
+						<img src="./media/imgs/usr_bg.jpg">
+					</p>
+					  <p class="collap-p2">有志者事竟成。</p>
+					</div>
+				</div>
+
+				<div class="collapsible-body collap-style" style="background:none;">
+						<div class="collap-rq" >
+						<p class="collap-p" >
+							<img src="./media/imgs/usr_bg.jpg">
+						</p>
+						  <p class="collap-p2">有志者事竟成。</p>
+						</div>
+					</div>
+			</li>
+			
+		  </ul>
+		
 	</ul>
 
 
@@ -116,11 +144,12 @@
 		<a class="btn-floating btn-large red">
 		<i class="fa fa-plus" aria-hidden="true"></i>
 	  </a>
-		<ul>
-			<li><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
-			<li><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true"></i></a></li>
-			<li><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-			<li><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
+		<ul class="ulIcon">
+			<li ><span style="color:#fff;" class="icbefore">约战</span><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
+			<li ><span style="color:#fff;" class="icbefore">大厅</span><a id="turn_to_room_btn" class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=" fa fa-hourglass-start" aria-hidden="true"></i></a><li>
+			<li ><span style="color:#fff;" class="icbefore">战力</span><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true" id='home'></i></a></li>
+			<li ><span style="color:#fff;" class="icbefore">好友</span><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+			<li ><span style="color:#fff;" class="icbefore">充值</span><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
 		</ul>
 	</div>
 
@@ -144,7 +173,7 @@
 							<div class="row">
 								<div class="input-field col s12">
 									<!-- Winning Condition -->
-									<select id="map-selection">
+						<select id="map-selection">
 					  <option id="map-selection-1" value="">召唤师峡谷</option>
 					  <option id="map-selection-2" value="">嚎哭深渊</option>
 					</select>
@@ -366,22 +395,22 @@
 	<!-- Modal Structure -->
 	<div id="link_modal" class="modal">
 		<div class="modal-content">
-		  <h4>绑定英雄联盟账号</h4>
-		  <div class="row">
-			<form class="col s12">
-			  <div class="row">
-				<div class="input-field col s12">
-				  <i class="fa fa-user prefix" aria-hidden="true"></i>
-				  <input id="bind_lol_account_text" type="text" class="validate" />
-				  <label for="bind_lol_account_text">英雄联盟用户名</label>
-				</div>
-			  </div>
-  
-			  <a id="bind_lol_account_btn" class="btn waves-effect waves-light right teal lighten-2">绑定
-				<i class="fa fa-paper-plane" aria-hidden="true"></i>
-			  </a>
-			</form>
-		  </div>
+			<h4>绑定英雄联盟账号</h4>
+			<div class="row">
+				<form class="col s12">
+					<div class="row">
+						<div class="input-field col s12">
+							<i class="fa fa-user prefix" aria-hidden="true"></i>
+							<input id="bind_lol_account_text" type="text" class="validate" />
+							<label for="bind_lol_account_text">英雄联盟用户名</label>
+						</div>
+					</div>
+
+					<a id="bind_lol_account_btn" class="btn waves-effect waves-light right teal lighten-2" name="action"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;&nbsp绑定</a>
+			  
+			</button>
+				</form>
+			</div>
 		</div>
 	  </div>
   
@@ -619,10 +648,16 @@
 							</button>
 		</div>
 	</div>
-
-
-
-
+<!-- 邀请好友弹出 -->
+<div id="coollap" class="modal" style="background-color: #455a64;width:35%;">
+		<div class="row">
+				<div class="input-field col s6">
+				  <input style="color:#fff;" value="" id="first_name2" type="text" class="validate">
+				  <label class="active" for="first_name2">对方ID</label>
+				</div>
+			</div>
+			  <a class="waves-effect waves-light btn collpost" >添加</a>
+	  </div>
 	</div>
 	<!-- Modal Structure -->
 	<div id="fankui" class="modal modal-fixed-footer fankui_size" style="height: 50%;background:#455a64;">
@@ -688,6 +723,9 @@
 	<script src="./js/feedback_message.js"></script>
 	<script src="./js/turn_to_room.js"></script>
 	<script src="./js/bullup_message_box.js"></script>
+	<script src="./js/bullup_message_box.js"></script>
+	
+
 
 
 
@@ -744,11 +782,27 @@
 				$('#competition_sign_start').date({ theme: "datetime" });
 				$('#competition_end').date({ theme: "datetime" });
 				$('#competition_start').date({ theme: "datetime" });
-			});
 			// $(document).ready(function () {
 			// 	$('input#input_text, textarea#textarea1').characterCounter();
 			// });
+			});
+			$(document).ready(function () {
+				$('input#input_text, textarea#textarea1').characterCounter();
 
+				//地图替换
+				$('.dropdown-content li').on("click",function () {
+					var map = $(this).index();
+				
+					if ( map == 1 ) {
+						$('.room_map').attr('src','./media/imgs/hhsy_map.jpg');
+					}else{
+						$('.room_map').attr('src','./media/imgs/rift_map.jpg');
+					}
+				});
+			});
+			
+			
+			
 			
 		</script>
 </body>

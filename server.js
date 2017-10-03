@@ -61,6 +61,7 @@ io.on('connection', function(socket) {
     paymentProxy.handleBankInfo(socket);
 
     chatProxy.handleChat(io,socket);
+<<<<<<< HEAD
 
     matchProxy.handlematchInfo(socket);
 
@@ -87,13 +88,13 @@ io.on('connection', function(socket) {
     matchProxy.handleagreeApply(socket);
 
     matchProxy.handlerejectApply(socket);
+=======
+>>>>>>> abd6784107ea3e2a4b62cdb595de48a0e97eaa1e
 });
-
 
 io.on('disconnect', function (socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' disconnected!');
     socketProxy.remove(socket);
-
 });
 
 //一天更新一次约战排行榜

@@ -9,6 +9,9 @@ $().ready(function () {
             userId:userInfo.userId
         });
       
+        bullup.loadTemplateIntoTarget('swig_await.html', {}, 'main-view');
+        //动态加载查看队员子页面路由js
+        $.getScript('/js/check.js');
     });
     //我参与的赛事路由
     $('.routing').on('click', function (e) {
@@ -28,7 +31,7 @@ $().ready(function () {
         });
     
         $.getScript('/js/check.js');
-    })
+    });
 });
 
 

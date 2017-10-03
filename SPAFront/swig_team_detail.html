@@ -3,22 +3,84 @@
 	 of swig_battle.html
    -->
 
-{% if team %}
-  
-  <h4><div id="team_details_team_name">{{ team.roomName }}</div></h4>
-  <label for="team-size">队伍人数</label>
-  <p id="team-size">{{ team.participantCount }}</p>
+   {% if team %}
+   
+   <h4><div id="team_details_team_name">{{ team.roomName }}</div></h4>
+   <label for="team-size">队伍人数</label>
+   <p id="team-size">{{ team.participantCount }}</p>
+ 
+   <label for="team-desc">队伍描述</label>
+   <p id="team-desc" style="width:100px;height:100px;overflow: hidden;">{{ team.battleDesc }}</p>
+ 
+   <label for="game-mode">游戏模式</label>
+   <p id="game-mode">{{ team.gameMode }}</p>
+   
+   <label for="winning-condition">胜利条件</label>
+   <p id="winning-condition">{% if team.winningCondition == 'push-crystal' %}推掉水晶{% endif %}</p>
+   
+   <label for="bet-amount">下注金额</label>
+   <p id="bet-amount">{{ team.rewardAmount }}</p>
+ 
+   <label for="team-desc">队伍描述</label>
+   <p id="team-desc" style="width:100px;height:100px;overflow: hidden;">萨达大所大所大所大所大所大所大所大所大所大所大所大大所大所多撒大所多啊实打实打扫打扫打扫打扫大</p>
 
-  <label for="team-desc">队伍描述</label>
-  <p id="team-desc" style="width:100px;height:100px;overflow: hidden;">萨达大所大所大所大所大所大所大所大所大所大所大所大大所大所多撒大所多啊实打实打扫打扫打扫打扫大</p>
+ {% endif %}
+ <script>
+  window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(54, 162, 235)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+};
 
-  <label for="game-mode">游戏模式</label>
-  <p id="game-mode">{{ team.gameMode }}</p>
-  
-  <label for="winning-condition">胜利条件</label>
-  <p id="winning-condition">{% if team.winningCondition == 'push-crystal' %}推掉水晶{% endif %}</p>
-  
-  <label for="bet-amount">下注金额</label>
-  <p id="bet-amount">{{ team.rewardAmount }}</p>
+var chartColors = window.chartColors;
+var color = Chart.helpers.color;
+var arr;
+function setData (data) {
+    arr = data;
+}
+var $a =  $('#a1').val();
+console.log($a);
+var json = {
+     name1:250,
+     name2:250,
+     name3:250,
+     name4:250,
+     name5:250,
+     name6:250
+}
+setData([json.name1,json.name2,json.name3,json.name4,json.name5,json.name6]);
+var config3 = {
+        type: 'radar',
+        data: {
+            labels: ['击杀', '死亡', '助攻','治疗', '造成伤害', '承受伤害'],
+            datasets: [{
+                label: "能力雷达图",
+                backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
+                borderColor: window.chartColors.red,
+                pointBackgroundColor: chartColors.red,
+                data: arr
+            }, ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: '能力'
+            },
+            scale: {
+                ticks: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
 
-{% endif %}
+    var arr = config3.data.datasets[0]; 
+    console.log(arr.data);
+var radar = document.getElementById("team-detail-chart");
+window.myRadar = new Chart(radar, config3);
+  
+</script>

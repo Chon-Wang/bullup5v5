@@ -1,7 +1,7 @@
 {% if player %}
   <div class="col s2 center-align" style="margin-top:20px;">
     <a href="#" data-activates="slide-out" class="button-collapse">
-      <img id="tiaozhuan" class="personalInfo-teaser" src="./media/imgs/timg-2.jpeg">
+      <img id="tiaozhuan" class="personalInfo-teaser" src="./media/imgs/{{player.icon_id}}.jpg">
     </a>
   </div>
 <!-- 召唤师名 所属服务器 -->
@@ -9,6 +9,7 @@
     <label class="personal-title" style="font-size:16px;">
       {{ player.name }}
     </label>
+
     <div class="personal-server chip">
       {{ player.server }}
     </div>
@@ -27,10 +28,19 @@
 
 <!--雷达图-->
 <!-- Personal Info -->
-<div class="row" id="personal_basic" style="margin-top:25px;">
+<div class="row" id="personal_basic" style="margin-top:25px;text-align: center;">
 
 <!-- 战斗力 -->
-<div class="col s6 m2">
+<nav style="background: none;">
+        <div class="nav-wrapper" style="background: #4db6ac;height: 65%;">
+          
+          <ul id="nav-mobile" class="left hide-on-med-and-down" style="padding-left:50px;">
+            <a href="#!" class="brand-logo" style="font-size:1rem; line-height: 40px;" >摘要</a>
+         
+          </ul>
+        </div>
+    </nav>
+<div class="col s6 m2" style="width:20%;">
     <label class="personal-title">战斗力</label>
     <div class="personal-value">
         {{player.strength}}
@@ -38,7 +48,7 @@
 </div>
 
 <!-- 胜率 -->
-<div class="col s6 m2">
+<div class="col s6 m2" style="width:20%;">
     <label class="personal-title">
         胜率
 </label>
@@ -48,7 +58,7 @@
 </div>
 
 <!-- 财富 -->
-<div class="col s6 m2">
+<div class="col s6 m2" style="width:20%;">
     <label class="personal-title">
       财富
     </label>
@@ -57,13 +67,13 @@
     </div>
   </div>
 <!-- 排行 -->
-<div class="col s6 m2">
+<div class="col s6 m2" style="width:20%;">
     <label class="personal-title"> 战斗力排行</label>
     <div class="personal-value">
         {{ player.cap }}
     </div>
 </div>
-<div class="col s6 m2">
+<div class="col s6 m2" style="width:20%;">
     <label class="personal-title">财富排行</label>
     <div class="personal-value">
         {{ player.wealthRank }}
@@ -74,85 +84,45 @@
 
 </div>
 <!-- first row -->
+<nav style="background: none;">
+        <div class="nav-wrapper" style="background: #4db6ac;height: 65%;">
+          
+          <ul id="nav-mobile" class="left hide-on-med-and-down" style="padding-left:50px;">
+            <a href="#!" class="brand-logo" style="font-size:1rem; line-height: 40px;" >战斗力统计</a>
+         
+          </ul>
+        </div>
+    </nav>
 
-<div class="row">
-<div class="col s12 m3">
+<div class="row" style="width:75%;margin-top:50px;">
+<div class="col s12 m3"  style="width:33.33%;">
     <canvas id="chart-area"></canvas>
 </div>
-<div class="col s12 m3">
+<div class="col s12 m3"  style="width:33.33%;">
     <canvas id="polar-area"></canvas>
 </div>
 
     <!--  -->
-    <div class="col s12 m3">
+    <div class="col s12 m3"  style="width:33.33%;">
         <canvas id="radar-area"></canvas>
     </div>
 
-<div class="col s12 m3" >
-    <!-- Win and Lose table -->
-    <label class="table-name ">最近盈亏</label>
-    <table class="bordered recent-pl">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>盈亏</th>
-                <th>排名浮动</th>
-            </tr>
-        </thead>
 
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>+300</td>
-                <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>245</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>-200</td>
-                <td><label><i class="fa fa-arrow-down" aria-hidden="true"></i></label>332</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>+300</td>
-                <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>+300</td>
-                <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>+300</td>
-                <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>+300</td>
-                <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>+300</td>
-                <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>+300</td>
-                <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>+300</td>
-                <td><label><i class="fa fa-arrow-up" aria-hidden="true"></i></label>121</td>
-            </tr>
-        </tbody>
-    </table>
 </div>
-</div>
-
+<nav style="background: none;">
+    <div class="nav-wrapper" style="background: #4db6ac;height: 65%;">
+      
+      <ul id="nav-mobile" class="left hide-on-med-and-down" style="padding-left:50px;">
+        <a href="#!" class="brand-logo" style="font-size:1rem; line-height: 40px;" >涨幅</a>
+     
+      </ul>
+    </div>
+</nav>
+  
 <div class="row">
-
+ <div class="col s12 m8"  style="margin:0 auto;float: none;">
+    <canvas id="chartjs-0" class="chartjs"></canvas>
+ </div>
 </div>
 
 {% else %}
@@ -161,8 +131,8 @@
 </div>
 {% endif %}
 
-<script src="./js/jquery-2.2.4.js"></script>
 <script>
+ 
 window.chartColors = {
     red: 'rgb(255, 99, 132)',
     orange: 'rgb(255, 159, 64)',
@@ -310,6 +280,35 @@ var radar = document.getElementById("radar-area");
 window.myDoughnut = new Chart(ctx1, config1)
 window.myPolarArea = Chart.PolarArea(ctx2, config2);
 window.myRadar = new Chart(radar, config3);
+//涨幅曲线图
+var config4 = {
+    type: 'line',
+    data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+            label: '涨幅',
+            data: [343, 131,323, 1, 2, 3],
+            backgroundColor: "rgba(255,255,255,0)",
+            borderColor:"#4db6ac",
+            borderWidth: 2
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        },
+        title: {
+            display: false,
+            text: '经济'
+        }
+    }
+};
+var $ctx = $("#chartjs-0");
+var myChart = new Chart($ctx, config4);
 
 </script>
-<div><script >$.getScript('/js/gerenly.js');</script></div>
+<!-- <div><script >$.getScript('/js/gerenly.js');</script></div> -->
