@@ -4,6 +4,7 @@ exports.server = {
     user: 'root',
     password: '123456',
     database: 'bullup'
+   
 };
 
 exports.userTbl = {

@@ -1,13 +1,11 @@
 var logger = require('../util/logutil.js');
-var socketProxy = require('./socketproxy');
-
 exports.init = function() {
     // 已经创建完毕的队伍
-    this.formedTeams = {};
+    this.formedmatchTeams = {};
     // 正在创建中的队伍列表
-    this.unformedTeams = {};
+    this.unformedmatchTeams = {};
     // 用来进行广播的队伍列表
-    this.broadcastTeamInfos = {};
+    this.broadcastmatchTeamInfos = {};
 }
 
 /**
@@ -15,21 +13,21 @@ exports.init = function() {
  * @param socket
  */
 exports.handleRoomEstablish = function(socket) {
-    socket.on('roomEstablish', function (room) {
+    socket.on('teamEstablish', function (team) {
         logger.listenerLog('roomEstablish');
-        exports.unformedTeams[room.roomName] = room;
+        logger.jsonLog(competitionTeam);
+        exports.unformedmatchTeams[team.teamName] = team;
         // 将该socket放入teamname命名的room中
-        socketProxy.joinRoom(socket, room.roomName);
+        socket.join(team.teamName);
         // 返回回馈信息
-        socketProxy.stableSocketEmit(socket, 'feedback', {
+        socket.emit('feedback', {
             errorCode: 0,
-            type: 'ESTABLISHROOMRESULT',
+            type: 'ESTABLISHMATCHTEAMRESULT',
             text: '创建成功',
-            extension: room
+            extension: team
         });
     });
 }
-
 
 exports.handleRefreshFormedBattleRoom = function(socket){
     socket.on('refreshFormedBattleRoom', function(data){
@@ -42,11 +40,11 @@ exports.handleRefreshFormedBattleRoom = function(socket){
                 formedTeams: exports.formedTeams
             }
         }
-        socketProxy.stableSocketEmit(socket, 'feedback', feedback);
-        //socketProxy.stableEmit();
+        socket.emit('feedback', feedback);
     });
 
 }
+
 
 /**
  * 通过队伍名获取未形成的队伍信息
@@ -108,52 +106,8 @@ exports.handleTeamEstablish = function (io, socket) {
             }
         };
         // 告诉该队伍中的所有用户队伍已经形成
-        var sockets = io.sockets;
-        socketProxy.stableSocketsEmit(sockets, teamInfo.roomName, 'feedback', feedback);
-        //socketProxy.stableEmit();
+        io.sockets.in(teamInfo.roomName).emit('feedback', feedback);
     });
-}
-/**
- * 处理用户更新对战大厅房间请求
- * @param socket
- */
-exports.handleVersusLobbyRefresh = function(socket) {
-    socket.on('versusLobbyRefresh', function () {
-        logger.listenerLog('versusLobbyRefresh');
-        socketProxy.stableSocketEmit(socket, 'feedback', {
-            errorCode: 0,
-            type: 'VERSUSLOBBYINFO',
-            text: '对战大厅更新数据',
-            extension: exports.broadcastTeamInfos
-        });
-    });
-}
-
-
-/**
- * 处理用户查看详情
- * @param socket
- */
-exports.handleTeamDetails = function (socket) {
-    socket.on('teamDetails', function (teamInfo) {
-        var team = exports.formedTeams[teamInfo.teamName];
-        
-        if (team && team.status == 'PUBLISHING') {
-            socketProxy.stableSocketEmit(socket, 'feedback', {
-                errorCode: 0,
-                type: 'TEAMDETAILS',
-                text: '队伍详情',
-                extension: team,
-            })
-        } else {
-            socketProxy.stableSocketEmit(socket, 'feedback', {
-                errorCode: 1,
-                type: 'TEAMDETAILS',
-                text: '查看队伍详情失败, 请刷新对战大厅',
-                extension: null
-            })
-        }
-    })
 }
 
 /**
