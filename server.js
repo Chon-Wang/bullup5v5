@@ -60,6 +60,8 @@ io.on('connection', function(socket) {
 
     battleProxy.handleBattleResult(io, socket);
 
+    battleProxy.handleMatch(io);
+
     paymentProxy.handlePayment(socket);
     paymentProxy.handleBankInfo(socket);
     //资金流动
@@ -104,7 +106,13 @@ io.on('disconnect', function (socket) {
 //开启消息推送器
 socketProxy.startstableEmiter();
 
+//开启匹配器
+teamProxy.match();
+
 //一天更新一次排行榜
 //timmer.autoUpdateRankList(24 * 3600);
 
 io.listen(3000);
+
+
+

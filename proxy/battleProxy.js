@@ -1,6 +1,11 @@
 var teamProxy = require('./teamProxy.js');
 var socketProxy = require('./socketproxy.js');
 
+var matchLevel1MinCount = 2;
+var matchLevel2MinCount = 2;
+var matchLevel3MinCount = 2;
+
+
 exports.init = function () {
     this.battles = {};
 }
@@ -48,15 +53,12 @@ exports.handleBattleInviteResult = function (io, socket) {
             var challengerTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.challengerTeam.roomName);
             var hostTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.hostTeam.roomName);
             var currentTime = require('moment')().format('YYYYMMDDHHmmss');
-
             // 更新队伍状态
             teamProxy.changeTeamStatus(challengerTeam.roomName, 'INBATTLE');
             teamProxy.changeTeamStatus(hostTeam.roomName, 'INBATTLE');
-
             // 状态改变的队伍不再需要在对战大厅中显示，所以不再广播类表中
             teamProxy.removeBroadcastTeam(challengerTeam.roomName);
             teamProxy.removeBroadcastTeam(hostTeam.roomName);
-
             var battle = {
                 battleName: challengerTeam.captain.name + hostTeam.captain.name + (new Date).valueOf(),
                 blueSide: challengerTeam,
@@ -68,33 +70,25 @@ exports.handleBattleInviteResult = function (io, socket) {
                     start: null
                 }
             };
-            
             exports.battles[battle.battleName] = battle;
-
             // 将挑战队伍的所有用户加入到新的socket room
             for (var i in challengerTeam.participants) {
                 socketProxy.userJoin(challengerTeam.participants[i].userId, battle.battleName);
             }
-
             // 将受挑战队伍的所有用户加入到新的socket room
             for (var i in hostTeam.participants) {
                 socketProxy.userJoin(hostTeam.participants[i].userId, battle.battleName);
             }
-
             //teamProxy.printfAllTeamsInfo();
             // 向该对局中所有的用户广播对局信息
-            
             socketProxy.stableSocketsEmit(io.in(battle.battleName), battle.battleName, 'battleInfo', battle);
             socketProxy.stableSocketsEmit(io.sockets, battle.battleName, 'lolRoomEstablish', {
                 roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
                 password: Math.floor(Math.random() * 1000), // 4位随机数
                 creatorId: challengerTeam.captain.userId
             });
-            
         } else if (feedback.errorCode == 1) {
-
             var dstSocket = socketProxy.mapUserIdToSocket(feedback.extension.userId);
-
             socketProxy.stableSocketEmit(dstSocket, 'feedback', feedback);
         }
     });
@@ -276,3 +270,156 @@ exports.handleBattleResult = function (io, socket){
     });
 }
 
+exports.matchScheduling = function(matchPool){
+    //console.log("------------scheduling-------------");
+    for(var index in matchPool){
+        if(matchPool[index].queue.length == 0){
+            matchPool[index].delay = 0;
+            continue;
+        }
+        if(matchPool[index].delay < 10){
+            //一级调度
+            matchSchedulingLevel1(matchPool, index);
+        }else if(matchPool[index].delay >= 10 && matchPool[index].delay < 30){
+            //二级调度
+            matchSchedulingLevel2(matchPool, index);
+        }else{
+            //三级调度
+            matchSchedulingLevel3(matchPool, index);
+        }
+        matchPool[index].delay++;
+    }
+}
+
+function matchSchedulingLevel1(matchPool, poolIndex){
+    
+    if(matchPool[poolIndex].queue.length >= matchLevel1MinCount){
+        console.log("lv1 match");
+        var queues = [];
+        var queuesIndex = [];
+        queues.push(matchPool[poolIndex].queue);
+        queuesIndex.push(poolIndex);
+        var matchList = excuteMatch(queues);
+
+        var queueNum1 = matchList.firstTeam.queueNum;
+        var teamNum1 = matchList.firstTeam.teamNum;
+        var firstTeam = matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+
+        var queueNum2 = matchList.secondTeam.queueNum;
+        var teamNum2 = matchList.secondTeam.teamNum;
+        var secondTeam = matchPool[queuesIndex[queueNum2]].queue[teamNum2];
+
+        if(queueNum1 == queueNum2){
+            delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+            if(teamNum1 < teamNum2){
+                delete matchPool[queuesIndex[queueNum1]].queue[teamNum2-1];
+            }else{
+                delete matchPool[queuesIndex[queueNum1]].queue[teamNum2];
+            }
+            matchPool[queuesIndex[queueNum1]].queue.length -= 2;
+        }else{
+            delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+            matchPool[queuesIndex[queueNum1]].queue.length -= 1;
+            delete matchPool[queuesIndex[queueNum2]].queue[teamNum2];
+            matchPool[queuesIndex[queueNum2]].queue.length -= 1;
+        }
+
+        broadCastMatchResult(firstTeam, secondTeam);
+        matchPool[poolIndex].delay -= 2;
+        if(matchPool[poolIndex].delay < 0){
+            matchPool[poolIndex].delay = 0;
+        }
+    }
+}
+
+function matchSchedulingLevel2(matchPool, poolIndex){
+    if(parseInt(poolIndex) >= 4300){
+        //前找2个
+    }else{
+        //后找2个
+    }
+}
+
+function matchSchedulingLevel3(matchPool, poolIndex){
+    if(parseInt(poolIndex) >= 4100){
+        //前找5个
+    }else{
+        //后找5个
+    }
+}
+
+function excuteMatch(queues){
+    var queueCount = queues.length;
+    var queueNum1 = (parseInt(Math.random() * 100)) % queueCount;
+    var queueNum2 = (parseInt(Math.random() * 100)) % queueCount;
+    var teamNum1 = (parseInt(Math.random() * 10 * queues[queueNum1].length)) % queues[queueNum1].length;
+    var teamNum2 = (parseInt(Math.random() * 10 * queues[queueNum2].length)) % queues[queueNum2].length;
+    if(queueNum1 == queueNum2 && teamNum1 == teamNum2){
+        //调度到了同一个队伍
+        if(queueCount = 1){
+            //只有一个队列   说明该队列人数大于等于最小限制值
+            if(teamNum2 == 0){
+                teamNum2++;
+            }else{
+                teamNum2--;
+            }
+        }else{
+            if(queueNum2 == 0){
+                queueNum2 = 1;
+                teamNum2 = 0;
+            }else{
+                queueNum2--;
+                teamNum2 = 0;
+            }
+        }
+    }
+    var matchList = {
+        'firstTeam':{
+            'queueNum': queueNum1,
+            'teamNum': teamNum1
+        },
+        'secondTeam':{
+            'queueNum': queueNum2,
+            'teamNum': teamNum2
+        }
+    }
+    return matchList;
+}
+
+function broadCastMatchResult(firstTeam, secondTeam){
+    var challengerTeam = firstTeam;
+    var hostTeam = secondTeam;
+    var currentTime = require('moment')().format('YYYYMMDDHHmmss');
+    var battle = {
+        battleName: challengerTeam.captain.name + hostTeam.captain.name + (new Date).valueOf(),
+        blueSide: challengerTeam,
+        redSide: hostTeam,
+        status: 'unready',
+        time: {
+            unready: currentTime,
+            ready: null,
+            start: null
+        }
+    };
+    exports.battles[battle.battleName] = battle;
+    // 将挑战队伍的所有用户加入到新的socket room
+    for (var i in challengerTeam.participants) {
+        socketProxy.userJoin(challengerTeam.participants[i].userId, battle.battleName);
+    }
+    // 将受挑战队伍的所有用户加入到新的socket room
+    for (var i in hostTeam.participants) {
+        socketProxy.userJoin(hostTeam.participants[i].userId, battle.battleName);
+    }
+    //teamProxy.printfAllTeamsInfo();
+    // 向该对局中所有的用户广播对局信息
+    socketProxy.stableSocketsEmit(exports.io.in(battle.battleName), battle.battleName, 'battleInfo', battle);
+    socketProxy.stableSocketsEmit(exports.io.sockets, battle.battleName, 'lolRoomEstablish', {
+        roomName: 'BULLUP' + String((new Date).valueOf()).substr(6),
+        password: Math.floor(Math.random() * 1000), // 4位随机数
+        creatorId: challengerTeam.captain.userId
+    });
+}
+
+exports.handleMatch = function(io){
+    this.io = io;
+}

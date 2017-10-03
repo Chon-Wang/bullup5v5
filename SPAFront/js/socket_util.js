@@ -600,8 +600,11 @@ function handleRoomEstablishmentResult(feedback){
     });
 
     $("#confirm_create_team_btn").click(function(){
-		console.log(roomInfo);
-		socket.emit('establishTeam', roomInfo);
+		//console.log(roomInfo);
+        socket.emit('establishTeam', roomInfo);
+        if(roomInfo.gameMode == 'match'){
+            alert("匹配中，请等待！");
+        }
 	});
 
 }
