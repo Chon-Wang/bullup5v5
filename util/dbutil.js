@@ -1104,6 +1104,9 @@ exports.getJoinCompetition = function (matchInfo, callback) {
     connection.query('select s.bullup_competition_id,s.user_id,c.* from bullup_competition_sign_up s,bullup_competition c  where s.user_id=? and s.bullup_competition_id=c.bullup_competition_id', [matchInfo.userId], function (err, results) {
         if (err) throw err;
         callback(results);
+    });
+}
+
 exports.insertBankInfo = function(bankInfo, callback) {
     async.parallel([
         function(done){
@@ -1187,8 +1190,8 @@ exports.getApplyInfo = function (matchInfo, callback) {
     async.waterfall([
         function (callback) {
             connection.query('select * from bullup_competition where bullup_competition_id=?', [matchInfo.competitionid], function (err, results) {
-                query.results = results
-                callback(null, query)
+                query.results = results;
+                callback(null, query);
             });
         },
         function (query, callback) {
