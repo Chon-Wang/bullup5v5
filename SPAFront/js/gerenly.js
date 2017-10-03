@@ -1,9 +1,14 @@
 
-var request = require("request");
-
 $().ready(function(){
     $('#router_index').on('click', function(e){
-            e.preventDefault();
+        e.preventDefault();
+        var $role = userInfo.userRole;
+        //alert($role);
+        if($role==1){
+            bullup.loadTemplateIntoTarget('swig_admin.html', {}, 'main-view');
+            $.getScript('/js/zymly.js');
+            
+        }else{
             bullup.loadTemplateIntoTarget('swig_index.html', {}, 'main-view');
             $.getScript('/js/zymly.js');
             $.getScript('/js/payment.js');
@@ -17,8 +22,14 @@ $().ready(function(){
                 htmlStr = htmlStr.substr(bodyStartIndex + 6, htmlStr.length - 6);
                 $('#payment').html(htmlStr);
             });
-	    });
-    });
+            var $userId = userInfo.userId;
+            socket.emit('getBalance',{
+                userId:$userId
+            });            
+        }
+	});
+});
+
    
 
     

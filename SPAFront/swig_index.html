@@ -2,7 +2,6 @@
 <body>
 <section id="container">
 <!--header start-->
-
 <!--header end-->
 <!--sidebar start-->
 
@@ -12,21 +11,21 @@
 	<section class="wrapper">
 		<!-- //market-->
 		<div class="market-updates" style="padding-left:50px;">
-         <div class="col-md-3 market-update-gd" style="cursor: pointer;width:22%;float:left;">
+         
+            <div class="col-md-3 market-update-gd" style="cursor: pointer;width:22%;float:left;">
                 <div class="market-update-block clr-block-3">
                     <div class="col-md-4 market-update-right">
                         <i class="fa fa-usd"></i>
                     </div>
                     <div class="col-md-8 market-update-left">
                         <h4>余额</h4>
-                        <h3>1,500</h3>
-                        <!-- <p>Other hand, we denounce</p> -->
+                        <h3>{{ player.balance }}</h3>
                     </div>
                   <div class="clearfix"> </div>
                 </div>
             </div>
             
-
+            
            <div class="clearfix"> </div>
         </div> 
 		<!-- //market-->
@@ -87,11 +86,32 @@
                   <div class="clearfix"> </div>
                 </div>
             </div>
+           <div class="clearfix"> </div>
+        </div> 
+
+        
+        </div>
+
+        
+		<!-- //market-->
+
+		
 		
 </section>
+
+<!--  -->
+
 
 </section>
 <!--main content end-->
 </section>
-
+<script>
+    //将余额的值传到提现界面
+    var balance = '{{ player.balance }}';
+    $('.tix').on('click', function(e){
+        e.preventDefault();
+        bullup.loadTemplateIntoTarget('swig_recharge.html', {balance}, 'main-view');
+    });
+    // $.getScript('/js/back.js');
+</script>
 </body>

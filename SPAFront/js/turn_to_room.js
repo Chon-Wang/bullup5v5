@@ -75,7 +75,7 @@ $(document).ready(function(){
             $('.content').html(roomInfoFrameHtml);
             $('#team_info').html(roomInfoHtml);
             $('#teamates_info').html(teamatesHtml);
-            $('#create_room_modal').modal('close');
+            $('#create_room_modall').modal('close');
             $.getScript('/js/invite_friend.js');
         
             $('#invite_friend_btn').sideNav({

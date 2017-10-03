@@ -1,4 +1,5 @@
 var logger = require('../util/logutil.js');
+var socketProxy = require('./socketproxy');
 
 exports.init = function() {
     // 已经创建完毕的队伍
@@ -16,12 +17,11 @@ exports.init = function() {
 exports.handleRoomEstablish = function(socket) {
     socket.on('roomEstablish', function (room) {
         logger.listenerLog('roomEstablish');
-        logger.jsonLog(room);
         exports.unformedTeams[room.roomName] = room;
         // 将该socket放入teamname命名的room中
-        socket.join(room.roomName);
+        socketProxy.joinRoom(socket, room.roomName);
         // 返回回馈信息
-        socket.emit('feedback', {
+        socketProxy.stableSocketEmit(socket, 'feedback', {
             errorCode: 0,
             type: 'ESTABLISHROOMRESULT',
             text: '创建成功',
@@ -42,7 +42,8 @@ exports.handleRefreshFormedBattleRoom = function(socket){
                 formedTeams: exports.formedTeams
             }
         }
-        socket.emit('feedback', feedback);
+        socketProxy.stableSocketEmit(socket, 'feedback', feedback);
+        //socketProxy.stableEmit();
     });
 
 }
@@ -107,7 +108,9 @@ exports.handleTeamEstablish = function (io, socket) {
             }
         };
         // 告诉该队伍中的所有用户队伍已经形成
-        io.sockets.in(teamInfo.roomName).emit('feedback', feedback);
+        var sockets = io.sockets;
+        socketProxy.stableSocketsEmit(sockets, teamInfo.roomName, 'feedback', feedback);
+        //socketProxy.stableEmit();
     });
 }
 /**
@@ -117,7 +120,7 @@ exports.handleTeamEstablish = function (io, socket) {
 exports.handleVersusLobbyRefresh = function(socket) {
     socket.on('versusLobbyRefresh', function () {
         logger.listenerLog('versusLobbyRefresh');
-        socket.emit('feedback', {
+        socketProxy.stableSocketEmit(socket, 'feedback', {
             errorCode: 0,
             type: 'VERSUSLOBBYINFO',
             text: '对战大厅更新数据',
@@ -136,14 +139,14 @@ exports.handleTeamDetails = function (socket) {
         var team = exports.formedTeams[teamInfo.teamName];
         
         if (team && team.status == 'PUBLISHING') {
-            socket.emit('feedback', {
+            socketProxy.stableSocketEmit(socket, 'feedback', {
                 errorCode: 0,
                 type: 'TEAMDETAILS',
                 text: '队伍详情',
                 extension: team,
             })
         } else {
-            socket.emit('feedback', {
+            socketProxy.stableSocketEmit(socket, 'feedback', {
                 errorCode: 1,
                 type: 'TEAMDETAILS',
                 text: '查看队伍详情失败, 请刷新对战大厅',

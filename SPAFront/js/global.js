@@ -8,7 +8,7 @@ $().ready(function(){
 	$('select').material_select();
 	
 	/* modal initialize */
-	$("#create_room_modal").modal();
+	$("#create_room_modall").modal();
 
 	/* modal initialize */
 	$("#log_modal").modal();
@@ -17,7 +17,7 @@ $().ready(function(){
 
 	$("#message_sheet").modal();
 
-	$("#link_modal").modal();
+	//$("#link_modal").modal();
 
 	$(".user-collapse").sideNav();
 	

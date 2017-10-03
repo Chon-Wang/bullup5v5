@@ -14,10 +14,10 @@
  <div class="panel panel-default">
     <a style="float:right;margin-right: 10px;margin-top: 10px;" class="waves-effect waves-light btn" id="back">返回</a>
     <div class="panel-heading">
-     资金流动记录
+     充值记录
     </div>
     <div>
-      <table class="table" ui-jq="footable" ui-options='{
+      <table class="table centered" ui-jq="footable" ui-options='{
         "paging": {
           "enabled": true
         },
@@ -30,30 +30,86 @@
         <thead>
           <tr>
             <th data-breakpoints="xs">ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th data-breakpoints="xs">Job Title</th>
-           
-            <th data-breakpoints="xs sm md" data-title="DOB">Date of Birth</th>
+            <th>金额</th>
+            <th>货币类型</th>
+            <th data-breakpoints="xs">订单号</th>
+            <th data-breakpoints="xs sm md" data-title="DOB">日期</th>
           </tr>
         </thead>
         <tbody>
+          {% if dataSource %}
+          {% for key in dataSource %}
+          {% for i in key.rechargeInfo %}
           <tr data-expanded="true">
-            <td>1</td>
-            <td>Dennise</td>
-            <td>Fuhrman</td>
-            <td>High School History Teacher</td>
+            <td>{{ loop.index }}</td>
+            <td>{{ i.bullup_bill_value }}</td>
+            <td>{{ i.bullup_bill_type }}</td>
+            <td>{{ i.bullup_bill_id }}</td>
+            <td>{{ i.bullup_bill_time|date('Y-m-d h:m') }}</td>
             
-            <td>July 25th 1960</td>
           </tr>
-          
+          {% endfor %}
+          {% endfor %}
         </tbody>
       </table>
+      
     </div>
   </div>
 </div>
 </section>
 
+
+<section id="main-content">
+	<section class="wrapper">
+		<div class="table-agile-info">
+ <div class="panel panel-default">
+    <a style="float:right;margin-right: 10px;margin-top: 10px;" class="waves-effect waves-light btn">返回</a>
+    <div class="panel-heading">
+     提现记录
+    </div>
+    <div>
+      <table class="table centered" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+        <thead>
+          <tr>
+            <th data-breakpoints="xs">ID</th>
+            <th>金额</th>
+            <th>目标账户</th>
+            <!-- <th>货币类型</th> -->
+            <th data-breakpoints="xs">订单号</th>
+            <th data-breakpoints="xs sm md" data-title="DOB">日期</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key in dataSource %}
+          {% for i in key.withdrawInfo %}
+          <tr data-expanded="true">
+            <td>{{ loop.index }}</td>
+            <td>{{ i.bullup_bank_money }}</td>
+            <td>{{ i.bullup_bank_cardnumber }}</td>
+            <td>{{ i.bullup_withdraw_id }}</td>
+            <td>{{ i.bullup_bank_wdtime|date('Y-m-d h:m') }}</td>
+            <td>{{ i.bullup_bank_state }}</td>
+          </tr>
+          {% endfor %}
+          {% endfor %}
+        {% endif %}
+        </tbody>
+      </table>
+      
+    </div>
+  </div>
+</div>
+</section>
 </section>
 
 <!--main content end-->

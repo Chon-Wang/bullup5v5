@@ -1,5 +1,5 @@
 $().ready(function () {
-    $('#bind_lol_account_btn').on('click', function(e){
+    $('#bind_lol_btn').on('click', function(e){
         if(userInfo == null || userInfo.userId == undefined){
             alert("请先登录，在绑定LOL账号！");
         } else{

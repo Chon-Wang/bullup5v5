@@ -32,6 +32,8 @@ $().ready(function(){
 		$.getScript('/js/await.js');
 		// clearInterval(sh);
 	});
+
+	
 });
 
 function loadStarter(){
