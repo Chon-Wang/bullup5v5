@@ -3,6 +3,8 @@ var child_process = require("child_process");
 
 $(document).ready(function(){
     $("#router_test_page").click(function(e){
+        e.preventDefault();
+        bullup.loadTemplateIntoTarget('swig_fightfor.html', {}, 'main-view');
         // lolProcess.grabLOLData('result', socket);
         // function processResultPacket(stdout){
         //     var resultPacket = {};
