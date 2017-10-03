@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+
+<body>
+
+	<form action="http://localhost:3001/charge" method="post">
+		<script src='https://checkout.stripe.com/checkout.js' 
+		class='stripe-button' 
+		data-key='pk_live_xXGeuc5byKCm3RkS7sX26hHQ' 
+		data-amount='1000'
+		data-name="Bullup.Inc" 
+		{{!-- data-description='just a test'  --}}
+		data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+		data-currency='usd'>
+
+		</script>
+		<input type="hidden" name="chargeAmount" value="1000">
+	</form> 
+
+</body>
+
+</html>

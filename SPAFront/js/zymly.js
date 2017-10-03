@@ -12,8 +12,9 @@ $().ready(function(){
 
     $('.gengg').on('click', function(e){
         e.preventDefault();
-        bullup.loadTemplateIntoTarget('swig_form_component.html', {}, 'main-view');           
+        bullup.loadTemplateIntoTarget('swig_form_component.html', {}, 'main-view');               
     });
+   
 });
    
 
