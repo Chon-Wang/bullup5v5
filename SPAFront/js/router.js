@@ -30,6 +30,8 @@ $().ready(function(){
 		var tournaments_data = [];
 		bullup.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');
 	});
+
+	
 });
 
 function loadStarter(){

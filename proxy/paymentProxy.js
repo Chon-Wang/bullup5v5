@@ -15,55 +15,105 @@ exports.handlePayment = function (socket) {
         var  token = data.token;
         var amount = data.money;
         logger.listenerLog('payment');
-        console.log('------------------------------')
-        console.log('payment');
-        console.log('------------------------------')
-        console.log(data);
-        console.log('------------------------------')
-        console.log(amount);
-        console.log('-------------------------------')
-            stripe.charges.create({
-                amount: amount*1000,
-                currency: "usd",
-                description: "Example charge",
-                source: "tok_mastercard",
-            }, function(err, charge) {
-        // asynchronously called
-                console.log(charge)
-                console.log('------------------------------')
-                console.log(err)
-                console.log('------------------------------')
-                console.log(token)
-                console.log(token.length)
+        console.log('日期：'+data.date);
+        // console.log('------------------------------')
+        stripe.charges.create({
+            amount: amount,
+            currency: "usd",
+            description: "Example charge",
+            source: "tok_mastercard",
+        }, function(err, charge) {
+            if (err) {
+                socket.emit('feedback', {
+                    errorCode: 1,
+                    text: '充值失败，请稍后重试',
+                    type: 'RECHARGERESULT',
+                    extension: null
+                });
+            } else {
+                dbUtil.userRecharge(data,function(err){
+                    if (err) {
+                        socket.emit('feedback', {
+                            errorCode: 1,
+                            text: '充值失败，请稍后重试',
+                            type: 'RECHARGERESULT',
+                            extension: null
+                        });
+                    } else {
+                         socket.emit('feedback', {
+                            errorCode: 0,
+                            text: '充值成功！',
+                            type: 'RECHARGERESULT',
+                            extension: {
+                                //userAccount: userInfo.userAccount,
+                                //userNickname: userInfo.userNickname,
+                                //userId: userAddRes.userId,
+                                //userIconId: 1,
+                            }
+                        });
+                    }
+                });
+            }
         });
-    })
+    });
 }
 /**
- * 收集支付信息
+ * 收集支付信息，提现申请入库
  * @param socket
 */
 exports.handleBankInfo = function (socket) {
     socket.on('bankInfo', function (bank) {
         console.log('bankInfo:'+bank.firstname);
         logger.listenerLog('changeInfo');
-        dbUtil.insertBankInfo(bank,function(res){
-            if (!res) {
+        dbUtil.insertBankInfo(bank,function(err){
+            if (err) {
                 socketProxy.stableSocketEmit(socket, 'feedback', {
                     errorCode: 1,
-                    text: '修改失败，请稍后重试',
+                    text: '申请失败，请稍后重试',
                     type: 'PAYMENTRESULT',
                     extension: null
                 });
             } else {
                 socketProxy.stableSocketEmit(socket, 'feedback', {
                     errorCode: 0,
-                    text: '修改成功',
+                    text: '申请成功，请耐心等待处理',
                     type: 'PAYMENTRESULT',
                     extension: {
                         //userAccount: userInfo.userAccount,
                         //userNickname: userInfo.userNickname,
                         //userId: userAddRes.userId,
                         //userIconId: 1,
+                    }
+                });
+            }
+        });
+    });
+}
+
+
+/**
+ * 查询资金流动记录
+ * @param socket
+*/
+exports.handleSearchCashFlow = function (socket) {
+    socket.on('cashFlow', function (data) {
+        logger.listenerLog('cashFlow');
+        dbUtil.searchCashFlow(data,function(res){
+            //console.log("resResult"+JSON.stringify(res));
+            if (!res) {
+                socket.emit('feedback', {
+                    errorCode: 1,
+                    text: '查询失败，请稍后重试',
+                    type: 'CASHFLOWRESULT',
+                    extension: null
+                });
+            } else {
+                 socket.emit('feedback', {
+                    errorCode: 0,
+                    text: '查询成功',
+                    type: 'CASHFLOWRESULT',
+                    extension:{
+                        data:res
                     }
                 });
             }
