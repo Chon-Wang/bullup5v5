@@ -1,6 +1,14 @@
-{% if swigTest %}
-<a class="waves-effect waves-light btn">
-	{{swigTest}}
-</a>
-
-{% endif %}
+<div class="col s4">
+	  <label class="rank-title ">财富排名</label>
+	  <div class="rank-value">
+		<!-- 财富排名 -->
+		{% if dataResult %}
+			{% for key in dataResult%}
+				{% for i in key%}
+			{{i.user_id}}
+		
+			{% endfor%}
+			{%endfor%}
+		{% endif %}
+	  </div>
+	</div>

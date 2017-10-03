@@ -8,7 +8,8 @@ var teamProxy = require('./proxy/teamProxy.js');
 var socketProxy = require('./proxy/socketproxy.js');
 var battleProxy = require('./proxy/battleProxy.js');
 var paymentProxy = require('./proxy/paymentProxy.js');
-var chatProxy = require('./proxy/chatProxy.js')
+var chatProxy = require('./proxy/chatProxy.js');
+var matchProxy = require('./proxy/matchProxy.js')
 
 // 初始化Proxy, 所有需要保存数据结构的对象都需要初始化, 只能初始化一次
 userProxy.init();
@@ -17,6 +18,7 @@ socketProxy.init();
 battleProxy.init();
 paymentProxy.init();
 chatProxy.init();
+matchProxy.init();
 
 io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
@@ -60,7 +62,31 @@ io.on('connection', function(socket) {
 
     chatProxy.handleChat(io,socket);
 
+    matchProxy.handlematchInfo(socket);
 
+    matchProxy.handleInitiateCompetition(socket);
+
+    matchProxy.handlecheckMatchInfo(socket);
+
+    matchProxy.handleJoinCompetition(socket);
+    
+    matchProxy.handleApplyInfo(socket);
+
+    matchProxy.handleAwaitApplyInfo(socket);
+
+    matchProxy.handleAwayGame(socket);
+
+    matchProxy.handleUnderway(socket);
+
+    matchProxy.handleFinishGame(socket);
+
+    matchProxy.handleapplyMatch(socket);
+
+    matchProxy.handleauditApply(socket);
+
+    matchProxy.handleagreeApply(socket);
+
+    matchProxy.handlerejectApply(socket);
 });
 
 
@@ -70,7 +96,19 @@ io.on('disconnect', function (socket) {
 
 });
 
-//一天更新一次排行榜
+//一天更新一次约战排行榜
 timmer.autoUpdateRankList(24 * 3600);
 
+//监听数据库更新赛事状态
+timmer.autoUpdateMatchState(1 * 3600);
 io.listen(3000);
+
+
+// //一天更新一次赛事排行榜
+// timmer.autoUpdatematchRankList(1 * 3600);
+
+// io.listen(3000);
+
+
+
+

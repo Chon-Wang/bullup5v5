@@ -15,7 +15,8 @@ $().ready(function(){
          e.preventDefault();
         
          bullup.loadTemplateIntoTarget('swig_checkthelist.html', {}, 'main-view');
-        
+      
+    })
         
       });
       //结束查看排行路由

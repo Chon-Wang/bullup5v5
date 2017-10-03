@@ -1,8 +1,12 @@
-var lolProcess = require('C:/Users/Public/Bullup/auto_program/lol_process.js');
-var child_process = require("child_process");
+// var lolProcess = require('C:/Users/Public/Bullup/auto_program/lol_process.js');
+// var child_process = require("child_process");
 
 $(document).ready(function(){
     $("#router_test_page").click(function(e){
+        bullup.loadTemplateIntoTarget('swig_test.html', {}, 'main-view');
+        socket.emit('initiate',{
+            userId:userInfo.userId
+        });
         // lolProcess.grabLOLData('result', socket);
         // function processResultPacket(stdout){
         //     var resultPacket = {};
