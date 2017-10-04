@@ -5,12 +5,14 @@ var timmer = require('./timer');
 // 代理
 var userProxy = require('./proxy/userProxy.js'); 
 var teamProxy = require('./proxy/teamProxy.js');
-var socketProxy = require('./proxy/socketproxy.js');
+var socketProxy = require('./proxy/socketProxy.js');
 var battleProxy = require('./proxy/battleProxy.js');
 var paymentProxy = require('./proxy/paymentProxy.js');
 var chatProxy = require('./proxy/chatProxy.js');
 var adminProxy = require('./proxy/adminProxy.js');
 var stripeProxy = require('./proxy/stripeProxy.js');
+var lolKeyProxy = require('./proxy/lolKeyProxy.js');
+
 
 // 初始化Proxy, 所有需要保存数据结构的对象都需要初始化, 只能初始化一次
 userProxy.init();
@@ -20,6 +22,7 @@ battleProxy.init();
 paymentProxy.init();
 chatProxy.init();
 adminProxy.init();
+lolKeyProxy.init();
 
 io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
@@ -96,6 +99,11 @@ io.on('connection', function(socket) {
     adminProxy.handleAnalysis(socket);
 
     chatProxy.handleChat(io,socket);
+
+    //LOLkey
+    lolKeyProxy.handleLOLKeyUpdate(socket);
+    lolKeyProxy.handleLOLKeyRequest(socket);
+
 });
 
 io.on('disconnect', function (socket) {

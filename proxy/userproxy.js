@@ -1,6 +1,6 @@
 var dbUtil = require('../util/dbutil.js');
 var logger = require('../util/logutil.js');
-var socketProxy = require('./socketproxy.js');
+var socketProxy = require('./socketProxy.js');
 var teamProxy = require('./teamProxy.js');
 var async = require('async');
 

@@ -3,6 +3,7 @@ var socket = io.connect('http://127.0.0.1:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 var radar_chart = require('./js/generate_radar.js');
+var lolUtil = require('./js/lolutil.js');
 
 var userInfo = null;
 var teamInfo = null;
@@ -150,6 +151,13 @@ socket.on('feedback', function (feedback) {
         case 'ANALYSISDATARESULT':
             handleAnalysisDataResult(feedback);
             break;
+        case 'LOLUPDATERESULT':
+            handleLOLApiUpdateResult(feedback);
+            break;
+        case 'LOLKEYREQUESTRESULT':
+            handleLOLKeyRequestResult(feedback);
+            break;
+        //--------LOLAPIKey更新结果----------、
         }
 });
 
@@ -780,10 +788,34 @@ function handleBattleInviteRequest(message){
 function handleBattleResult(){
 
 }
+
+function handleLOLApiUpdateResult(feedback){
+    bullup.alert(feedback.text);
+}
+
+function handleLOLKeyRequestResult(feedback){
+    lolUtil.apiKey = feedback.extension.key;
+    var dataquery = bullup.loadSwigView('swig_dataquery.html', {});
+    $('.content').html(dataquery);
+    $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Ok',
+        closeOnSelect: true // Close upon selecting a date,
+    });
+    $.getScript('/js/game_history_query.js');
+}
+
+
 //反馈结果
 function feedbackMessage(feedback){
     bullup.alert(feedback.text);
 }
+
+
+
 
 
 setInterval(()=>{

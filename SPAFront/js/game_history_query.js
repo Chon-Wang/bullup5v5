@@ -23,6 +23,7 @@ $().ready(function () {
             bullup.alert("请输入终止时间");
             return;
         }
+        bullup.alert("正在查询对战记录，请稍等");
         var strs = startDate.split(",");
         var year = strs[1];
         var day = strs[0].split(" ")[0];

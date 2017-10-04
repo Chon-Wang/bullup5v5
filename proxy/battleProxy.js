@@ -1,5 +1,5 @@
 var teamProxy = require('./teamProxy.js');
-var socketProxy = require('./socketproxy.js');
+var socketProxy = require('./socketProxy.js');
 
 var matchLevel1MinCount = 2;
 var matchLevel2MinCount = 2;

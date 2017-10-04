@@ -1,5 +1,5 @@
 var logger = require('../util/logutil');
-var socketProxy = require('./socketproxy.js');
+var socketProxy = require('./socketProxy.js');
 
 exports.init = function () {
     
