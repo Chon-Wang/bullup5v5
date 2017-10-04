@@ -138,18 +138,29 @@ exports.handleRegister = function (socket) {
                     extension: null
                 });
             } else {
-                dbUtil.addUser(userInfo, function (userAddRes) {
-                    socketProxy.stableSocketEmit(socket, 'feedback', {
-                        errorCode: 0,
-                        text: '注册成功',
-                        type: 'REGISTERRESULT',
-                        extension: {
-                            userAccount: userInfo.userAccount,
-                            userNickname: userInfo.userNickname,
-                            userId: userAddRes.userId,
-                            userIconId: 1,
-                        }
-                    });
+                dbUtil.findUserByNickname(userInfo.userNickname, function (user) {
+                    if(user){
+                        socketProxy.stableSocketEmit(socket, 'feedback', {
+                            errorCode: 1,
+                            text: '该昵称已被使用',
+                            type: 'REGISTERRESULT',
+                            extension: null
+                        });
+                    }else{
+                        dbUtil.addUser(userInfo, function (userAddRes) {
+                            socketProxy.stableSocketEmit(socket, 'feedback', {
+                                errorCode: 0,
+                                text: '注册成功',
+                                type: 'REGISTERRESULT',
+                                extension: {
+                                    userAccount: userInfo.userAccount,
+                                    userNickname: userInfo.userNickname,
+                                    userId: userAddRes.userId,
+                                    userIconId: 1,
+                                }
+                            });
+                        });
+                    }
                 });
             }
         });

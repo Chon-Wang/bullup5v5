@@ -12,6 +12,10 @@ $(document).ready(function(){
         bullup.loadTemplateIntoTarget('swig_fightfor.html', {
             'participants': data.participants
         }, 'main-view');
+        var labelArray = ['击杀', '死亡', '助攻','治疗', '造成伤害', '承受伤害'];
+        var dataArray1 = [50,50,50,50,50,50];
+        bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
+
         // lolProcess.grabLOLData('result', socket);
         // function processResultPacket(stdout){
         //     var resultPacket = {};

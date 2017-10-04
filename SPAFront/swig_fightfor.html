@@ -82,45 +82,7 @@ function setData (data) {
     arr = data;
 }
 var $a =  $('#a1').val();
-//console.log($a);
-var json = {
-     name1:250,
-     name2:250,
-     name3:250,
-     name4:250,
-     name5:250,
-     name6:250
-}
-setData([json.name1,json.name2,json.name3,json.name4,json.name5,json.name6]);
-var config3 = {
-        type: 'radar',
-        data: {
-            labels: ['击杀', '死亡', '助攻','治疗', '造成伤害', '承受伤害'],
-            datasets: [{
-                label: "能力雷达图",
-                backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
-                borderColor: window.chartColors.red,
-                pointBackgroundColor: chartColors.red,
-                data: arr
-            }, ]
-        },
-        options: {
-            title: {
-                display: true,
-                text: '能力'
-            },
-            scale: {
-                ticks: {
-                    beginAtZero: true
-                }
-            }
-        }
-    };
 
-    var arr = config3.data.datasets[0]; 
-    //console.log(arr.data);
-var radar = document.getElementById("team-detail-chart");
-window.myRadar = new Chart(radar, config3);
  //添加事件
 $(function(){
     var min=0;

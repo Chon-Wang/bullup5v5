@@ -233,6 +233,8 @@ socket.on('battleInfo', function (battle) {
         redSide: battleInfo.redSide,
     });
     $('#main-view').html(battleRoomHtml);
+
+ 
     $('#waiting-modal').css('display', 'none');    
     $('#team-detail-modal').css('display', 'none');    
     $('.modal-overlay').remove();
@@ -248,6 +250,26 @@ socket.on('lolRoomEstablish', function (lolRoom) {
         // 如果用户是创建者，则创建房间
         bullup.alert('请在规定时间内创建房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password);
         
+
+        //////////////////////////////////////
+        var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
+        var dataArray1 = [50,50,50,50,50,50];
+        var dataArray2 = [30,70,50,40,20,90];
+        bullup.generateRadar(dataArray1, dataArray2, labelArray, "战力对比", "teams-radar-chart");
+        var clock = $('.countdown-clock').FlipClock(60, {
+			// ... your options here
+			clockFace: 'MinuteCounter',
+			countdown: true
+        });
+		$('#my_collapsible').collapsible('open', 0);
+		$('#my_collapsible').collapsible('open', 1);
+		$('#my_collapsible').collapsible('open', 2);
+		$('#component_collapsible').collapsible('open', 0);
+		$('#component_collapsible').collapsible('open', 1);
+		$('#component_collapsible').collapsible('open', 2);
+
+        //////////////////////////////////////
+
         //自动创建房间
         //auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
         
@@ -615,6 +637,9 @@ function handleRoomEstablishmentResult(feedback){
             bullup.loadTemplateIntoTarget('swig_fightfor.html', {
                 'participants': roomInfo.participants
             }, 'main-view');
+            var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
+            var dataArray1 = [50,50,50,50,50,50];
+            bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
         }
         socket.emit('establishTeam', roomInfo);
         
@@ -790,9 +815,6 @@ function handleBattleInviteRequest(message){
     $("#message_center_nav").click();
 }
 
-function handleBattleResult(){
-
-}
 
 function handleLOLApiUpdateResult(feedback){
     bullup.alert(feedback.text);

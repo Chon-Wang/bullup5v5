@@ -101,12 +101,8 @@
 	<!-- side nav bar -->
 
 	<ul id="user-slide-out" class="side-nav">
-
-		
-
-		<li>
+		<!-- <li>
 			<div class="user-view">
-
 				<div class="background">
 					<img src="./media/imgs/usr_bg.jpg">
 				</div>
@@ -147,9 +143,7 @@
 						</div>
 					</div>
 			</li>
-			
-		  </ul>
-		
+		</ul> -->
 	</ul>
 
 
@@ -161,7 +155,7 @@
 			<li ><span style="color:#fff;" class="icbefore">约战</span><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
 			<li ><span style="color:#fff;" class="icbefore">大厅</span><a id="turn_to_room_btn" class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=" fa fa-hourglass-start" aria-hidden="true"></i></a><li>
 			<li ><span style="color:#fff;" class="icbefore">战力</span><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true" id='home'></i></a></li>
-			<li ><span style="color:#fff;" class="icbefore">好友</span><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+			<li ><span style="color:#fff;" class="icbefore">好友</span><a id="friend_list_btn" class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 			<li ><span style="color:#fff;" class="icbefore">充值</span><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
 		</ul>
 	</div>
@@ -622,7 +616,7 @@
 				  <label class="active" for="first_name2">对方ID</label>
 				</div>
 			</div>
-			  <a class="waves-effect waves-light btn collpost" >添加</a>
+			  <a id="confirm_add_friend_btn" class="waves-effect waves-light btn collpost" >添加</a>
 	  </div>
 	</div>
 	<!-- 反馈信息 -->
@@ -738,7 +732,7 @@
 	<script src="./js/recharge.js"></script>
 	<script src="./js/feedback_message.js"></script>
 	<script src="./js/turn_to_room.js"></script>
-	<script src="./js/bullup_message_box.js"></script>
+	<script src="./js/add_friend.js"></script>
 	<script src="./js/bullup_message_box.js"></script>
 	<script src="./js/jquery.pagewalkthrough.js"></script>
 	<script type="text/javascript" src="./js/time_js.js"></script>
