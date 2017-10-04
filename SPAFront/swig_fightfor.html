@@ -1,6 +1,6 @@
 <body>
 <style type="text/css">
-.box{margin:10px auto;width:400px;}
+  .box{margin:10px auto;width:400px;}
   #showtime{margin:20px;margin-bottom: 20px;text-align: center;}
   span{font-size: 60px;color: #fff;}
   button{width:100px;height:100px;border-radius: 50px;border:0;outline:none ;margin:0 48px;font-size:24px;}
@@ -40,60 +40,29 @@
    -->
 
    
-   <div style="width: 100%;">
+  <div style="width: 100%;">
     <p style="color: #fff;text-align: left;font-size: 16px;margin-top: 10px;margin-left: 10px;">我的队伍</p>
-  <div style="margin-left: 55px;">
-  <div style="width: 200px;height: 50px;overflow: hidden;;margin-left: 10px;margin-top: 10px;">
-        <img src='/media/imgs/1.jpg' style="width: 50px;height: 50px;border-radius: 24px;float: left">
-        <p style="color: #fff;float: left;font-size: 16px;line-height: 45px;margin-left: 20px;">杀神风封封</p>
-        </div>
-
-         <div style="width: 200px;height: 50px;overflow: hidden;;margin-left: 10px;margin-top: 10px;">
-        <img src='/media/imgs/1.jpg' style="width: 50px;height: 50px;border-radius: 24px;float: left">
-        <p style="color: #fff;float: left;font-size: 16px;line-height: 45px;margin-left: 20px;">杀神风封封</p>
-        </div>
-
-         <div style="width: 200px;height: 50px;overflow: hidden;;margin-left: 10px;margin-top: 10px;">
-        <img src='/media/imgs/1.jpg' style="width: 50px;height: 50px;border-radius: 24px;float: left">
-        <p style="color: #fff;float: left;font-size: 16px;line-height: 45px;margin-left: 20px;">杀神风封封</p>
-        </div>
-
-        <div style="width: 200px;height: 50px;overflow: hidden;;margin-left: 10px;margin-top: 10px;">
-        <img src='/media/imgs/1.jpg' style="width: 50px;height: 50px;border-radius: 24px;float: left">
-        <p style="color: #fff;float: left;font-size: 16px;line-height: 45px;margin-left: 20px;">杀神风封封</p>
-        </div>
-
-        <div style="width: 200px;height: 50px;overflow: hidden;;margin-left: 10px;margin-top: 10px;">
-        <img src='/media/imgs/1.jpg' style="width: 50px;height: 50px;border-radius: 24px;float: left">
-        <p style="color: #fff;float: left;font-size: 16px;line-height: 45px;margin-left: 20px;">杀神风封封</p>
-        </div>
-
+    <div style="margin-left: 55px;">
+        {% for participant in participants %}
+          <div style="width: 200px;height: 50px;overflow: hidden;;margin-left: 10px;margin-top: 10px;">
+          <img src='/media/user_icon/{{participant.avatarId}}.png' style="width: 50px;height: 50px;border-radius: 24px;float: left">
+          <p style="color: #fff;float: left;font-size: 16px;line-height: 45px;margin-left: 20px;">{{participant.name}}</p>
+          </div>
+        {% endfor %}
+    </div>
   </div>
- </div>
- </div>
-  <div class="col s6 m9" style=" width:378px!important;height: 462px!important;margin:0 auto;">
-   
-   
+  </div>
+  <div class="col s6 m9" style=" width:378px!important;height: 462px!important;margin:0 auto;"> 
     <!--  Radar Chart of two teams   -->
     <canvas id="team-detail-chart" style="margin-left: 162px; display: block;"></canvas>
     </div>
-</div>
+  </div>
     <!-- End of Details -->
   
   </div>
   </div>
   <div class="modal-footer">
-
-  
-  
-  
   </div>
-
-
-
-
-
-
 </body>
   <script>
   window.chartColors = {
@@ -113,7 +82,7 @@ function setData (data) {
     arr = data;
 }
 var $a =  $('#a1').val();
-console.log($a);
+//console.log($a);
 var json = {
      name1:250,
      name2:250,
@@ -149,7 +118,7 @@ var config3 = {
     };
 
     var arr = config3.data.datasets[0]; 
-    console.log(arr.data);
+    //console.log(arr.data);
 var radar = document.getElementById("team-detail-chart");
 window.myRadar = new Chart(radar, config3);
  //添加事件
@@ -162,7 +131,7 @@ $(function(){
 
 //点击第二个按钮
 
-  timer=setInterval(show,10)
+timer=setInterval(show,10)
 //生成时间
   function show(){
     ms++;

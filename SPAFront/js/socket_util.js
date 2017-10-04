@@ -582,6 +582,7 @@ function handleRoomEstablishmentResult(feedback){
     }
     //socket.emit('tokenData', feedback.token);
     roomInfo = feedback.extension;
+    //console.log(JSON.stringify(roomInfo));
     var roomInfoFrameHtml = bullup.loadSwigView('swig_myroom_frame.html', {});
     var roomInfoHtml = bullup.loadSwigView('swig_myroom_info.html', {
         room: roomInfo
@@ -611,7 +612,10 @@ function handleRoomEstablishmentResult(feedback){
 		//console.log(roomInfo);
         socket.emit('establishTeam', roomInfo);
         if(roomInfo.gameMode == 'match'){
-            bullup.alert("匹配中，请等待！");
+            //bullup.alert("匹配中，请等待！");
+            bullup.loadTemplateIntoTarget('swig_fightfor.html', {
+                'participants': roomInfo.participants
+            }, 'main-view');
         }
 	});
 
