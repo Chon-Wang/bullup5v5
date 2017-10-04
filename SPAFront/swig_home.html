@@ -243,7 +243,8 @@
 							<!--  -->
 							<!-- Create button -->
 							<div class="row">
-								<a id="confirm_create_room_btn" class="waves-effect waves-light btn right">创建</a>
+								<!-- <a id="confirm_create_room_btn" class="waves-effect waves-light btn modal-trigger right">创建</a> -->
+								<a id="confirm_create_room_btn" class="waves-effect right btn">创建</a> 
 							</div>
 						</div>
 					</div>
@@ -602,13 +603,13 @@
 
 	<div id="modalpopo" class="modal" style="background: #455a64;">
 		<div class="modal-content">
-			<h4 style="color: #fff;">模态标题</h4>
-			<p class="ceneter_w" style="color: #fff;">一堆文本</p>
+			<h4 style="color: #fff;font-size:20px">模态标题</h4>
+
+			<p class="ceneter_w" style="color: #fff;margin-top:20px;font-size:16px">一堆文本</p>
 		</div>
 		<div class="modal-footer" style="background: #455a64;">
-			<button style="background: #26a69a;" class="btn waves-effect waves-light" type="submit" name="action">确定
-							
-							</button>
+			<button style="background: #26a69a;" class="btn waves-effect waves-light" type="submit" name="action">确定		
+			</button>
 		</div>
 	</div>
 <!-- 邀请好友弹出 -->
@@ -769,11 +770,6 @@
 			// 	$('.account').bankList();
 			// });
 			//弹出popo
-			function poroto_w() {
-				$('#modalpopo .modal-content  h4').text("sdwdwdwdwd")
-				$('#modalpopo .ceneter_w').text("s123123123")
-				$('#modalpopo').modal('open');
-			}
 			$('.waves-light').click(function () {
 				$('#modalpopo').modal('close');
 			});

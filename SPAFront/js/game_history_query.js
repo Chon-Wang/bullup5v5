@@ -10,17 +10,17 @@ $().ready(function () {
         e.preventDefault();
         var summonerName = $('#query_summoner_name').val();
         if(summonerName == ""){
-            alert("请输入召唤师的名字");
+            bullup.alert("请输入召唤师的名字");
             return;
         }
         var startDate = $('#query_start_data').val();
         if(startDate == ""){
-            alert("请输入起始时间");
+            bullup.alert("请输入起始时间");
             return;
         }
         var endDate = $('#query_end_data').val();
         if(endDate == ""){
-            alert("请输入终止时间");
+            bullup.alert("请输入终止时间");
             return;
         }
         var strs = startDate.split(",");
@@ -66,7 +66,7 @@ $().ready(function () {
         endDate = year + "/" + month + "/" + day;
         lolapi.getMatchDetailsBySummonerName(summonerName, startDate, endDate, function(matchDetails){
             if(matchDetails == null || matchDetails == undefined){
-                alert("召唤师不存在或设置的时间段过长！");
+                bullup.alert("召唤师不存在或设置的时间段过长！");
                 return;
             }else{
                 var frame = bullup.loadSwigView("swig_queryres.html", {});
