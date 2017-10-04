@@ -3,13 +3,14 @@ var logger = require('./util/logutil');
 var timmer = require('./timer');
 
 // 代理
-var userProxy = require('./proxy/userproxy.js'); 
+var userProxy = require('./proxy/userProxy.js'); 
 var teamProxy = require('./proxy/teamProxy.js');
 var socketProxy = require('./proxy/socketproxy.js');
 var battleProxy = require('./proxy/battleProxy.js');
 var paymentProxy = require('./proxy/paymentProxy.js');
 var chatProxy = require('./proxy/chatProxy.js');
 var adminProxy = require('./proxy/adminProxy.js');
+var stripeProxy = require('./proxy/stripeProxy.js');
 
 // 初始化Proxy, 所有需要保存数据结构的对象都需要初始化, 只能初始化一次
 userProxy.init();
@@ -109,9 +110,11 @@ socketProxy.startstableEmiter();
 //开启匹配器
 teamProxy.match();
 
+//监听充值请求
+stripeProxy.recharge();
+
 //一天更新一次排行榜
 //timmer.autoUpdateRankList(24 * 3600);
-
 io.listen(3000);
 
 

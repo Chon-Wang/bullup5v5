@@ -18,9 +18,7 @@ exports.handleChat=function(io,socket){
       } 
        
       io.sockets.emit('chatMsg',data);//广播 
-      console.log(data);
+      //console.log(data);
       });
-       console.log("----------------------------");
-       
-
+      //console.log("----------------------------");
 }
