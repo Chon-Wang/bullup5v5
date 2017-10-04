@@ -4,19 +4,8 @@ var request = require("request");
 
 $(document).ready(function(){
     $("#router_test_page").click(function(e){
-
-        var options = {
-            url: 'http://localhost:3000',
-        };
-        request(options, function(error, response, body){
-            var bodyStartIndex = body.indexOf("<body>");
-            var bodyEndIndex = body.indexOf("</body>");
-            var htmlStr = body.substr(0, bodyEndIndex);
-            htmlStr = htmlStr.substr(bodyStartIndex + 6, htmlStr.length - 6);
-            $('#main-view').html(htmlStr);
-        });
-
-
+        e.preventDefault();
+        bullup.loadTemplateIntoTarget('swig_fightfor.html', {}, 'main-view');
         // lolProcess.grabLOLData('result', socket);
         // function processResultPacket(stdout){
         //     var resultPacket = {};
