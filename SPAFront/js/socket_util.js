@@ -609,14 +609,15 @@ function handleRoomEstablishmentResult(feedback){
     });
 
     $("#confirm_create_team_btn").click(function(){
-		//console.log(roomInfo);
-        socket.emit('establishTeam', roomInfo);
+        //console.log(roomInfo);
         if(roomInfo.gameMode == 'match'){
             //bullup.alert("匹配中，请等待！");
             bullup.loadTemplateIntoTarget('swig_fightfor.html', {
                 'participants': roomInfo.participants
             }, 'main-view');
         }
+        socket.emit('establishTeam', roomInfo);
+        
 	});
 
 }
