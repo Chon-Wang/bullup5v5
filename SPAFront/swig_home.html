@@ -26,8 +26,18 @@
 	<link href="./css/materialize.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="./css/spa_fight.css">
 	<link rel="stylesheet" href="./css/date.css">
-</head> 
-
+	<link type="text/css" rel="stylesheet" href="./css/jquery.pagewalkthrough.css" />
+	<link type="text/css" rel="stylesheet" href="./css/time_css.css" />
+	<style>
+	.main{ width: 1440px; height: 738px; margin-left: auto; margin-right: auto; position: relative; }
+	.w1,.w2,.w3,.w4{position:absolute; width:300px; height:80px;  top:120px; left:220px}
+	.w2{top:310px; left:220px; width:600px; height:40px; }
+	.w3{top:550px; left:220px; width:380px; height:40px; }
+	.w4{top:700px; left:1240px; width:100px; height:40px;  }
+	.overlay-hole{margin-left: 20px!important; margin-top: 20px!important;}
+	</style>
+</head>
+   
 <body>
 	<style>
 		.selected {
@@ -71,7 +81,7 @@
 					
 					<li><a id="message_center_nav" href="#message_sheet" id="router_message">消息中心</a></li>
 					<!-- Dropdown Trigger -->
-					<li><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
+					<li class="dro-index"><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
 					<div style="float:left;width:100px;position: relative">
 						<p class="zuix" style="position: absolute;left:30px;top:0px;cursor: pointer;"><img src="media/imgs/zx.png" width="15" height="15"></p>
 						<p class="g_bi" style="position: absolute;right:20px;top:0px;cursor: pointer;"><img src="media/imgs/gb.png" width="15" height="15"></p>
@@ -100,7 +110,7 @@
 				<div class="background">
 					<img src="./media/imgs/usr_bg.jpg">
 				</div>
-				<a href="#!user"><img class="circle" src="./media/imgs/timg.jpeg"></a>
+				<a href="#" style="z-index:1000;"><img style="margin-top:20px;" data-target="modal1" class="circle" src="./media/imgs/timg.jpeg"></a>
 				<a href="#!name"><span class="white-text name">John Doe</span></a>
 				<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
 			</div>
@@ -143,7 +153,7 @@
 	</ul>
 
 
-	<div class="fixed-action-btn vertical">
+	<div class="fixed-action-btn vertical subsidy">
 		<a class="btn-floating btn-large red">
 			<i class="fa fa-plus" aria-hidden="true"></i>
 	 	</a>
@@ -465,21 +475,13 @@
 						<input placeholder="占位提示" id="first_name" type="text" class="validate">
 						<label for="first_name">个人昵称</label>
 					</div>
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">爱好</label>
-					</div>
+					
 				</div>
 
 
 
 
-				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">年龄</label>
-					</div>
-				</div>
+				
 				<div class="row">
 					<div class="input-field col s6">
 						<input placeholder="占位提示" id="first_name" type="text" class="validate">
@@ -673,6 +675,34 @@
 			</form>
 		</div>
 	</div>
+	<div class="main" style="display: none;">
+		<div class="w1">
+		系统菜单包含注册登录和绑定英雄联盟账号
+		</div>
+		  
+		<div class="w2"></div>
+		<div id="walkthrough-2">
+		
+		 </div>
+		<div class="w3"></div>
+		<div id="walkthrough-3">
+		发起约战与队友一起战斗
+		 </div>
+		<div class="w4"></div>
+		<div id="walkthrough-4">
+		充值提现资金流水详情都在个人中心
+		 </div>
+		<img  usemap="#Map">
+		<div id="walkthrough-5">
+		好友,充值,个人能力分析快捷入口
+		 </div>
+		 <div id="walkthrough-6">
+				第四部演示
+				 </div>
+	
+	
+	
+	</div>
 
 
 
@@ -710,6 +740,8 @@
 	<script src="./js/turn_to_room.js"></script>
 	<script src="./js/bullup_message_box.js"></script>
 	<script src="./js/bullup_message_box.js"></script>
+	<script src="./js/jquery.pagewalkthrough.js"></script>
+	<script type="text/javascript" src="./js/time_js.js"></script>
 	
 
 
@@ -792,11 +824,57 @@
 					}
 				});
 			});
-			
-			
-			
-			
-		</script>
+			//引导页
+			$(function() {
+                // 设置参数
+                $('body').pagewalkthrough({
+                    name: 'introduction',
+                    steps: [{
+                            popup: { //定义弹出提示引导层
+                                content: '开启界面引导',
+                                type: 'modal'
+                            }
+                        }, {
+                            wrapper: '.dro-index',//当前引导对应的元素位置
+                            popup: {
+                                content: '.w1',//关联的内容元素
+                                type: 'tooltip',//弹出方式（tooltip和modal以及nohighlight）
+								position: 'bottom',//弹出层位置（top,left, right or bottom）
+								width:'200'
+								
+								
+                            }
+                        }, {
+                            wrapper: '#yuezhan',
+                            popup: {
+                                content: '#walkthrough-3',
+                                type: 'tooltip',
+								position: 'bottom',
+								top: '505px',
+								left: '368.406'
+
+                            }
+                        }, {
+                            wrapper: '#router_index',
+                            popup: {
+                                content: '#walkthrough-4',
+                                type: 'tooltip',
+                                position: 'bottom'
+                            }
+                        }, {
+                            wrapper: '.fa-plus',
+                            popup: {
+                                content: '#walkthrough-5',
+                                type: 'tooltip',
+                                position: 'left'
+                            }
+                        }]
+                });
+
+                // 一步一步显示引导页
+                $('body').pagewalkthrough('show');
+			});
+			</script>
 </body>
 
 </html>
