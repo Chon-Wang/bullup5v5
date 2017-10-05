@@ -37,6 +37,14 @@ exports.findUserByNickname = function(nickname, callback) {
         callback(results[0]);
     });
 }
+
+exports.findUserByCode  = function(code, callback) {
+    connection.query('select * from `user_info` where user_mail=?', [code], function (err, results){
+        if (err) throw err;
+        callback(results[0]);
+    });
+}
+
 //--------------查询全部提现信息------------------------
 exports.findAllWithdrawInfo = function(callback) {
     connection.query('select * from bullup_bankcard_info', function (err, results){

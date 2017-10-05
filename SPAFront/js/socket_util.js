@@ -362,30 +362,7 @@ socket.on('battleResult', function(resultPacket){
     $('#main-view').html(battleResHtml);
     //添加确认按钮单击事件
     $('#confirm_battle_result').on('click', function(e){
-        e.preventDefault();
-        var starter_data = {
-            tournaments:[
-                {
-                    name:'S7 Championship',
-                    description: 'Starting at October'
-                },
-                {
-                    name:'MSI Championship',
-                    description: 'Starting at May'
-                }
-                
-            ],
-            news:[
-                {
-                    title: 'New champion coming soon'
-                },
-                {
-                    title: 'Arcade 2017 Overview'
-                }
-            ]
-        };
-        bullup.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
-        $.getScript('./js/starter.js');
+        $('#router_starter').click();
 	});
 });
 
