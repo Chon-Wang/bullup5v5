@@ -181,7 +181,7 @@ exports.handleInviteFriend = function (socket) {
             socketProxy.stableSocketEmit(socket, 'feedback', {
                 errorCode: 1,
                 type: 'INVITERESULT',
-                text: inviteMessage.userName + '邀请失败,该用户已经下线'
+                text: '邀请失败,该用户已经下线'
             });
         }
     })
@@ -436,7 +436,6 @@ exports.handleAddFriendResult = function(socket){
         var userInfo = result.extension.userInfo;
         var invitedUserInfo = result.extension.invitedUserInfo;
         var socket1 = socketProxy.mapUserIdToSocket(userInfo.userId);
-
         if(result.errorCode == 0){
             var socket2 = socketProxy.mapUserIdToSocket(invitedUserInfo.userId);
             socketProxy.stableSocketEmit(socket1, 'feedback', {
