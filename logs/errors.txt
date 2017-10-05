@@ -1,0 +1,1 @@
+[2017-10-05 16:49:52] TypeError: Cannot read property 'user_lol_account' of undefined

@@ -160,6 +160,9 @@ socket.on('feedback', function (feedback) {
         case 'ADDFRIENDRESULT':
             handleAddFriendResult(feedback);
             break;
+        case 'ICONUPDATERESULT':
+            handleIconUpdateResult(feedback);
+            break;  
         //--------LOLAPIKey更新结果----------、
         }
 });
@@ -212,6 +215,21 @@ socket.on('teamInfoUpdate', function (data) {
             onOpen: function(el) {},
             onClose: function(el) {}
         });
+
+        $("#confirm_create_team_btn").click(function(){
+            //console.log(roomInfo);
+            if(roomInfo.gameMode == 'match'){
+                //bullup.alert("匹配中，请等待！");
+                bullup.loadTemplateIntoTarget('swig_fightfor.html', {
+                    'participants': roomInfo.participants
+                }, 'main-view');
+                var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
+                var dataArray1 = [50,50,50,50,50,50];
+                bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
+            }
+            socket.emit('establishTeam', roomInfo);
+        });
+
     }else{
         //普通对员只显示队伍信息，没有好友邀请栏
         $('#invite_friend_btn').css('display', 'none');
@@ -347,30 +365,7 @@ socket.on('battleResult', function(resultPacket){
     $('#main-view').html(battleResHtml);
     //添加确认按钮单击事件
     $('#confirm_battle_result').on('click', function(e){
-        e.preventDefault();
-        var starter_data = {
-            tournaments:[
-                {
-                    name:'S7 Championship',
-                    description: 'Starting at October'
-                },
-                {
-                    name:'MSI Championship',
-                    description: 'Starting at May'
-                }
-                
-            ],
-            news:[
-                {
-                    title: 'New champion coming soon'
-                },
-                {
-                    title: 'Arcade 2017 Overview'
-                }
-            ]
-        };
-        bullup.loadTemplateIntoTarget('swig_starter.html', starter_data, 'main-view');
-        $.getScript('./js/starter.js');
+        $('#router_starter').click();
 	});
 });
 
@@ -562,6 +557,20 @@ function handleOverFeedbackResult(feedback){
     bullup.alert(feedback.text);
 }
 
+//处理操作用户反馈
+function handleIconUpdateResult(feedback){
+    bullup.alert(feedback.text);
+    var friendCount = 0;
+    for(var index in userInfo.friendList){
+        friendCount++
+    }
+    bullup.loadTemplateIntoTarget('swig_home_friendlist.html', {
+        'userInfo': userInfo,
+        'friendListLength': friendCount
+    }, 'user-slide-out');
+    $('.collapsible').collapsible();
+}
+
 //充值管理
 function handleSearchAllRechargeResult(feedback){
     var tempData = feedback.extension.data;
@@ -648,7 +657,6 @@ function handleRoomEstablishmentResult(feedback){
             bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
         }
         socket.emit('establishTeam', roomInfo);
-        
 	});
 
 }
@@ -780,7 +788,7 @@ function handleInviteFromFriend(message){
     //console.log("messageInfo:  " + JSON.stringify(messageInfo));
 } 
 
-function  handlePersonalCenterResult(feedback){
+function handlePersonalCenterResult(feedback){
     //判断是否成功
     if(feedback.errorCode == 0){
         var data = feedback.extension;
@@ -801,18 +809,18 @@ function  handlePersonalCenterResult(feedback){
                tower:data.UserlolInfo_tower,
                damage:data.UserlolInfo_damage,
                taken:data.UserInfo_damage_taken,
-               cap:data.UserStrengthRank[0].strengthRank,
-               wealthRank:data.UserWealthRank[0].wealthRank,
+               cap:data.UserStrengthRank,
+               wealthRank:data.UserWealthRank,
                wealth:data.UserWealth,
                strength:data.UserStrength,
-               winning_rate:data.competition_wins
+               winning_rate:data.competition_wins,
+               avatarId:data.User_icon_id
             }
         });
         $('#main-view').html(personalCenterHtml);
     }else{
         bullup.alert("页面加载失败!");
     }
-   
 }
 
 function handleBattleInviteRequest(message){

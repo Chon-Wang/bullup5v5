@@ -39,7 +39,7 @@ io.on('connection', function(socket) {
     userProxy.insertFeedbackMessage(socket);
 
     userProxy.handleLOLBind(socket); 
-
+    userProxy.handleIconIdUpdate(socket);
     userProxy.handleAddFriendRequest(socket);
     userProxy.handleAddFriendResult(socket);
 

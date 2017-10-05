@@ -37,6 +37,20 @@ exports.findUserByNickname = function(nickname, callback) {
         callback(results[0]);
     });
 }
+
+exports.findUserByCode  = function(code, callback) {
+    connection.query('select * from `user_info` where user_mail=?', [code], function (err, results){
+        if (err) throw err;
+        callback(results[0]);
+    });
+}
+
+exports.updateUserIconIdByUserId = function(userId, iconId){
+    connection.query('update bullup_profile set icon_id = ? where user_id = ?', [iconId, userId], function(err, res){
+        if (err) throw err;
+    });
+}
+
 //--------------查询全部提现信息------------------------
 exports.findAllWithdrawInfo = function(callback) {
     connection.query('select * from bullup_bankcard_info', function (err, results){
@@ -974,38 +988,26 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                console.log(JSON.stringify("lolInfo:"+userPersonalInfo));
                callback(null,userPersonalInfo); 
             });
-        },function(userPersonalInfo,callback){
-            //个人战斗力排行
-            connection.query('select bullup_strength_score from bullup_strength where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
-                let temp = results[0].bullup_strength_score;
-                //console.log(temp);
-                connection.query('select count(*) as strengthRank from bullup_strength where bullup_strength_score>=?',[userId],function(err,results2,fields){
-                    userPersonalInfo.strengthRank=results2;
-                    console.log(JSON.stringify("strengthRank:"+userPersonalInfo.strengthRank));
-                    callback(null,userPersonalInfo);
-                });
+         },function(userPersonalInfo,callback){
+             connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
+            if(err) throw err;
+                 userPersonalInfo.wealth=results[0].bullup_currency_amount;
+                 callback(null,userPersonalInfo);
             });
-        },function(userPersonalInfo,callback){
-            connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
-                userPersonalInfo.wealth=results[0].bullup_currency_amount;
+         },function(userPersonalInfo,callback){
+             connection.query('select bullup_strength_rank,bullup_wealth_rank,user_icon_id from bullup_rank where user_id = ?',[userId],function(err,results,fields){
+                if (err) throw err;
+                userPersonalInfo.strengthRank=results[0].bullup_strength_rank;
+                userPersonalInfo.wealthRank=results[0].bullup_wealth_rank;
                 callback(null,userPersonalInfo);
-            });
-        },function(userPersonalInfo,callback){
-            //个人财富排行
-            connection.query('select bullup_currency_amount from bullup_wealth where user_id=?',[userId],function(err,results,fields){
-                if(err) throw err;
-                let temp2 = results[0].bullup_currency_amount;
-                console.log(temp2);
-                connection.query('select count(*) as wealthRank from bullup_wealth where bullup_currency_amount>=?',[temp2],function(err,results2,fields){
-                    if(err) throw err;
-                    userPersonalInfo.wealthRank=results2;
-                    console.log(JSON.stringify("wealthRank:"+userPersonalInfo.wealthRank));
-                    callback(null,userPersonalInfo);
-                });
-            });
-        }
+             });
+         },function(userPersonalInfo,callback){
+             connection.query('select icon_id from bullup_profile  where user_id=?',[userId],function(err,results,fields){
+                if (err) throw err;
+                userPersonalInfo.icon_id=results[0].icon_id;
+                callback(null,userPersonalInfo);
+             });
+         }
     ],function(err,res){
         callback(res);
         console.log(res);

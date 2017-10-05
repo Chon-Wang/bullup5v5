@@ -147,19 +147,31 @@ exports.handleRegister = function (socket) {
                             extension: null
                         });
                     }else{
-                        dbUtil.addUser(userInfo, function (userAddRes) {
-                            socketProxy.stableSocketEmit(socket, 'feedback', {
-                                errorCode: 0,
-                                text: '注册成功',
-                                type: 'REGISTERRESULT',
-                                extension: {
-                                    userAccount: userInfo.userAccount,
-                                    userNickname: userInfo.userNickname,
-                                    userId: userAddRes.userId,
-                                    userIconId: 1,
-                                }
-                            });
+                        dbUtil.findUserByCode(userInfo.userEmail, function (user) {
+                            if(user){
+                                socketProxy.stableSocketEmit(socket, 'feedback', {
+                                    errorCode: 1,
+                                    text: '该邀请码已被使用',
+                                    type: 'REGISTERRESULT',
+                                    extension: null
+                                });
+                            }else{
+                                dbUtil.addUser(userInfo, function (userAddRes) {
+                                    socketProxy.stableSocketEmit(socket, 'feedback', {
+                                        errorCode: 0,
+                                        text: '注册成功',
+                                        type: 'REGISTERRESULT',
+                                        extension: {
+                                            userAccount: userInfo.userAccount,
+                                            userNickname: userInfo.userNickname,
+                                            userId: userAddRes.userId,
+                                            userIconId: 1,
+                                        }
+                                    });
+                                });
+                            }
                         });
+                        
                     }
                 });
             }
@@ -184,7 +196,19 @@ exports.handleInviteFriend = function (socket) {
                 text: '邀请失败,该用户已经下线'
             });
         }
-    })
+    });
+}
+
+exports.handleIconIdUpdate = function (socket) {
+    socket.on('iconIdUpdate', function (iconData) {
+        dbUtil.updateUserIconIdByUserId(iconData.userId, iconData.newIconId);
+        socketProxy.stableSocketEmit(socket, 'feedback', {
+            'errorCode': 0,
+            'type': 'ICONUPDATERESULT',
+            'text': '头像更新成功',
+            'extension': null
+        });
+    });
 }
 
 //查询账户余额
@@ -356,14 +380,13 @@ exports.handlePersonalCenterRequest = function(socket){
                 var data = {};
                 //填充data
                 data.userId = queryResult.userInfo[0].user_id;
-                
                 console.log('id..'+queryResult.user_id);
                 //data.XXX = queryResult.XXX;
                 data.userAccount=queryResult.userInfo[0].user_account;
                 data.name=queryResult.userInfo[0].user_nickname;
                 data.payAccountId=queryResult.Id.bullup_payment_account_id;
-                data.paymentType=queryResult.paymentHistory.bullup_paymet_type;
-                data.paymentAccount=queryResult.paymentHistory.bullup_account;
+                // data.paymentType=queryResult.paymentHistory.bullup_paymet_type;
+                // data.paymentAccount=queryResult.paymentHistory.bullup_account;
                 data.lolInfoId=queryResult.info[0].lol_info_id;
                 data.UserlolAccount=queryResult.info[0].user_lol_account;
                 data.UserlolNickname=queryResult.info[0].user_lol_nickname;
@@ -381,6 +404,7 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserInfo_heal=queryResult.lolInfo_strength_heal;
                 data.UserStrengthRank=queryResult.strengthRank;
                 data.UserWealthRank=queryResult.wealthRank;
+                data.User_icon_id=queryResult.icon_id;
                 data.UserWealth=queryResult.wealth;
                 data.UserStrength=queryResult.lolInfo_strength_score;
                 data.competition_wins=queryResult.competition_wins;
@@ -394,10 +418,8 @@ exports.handlePersonalCenterRequest = function(socket){
             }
             socketProxy.stableSocketEmit(socket, 'feedback', feedback);
             console.log('feedback111:'+JSON.stringify(feedback));
-
         });
     });
-
 }
 
 exports.handleAddFriendRequest = function(socket){
