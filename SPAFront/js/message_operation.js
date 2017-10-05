@@ -21,7 +21,8 @@ $(".message_accept_btn").on('click', function(e){
                         name: userInfo.name,
                         userId: userInfo.userId,
                         avatarId: userInfo.avatarId,
-                        strength: userInfo.strength
+                        strength: userInfo.strength,
+                        lolAccountInfo: userInfo.lolAccountInfo
                     }
                 }
             };
