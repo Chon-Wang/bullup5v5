@@ -406,12 +406,13 @@ exports.handleAddFriendRequest = function(socket){
         var invitedUserNickname = request.invitedUserNickname;
         var flag = false;
         for(var index in exports.users){
-            if(exports.users[index].userNickname == invitedUserNickname){
+            if(exports.users[index].name == invitedUserNickname){
                 //发送请求
                 var invitedUserInfo = exports.users[index];
                 var tarSocket = socketProxy.mapUserIdToSocket(invitedUserInfo.userId);
                 socketProxy.stableSocketEmit(tarSocket, 'message', {
                     'userInfo':  userInfo,
+                    'invitedUserInfo': invitedUserInfo,
                     'messageType': 'addFriend',
                     'messageText': '添加好友'
                 });
@@ -426,6 +427,45 @@ exports.handleAddFriendRequest = function(socket){
                 'type': 'ADDFRIENDRESULT',
                 'extension': null
             })
+        }
+    });
+}
+
+exports.handleAddFriendResult = function(socket){
+    socket.on('addFriendResult', function(result){
+        var userInfo = result.extension.userInfo;
+        var invitedUserInfo = result.extension.invitedUserInfo;
+        var socket1 = socketProxy.mapUserIdToSocket(userInfo.userId);
+
+        if(result.errorCode == 0){
+            var socket2 = socketProxy.mapUserIdToSocket(invitedUserInfo.userId);
+            socketProxy.stableSocketEmit(socket1, 'feedback', {
+                'errorCode': 0,
+                'type': "ADDFRIENDRESULT",
+                'text': invitedUserInfo.name + "同意了您的好友添加请求",
+                'extension': {
+                    'newFriend':  invitedUserInfo
+                }
+            });
+
+            socketProxy.stableSocketEmit(socket2, 'feedback', {
+                'errorCode': 0,
+                'type': "ADDFRIENDRESULT",
+                'text': "成功将" + userInfo.name + "添加为好友",
+                'extension': {
+                    'newFriend':  invitedUserInfo
+                }
+            });
+
+            dbUtil.addFriendRelationship(userInfo.userId, invitedUserInfo.userId);
+            
+        }else{
+            socketProxy.stableSocketEmit(socket1, 'feedback', {
+                'errorCode': 1,
+                'type': "ADDFRIENDRESULT",
+                'text': invitedUserInfo.name + "拒绝了您的好友添加请求",
+                'extension': null
+            });
         }
     });
 }
