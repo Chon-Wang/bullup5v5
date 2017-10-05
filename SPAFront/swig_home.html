@@ -28,14 +28,7 @@
 	<link rel="stylesheet" href="./css/date.css">
 	<link type="text/css" rel="stylesheet" href="./css/jquery.pagewalkthrough.css" />
 	<link type="text/css" rel="stylesheet" href="./css/time_css.css" />
-	<style>
-	.main{ width: 1440px; height: 738px; margin-left: auto; margin-right: auto; position: relative; }
-	.w1,.w2,.w3,.w4{position:absolute; width:300px; height:80px;  top:120px; left:220px}
-	.w2{top:310px; left:220px; width:600px; height:40px; }
-	.w3{top:550px; left:220px; width:380px; height:40px; }
-	.w4{top:700px; left:1240px; width:100px; height:40px;  }
-	.overlay-hole{margin-left: 20px!important; margin-top: 20px!important;}
-	</style>
+
 </head>
    
 <body>
@@ -48,6 +41,33 @@
 		.qies {
 			float: left;
 			margin-left: 10px;
+		}
+		.main{ width: 1440px; height: 738px; margin-left: auto; margin-right: auto; position: relative; }
+		.w1,.w2,.w3,.w4{position:absolute; width:300px; height:80px;  top:120px; left:220px}
+		.w2{top:310px; left:220px; width:600px; height:40px; }
+		.w3{top:550px; left:220px; width:380px; height:40px; }
+		.w4{top:700px; left:1240px; width:100px; height:40px;  }
+		.overlay-hole{margin-left: 20px!important; margin-top: 20px!important;}
+		.moda{padding-left: 10px;padding-top: 10px;}
+		.moda li{width:54px;height: 54px;border-radius: 36px;margin-left: 13px;margin-top:10px;cursor:pointer;float: left;overflow: hidden;border:2px solid #26a69a;}
+		.moda-img{cursor:pointer;width:100%;height:100%;}
+		.remove-a{
+			width: 90px;
+			height: 30px;
+			text-align: center;
+			float: left;;
+			color: #fff;
+			background: #26a69a;
+			cursor: pointer;
+			line-height: 30px;
+			margin-top: 30px;
+			font-size:14px;
+			border-radius: 2px;
+		}
+		.collap-buff{
+			float:right;
+			margin-right:10px;
+			margin-top:-5px;
 		}
 	</style>
 
@@ -64,7 +84,7 @@
 					斗牛电竞
 				</div>
 				<div class="nav-weblink">
-					http://bullesport.com
+				<a class="bull-href" href="www.bullesport.com">www.bullesport.com</a>
 				</div>
 
 				<ul class="right hide-on-med-and-down wang_ul">
@@ -122,7 +142,16 @@
 					<img src="./media/imgs/usr_bg.jpg">
 				</p>
 				  <p class="collap-p2">有志者事竟成。</p>
+				  <div class="collap-buff">
+				  <div class="color-dot color-dot-red" >
+					</div>
+					<label class="friend-status friend-status--offline">
+					在线
+					</label>
 				</div>
+				</div>
+					
+		
 			</div>
 
 			<div class="collapsible-body collap-style" style="background:none;">
@@ -465,43 +494,60 @@
 	<!-- Modal Structure -->
 	<div id="modal1" class="modal" style="background:#455a64;">
 		<div class="row">
-			<form class="col s6">
-				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">个人昵称</label>
-					</div>
-					
-				</div>
-
-
-
-
+			<div class="moda">
+				<li><img class="moda-img" src="media/user_icon/594601274d3d8.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/59686836efc33.jpg"></li>
+				<li><img class="moda-img" src="media/user_icon/58d7223c87507.jpg"></li>
+				<li><img class="moda-img" src="media/user_icon/58f5ef67bb0aa.png"></li>
+				<li><img class="moda-img" src="media/user_icon/58f5ef67ed32f.png"></li>
+				<li><img class="moda-img" src="media/user_icon/58f5ef684c65b.png"></li>
+				<li><img class="moda-img" src="media/user_icon/75d3478c812cc62790520b3756afd874.jpg"></li>
+				<li><img class="moda-img" src="media/user_icon/594e05d5a739d.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/5944b8528744f.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/599127beb6916.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/rBACE1ONzmuCAIPAAAAgBntOY1M201_200x200_3.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/59b14c4bc9eed.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/59b14c4b8ffce.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/59d3c7017cd47.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/5f808b33gw1evgc0eh0vyj20zk0zkjte.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/5f808b33gw1evgc0ghacuj20zk0zk42u.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/5f808b33gw1evgc0ho7rbj20zk0zkgnx.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/58d7cf8a0774c.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/596ac7ef84f73.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/timg.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/596b3f2454758.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/595c40b63d268.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/595b5ed70eff1.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/bluesi.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/5947c63b0206b.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/58d7cf89f094d.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/598802f7ce468.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/599127be35f40.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/c7584bdb7776461467dc797b175fd6f39894fdaab43f-theoLD_fw658.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/59819a0d87413.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/59477cdf08d64.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/20170502124052_yiPQr.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/59661a7c72083.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/5990f5a35bdc4.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/5990291c0aef5.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/58d7cf89ead83.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/598802fde79ab.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/20161025173339_M4wFn.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/20170726210832_Rfmsi.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/20170722193033_wcCZt.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/59b9c8b2623ca.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/78t0iothtp7z79aesz87370p9.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/ac4bd11373f0820234e0dbc049fbfbedaa641bda.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/3izxe8cq11gdr2jeo6srqpjcr.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/35.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/59kg1aa90d1803pq38cjhnvrz.jpg" ></li>
+				<li><img class="moda-img" src="media/user_icon/59abf5a758d40.jpg" ></li>
+			
+				<li><img class="moda-img" src="media/user_icon/5881f7230028f.jpg" ></li>				
+				<li><img class="moda-img" src="media/user_icon/005UmBnIly1fk6fivfbx0j30fd0fd755.jpg" ></li>	
+				<li><img class="moda-img" src="media/user_icon/7ccadb82ly1fjxcab2xyjj20rs0rsjw4.jpg" ></li>	
 				
-				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">邮件</label>
-					</div>
-				</div>
-				<form action="#">
-					<div class="file-field input-field" style="padding-left: 10px;">
-						<div class="btn">
-							<span>更改头像</span>
-							<input type="file">
-						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text">
-						</div>
-					</div>
-					<button style="margin-left: 10px;" class="btn waves-effect waves-light" type="submit" name="action">提交
-							</form>
-
-					
-							
-							</button>
-
-				</form>
+			</div>
 		</div>
 
 
@@ -611,14 +657,15 @@
 		</div>
 	</div>
 <!-- 邀请好友弹出 -->
-<div id="coollap" class="modal" style="background-color: #455a64;width:35%;">
+<div id="coollap" class="modal" style="background-color: #455a64;width:26%;overflow: hidden;height: 70px;">
 		<div class="row">
-			<div class="input-field col s6">
-				<input style="color:#fff;" value="" id="first_name2" type="text" class="validate">
-				<label class="active" for="first_name2">对方昵称</label>
+				<div class="input-field col s6" style="width:70%;float:left;margin-top:12px;">
+				  <input style="color:#fff;" value="" id="first_name2" type="text" class="validate">
+				  <label class="active" for="first_name2">对方ID</label>
+				</div>
+				<a style="" class="remove-a">添加</a>
 			</div>
-		</div>
-		<a id="confirm_add_friend_btn" class="waves-effect btn collpost" >添加</a>
+			 
 	  </div>
 	</div>
 	<!-- 反馈信息 -->
@@ -870,6 +917,13 @@
                 // 一步一步显示引导页
                 $('body').pagewalkthrough('show');
 			});
+			//获取头像文件名字
+			$('.moda li').click(function () {
+				var modai = $(this).index();
+				var modimg = $('.moda img').eq(modai).attr('src'); 
+				console.log(modimg);
+			});
+
 			</script>
 </body>
 
