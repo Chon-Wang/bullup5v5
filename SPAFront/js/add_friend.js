@@ -7,12 +7,11 @@ $().ready(function(){
             for(var index in userInfo.friendList){
                 friendCount++
             }
-            
-    
             bullup.loadTemplateIntoTarget('swig_home_friendlist.html', {
                 'userInfo': userInfo,
                 'friendListLength': friendCount
             }, 'user-slide-out');
+            $('.collapsible').collapsible();
             $('#friend_list_real_btn').click();
         }
     });
@@ -23,6 +22,12 @@ $().ready(function(){
         if(inputUserNickName == ""){
             bullup.alert('请输入对方昵称');
         }else{
+            for(var friendName in userInfo.friendList){
+                if(friendName == inputUserNickName){
+                    bullup.alert(friendName + '已经是您的好友');
+                    return;
+                }
+            }
             $('#coollap').modal('close');
             bullup.alert('已发送好友请求');
             socket.emit('addFriendRequest', {

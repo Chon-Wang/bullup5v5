@@ -849,6 +849,26 @@ function handleLOLKeyRequestResult(feedback){
 }
 
 function handleAddFriendResult(feedback){
+    if(feedback.errorCode == 0){
+        //更新本地好友列表
+        var newFriendDetails = feedback.extension.newFriend;
+        var newFriend = {};
+        newFriend.userId = newFriendDetails.userId;
+        newFriend.avatarId = newFriendDetails.avatarId;
+        newFriend.online = 'true';
+        newFriend.status = 'idle';
+        newFriend.name = newFriendDetails.name;
+        userInfo.friendList[newFriend.name] = newFriend;
+        var friendCount = 0;
+        for(var index in userInfo.friendList){
+            friendCount++
+        }
+        bullup.loadTemplateIntoTarget('swig_home_friendlist.html', {
+            'userInfo': userInfo,
+            'friendListLength': friendCount
+        }, 'user-slide-out');
+        $('.collapsible').collapsible();
+    }
     bullup.alert(feedback.text);
 }
 
@@ -856,9 +876,6 @@ function handleAddFriendResult(feedback){
 function feedbackMessage(feedback){
     bullup.alert(feedback.text);
 }
-
-
-
 
 
 setInterval(()=>{

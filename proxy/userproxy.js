@@ -453,7 +453,7 @@ exports.handleAddFriendResult = function(socket){
                 'type': "ADDFRIENDRESULT",
                 'text': "成功将" + userInfo.name + "添加为好友",
                 'extension': {
-                    'newFriend':  invitedUserInfo
+                    'newFriend':  userInfo
                 }
             });
 

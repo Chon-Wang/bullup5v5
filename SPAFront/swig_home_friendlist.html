@@ -12,32 +12,18 @@
 
 <ul class="collapsible" data-collapsible="accordion">
     <li>
+        
         <div class="collapsible-header"><span class="new badge">{{friendListLength}}</span>好友</div>
-        <div class="collapsible-body collap-style" style="background:none;">
-        <div class="collap-rq" >
-        <p class="collap-p" >
-            <img src="./media/imgs/usr_bg.jpg">
-        </p>
-            <p class="collap-p2">有志者事竟成。</p>
-        </div>
-    </div>
 
-    <div class="collapsible-body collap-style" style="background:none;">
+        {% for friend in userInfo.friendList%}
+        <div class="collapsible-body collap-style" style="background:none;">
             <div class="collap-rq" >
             <p class="collap-p" >
-                <img src="./media/imgs/usr_bg.jpg">
+                <img src="./media/user_icon/{{friend.avatarId}}.png">
             </p>
-                <p class="collap-p2">有志者事竟成。</p>
+                <p class="collap-p2">{{friend.name}}</p>
             </div>
         </div>
-
-        <div class="collapsible-body collap-style" style="background:none;">
-                <div class="collap-rq" >
-                <p class="collap-p" >
-                    <img src="./media/imgs/usr_bg.jpg">
-                </p>
-                    <p class="collap-p2">有志者事竟成。</p>
-                </div>
-            </div>
+        {% endfor %}
     </li>
 </ul>

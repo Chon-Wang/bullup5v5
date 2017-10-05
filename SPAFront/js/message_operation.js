@@ -106,7 +106,7 @@ $(".message_reject_btn").on('click', function(e){
 
         case 'addFriend':{
             var addFriendResult = {
-                errorCode: 0,
+                errorCode: 1,
                 type: 'ADDFRIENDRESULT',
                 text: '添加好友失败',
                 extension: {

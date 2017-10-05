@@ -21,6 +21,16 @@ exports.findUserByAccount = function(account, callback) {
     });
 }
 
+//---------------------------------------添加好友关系-------------------------------------//
+exports.addFriendRelationship = function(userId1, userId2){
+    connection.query('insert into `bullup_friend` values (?, ?)', [userId1, userId2], function (err, results){
+        if (err) throw err;
+        connection.query('insert into `bullup_friend` values (?, ?)', [userId2, userId1], function (err, results){
+            if (err) throw err;
+        });
+    });
+}
+
 exports.findUserByNickname = function(nickname, callback) {
     connection.query('select * from `user_base` where user_nickname=?', [nickname], function (err, results){
         if (err) throw err;
