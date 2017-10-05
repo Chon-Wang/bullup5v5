@@ -212,6 +212,21 @@ socket.on('teamInfoUpdate', function (data) {
             onOpen: function(el) {},
             onClose: function(el) {}
         });
+
+        $("#confirm_create_team_btn").click(function(){
+            //console.log(roomInfo);
+            if(roomInfo.gameMode == 'match'){
+                //bullup.alert("匹配中，请等待！");
+                bullup.loadTemplateIntoTarget('swig_fightfor.html', {
+                    'participants': roomInfo.participants
+                }, 'main-view');
+                var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
+                var dataArray1 = [50,50,50,50,50,50];
+                bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
+            }
+            socket.emit('establishTeam', roomInfo);
+        });
+
     }else{
         //普通对员只显示队伍信息，没有好友邀请栏
         $('#invite_friend_btn').css('display', 'none');
@@ -648,7 +663,6 @@ function handleRoomEstablishmentResult(feedback){
             bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
         }
         socket.emit('establishTeam', roomInfo);
-        
 	});
 
 }
