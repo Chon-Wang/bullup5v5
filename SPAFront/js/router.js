@@ -28,9 +28,10 @@ $().ready(function(){
 	});
 
 	$('#router_tournament').on('click', function(e){
-		e.preventDefault();
-		var tournaments_data = [];
-		bullup.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');
+		bullup.alert("敬请期待");
+		//e.preventDefault();
+		// var tournaments_data = [];
+		// bullup.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');
 	});
 
 	

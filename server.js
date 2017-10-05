@@ -40,6 +40,8 @@ io.on('connection', function(socket) {
 
     userProxy.handleLOLBind(socket); 
 
+    userProxy.handleAddFriendRequest(socket);
+
     //余额
     userProxy.handleGetBalance(socket);
     //

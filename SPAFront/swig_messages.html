@@ -32,5 +32,21 @@
                 </div>
             </li>
         {% endif %}
+        {% if message.messageType == 'addFriend' %}
+        <li>
+            <div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>{{ message.messageText }}</div>
+            <div class="collapsible-body">
+                <span>{{ message.userInfo.name }}向您发出了好友请求，请问您是否同意？</span>
+                <div class="right">
+                <a class="waves-effect waves-light btn">
+                    <i id="message_{{loop.index - 1}}_accept_btn" class="message_accept_btn fa fa-check" aria-hidden="true"></i>
+                </a>
+                <a class="waves-effect waves-light btn">
+                    <i id="message_{{loop.index - 1}}_reject_btn" class="message_reject_btn fa fa-times" aria-hidden="true"></i>
+                </a>
+                </div>
+            </div>
+        </li>
+    {% endif %}
     {% endfor %}
 {% endif %}

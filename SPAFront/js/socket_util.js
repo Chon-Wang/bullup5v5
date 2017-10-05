@@ -157,6 +157,9 @@ socket.on('feedback', function (feedback) {
         case 'LOLKEYREQUESTRESULT':
             handleLOLKeyRequestResult(feedback);
             break;
+        case 'ADDFRIENDRESULT':
+            handleAddFriendResult(feedback);
+            break;
         //--------LOLAPIKey更新结果----------、
         }
 });
@@ -169,6 +172,9 @@ socket.on('message', function(message){
             break;
         case 'inviteBattle':
             handleBattleInviteRequest(message);
+            break;
+        case 'addFriend':
+            handleAddFriendRequest(message);
             break;
     }
 
@@ -815,6 +821,13 @@ function handleBattleInviteRequest(message){
     $("#message_center_nav").click();
 }
 
+function handleAddFriendRequest(message){
+    messageInfo.push(message);
+    //弹出消息中心
+    $("#message_center_nav").click();
+}
+
+
 
 function handleLOLApiUpdateResult(feedback){
     bullup.alert(feedback.text);
@@ -835,6 +848,9 @@ function handleLOLKeyRequestResult(feedback){
     $.getScript('/js/game_history_query.js');
 }
 
+function handleAddFriendResult(feedback){
+    bullup.alert(feedback.text);
+}
 
 //反馈结果
 function feedbackMessage(feedback){

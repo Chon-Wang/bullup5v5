@@ -400,6 +400,36 @@ exports.handlePersonalCenterRequest = function(socket){
 
 }
 
+exports.handleAddFriendRequest = function(socket){
+    socket.on('addFriendRequest', function(request){
+        var userInfo = request.userInfo;
+        var invitedUserNickname = request.invitedUserNickname;
+        var flag = false;
+        for(var index in exports.users){
+            if(exports.users[index].userNickname == invitedUserNickname){
+                //发送请求
+                var invitedUserInfo = exports.users[index];
+                var tarSocket = socketProxy.mapUserIdToSocket(invitedUserInfo.userId);
+                socketProxy.stableSocketEmit(tarSocket, 'message', {
+                    'userInfo':  userInfo,
+                    'messageType': 'addFriend',
+                    'messageText': '添加好友'
+                });
+                flag = true;
+                break;
+            }
+        }
+        if(!flag){
+            socketProxy.stableSocketEmit(socket, 'feedback', {
+                'errorCode': 1,
+                'text': '好友添加失败，对方不在线',
+                'type': 'ADDFRIENDRESULT',
+                'extension': null
+            })
+        }
+    });
+}
+
 exports.insertFeedbackMessage=function(socket){
     socket.on('feedbackMessage',function(result){
         console.log('result:'+JSON.stringify(result)); 
