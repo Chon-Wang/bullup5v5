@@ -21,7 +21,8 @@ $(".message_accept_btn").on('click', function(e){
                         name: userInfo.name,
                         userId: userInfo.userId,
                         avatarId: userInfo.avatarId,
-                        strength: userInfo.strength
+                        strength: userInfo.strength,
+                        lolAccountInfo: userInfo.lolAccountInfo
                     }
                 }
             };
@@ -44,6 +45,24 @@ $(".message_accept_btn").on('click', function(e){
             }
             socket.emit('inviteBattleResult', inviteBattleResult);
             //删除消息
+            messageInfo.splice(Number.parseInt(messageIndexString), 1);
+            $('#message_center_nav').click();
+            break;
+        }
+
+        case 'addFriend':{
+
+            var addFriendResult = {
+                errorCode: 0,
+                type: 'ADDFRIENDRESULT',
+                text: '添加好友成功',
+                extension: {
+                    'userInfo': message.userInfo,
+                    'invitedUserInfo': message.invitedUserInfo
+                }
+            }
+            socket.emit('addFriendResult', addFriendResult);
+
             messageInfo.splice(Number.parseInt(messageIndexString), 1);
             $('#message_center_nav').click();
             break;
@@ -83,6 +102,23 @@ $(".message_reject_btn").on('click', function(e){
             //删除消息
             messageInfo.splice(Number.parseInt(messageIndexString), 1);
             //console.log(JSON.stringify(messageInfo[Number.parseInt(messageIndexString)]));
+            break;
+        }
+
+        case 'addFriend':{
+            var addFriendResult = {
+                errorCode: 1,
+                type: 'ADDFRIENDRESULT',
+                text: '添加好友失败',
+                extension: {
+                    'userInfo': message.userInfo,
+                    'invitedUserInfo': message.invitedUserInfo
+                }
+            }
+            socket.emit('addFriendResult', addFriendResult);
+
+            messageInfo.splice(Number.parseInt(messageIndexString), 1);
+            $('#message_center_nav').click();
             break;
         }
     }

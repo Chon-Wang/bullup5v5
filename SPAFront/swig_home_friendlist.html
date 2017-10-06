@@ -1,0 +1,29 @@
+<li>
+    <div class="user-view">
+        <div class="background">
+            <img src="./media/imgs/usr_bg.jpg">
+        </div>
+        <a href="#" style="z-index:1000;"><img style="margin-top:20px;" data-target="modal1" class="circle" src="./media/user_icon/{{userInfo.avatarId}}.png"></a>
+        <a href="#!name"><span class="white-text name">{{userInfo.name}}</span></a>
+        <!-- <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a> -->
+    </div>
+    <a class="waves-effect waves-light btn" href="#coollap">添加好友</a>
+</li>
+
+<ul class="collapsible" data-collapsible="accordion">
+    <li>
+        
+        <div class="collapsible-header"><span class="new badge">{{friendListLength}}</span>好友</div>
+
+        {% for friend in userInfo.friendList%}
+        <div class="collapsible-body collap-style" style="background:none;">
+            <div class="collap-rq" >
+            <p class="collap-p" >
+                <img src="./media/user_icon/{{friend.avatarId}}.png">
+            </p>
+                <p class="collap-p2">{{friend.name}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </li>
+</ul>

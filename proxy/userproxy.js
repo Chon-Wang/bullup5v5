@@ -1,6 +1,6 @@
 var dbUtil = require('../util/dbutil.js');
 var logger = require('../util/logutil.js');
-var socketProxy = require('./socketproxy.js');
+var socketProxy = require('./socketProxy.js');
 var teamProxy = require('./teamProxy.js');
 var async = require('async');
 
@@ -138,18 +138,41 @@ exports.handleRegister = function (socket) {
                     extension: null
                 });
             } else {
-                dbUtil.addUser(userInfo, function (userAddRes) {
-                    socketProxy.stableSocketEmit(socket, 'feedback', {
-                        errorCode: 0,
-                        text: '注册成功',
-                        type: 'REGISTERRESULT',
-                        extension: {
-                            userAccount: userInfo.userAccount,
-                            userNickname: userInfo.userNickname,
-                            userId: userAddRes.userId,
-                            userIconId: 1,
-                        }
-                    });
+                dbUtil.findUserByNickname(userInfo.userNickname, function (user) {
+                    if(user){
+                        socketProxy.stableSocketEmit(socket, 'feedback', {
+                            errorCode: 1,
+                            text: '该昵称已被使用',
+                            type: 'REGISTERRESULT',
+                            extension: null
+                        });
+                    }else{
+                        dbUtil.findUserByCode(userInfo.userEmail, function (user) {
+                            if(user){
+                                socketProxy.stableSocketEmit(socket, 'feedback', {
+                                    errorCode: 1,
+                                    text: '该邀请码已被使用',
+                                    type: 'REGISTERRESULT',
+                                    extension: null
+                                });
+                            }else{
+                                dbUtil.addUser(userInfo, function (userAddRes) {
+                                    socketProxy.stableSocketEmit(socket, 'feedback', {
+                                        errorCode: 0,
+                                        text: '注册成功',
+                                        type: 'REGISTERRESULT',
+                                        extension: {
+                                            userAccount: userInfo.userAccount,
+                                            userNickname: userInfo.userNickname,
+                                            userId: userAddRes.userId,
+                                            userIconId: 1,
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                        
+                    }
                 });
             }
         });
@@ -170,7 +193,7 @@ exports.handleInviteFriend = function (socket) {
             socketProxy.stableSocketEmit(socket, 'feedback', {
                 errorCode: 1,
                 type: 'INVITERESULT',
-                text: inviteMessage.userName + '邀请失败,该用户已经下线'
+                text: '邀请失败,该用户已经下线'
             });
         }
     })
@@ -387,6 +410,75 @@ exports.handlePersonalCenterRequest = function(socket){
         });
     });
 
+}
+
+exports.handleAddFriendRequest = function(socket){
+    socket.on('addFriendRequest', function(request){
+        var userInfo = request.userInfo;
+        var invitedUserNickname = request.invitedUserNickname;
+        var flag = false;
+        for(var index in exports.users){
+            if(exports.users[index].name == invitedUserNickname){
+                //发送请求
+                var invitedUserInfo = exports.users[index];
+                var tarSocket = socketProxy.mapUserIdToSocket(invitedUserInfo.userId);
+                socketProxy.stableSocketEmit(tarSocket, 'message', {
+                    'userInfo':  userInfo,
+                    'invitedUserInfo': invitedUserInfo,
+                    'messageType': 'addFriend',
+                    'messageText': '添加好友'
+                });
+                flag = true;
+                break;
+            }
+        }
+        if(!flag){
+            socketProxy.stableSocketEmit(socket, 'feedback', {
+                'errorCode': 1,
+                'text': '好友添加失败，对方不在线',
+                'type': 'ADDFRIENDRESULT',
+                'extension': null
+            })
+        }
+    });
+}
+
+exports.handleAddFriendResult = function(socket){
+    socket.on('addFriendResult', function(result){
+        var userInfo = result.extension.userInfo;
+        var invitedUserInfo = result.extension.invitedUserInfo;
+        var socket1 = socketProxy.mapUserIdToSocket(userInfo.userId);
+        if(result.errorCode == 0){
+            var socket2 = socketProxy.mapUserIdToSocket(invitedUserInfo.userId);
+            socketProxy.stableSocketEmit(socket1, 'feedback', {
+                'errorCode': 0,
+                'type': "ADDFRIENDRESULT",
+                'text': invitedUserInfo.name + "同意了您的好友添加请求",
+                'extension': {
+                    'newFriend':  invitedUserInfo
+                }
+            });
+
+            socketProxy.stableSocketEmit(socket2, 'feedback', {
+                'errorCode': 0,
+                'type': "ADDFRIENDRESULT",
+                'text': "成功将" + userInfo.name + "添加为好友",
+                'extension': {
+                    'newFriend':  userInfo
+                }
+            });
+
+            dbUtil.addFriendRelationship(userInfo.userId, invitedUserInfo.userId);
+            
+        }else{
+            socketProxy.stableSocketEmit(socket1, 'feedback', {
+                'errorCode': 1,
+                'type': "ADDFRIENDRESULT",
+                'text': invitedUserInfo.name + "拒绝了您的好友添加请求",
+                'extension': null
+            });
+        }
+    });
 }
 
 exports.insertFeedbackMessage=function(socket){

@@ -26,8 +26,11 @@
 	<link href="./css/materialize.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="./css/spa_fight.css">
 	<link rel="stylesheet" href="./css/date.css">
-</head> 
+	<link type="text/css" rel="stylesheet" href="./css/jquery.pagewalkthrough.css" />
+	<link type="text/css" rel="stylesheet" href="./css/time_css.css" />
 
+</head>
+   
 <body>
 	<style>
 		.selected {
@@ -38,6 +41,33 @@
 		.qies {
 			float: left;
 			margin-left: 10px;
+		}
+		.main{ width: 1440px; height: 738px; margin-left: auto; margin-right: auto; position: relative; }
+		.w1,.w2,.w3,.w4{position:absolute; width:300px; height:80px;  top:120px; left:220px}
+		.w2{top:310px; left:220px; width:600px; height:40px; }
+		.w3{top:550px; left:220px; width:380px; height:40px; }
+		.w4{top:700px; left:1240px; width:100px; height:40px;  }
+		.overlay-hole{margin-left: 20px!important; margin-top: 20px!important;}
+		.moda{padding-left: 10px;padding-top: 10px;}
+		.moda li{width:54px;height: 54px;border-radius: 36px;margin-left: 13px;margin-top:10px;cursor:pointer;float: left;overflow: hidden;border:2px solid #26a69a;}
+		.moda-img{cursor:pointer;width:100%;height:100%;}
+		.remove-a{
+			width: 90px;
+			height: 30px;
+			text-align: center;
+			float: left;;
+			color: #fff;
+			background: #26a69a;
+			cursor: pointer;
+			line-height: 30px;
+			margin-top: 30px;
+			font-size:14px;
+			border-radius: 2px;
+		}
+		.collap-buff{
+			float:right;
+			margin-right:10px;
+			margin-top:-5px;
 		}
 	</style>
 
@@ -54,7 +84,7 @@
 					斗牛电竞
 				</div>
 				<div class="nav-weblink">
-					http://bullesport.com
+				<a class="bull-href" href="www.bullesport.com">www.bullesport.com</a>
 				</div>
 
 				<ul class="right hide-on-med-and-down wang_ul">
@@ -71,7 +101,7 @@
 					
 					<li><a id="message_center_nav" href="#message_sheet" id="router_message">消息中心</a></li>
 					<!-- Dropdown Trigger -->
-					<li><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
+					<li class="dro-index"><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
 					<div style="float:left;width:100px;position: relative">
 						<p class="zuix" style="position: absolute;left:30px;top:0px;cursor: pointer;"><img src="media/imgs/zx.png" width="15" height="15"></p>
 						<p class="g_bi" style="position: absolute;right:20px;top:0px;cursor: pointer;"><img src="media/imgs/gb.png" width="15" height="15"></p>
@@ -90,60 +120,10 @@
 
 	<!-- side nav bar -->
 
-	<ul id="user-slide-out" class="side-nav">
-
-		
-
-		<li>
-			<div class="user-view">
-
-				<div class="background">
-					<img src="./media/imgs/usr_bg.jpg">
-				</div>
-				<a href="#!user"><img class="circle" src="./media/imgs/timg.jpeg"></a>
-				<a href="#!name"><span class="white-text name">John Doe</span></a>
-				<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-			</div>
-			<a class="waves-effect waves-light btn" href="#coollap">添加好友</a>
-		</li>
-		
-		<ul class="collapsible" data-collapsible="accordion">
-			<li>
-			  <div class="collapsible-header"><span class="new badge">4</span>好友</div>
-			  <div class="collapsible-body collap-style" style="background:none;">
-				<div class="collap-rq" >
-				<p class="collap-p" >
-					<img src="./media/imgs/usr_bg.jpg">
-				</p>
-				  <p class="collap-p2">有志者事竟成。</p>
-				</div>
-			</div>
-
-			<div class="collapsible-body collap-style" style="background:none;">
-					<div class="collap-rq" >
-					<p class="collap-p" >
-						<img src="./media/imgs/usr_bg.jpg">
-					</p>
-					  <p class="collap-p2">有志者事竟成。</p>
-					</div>
-				</div>
-
-				<div class="collapsible-body collap-style" style="background:none;">
-						<div class="collap-rq" >
-						<p class="collap-p" >
-							<img src="./media/imgs/usr_bg.jpg">
-						</p>
-						  <p class="collap-p2">有志者事竟成。</p>
-						</div>
-					</div>
-			</li>
-			
-		  </ul>
-		
-	</ul>
+	<ul id="user-slide-out" class="side-nav"></ul>
 
 
-	<div class="fixed-action-btn vertical">
+	<div class="fixed-action-btn vertical subsidy">
 		<a class="btn-floating btn-large red">
 			<i class="fa fa-plus" aria-hidden="true"></i>
 	 	</a>
@@ -151,10 +131,12 @@
 			<li ><span style="color:#fff;" class="icbefore">约战</span><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
 			<li ><span style="color:#fff;" class="icbefore">大厅</span><a id="turn_to_room_btn" class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=" fa fa-hourglass-start" aria-hidden="true"></i></a><li>
 			<li ><span style="color:#fff;" class="icbefore">战力</span><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true" id='home'></i></a></li>
-			<li ><span style="color:#fff;" class="icbefore">好友</span><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+			<li ><span style="color:#fff;" class="icbefore">好友</span><a id="friend_list_btn" class="btn-floating yellow darken-1"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 			<li ><span style="color:#fff;" class="icbefore">充值</span><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
 		</ul>
 	</div>
+
+	<a id="friend_list_real_btn" class="user-collapse" data-activates="user-slide-out"></a>
 
 	<!-- modal structure -->
 	<div class="modal" id="create_room_modall">
@@ -243,7 +225,8 @@
 							<!--  -->
 							<!-- Create button -->
 							<div class="row">
-								<a id="confirm_create_room_btn" class="waves-effect waves-light btn right">创建</a>
+								<!-- <a id="confirm_create_room_btn" class="waves-effect waves-light btn modal-trigger right">创建</a> -->
+								<a id="confirm_create_room_btn" class="waves-effect right btn">创建</a> 
 							</div>
 						</div>
 					</div>
@@ -288,9 +271,9 @@
 			<div class="row">
 				<div class="row">
 					<div class="input-field col s6">
-						<i class="fa fa-user prefix" aria-hidden="true"></i>
+						<i class="fa fa-envelope prefix" aria-hidden="true"></i>
 						<input id="usr_name" type="text" class="validate">
-						<label for="usr_name">用户名</label>
+						<label for="usr_name">邮箱</label>
 					</div>
 
 					<div class="input-field col s6">
@@ -318,9 +301,9 @@
 					</div>
 
 					<div class="input-field col s6">
-						<i class="fa fa-envelope prefix" aria-hidden="true"></i>
-						<input type="email" id="usr_email" class="validate">
-						<label for="usr_email">邮箱</label>
+						<i class="fa fa-user prefix" aria-hidden="true"></i>
+						<input type="text" id="usr_email">
+						<label for="usr_email">邀请码</label>
 					</div>
 
 					<p style="margin-left:15px;margin-top:20px;">
@@ -344,10 +327,9 @@
 
 		<div>
 			<input id="money" type="text" class="validate" placeholder="请输入充值金额">
-
 		</div>
 		<div class="qies">
-			<div class="chip ">19</div>
+			<div class="chip">19</div>
 			<div class="chip">29</div>
 			<div class="chip">39</div>
 			<div class="chip">49</div>
@@ -373,11 +355,11 @@
 					<!-- Used to display Element errors -->
 					<div id="card-errors" role="alert"></div>
 				</div>
-				<!-- <a id="charge_btn   " class="btn an_n" >提交</a>  -->
+	
 				<div>
-
+					<a id="charge_btn" class="btn an_n" style="margin:20px;">Submit Payment</a>
 				</div>
-				<button id="charge_btn" class="btn an_n" style="margin:20px;">Submit Payment</button>
+				
 			</form>
 		</div>
 	</div>
@@ -439,7 +421,7 @@
 		</div>
 	</div>
 
-	<div id="match-bet-modal" class="modal">
+	<!-- <div id="match-bet-modal" class="modal">
 		<div class="modal-content">
 			<h4>匹配选择积分</h4>
 			<div class="row">
@@ -454,60 +436,64 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- Modal Structure -->
 	<div id="modal1" class="modal" style="background:#455a64;">
 		<div class="row">
-			<form class="col s6">
-				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">个人昵称</label>
-					</div>
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">爱好</label>
-					</div>
-				</div>
-
-
-
-
-				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">年龄</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">邮件</label>
-					</div>
-				</div>
-				<form action="#">
-					<div class="file-field input-field" style="padding-left: 10px;">
-						<div class="btn">
-							<span>更改头像</span>
-							<input type="file">
-						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text">
-						</div>
-					</div>
-					<button style="margin-left: 10px;" class="btn waves-effect waves-light" type="submit" name="action">提交
-							</form>
-
-					
-							
-							</button>
-
-				</form>
+			<div class="moda"></div>
+				<li><img class="moda-img" src="media/user_icon/1.png" /></li>
+				<li><img class="moda-img" src="media/user_icon/2.png" /></li>
+				<li><img class="moda-img" src="media/user_icon/3.png" /></li>
+				<li><img class="moda-img" src="media/user_icon/4.png" /></li>
+				<li><img class="moda-img" src="media/user_icon/5.png" /></li>
+				<li><img class="moda-img" src="media/user_icon/6.png" /></li>
+				<li><img class="moda-img" src="media/user_icon/7.png" /></li>
+				<li><img class="moda-img" src="media/user_icon/8.png" /></li>
+				<li><img class="moda-img" src="media/user_icon/9.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/10.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/11.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/12.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/13.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/14.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/15.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/16.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/17.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/18.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/19.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/20.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/21.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/22.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/23.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/24.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/25.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/26.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/27.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/28.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/29.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/30.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/31.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/32.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/33.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/34.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/35.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/36.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/37.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/38.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/39.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/40.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/41.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/42.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/43.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/44.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/45.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/46.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/47.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/48.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/49.png" ></li>
+				<li><img class="moda-img" src="media/user_icon/50.png" ></li>
+			</div>
 		</div>
-
-
-
 	</div>
 
 	<!-- Modal Trigger -->
@@ -603,24 +589,25 @@
 
 	<div id="modalpopo" class="modal" style="background: #455a64;">
 		<div class="modal-content">
-			<h4 style="color: #fff;">模态标题</h4>
-			<p class="ceneter_w" style="color: #fff;">一堆文本</p>
+			<h4 style="color: #fff;font-size:20px">模态标题</h4>
+
+			<p class="ceneter_w" style="color: #fff;margin-top:20px;font-size:16px">一堆文本</p>
 		</div>
 		<div class="modal-footer" style="background: #455a64;">
-			<button style="background: #26a69a;" class="btn waves-effect waves-light" type="submit" name="action">确定
-							
-							</button>
+			<button style="background: #26a69a;" class="btn waves-effect waves-light" type="submit" name="action">确定		
+			</button>
 		</div>
 	</div>
 <!-- 邀请好友弹出 -->
-<div id="coollap" class="modal" style="background-color: #455a64;width:35%;">
+<div id="coollap" class="modal" style="background-color: #455a64;width:26%;overflow: hidden;height: 70px;">
 		<div class="row">
-				<div class="input-field col s6">
+				<div class="input-field col s6" style="width:70%;float:left;margin-top:12px;">
 				  <input style="color:#fff;" value="" id="first_name2" type="text" class="validate">
-				  <label class="active" for="first_name2">对方ID</label>
+				  <label class="active" for="first_name2">对方昵称</label>
 				</div>
+				<a id="confirm_add_friend_btn" class="btn waves-effect teal lighten-2 remove-a">添加</a>
 			</div>
-			  <a class="waves-effect waves-light btn collpost" >添加</a>
+			 
 	  </div>
 	</div>
 	<!-- 反馈信息 -->
@@ -673,6 +660,34 @@
 			</form>
 		</div>
 	</div>
+	<div class="main" style="display: none;">
+		<div class="w1">
+		系统菜单包含注册登录和绑定英雄联盟账号
+		</div>
+		  
+		<div class="w2"></div>
+		<div id="walkthrough-2">
+		
+		 </div>
+		<div class="w3"></div>
+		<div id="walkthrough-3">
+		发起约战与队友一起战斗
+		 </div>
+		<div class="w4"></div>
+		<div id="walkthrough-4">
+		充值提现资金流水详情都在个人中心
+		 </div>
+		<img  usemap="#Map">
+		<div id="walkthrough-5">
+		好友,充值,个人能力分析快捷入口
+		 </div>
+		 <div id="walkthrough-6">
+				第四部演示
+				 </div>
+	
+	
+	
+	</div>
 
 
 
@@ -701,13 +716,18 @@
 	<script src="./js/date.js"></script>
 	<script src="./js/gerenly.js"></script>
 	<script src="./js/cjdwly.js"></script>
+	
 	<!-- <script src="./js/chat.js"></script> -->
 	<script src="https://js.stripe.com/v3/"></script>
+
+	<script src="./js/recharge.js"></script>
 	<script src="./js/feedback_message.js"></script>
 	<script src="./js/turn_to_room.js"></script>
+	<script src="./js/add_friend.js"></script>
 	<script src="./js/bullup_message_box.js"></script>
-	<script src="./js/bullup_message_box.js"></script>
-	
+	<script src="./js/jquery.pagewalkthrough.js"></script>
+	<script type="text/javascript" src="./js/time_js.js"></script>
+	<script src="./js/change_icon.js"></script>
 
 
 	<!--处理提现-->
@@ -767,11 +787,6 @@
 			// 	$('.account').bankList();
 			// });
 			//弹出popo
-			function poroto_w() {
-				$('#modalpopo .modal-content  h4').text("sdwdwdwdwd")
-				$('#modalpopo .ceneter_w').text("s123123123")
-				$('#modalpopo').modal('open');
-			}
 			$('.waves-light').click(function () {
 				$('#modalpopo').modal('close');
 			});
@@ -794,11 +809,58 @@
 					}
 				});
 			});
-			
-			
-			
-			
-		</script>
+			//引导页
+			$(function() {
+                // 设置参数
+                $('body').pagewalkthrough({
+                    name: 'introduction',
+                    steps: [{
+                            popup: { //定义弹出提示引导层
+                                content: '开启界面引导',
+                                type: 'modal'
+                            }
+                        }, {
+                            wrapper: '.dro-index',//当前引导对应的元素位置
+                            popup: {
+                                content: '.w1',//关联的内容元素
+                                type: 'tooltip',//弹出方式（tooltip和modal以及nohighlight）
+								position: 'bottom',//弹出层位置（top,left, right or bottom）
+								width:'200'
+								
+								
+                            }
+                        }, {
+                            wrapper: '#yuezhan',
+                            popup: {
+                                content: '#walkthrough-3',
+                                type: 'tooltip',
+								position: 'bottom',
+								top: '505px',
+								left: '368.406'
+
+                            }
+                        }, {
+                            wrapper: '#router_index',
+                            popup: {
+                                content: '#walkthrough-4',
+                                type: 'tooltip',
+                                position: 'bottom'
+                            }
+                        }, {
+                            wrapper: '.fa-plus',
+                            popup: {
+                                content: '#walkthrough-5',
+                                type: 'tooltip',
+                                position: 'left'
+                            }
+                        }]
+                });
+
+                // 一步一步显示引导页
+                $('body').pagewalkthrough('show');
+			});
+
+			</script>
 </body>
 
 </html>
