@@ -45,6 +45,12 @@ exports.findUserByCode  = function(code, callback) {
     });
 }
 
+exports.updateUserIconIdByUserId = function(userId, iconId){
+    connection.query('update bullup_profile set icon_id = ? where user_id = ?', [iconId, userId], function(err, res){
+        if (err) throw err;
+    });
+}
+
 //--------------查询全部提现信息------------------------
 exports.findAllWithdrawInfo = function(callback) {
     connection.query('select * from bullup_bankcard_info', function (err, results){

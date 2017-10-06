@@ -160,6 +160,9 @@ socket.on('feedback', function (feedback) {
         case 'ADDFRIENDRESULT':
             handleAddFriendResult(feedback);
             break;
+        case 'ICONUPDATERESULT':
+            handleIconUpdateResult(feedback);
+            break;  
         //--------LOLAPIKey更新结果----------、
         }
 });
@@ -552,6 +555,20 @@ function handleSearchFeedbackResult(feedback){
 //处理操作用户反馈
 function handleOverFeedbackResult(feedback){
     bullup.alert(feedback.text);
+}
+
+//处理操作用户反馈
+function handleIconUpdateResult(feedback){
+    bullup.alert(feedback.text);
+    var friendCount = 0;
+    for(var index in userInfo.friendList){
+        friendCount++
+    }
+    bullup.loadTemplateIntoTarget('swig_home_friendlist.html', {
+        'userInfo': userInfo,
+        'friendListLength': friendCount
+    }, 'user-slide-out');
+    $('.collapsible').collapsible();
 }
 
 //充值管理

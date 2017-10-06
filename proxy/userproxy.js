@@ -196,7 +196,19 @@ exports.handleInviteFriend = function (socket) {
                 text: '邀请失败,该用户已经下线'
             });
         }
-    })
+    });
+}
+
+exports.handleIconIdUpdate = function (socket) {
+    socket.on('iconIdUpdate', function (iconData) {
+        dbUtil.updateUserIconIdByUserId(iconData.userId, iconData.newIconId);
+        socketProxy.stableSocketEmit(socket, 'feedback', {
+            'errorCode': 0,
+            'type': 'ICONUPDATERESULT',
+            'text': '头像更新成功',
+            'extension': null
+        });
+    });
 }
 
 //查询账户余额
