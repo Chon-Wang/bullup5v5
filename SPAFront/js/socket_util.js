@@ -325,7 +325,7 @@ socket.on('chatMsg', function(msg){
         var msgId = msg.chatName + String((new Date).valueOf());
         var msgHtml = '<ul id="messages" style="width: 100%;"><li class="friend-messages" style="float:left;"><p id="' + msgId + '" style="white-space:nowrap;background: #009fab;color: #fff;font-size: 18px;padding: 15px; margin: 5px 10px 0;border-radius: 10px;"></p> </li></ul>'
         $('#messages').append(msgHtml);
-        $('#' + msgId + '').html(msg.chatMsg);
+        $('#' + msgId + '').html(msg.chatName + ":" + msg.chatMsg);
     }
 });
     
