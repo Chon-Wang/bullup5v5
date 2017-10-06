@@ -2,6 +2,8 @@ var io = require('socket.io')();
 var logger = require('./util/logutil');
 var timmer = require('./timer');
 
+var dbutil = require('./util/dbutil.js');
+
 // 代理
 var userProxy = require('./proxy/userProxy.js'); 
 var teamProxy = require('./proxy/teamProxy.js');
@@ -125,7 +127,8 @@ teamProxy.match();
 stripeProxy.recharge();
 
 //一天更新一次排行榜
-//timmer.autoUpdateRankList(24 * 3600);
+//timmer.autoUpdateRankList(10);
+//dbutil.updateRankList();
 io.listen(3000);
 
 
