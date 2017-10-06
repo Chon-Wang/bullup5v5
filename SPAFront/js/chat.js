@@ -27,7 +27,8 @@ $(document).ready(function () {
         var $chatName=userInfo.name; 
         socket.emit('chatMsg', {	
             chatMsg:$msg1,
-            chatName:$chatName
+            chatName:$chatName,
+            userIconId:userInfo.avatarId
         });
         $('#saytext').val('');
     });
