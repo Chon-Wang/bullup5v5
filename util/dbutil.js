@@ -2,7 +2,7 @@ var mysql = require('mysql');
 var dbCfg = require('./dbcfg.js');
 var logger = require('../util/logutil.js');
 var async = require('async');
-var socketProxy = require('../proxy/socketproxy.js');
+var socketProxy = require('../proxy/socketProxy.js');
 
 var connection = mysql.createConnection(dbCfg.server);
 
@@ -20,6 +20,31 @@ exports.findUserByAccount = function(account, callback) {
         callback(results[0]);
     });
 }
+
+//---------------------------------------添加好友关系-------------------------------------//
+exports.addFriendRelationship = function(userId1, userId2){
+    connection.query('insert into `bullup_friend` values (?, ?)', [userId1, userId2], function (err, results){
+        if (err) throw err;
+        connection.query('insert into `bullup_friend` values (?, ?)', [userId2, userId1], function (err, results){
+            if (err) throw err;
+        });
+    });
+}
+
+exports.findUserByNickname = function(nickname, callback) {
+    connection.query('select * from `user_base` where user_nickname=?', [nickname], function (err, results){
+        if (err) throw err;
+        callback(results[0]);
+    });
+}
+
+exports.findUserByCode  = function(code, callback) {
+    connection.query('select * from `user_info` where user_mail=?', [code], function (err, results){
+        if (err) throw err;
+        callback(results[0]);
+    });
+}
+
 //--------------查询全部提现信息------------------------
 exports.findAllWithdrawInfo = function(callback) {
     connection.query('select * from bullup_bankcard_info', function (err, results){
@@ -417,7 +442,7 @@ exports.findUserById = function(userId, callback) {
 exports.addUser = function(userInfo, callback) {
     async.waterfall([
         function(callback){
-            connection.query('insert into `user_base` (user_account, user_password, user_nickname) values (?, ?, ?)', [userInfo.userAccount, userInfo.userPassword, userInfo.userNickname], function (err, rows) {
+            connection.query('insert into `user_base` (user_account, user_password, user_nickname, user_role) values (?, ?, ?, 0)', [userInfo.userAccount, userInfo.userPassword, userInfo.userNickname], function (err, rows) {
                 if (err) {
                     connection.rollback();
                 }
@@ -505,7 +530,7 @@ exports.findFriendListByUserId = function(userId, callback) {
         async.eachSeries(rows, function(row, errCb){
             exports.findUserById(row.friend_user_id, function(user) {
                 
-                // var online = require('../proxy/socketproxy').isUserOnline(user.user_id);
+                // var online = require('../proxy/socketProxy').isUserOnline(user.user_id);
                 // var status = null;
                 
                 // //获取用户状态

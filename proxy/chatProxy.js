@@ -1,5 +1,5 @@
 var logger = require('../util/logutil');
-var socketProxy = require('./socketproxy.js');
+var socketProxy = require('./socketProxy.js');
 
 exports.init = function () {
     
@@ -8,7 +8,7 @@ exports.init = function () {
 
 exports.handleChat=function(io,socket){
       socket.on('chatMsg',function(data){
-            
+         
       logger.listenerLog('chatMsg');
       var feeback={};
       feeback.errCode=0;
@@ -18,9 +18,7 @@ exports.handleChat=function(io,socket){
       } 
        
       io.sockets.emit('chatMsg',data);//广播 
-      console.log(data);
+      //console.log(data);
       });
-       console.log("----------------------------");
-       
-
+      //console.log("----------------------------");
 }

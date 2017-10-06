@@ -1,6 +1,6 @@
 var stripe = require("stripe")( "sk_test_ud0FTgDIp5a5SLWZMMOGvVF9");
 var logger = require('../util/logutil');
-var socketProxy = require('./socketproxy.js');
+var socketProxy = require('./socketProxy.js');
 var dbUtil = require('../util/dbutil.js');
 var logger = require('../util/logutil.js');
 

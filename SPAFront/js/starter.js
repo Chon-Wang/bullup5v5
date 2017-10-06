@@ -4,15 +4,13 @@ $(document).ready(function(){
     });
 
     $('#starter-match-btn').on('click', function(){
-        
+        bullup.alert("敬请期待");
     });
 
     $('#starter-rank-btn').on('click', function(e){
         e.preventDefault();
         socket.emit('rankRequest');
-       
       // $.getScript('./js/request_rank_list.js');
-       
     });
 
     $('#starter-chatroom-btn').on('click', function(e){

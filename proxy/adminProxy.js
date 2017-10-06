@@ -1,10 +1,11 @@
 var logger = require('../util/logutil');
-var socketProxy = require('./socketproxy.js');
+var socketProxy = require('./socketProxy.js');
 var dbUtil = require('../util/dbutil.js');
 var logger = require('../util/logutil.js');
 
+
 exports.init = function () {
-   
+
 }
 
 //----------------------------提现管理部分--------------------------------

@@ -2,7 +2,7 @@ var request = require('request');
 var async = require('async');
 var lolcfg = require('./lolcfg.js');
 
-var apiKey =  "RGAPI-aec98ade-b04f-4cbf-875d-6f4672116b60";
+exports.apiKey = "";
 
 function getItemsStaticData(callback){
     var options = {
@@ -10,7 +10,7 @@ function getItemsStaticData(callback){
         headers: {
             "Origin": "https://developer.riotgames.com",
             "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
-            "X-Riot-Token": apiKey,
+            "X-Riot-Token": exports.apiKey,
             "Accept-Language": "zh-CN,zh;q=0.8",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
         }
@@ -28,7 +28,7 @@ function getChampionsStaticData(callback){
         headers: {
             "Origin": "https://developer.riotgames.com",
             "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
-            "X-Riot-Token": apiKey,
+            "X-Riot-Token": exports.apiKey,
             "Accept-Language": "zh-CN,zh;q=0.8",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
         }
@@ -46,7 +46,7 @@ function getSummonerByName(name, callback){
         headers: {
             "Origin": "https://developer.riotgames.com",
             "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
-            "X-Riot-Token": apiKey,
+            "X-Riot-Token": exports.apiKey,
             "Accept-Language": "zh-CN,zh;q=0.8",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
         }
@@ -65,7 +65,7 @@ function getMatchesListByAccountId(accountId, startTimeStr, endTimeStr, callback
         headers: {
             "Origin": "https://developer.riotgames.com",
             "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
-            "X-Riot-Token": apiKey,
+            "X-Riot-Token": exports.apiKey,
             "Accept-Language": "zh-CN,zh;q=0.8",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
         }
@@ -82,7 +82,7 @@ function getMatchDetailsByGameId(gameId, callback){
         headers: {
             "Origin": "https://developer.riotgames.com",
             "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
-            "X-Riot-Token": apiKey,
+            "X-Riot-Token": exports.apiKey,
             "Accept-Language": "zh-CN,zh;q=0.8",
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36"
         }
@@ -100,7 +100,7 @@ exports.getRecentMatchDetailsBySummonerName = function(name, callback){
             headers: {
                 "Origin": "https://developer.riotgames.com",
                 "Accept-Charset": "application/x-www-form-urlencoded; charset=UTF-8",
-                "X-Riot-Token": apiKey,
+                "X-Riot-Token": exports.apiKey,
                 "Accept-Language": "zh-CN,zh;q=0.8",
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
             }
