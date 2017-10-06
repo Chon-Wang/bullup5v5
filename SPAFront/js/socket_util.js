@@ -316,6 +316,7 @@ socket.on('lolRoomEstablished', function (data) {
 });
 
 socket.on('chatMsg', function(msg){
+    
     if(userInfo.name == undefined || msg.chatName!=userInfo.name){
         var msgId = msg.chatName + String((new Date).valueOf());
         var msgHtml = '<ul id="messages" style="width: 100%;"><li class="friend-messages" style="float:right;"><img style="width:50px;height:50px;border-radius: 36px;float:left;margin-top:9px;" src="./media/user_icon/'+ msg.userIconId + '.png"><p id="' + msgId + '" style="white-space:nowrap;background: #b3ade9;color: #fff;font-size: 18px;padding: 15px; margin: 5px 10px 0;border-radius: 10px;  float:left"></p> </li></ul>'
@@ -327,6 +328,7 @@ socket.on('chatMsg', function(msg){
         $('#messages').append(msgHtml);
         $('#' + msgId + '').html(msg.chatName + ":" + msg.chatMsg);
     }
+    $('.vessel').scrollTop( $('.vessel')[0].scrollHeight );  
 });
     
 
