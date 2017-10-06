@@ -788,7 +788,7 @@ function handleInviteFromFriend(message){
     //console.log("messageInfo:  " + JSON.stringify(messageInfo));
 } 
 
-function  handlePersonalCenterResult(feedback){
+function handlePersonalCenterResult(feedback){
     //判断是否成功
     if(feedback.errorCode == 0){
         var data = feedback.extension;
@@ -809,18 +809,18 @@ function  handlePersonalCenterResult(feedback){
                tower:data.UserlolInfo_tower,
                damage:data.UserlolInfo_damage,
                taken:data.UserInfo_damage_taken,
-               cap:data.UserStrengthRank[0].strengthRank,
-               wealthRank:data.UserWealthRank[0].wealthRank,
+               cap:data.UserStrengthRank,
+               wealthRank:data.UserWealthRank,
                wealth:data.UserWealth,
                strength:data.UserStrength,
-               winning_rate:data.competition_wins
+               winning_rate:data.competition_wins,
+               avatarId:data.User_icon_id
             }
         });
         $('#main-view').html(personalCenterHtml);
     }else{
         bullup.alert("页面加载失败!");
     }
-   
 }
 
 function handleBattleInviteRequest(message){

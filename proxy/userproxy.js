@@ -380,14 +380,13 @@ exports.handlePersonalCenterRequest = function(socket){
                 var data = {};
                 //填充data
                 data.userId = queryResult.userInfo[0].user_id;
-                
                 console.log('id..'+queryResult.user_id);
                 //data.XXX = queryResult.XXX;
                 data.userAccount=queryResult.userInfo[0].user_account;
                 data.name=queryResult.userInfo[0].user_nickname;
                 data.payAccountId=queryResult.Id.bullup_payment_account_id;
-                data.paymentType=queryResult.paymentHistory.bullup_paymet_type;
-                data.paymentAccount=queryResult.paymentHistory.bullup_account;
+                // data.paymentType=queryResult.paymentHistory.bullup_paymet_type;
+                // data.paymentAccount=queryResult.paymentHistory.bullup_account;
                 data.lolInfoId=queryResult.info[0].lol_info_id;
                 data.UserlolAccount=queryResult.info[0].user_lol_account;
                 data.UserlolNickname=queryResult.info[0].user_lol_nickname;
@@ -405,6 +404,7 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserInfo_heal=queryResult.lolInfo_strength_heal;
                 data.UserStrengthRank=queryResult.strengthRank;
                 data.UserWealthRank=queryResult.wealthRank;
+                data.User_icon_id=queryResult.icon_id;
                 data.UserWealth=queryResult.wealth;
                 data.UserStrength=queryResult.lolInfo_strength_score;
                 data.competition_wins=queryResult.competition_wins;
@@ -418,10 +418,8 @@ exports.handlePersonalCenterRequest = function(socket){
             }
             socketProxy.stableSocketEmit(socket, 'feedback', feedback);
             console.log('feedback111:'+JSON.stringify(feedback));
-
         });
     });
-
 }
 
 exports.handleAddFriendRequest = function(socket){

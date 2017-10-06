@@ -14,17 +14,17 @@ $(document).ready(function(){
     });
 
     $('#starter-chatroom-btn').on('click', function(e){
+        console.log('聊天室');
+        // e.preventDefault();
+        bullup.loadTemplateIntoTarget('swig_chatroom.html', {}, 'main-view');
+        $.getScript('./js/chat.js');
+    });
+
+    $('#return').on('click', function(e){
         e.preventDefault();
-       bullup.loadTemplateIntoTarget('chatroom.html', {}, 'main-view');
-    //    $.getScript('./js/chat.js');
-         });
-         $('#return').on('click', function(e){
-         e.preventDefault();
-         bullup.loadTemplateIntoTarget('swig_index.html', {}, 'main-view');
-          $.getScript('/js/zymly.js');
-          $.getScript('/js/Withdraw.js');
-         
-	    
+        bullup.loadTemplateIntoTarget('swig_index.html', {}, 'main-view');
+        $.getScript('/js/zymly.js');
+        $.getScript('/js/Withdraw.js');
     });
 });    
 
@@ -77,6 +77,7 @@ function autoplay() {
     // }
     
 }
+
 //轮播左右焦点
 $('.ctavi').click(function () {
     if($(this).hasClass("left-d")){
