@@ -317,9 +317,15 @@ socket.on('lolRoomEstablished', function (data) {
 
 socket.on('chatMsg', function(msg){
     if(userInfo.name == undefined || msg.chatName!=userInfo.name){
-        $('#messages').append($('<li class="friend-message " style="min-width:835px;width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;background:  #b3ade9;color: #fff;float:right;" >').html(msg.chatName+':'+" "+msg.chatMsg));
+        var msgId = msg.chatName + String((new Date).valueOf());
+        var msgHtml = '<ul id="messages" style="width: 100%;"><li class="friend-messages" style="float:right;"><p id="' + msgId + '" style="white-space:nowrap;background: #009fab;color: #fff;font-size: 18px;padding: 15px; margin: 5px 10px 0;border-radius: 10px;"></p> </li></ul>'
+        $('#messages').append(msgHtml);
+        $('#' + msgId + '').html(msg.chatMsg);
     }else{
-        $('#messages').append($('<li class="chat-messages"  style="min-width:835px;width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;;background: #ff0000;color: #fff;float:left;" >').html(msg.chatName+':'+" "+msg.chatMsg));
+        var msgId = msg.chatName + String((new Date).valueOf());
+        var msgHtml = '<ul id="messages" style="width: 100%;"><li class="friend-messages" style="float:left;"><p id="' + msgId + '" style="white-space:nowrap;background: #b3ade9;color: #fff;font-size: 18px;padding: 15px; margin: 5px 10px 0;border-radius: 10px;"></p> </li></ul>'
+        $('#messages').append(msgHtml);
+        $('#' + msgId + '').html(msg.chatMsg);
     }
 });
     
@@ -481,18 +487,7 @@ function handleGetBalanceResult(feedback){
         });
     $('#main-view').html(balanceHtml);
     $.getScript('/js/zymly.js');
-    //$.getScript('/js/zymly.js');
     $.getScript('/js/payment.js');
-    options = {
-        url: 'http://127.0.0.1:3001',
-    };
-    request(options, function(error, response, body){
-        var bodyStartIndex = body.indexOf("<body>");
-        var bodyEndIndex = body.indexOf("</body>");
-        var htmlStr = body.substr(0, bodyEndIndex);
-        htmlStr = htmlStr.substr(bodyStartIndex + 6, htmlStr.length - 6);
-        $('#payment').html(htmlStr);
-    });
 }
 
 //处理查到的资金流动记录
