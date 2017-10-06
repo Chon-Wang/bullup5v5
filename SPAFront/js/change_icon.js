@@ -1,5 +1,5 @@
 $().ready(function(){
-    $('.moda-img').on('click', function (e) {
+    $('.moda li').on('click', function () {
         var modai = $(this).index();
         var modimg = $('.moda img').eq(modai).attr('src'); 
         console.log(modimg);
