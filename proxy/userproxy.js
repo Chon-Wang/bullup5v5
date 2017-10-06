@@ -69,9 +69,12 @@ exports.handleLogin = function (socket) {
                             callback(null, userInfo);
                         });
                     },
-                    // function(userInfo,callback){
-                    // 提现限制
-                    // }
+                    function(userInfo,callback){
+                        dbUtil.checkLastLoginTime(userInfo.userId,function(lastLoginTime){
+                            userInfo.lastLoginTime = lastLoginTime;
+                            callback(null,userInfo);
+                        });
+                    }
                 ], function(err, userInfo){
                     var userStrength = userInfo.strengthInfo;
                     var feedback = {
@@ -83,6 +86,7 @@ exports.handleLogin = function (socket) {
                             userId: userInfo.userId,
                             //----------------------
                             userRole:user.user_role,
+                            lastLoginTime:userInfo.lastLoginTime,
                             //----------------------
                             avatarId: userInfo.userIconId,
                             wealth: userInfo.wealth,
@@ -213,6 +217,24 @@ exports.handleGetBalance = function (socket){
                     "balance": tempBalance,
                 }
             });
+        });
+     });
+}
+
+//用户最近登陆时间
+exports.handlelastLoginTime = function (socket){
+    socket.on('loginTime', function(data){
+        //console.log('2134');
+        dbUtil.insertLastLoginTime(data,function(res){
+            // var tempBalance = balance.bullup_currency_amount;
+            // socket.emit('feedback', {
+            //     errorCode: 0,
+            //     text: '查询余额OK',
+            //     type: 'GETBALANCERESULT',
+            //     extension: {
+            //         "balance": tempBalance,
+            //     }
+            // });
         });
      });
 }

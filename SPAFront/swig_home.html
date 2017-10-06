@@ -660,33 +660,31 @@
 			</form>
 		</div>
 	</div>
-	<div class="main" style="display: none;">
+
+	<div id="newGuide" class="main"  style="display: none;">
 		<div class="w1">
-		系统菜单包含注册登录和绑定英雄联盟账号
+			系统菜单包含注册登录和绑定英雄联盟账号
 		</div>
 		  
 		<div class="w2"></div>
 		<div id="walkthrough-2">
-		
-		 </div>
+
+		</div>
 		<div class="w3"></div>
 		<div id="walkthrough-3">
-		发起约战与队友一起战斗
-		 </div>
+			发起约战与队友一起战斗
+		</div>
 		<div class="w4"></div>
 		<div id="walkthrough-4">
-		充值提现资金流水详情都在个人中心
-		 </div>
+			充值提现资金流水详情都在个人中心
+		</div>
 		<img  usemap="#Map">
 		<div id="walkthrough-5">
-		好友,充值,个人能力分析快捷入口
-		 </div>
-		 <div id="walkthrough-6">
-				第四部演示
-				 </div>
-	
-	
-	
+			好友,充值,个人能力分析快捷入口
+		</div>
+		<div id="walkthrough-6">
+			第四部演示
+		</div>
 	</div>
 
 
@@ -810,6 +808,7 @@
 				});
 			});
 			//引导页
+		
 			$(function() {
                 // 设置参数
                 $('body').pagewalkthrough({
@@ -825,9 +824,7 @@
                                 content: '.w1',//关联的内容元素
                                 type: 'tooltip',//弹出方式（tooltip和modal以及nohighlight）
 								position: 'bottom',//弹出层位置（top,left, right or bottom）
-								width:'200'
-								
-								
+								width:'200'	
                             }
                         }, {
                             wrapper: '#yuezhan',
@@ -857,10 +854,10 @@
                 });
 
                 // 一步一步显示引导页
-                $('body').pagewalkthrough('show');
+                //$('body').pagewalkthrough('show');
 			});
 
-			</script>
+		</script>
 </body>
 
 </html>
