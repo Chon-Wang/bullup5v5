@@ -33,8 +33,7 @@ $().ready(function () {
 				userEmail: $email
 			});
 		} else {
-			//alert('两次密码输入不一致!');
-			bullup.alert("提示:", "两次密码输入不一致!");
+			bullup.alert("两次密码输入不一致!");
 		}
 	});
 });

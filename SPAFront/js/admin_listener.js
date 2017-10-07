@@ -38,3 +38,9 @@ $('#admin_analysis').on('click', function(e){
 });
 
 //赛事管理
+
+//lolApiKey更新
+$('#admin_lolkey_update').on('click', function(e){
+    e.preventDefault();
+    socket.emit('lolKeyUpdate');
+});

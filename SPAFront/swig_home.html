@@ -1,772 +1,738 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>swig test</title>
+		<link href="css/style.css" rel='stylesheet' type='text/css' />
+		<link rel="stylesheet" href="css/font.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+		<link href="./font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+		<link href="./css/materialize.min.css" rel="stylesheet">
+		<link href="./css/mhome.css" rel="stylesheet">
+		<link href="./css/battle.css" rel="stylesheet">
+		<link href="./css/searchusr.css" rel="stylesheet">
+		<link href="./css/personalInfo.css" rel="stylesheet">
+		<link href="./css/rank.css" rel="stylesheet">
+		<link href="./css/personalInfo.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="./css/boxstyle.css">
+		<link rel="stylesheet" type="text/css" href="./css/friendbox.css">
+		<link rel="stylesheet" type="text/css" href="./css/searchbox.css">
+		<link href="/css/starter.css" rel="stylesheet" />
+		<link href="/css/tournament.css" rel="stylesheet" />
+		<link href="/css/myroom.css" rel="stylesheet" />
+		<link href="/css/spa_fight.css" rel="stylesheet" />
+		<link rel="stylesheet" href="./flipclock/flipclock.css">
+		<link href="./css/materialize.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="./css/spa_fight.css">
+		<link rel="stylesheet" href="./css/date.css">
+		<link type="text/css" rel="stylesheet" href="./css/jquery.pagewalkthrough.css" />
+		<link type="text/css" rel="stylesheet" href="./css/time_css.css" />
+		<link type="text/css" rel="stylesheet" href="./css/chatroom.css" />
+	</head>
+   
+	<body>
+		<style>
+			.selected {
+				background-color: #26a69a;
+				color: #fff;
+			}
 
-<head>
-	<meta charset="UTF-8">
-	<title>swig test</title>
-	<link href="css/style.css" rel='stylesheet' type='text/css' />
-	<link rel="stylesheet" href="css/font.css" type="text/css" />
-	<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
-	<link href="./font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="./css/materialize.min.css" rel="stylesheet">
-	<link href="./css/mhome.css" rel="stylesheet">
-	<link href="./css/battle.css" rel="stylesheet">
-	<link href="./css/searchusr.css" rel="stylesheet">
-	<link href="./css/personalInfo.css" rel="stylesheet">
-	<link href="./css/rank.css" rel="stylesheet">
-	<link href="./css/personalInfo.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="./css/boxstyle.css">
-	<link rel="stylesheet" type="text/css" href="./css/friendbox.css">
-	<link rel="stylesheet" type="text/css" href="./css/searchbox.css">
-	<link href="/css/starter.css" rel="stylesheet" />
-	<link href="/css/tournament.css" rel="stylesheet" />
-	<link href="/css/myroom.css" rel="stylesheet" />
-	<link href="/css/spa_fight.css" rel="stylesheet" />
-	<link rel="stylesheet" href="./flipclock/flipclock.css">
-	<link href="./css/materialize.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="./css/spa_fight.css">
-	<link rel="stylesheet" href="./css/date.css">
-</head> 
-
-<body>
-	<style>
-		.selected {
-			background-color: #26a69a;
-			color: #fff;
-		}
-
-		.qies {
-			float: left;
-			margin-left: 10px;
-		}
-	</style>
+			.qies {
+				float: left;
+				margin-left: 10px;
+			}
+			.main{ width: 1440px; height: 738px; margin-left: auto; margin-right: auto; position: relative; }
+			.w1,.w2,.w3,.w4{position:absolute; width:300px; height:80px;  top:120px; left:220px}
+			.w2{top:310px; left:220px; width:600px; height:40px; }
+			.w3{top:550px; left:220px; width:380px; height:40px; }
+			.w4{top:700px; left:1240px; width:100px; height:40px;  }
+			.overlay-hole{margin-left: 20px!important; margin-top: 20px!important;}
+			.moda{padding-left: 10px;padding-top: 10px;}
+			.moda li{width:54px;height: 54px;border-radius: 36px;margin-left: 13px;margin-top:10px;cursor:pointer;float: left;overflow: hidden;border:2px solid #26a69a;}
+			.moda-img{cursor:pointer;width:100%;height:100%;}
+			.remove-a{
+				width: 90px;
+				height: 30px;
+				text-align: center;
+				float: left;;
+				color: #fff;
+				background: #26a69a;
+				cursor: pointer;
+				line-height: 30px;
+				margin-top: 30px;
+				font-size:14px;
+				border-radius: 2px;
+			}
+			.collap-buff{
+				float:right;
+				margin-right:10px;
+				margin-top:-5px;
+			}
+		</style>
 
 
-	<ul id="system_menu" class="dropdown-content grey darken-4">
+		<ul id="system_menu" class="dropdown-content grey darken-4">
 
-	</ul>
-	<div class="navbar-fixed">
-		<nav>
-			<div class="nav-wrapper grey darken-4" style="-webkit-app-region:drag;">
+		</ul>
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper grey darken-4" style="-webkit-app-region:drag;">
 
-				<a href="#!" class="brand-logo"><img src="./media/imgs/bullup-noborder.png" width="54" height="40"></a>
-				<div class="nav-brand" style="margin-left: 75px;">
-					斗牛电竞
-				</div>
-				<div class="nav-weblink">
-					http://bullesport.com
-				</div>
-
-				<ul class="right hide-on-med-and-down wang_ul">
-					<!-- <li><a id="admin" style="display:none">提现管理</a></li> -->
-					<li><a class="nav-link" id="router_starter">主页</a></li>
-					<li><a id="router_test_page">测试</a></li>
-					<li><a id="router_tournament">赛事</a></li>
-					<li><a id="router_dataquery">数据查询</a></li>
-					<li><a id="router_rank">排行榜</a></li>
-
-					<li><a id="router_index">个人中心</a></li>
-					<li><a id="router_chat">聊天室</a></li>
-
-					
-					<li><a id="message_center_nav" href="#message_sheet" id="router_message">消息中心</a></li>
-					<!-- Dropdown Trigger -->
-					<li><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
-					<div style="float:left;width:100px;position: relative">
-						<p class="zuix" style="position: absolute;left:30px;top:0px;cursor: pointer;"><img src="media/imgs/zx.png" width="15" height="15"></p>
-						<p class="g_bi" style="position: absolute;right:20px;top:0px;cursor: pointer;"><img src="media/imgs/gb.png" width="15" height="15"></p>
-
+					<a href="#!" class="brand-logo"><img src="./media/imgs/bullup-noborder.png" width="54" height="40"></a>
+					<div class="nav-brand" style="margin-left: 75px;">
+						斗牛电竞
 					</div>
+					<div class="nav-weblink">
+					<a class="bull-href" href="www.bullesport.com">www.bullesport.com</a>
+					</div>
+
+					<ul class="right hide-on-med-and-down wang_ul">
+						<!-- <li><a id="admin" style="display:none">提现管理</a></li> -->
+						<li><a class="nav-link" id="router_starter">主页</a></li>
+						<li><a id="router_test_page">测试</a></li>
+						<li><a id="router_tournament">赛事</a></li>
+						<li><a id="router_dataquery">数据查询</a></li>
+						<li><a id="router_rank">排行榜</a></li>
+
+						<li><a id="router_index">个人中心</a></li>
+						<li><a id="router_chat">聊天室</a></li>
+
+						
+						<li><a id="message_center_nav" href="#message_sheet" id="router_message">消息中心</a></li>
+						<!-- Dropdown Trigger -->
+						<li class="dro-index"><a class="dropdown-button" href="#!" data-activates="system_menu">系统菜单</a></li>
+						<div style="float:left;width:100px;position: relative">
+							<p class="zuix" style="position: absolute;left:30px;top:0px;cursor: pointer;"><img src="media/imgs/zx.png" width="15" height="15"></p>
+							<p class="g_bi" style="position: absolute;right:20px;top:0px;cursor: pointer;"><img src="media/imgs/gb.png" width="15" height="15"></p>
+
+						</div>
+
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+		<div class="content" id="main-view">
+			<!-- load view in this container -->
+		</div>
+
+		<!-- side nav bar -->
+
+		<ul id="user-slide-out" class="side-nav"></ul>
+
+
+		<div class="fixed-action-btn vertical subsidy">
+			<a class="btn-floating btn-large red">
+				<i class="fa fa-plus" aria-hidden="true"></i>
+			</a>
+			<ul class="ulIcon">
+				<li ><span style="color:#fff;" class="icbefore">约战</span><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
+				<li ><span style="color:#fff;" class="icbefore">大厅</span><a id="turn_to_room_btn" class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=" fa fa-hourglass-start" aria-hidden="true"></i></a><li>
+				<li ><span style="color:#fff;" class="icbefore">战力</span><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true" id='home'></i></a></li>
+				<li ><span style="color:#fff;" class="icbefore">好友</span><a id="friend_list_btn" class="btn-floating yellow darken-1"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+				<li ><span style="color:#fff;" class="icbefore">充值</span><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
+			</ul>
+		</div>
+
+		<a id="friend_list_real_btn" class="user-collapse" data-activates="user-slide-out"></a>
+
+		<!-- modal structure -->
+		<div class="modal" id="create_room_modall">
+			<div class="modal-content">
+				<h4>创建房间</h4>
+				<div class="row">
+					<form class="col s12">
+						<div class="row">
+							<!-- first column -->
+							<div class="col s6">
+								<!-- Battle Declaration -->
+								<div class="input-field col s12">
+									<input id="battle_desc" type="text" class="validate" value="">
+									<label for="battle_desc">房间描述</label>
+								</div>
+								<!-- winning condition -->
+								<div class="row">
+									<div class="input-field col s12">
+										<!-- Winning Condition -->
+										<select id="map-selection">
+											<option id="map-selection-1" value="">召唤师峡谷</option>
+											<option id="map-selection-2" value="">嚎哭深渊</option>
+										</select>
+										<label>地图</label>
+									</div>
+								</div>
+								<div class="map-container">
+									<img src="./media/imgs/rift_map.jpg" class="room_map">
+								</div>
+							</div>
+
+							<!-- second column -->
+							<div class="col s6">
+								<!-- winning condition -->
+								<div class="row">
+									<div class="input-field col s12">
+										<!-- Winning Condition -->
+										<select id="winning_condition">
+											<option value="">推掉基地</option>
+											<option value="" disabled>1血1塔100刀(敬请期待)</option>
+										</select>
+										<label>胜利条件</label>
+									</div>
+								</div>
+								<!-- Game Mode -->
+								<div class="row">
+									<div class="input-field col s12">
+										<select id="game_mode">
+											<option value="battle">自主约战</option>
+											<option value="match">自由匹配</option>
+										</select>
+										<label>游戏模式</label>
+									</div>
+								</div>
+
+								<!-- Reward Type -->
+								<div class="row">
+									<div class="input-field col s12">
+										<select id="reward_type">
+											<option value="bullupScore">积分</option>
+											<option value="dolla" disabled>美金(暂未开放)</option>
+										</select>
+										<label>下注类型</label>
+									</div>
+								</div>
+
+								<!-- Reward Amount -->
+								<div class="row">
+									<div class="input-field col s12">
+										<select id="reward_amount">
+											<option value="10">10</option>
+											<option value="50">50</option>
+											<option value="100">100</option>
+										</select>
+										<label>下注数额</label>
+									</div>
+								</div>
+								<!-- Room Created Time -->
+								<!-- <div class="row">
+						<div class="input-field col s12">
+						<input disabled id="created_time" type="text" class="validate">
+						<label for="created_time">创建时间</label>
+						</div>
+						</div> -->
+
+								<!--  -->
+								<!-- Create button -->
+								<div class="row">
+									<!-- <a id="confirm_create_room_btn" class="waves-effect waves-light btn modal-trigger right">创建</a> -->
+									<a id="confirm_create_room_btn" class="waves-effect right btn">创建</a> 
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- end of create room modal -->
+
+		<!-- Modal Structure -->
+		<div id="log_modal" class="modal">
+			<div class="modal-content">
+				<h4>登录</h4>
+				<div class="row">
+					<div class="col s12">
+						<div class="row">
+							<div class="input-field col s6">
+								<i class="fa fa-user prefix" aria-hidden="true"></i>
+								<input type="text" class="validate" id="login_username" placeholder="">
+								<label for="icon_prefix">用户名</label>
+							</div>
+							<div class="input-field col s6">
+								<i class="fa fa-key prefix" aria-hidden="true"></i>
+								<input type="password" class="validate" id="login_password">
+								<label for="icon_telephone">密码</label>
+							</div>
+						</div>
+
+						<button class="btn waves-effect waves-light right teal lighten-2" id="login_btn">登录
+				<i class="fa fa-paper-plane" aria-hidden="true"></i>
+				</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--  sign modal  -->
+		<div id="sign_modal" class="modal">
+			<div class="modal-content">
+				<h4>新用户注册</h4>
+				<div class="row">
+					<div class="row">
+						<div class="input-field col s6">
+							<i class="fa fa-envelope prefix" aria-hidden="true"></i>
+							<input id="usr_name" type="text" class="validate">
+							<label for="usr_name">邮箱</label>
+						</div>
+
+						<div class="input-field col s6">
+							<i class="fa fa-key prefix" aria-hidden="true"></i>
+							<input id="usr_pwd" type="password" class="validate">
+							<label for="usr_pwd">密码</label>
+						</div>
+
+						<div class="input-field col s6">
+							<i class="fa fa-key prefix" aria-hidden="true"></i>
+							<input id="usr_repwd" type="password" class="validate">
+							<label for="usr_repwd">确认密码</label>
+						</div>
+
+						<div class="input-field col s6">
+							<i class="fa fa-user prefix" aria-hidden="true"></i>
+							<input id="usr_nick" type="text" class="validate">
+							<label for="usr_nick">用户昵称</label>
+						</div>
+
+						<div class="input-field col s6">
+							<i class="fa fa-phone prefix" aria-hidden="true"></i>
+							<input type="tel" id="usr_tel" class="validate">
+							<label for="usr_tel">手机号</label>
+						</div>
+
+						<div class="input-field col s6">
+							<i class="fa fa-user prefix" aria-hidden="true"></i>
+							<input type="text" id="usr_email">
+							<label for="usr_email">邀请码</label>
+						</div>
+
+						<p style="margin-left:15px;margin-top:20px;">
+							<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
+							<label for="filled-in-box" class="agree-check">我同意用户协议</label>
+						</p>
+					</div>
+
+					<button class="btn waves-effect waves-light right orange lighten-1" id="register_btn">注册
+				<i class="fa fa-paper-plane" aria-hidden="true"></i>
+			</button>
+				</div>
+			</div>
+		</div>
+
+
+
+
+		<!-- Modal 充值 -->
+		<div id="recharge" class="modal">
+
+			<div>
+				<input id="money" type="text" class="validate" placeholder="请输入充值金额">
+			</div>
+			<div class="qies">
+				<div class="chip">19</div>
+				<div class="chip">29</div>
+				<div class="chip">39</div>
+				<div class="chip">49</div>
+				<div class="chip">89</div>
+				<div class="chip">99</div>
+				<div class="chip">199</div>
+			</div>
+			<div>
+
+			</div>
+
+			<div class="row">
+
+				<form action="" id="payment-form">
+					<div class="form-row">
+
+						<label for="card-element">
+						<input /> 
+								</label>
+						<div id="card-element">
+							<!-- a Stripe Element will be inserted here. -->
+						</div>
+						<!-- Used to display Element errors -->
+						<div id="card-errors" role="alert"></div>
+					</div>
+		
+					<div>
+						<a id="charge_btn" class="btn an_n" style="margin:20px;">Submit Payment</a>
+					</div>
+					
+				</form>
+			</div>
+		</div>
+
+		<!-- link modal -->
+
+
+		<!-- Modal Structure -->
+		<div id="link_modal" class="modal">
+			<div class="modal-content">
+				<h4>绑定英雄联盟账号</h4>
+				<div class="row">
+					<form class="col s12">
+						<div class="row">
+							<div class="input-field col s12">
+								<i class="fa fa-user prefix" aria-hidden="true"></i>
+								<input id="bind_lol_account_text" type="text" class="validate" />
+								<label for="bind_lol_account_text">英雄联盟用户名</label>
+							</div>
+						</div>
+
+						<a id="bind_lol_btn" class="btn waves-effect waves-light right teal lighten-2" name="action">绑定</a>
+				<i class="fa fa-paper-plane" aria-hidden="true"></i>
+				</button>
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- notification center Modal Structure -->
+		<div id="message_sheet" class="modal bottom-sheet" style="background-color: #455a64;">
+			<div class="modal-content" id="message_modal_content">
+				<h4 style="color:#fff;">消息中心</h4>
+				<ul id="message_center" class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
+					<!--swig_messages.html-->
+				</ul>
+			</div>
+			<div class="modal-footer" style="background-color: #455a64;">
+				<a id="message_center_btn" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i style="color:#fff;" class="fa fa-trash" aria-hidden="true"></i></a>
+			</div>
+		</div>
+
+		<!--  -->
+		<!-- <div id="fight-bet-modal" class="modal">
+			<div class="modal-content">
+				<h4>约战选择积分</h4>
+				<div class="row">
+					<div class="col s4 bet-holder">
+						10
+					</div>
+					<div class="col s4 bet-holder">
+						50
+					</div>
+					<div class="col s4 bet-holder">
+						100
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<!-- <div id="match-bet-modal" class="modal">
+			<div class="modal-content">
+				<h4>匹配选择积分</h4>
+				<div class="row">
+					<div class="col s4 bet-holder">
+						10
+					</div>
+					<div class="col s4 bet-holder">
+						50
+					</div>
+					<div class="col s4 bet-holder">
+						100
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+		<!-- Modal Structure -->
+		<div id="modal1" class="modal" style="background:#455a64;">
+			<div class="row">
+				<div class="moda">
+					<li><img class="moda-img" src="media/user_icon/1.png"></li>
+					<li><img class="moda-img" src="media/user_icon/2.png"></li>
+					<li><img class="moda-img" src="media/user_icon/3.png"></li>
+					<li><img class="moda-img" src="media/user_icon/4.png"></li>
+					<li><img class="moda-img" src="media/user_icon/5.png"></li>
+					<li><img class="moda-img" src="media/user_icon/6.png"></li>
+					<li><img class="moda-img" src="media/user_icon/7.png"></li>
+					<li><img class="moda-img" src="media/user_icon/8.png"></li>
+					<li><img class="moda-img" src="media/user_icon/9.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/10.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/11.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/12.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/13.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/14.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/15.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/16.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/17.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/18.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/19.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/20.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/21.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/22.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/23.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/24.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/25.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/26.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/27.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/28.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/29.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/30.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/31.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/32.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/33.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/34.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/35.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/36.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/37.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/38.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/39.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/40.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/41.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/42.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/43.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/44.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/45.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/46.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/47.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/48.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/49.png" ></li>
+					<li><img class="moda-img" src="media/user_icon/50.png" ></li>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal Trigger -->
+		<!-- 邀请组队 -->
+
+		<div id="modal32" class="modal bottom-sheet">
+			<div class="modal-content">
+				<h4>邀请列表</h4>
+				<ul class="collection">
+					<li class="collection-item avatar">
+						<img src="media/imgs/2.jpg" alt="" class="circle">
+						<span class="title" style="margin-top:10px;">啊冷呀</span>
+
+						<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
+					</li>
+					<li class="collection-item avatar">
+						<img src="media/imgs/2.jpg" alt="" class="circle">
+						<span class="title" style="margin-top:10px;">啊冷呀</span>
+
+						<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
+					</li>
+					<li class="collection-item avatar">
+						<img src="media/imgs/2.jpg" alt="" class="circle">
+						<span class="title" style="margin-top:10px;">啊冷呀</span>
+
+						<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
+					</li>
+					<li class="collection-item avatar">
+						<img src="media/imgs/2.jpg" alt="" class="circle">
+						<span class="title" style="margin-top:10px;">啊冷呀</span>
+
+						<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
+					</li>
+					<li class="collection-item avatar">
+						<img src="media/imgs/2.jpg" alt="" class="circle">
+						<span class="title" style="margin-top:10px;">啊冷呀</span>
+
+						<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
+					</li>
 
 				</ul>
 			</div>
-		</nav>
-	</div>
-
-	<div class="content" id="main-view">
-		<!-- load view in this container -->
-
-	</div>
-
-	<!-- side nav bar -->
-
-	<ul id="user-slide-out" class="side-nav">
-
-		
-
-		<li>
-			<div class="user-view">
-
-				<div class="background">
-					<img src="./media/imgs/usr_bg.jpg">
-				</div>
-				<a href="#!user"><img class="circle" src="./media/imgs/timg.jpeg"></a>
-				<a href="#!name"><span class="white-text name">John Doe</span></a>
-				<a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
-			</div>
-			<a class="waves-effect waves-light btn" href="#coollap">添加好友</a>
-		</li>
-		
-		<ul class="collapsible" data-collapsible="accordion">
-			<li>
-			  <div class="collapsible-header"><span class="new badge">4</span>好友</div>
-			  <div class="collapsible-body collap-style" style="background:none;">
-				<div class="collap-rq" >
-				<p class="collap-p" >
-					<img src="./media/imgs/usr_bg.jpg">
-				</p>
-				  <p class="collap-p2">有志者事竟成。</p>
-				</div>
-			</div>
-
-			<div class="collapsible-body collap-style" style="background:none;">
-					<div class="collap-rq" >
-					<p class="collap-p" >
-						<img src="./media/imgs/usr_bg.jpg">
-					</p>
-					  <p class="collap-p2">有志者事竟成。</p>
-					</div>
-				</div>
-
-				<div class="collapsible-body collap-style" style="background:none;">
-						<div class="collap-rq" >
-						<p class="collap-p" >
-							<img src="./media/imgs/usr_bg.jpg">
-						</p>
-						  <p class="collap-p2">有志者事竟成。</p>
-						</div>
-					</div>
-			</li>
-			
-		  </ul>
-		
-	</ul>
-
-
-	<div class="fixed-action-btn vertical">
-		<a class="btn-floating btn-large red">
-			<i class="fa fa-plus" aria-hidden="true"></i>
-	 	</a>
-		<ul class="ulIcon">
-			<li ><span style="color:#fff;" class="icbefore">约战</span><a class="btn-floating red" href="#create_room_modall"><i class="fa fa-handshake-o" aria-hidden="true"></i></a></li>
-			<li ><span style="color:#fff;" class="icbefore">大厅</span><a id="turn_to_room_btn" class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(40px) translateX(0px); opacity: 0;"><i class=" fa fa-hourglass-start" aria-hidden="true"></i></a><li>
-			<li ><span style="color:#fff;" class="icbefore">战力</span><a class="btn-floating blue"><i class="fa fa-ra home_gr" aria-hidden="true" id='home'></i></a></li>
-			<li ><span style="color:#fff;" class="icbefore">好友</span><a class="btn-floating yellow darken-1 user-collapse" data-activates="user-slide-out"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-			<li ><span style="color:#fff;" class="icbefore">充值</span><a href="#recharge" class="btn-floating green"><i class="fa fa-dollar" aria-hidden="true"></i></a></li>
-		</ul>
-	</div>
-
-	<!-- modal structure -->
-	<div class="modal" id="create_room_modall">
-		<div class="modal-content">
-			<h4>创建房间</h4>
-			<div class="row">
-				<form class="col s12">
-					<div class="row">
-						<!-- first column -->
-						<div class="col s6">
-							<!-- Battle Declaration -->
-							<div class="input-field col s12">
-								<input id="battle_desc" type="text" class="validate" value="">
-								<label for="battle_desc">房间描述</label>
-							</div>
-							<!-- winning condition -->
-							<div class="row">
-								<div class="input-field col s12">
-									<!-- Winning Condition -->
-									<select id="map-selection">
-										<option id="map-selection-1" value="">召唤师峡谷</option>
-										<option id="map-selection-2" value="">嚎哭深渊</option>
-									</select>
-									<label>地图</label>
-								</div>
-							</div>
-							<div class="map-container">
-								<img src="./media/imgs/rift_map.jpg" class="room_map">
-							</div>
-						</div>
-
-						<!-- second column -->
-						<div class="col s6">
-							<!-- winning condition -->
-							<div class="row">
-								<div class="input-field col s12">
-									<!-- Winning Condition -->
-									<select id="winning_condition">
-										<option value="">推掉基地</option>
-										<option value="" disabled>1血1塔100刀(敬请期待)</option>
-									</select>
-									<label>胜利条件</label>
-								</div>
-							</div>
-							<!-- Game Mode -->
-							<div class="row">
-								<div class="input-field col s12">
-									<select id="game_mode">
-										<option value="battle">自主约战</option>
-										<option value="match">自由匹配</option>
-									</select>
-									<label>游戏模式</label>
-								</div>
-							</div>
-
-							<!-- Reward Type -->
-							<div class="row">
-								<div class="input-field col s12">
-									<select id="reward_type">
-										<option value="bullupScore">积分</option>
-										<option value="dolla" disabled>美金(暂未开放)</option>
-									</select>
-									<label>下注类型</label>
-								</div>
-							</div>
-
-							<!-- Reward Amount -->
-							<div class="row">
-								<div class="input-field col s12">
-									<select id="reward_amount">
-										<option value="10">10</option>
-										<option value="50">50</option>
-										<option value="100">100</option>
-									</select>
-									<label>下注数额</label>
-								</div>
-							</div>
-							<!-- Room Created Time -->
-							<!-- <div class="row">
-					 <div class="input-field col s12">
-					 <input disabled id="created_time" type="text" class="validate">
-					 <label for="created_time">创建时间</label>
-					 </div>
-					 </div> -->
-
-							<!--  -->
-							<!-- Create button -->
-							<div class="row">
-								<a id="confirm_create_room_btn" class="waves-effect waves-light btn right">创建</a>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-	<!-- end of create room modal -->
-
-	<!-- Modal Structure -->
-	<div id="log_modal" class="modal">
-		<div class="modal-content">
-			<h4>登录</h4>
-			<div class="row">
-				<div class="col s12">
-					<div class="row">
-						<div class="input-field col s6">
-							<i class="fa fa-user prefix" aria-hidden="true"></i>
-							<input type="text" class="validate" id="login_username" placeholder="">
-							<label for="icon_prefix">用户名</label>
-						</div>
-						<div class="input-field col s6">
-							<i class="fa fa-key prefix" aria-hidden="true"></i>
-							<input type="password" class="validate" id="login_password">
-							<label for="icon_telephone">密码</label>
-						</div>
-					</div>
-
-					<button class="btn waves-effect waves-light right teal lighten-2" id="login_btn">登录
-			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
-			</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!--  sign modal  -->
-	<div id="sign_modal" class="modal">
-		<div class="modal-content">
-			<h4>新用户注册</h4>
-			<div class="row">
-				<div class="row">
-					<div class="input-field col s6">
-						<i class="fa fa-user prefix" aria-hidden="true"></i>
-						<input id="usr_name" type="text" class="validate">
-						<label for="usr_name">用户名</label>
-					</div>
-
-					<div class="input-field col s6">
-						<i class="fa fa-key prefix" aria-hidden="true"></i>
-						<input id="usr_pwd" type="password" class="validate">
-						<label for="usr_pwd">密码</label>
-					</div>
-
-					<div class="input-field col s6">
-						<i class="fa fa-key prefix" aria-hidden="true"></i>
-						<input id="usr_repwd" type="password" class="validate">
-						<label for="usr_repwd">确认密码</label>
-					</div>
-
-					<div class="input-field col s6">
-						<i class="fa fa-user prefix" aria-hidden="true"></i>
-						<input id="usr_nick" type="text" class="validate">
-						<label for="usr_nick">用户昵称</label>
-					</div>
-
-					<div class="input-field col s6">
-						<i class="fa fa-phone prefix" aria-hidden="true"></i>
-						<input type="tel" id="usr_tel" class="validate">
-						<label for="usr_tel">手机号</label>
-					</div>
-
-					<div class="input-field col s6">
-						<i class="fa fa-envelope prefix" aria-hidden="true"></i>
-						<input type="email" id="usr_email" class="validate">
-						<label for="usr_email">邮箱</label>
-					</div>
-
-					<p style="margin-left:15px;margin-top:20px;">
-						<input type="checkbox" class="filled-in" id="filled-in-box" checked="checked" />
-						<label for="filled-in-box" class="agree-check">我同意用户协议</label>
-					</p>
-				</div>
-
-				<button class="btn waves-effect waves-light right orange lighten-1" id="register_btn">注册
-			<i class="fa fa-paper-plane" aria-hidden="true"></i>
-		  </button>
-			</div>
-		</div>
-	</div>
-
-
-
-
-	<!-- Modal 充值 -->
-	<div id="recharge" class="modal">
-
-		<div>
-			<input id="money" type="text" class="validate" placeholder="请输入充值金额">
-
-		</div>
-		<div class="qies">
-			<div class="chip ">19</div>
-			<div class="chip">29</div>
-			<div class="chip">39</div>
-			<div class="chip">49</div>
-			<div class="chip">89</div>
-			<div class="chip">99</div>
-			<div class="chip">199</div>
-		</div>
-		<div>
-
 		</div>
 
-		<div class="row">
+		<!-- 创建赛事 -->
+		<div class="modal" id="create_koom_modal" style="
+		background-color: #455a64;color:#fff;">
+			<div class="modal-content" style="height:468px;">
+				<h4 style="color:#fff;">创建赛事</h4>
+				<div class="input-field col s12">
+					<select>
+							<option value="" disabled selected>赛事名称</option>
+							<option value="1">选项 1</option>
+							<option value="2">选项 2</option>
+							<option value="3">选项 3</option>
+						</select>
 
-			<form action="" id="payment-form">
-				<div class="form-row">
-
-					<label for="card-element">
-      				<input /> 
-							</label>
-					<div id="card-element">
-						<!-- a Stripe Element will be inserted here. -->
-					</div>
-					<!-- Used to display Element errors -->
-					<div id="card-errors" role="alert"></div>
 				</div>
-				<!-- <a id="charge_btn   " class="btn an_n" >提交</a>  -->
+				<div class="input-field col s12">
+					<select>
+								<option value="" disabled selected>最大报名人数</option>
+								<option value="1">选项 1</option>
+								<option value="2">选项 2</option>
+								<option value="3">选项 3</option>
+							</select>
+
+				</div>
 				<div>
-
+					<p>战斗力范围</p>
+					<input style="width:25%;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
+					<p style="color:#fff;float: left;margin-left: 14px;
+							margin-top: 16px;">——</p>
+					<input style="width:26%;margin-left:20px;float: left;" placeholder="占位提示" id="first_name" type="text" class="validate">
 				</div>
-				<button id="charge_btn" class="btn an_n" style="margin:20px;">Submit Payment</button>
-			</form>
+
+
+				<div style="float:left;width:60%;">
+					<p>可比赛时间</p>
+					<input id="endTime" class="kbtn" />
+				</div>
+				<div style="float:left;width:60%;">
+					<p>结束时间</p>
+					<input id="endTime2" class="kbtn" />
+				</div>
+
+
+
+			</div>
+			<div style="padding-left:20px;padding-bottom:20px;">
+				<a class="waves-effect waves-light btn">完成</a>
+			</div>
 		</div>
-	</div>
+		<!-- 弹出弹出 -->
 
-	<!-- link modal -->
+		<div id="modalpopo" class="modal" style="background: #455a64;">
+			<div class="modal-content">
+				<h4 style="color: #fff;font-size:20px">模态标题</h4>
 
+				<p class="ceneter_w" style="color: #fff;margin-top:20px;font-size:16px">一堆文本</p>
+			</div>
+			<div class="modal-footer" style="background: #455a64;">
+				<button style="background: #26a69a;" class="btn waves-effect waves-light" type="submit" name="action">确定		
+				</button>
+			</div>
+		</div>
+		<!-- 邀请好友弹出 -->
+		<div id="coollap" class="modal" style="background-color: #455a64;width:26%;overflow: hidden;height: 70px;">
+			<div class="row">
+					<div class="input-field col s6" style="width:70%;float:left;margin-top:12px;">
+					<input style="color:#fff;" value="" id="first_name2" type="text" class="validate">
+					<label class="active" for="first_name2">对方昵称</label>
+					</div>
+					<a id="confirm_add_friend_btn" class="btn waves-effect teal lighten-2 remove-a">添加</a>
+				</div>
+				
+		</div>
+		</div>
 
-	<!-- Modal Structure -->
-	<div id="link_modal" class="modal">
-		<div class="modal-content">
-			<h4>绑定英雄联盟账号</h4>
+		<!-- 反馈信息 -->
+		<div id="fankui" class="modal modal-fixed-footer fankui_size" style="height: 50%;background:#455a64;">
 			<div class="row">
 				<form class="col s12">
-					<div class="row">
-						<div class="input-field col s12">
-							<i class="fa fa-user prefix" aria-hidden="true"></i>
-							<input id="bind_lol_account_text" type="text" class="validate" />
-							<label for="bind_lol_account_text">英雄联盟用户名</label>
-						</div>
-					</div>
-
-					<a id="bind_lol_btn" class="btn waves-effect waves-light right teal lighten-2" name="action">绑定</a>
-			  <i class="fa fa-paper-plane" aria-hidden="true"></i>
-			</button>
-				</form>
-			</div>
-		</div>
-	</div>
-
-
-	<!-- notification center Modal Structure -->
-	<div id="message_sheet" class="modal bottom-sheet" style="background-color: #455a64;">
-		<div class="modal-content" id="message_modal_content">
-			<h4 style="color:#fff;">消息中心</h4>
-			<ul id="message_center" class="collapsible popout" data-collapsible="expandable" id="message_collapsible">
-				<!--swig_messages.html-->
-			</ul>
-		</div>
-		<div class="modal-footer" style="background-color: #455a64;">
-			<a id="message_center_btn" href="#!" class="modal-action modal-close waves-effect waves-green btn-flat hover-black"><i style="color:#fff;" class="fa fa-trash" aria-hidden="true"></i></a>
-		</div>
-	</div>
-
-	<!--  -->
-	<div id="fight-bet-modal" class="modal">
-		<div class="modal-content">
-			<h4>约战选择积分</h4>
-			<div class="row">
-				<div class="col s4 bet-holder">
-					10
-				</div>
-				<div class="col s4 bet-holder">
-					50
-				</div>
-				<div class="col s4 bet-holder">
-					100
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="match-bet-modal" class="modal">
-		<div class="modal-content">
-			<h4>匹配选择积分</h4>
-			<div class="row">
-				<div class="col s4 bet-holder">
-					10
-				</div>
-				<div class="col s4 bet-holder">
-					50
-				</div>
-				<div class="col s4 bet-holder">
-					100
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Modal Structure -->
-	<div id="modal1" class="modal" style="background:#455a64;">
-		<div class="row">
-			<form class="col s6">
-				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">个人昵称</label>
-					</div>
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">爱好</label>
-					</div>
-				</div>
-
-
-
-
-				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">年龄</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-field col s6">
-						<input placeholder="占位提示" id="first_name" type="text" class="validate">
-						<label for="first_name">邮件</label>
-					</div>
-				</div>
-				<form action="#">
-					<div class="file-field input-field" style="padding-left: 10px;">
-						<div class="btn">
-							<span>更改头像</span>
-							<input type="file">
-						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate" type="text">
-						</div>
-					</div>
-					<button style="margin-left: 10px;" class="btn waves-effect waves-light" type="submit" name="action">提交
-							</form>
-
-					
-							
-							</button>
-
-				</form>
-		</div>
-
-
-
-	</div>
-
-	<!-- Modal Trigger -->
-
-	<!-- 邀请组队 -->
-	<div id="modal32" class="modal bottom-sheet">
-		<div class="modal-content">
-			<h4>邀请列表</h4>
-			<ul class="collection">
-				<li class="collection-item avatar">
-					<img src="media/imgs/2.jpg" alt="" class="circle">
-					<span class="title" style="margin-top:10px;">啊冷呀</span>
-
-					<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
-				</li>
-				<li class="collection-item avatar">
-					<img src="media/imgs/2.jpg" alt="" class="circle">
-					<span class="title" style="margin-top:10px;">啊冷呀</span>
-
-					<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
-				</li>
-				<li class="collection-item avatar">
-					<img src="media/imgs/2.jpg" alt="" class="circle">
-					<span class="title" style="margin-top:10px;">啊冷呀</span>
-
-					<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
-				</li>
-				<li class="collection-item avatar">
-					<img src="media/imgs/2.jpg" alt="" class="circle">
-					<span class="title" style="margin-top:10px;">啊冷呀</span>
-
-					<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
-				</li>
-				<li class="collection-item avatar">
-					<img src="media/imgs/2.jpg" alt="" class="circle">
-					<span class="title" style="margin-top:10px;">啊冷呀</span>
-
-					<a class="waves-effect waves-light btn" style="float:right;">邀请</a>
-				</li>
-
-			</ul>
-		</div>
-	</div>
-	<!-- 创建赛事 -->
-<!-- 创建赛事 -->
-<div class="modal" id="create_koom_modal" style="
-    background-color: #455a64;color:#fff;">
-		<div class="modal-content" style="height:468px;">
-			<div class="input-field col s6">
-				<input id="competition_name" type="text" class="validate" />
-				<label for="competition_name">赛事名称</label>
-			</div>
-			<div class="input-field col s12">
-				<select id="competition_max_paticipant"> <option value="" disabled="" selected="">最大报名人数</option> <option value="1">50</option> <option value="2">100</option> <option value="3">150</option> </select>
-			</div>
-			<div>
-				<p>战斗力范围</p>
-				<div class="input-field col s4" style="width:15.5%;float: left;">
-					<select id="competition_lowest_score"> <option value="" disabled="" selected="">最低战斗力范围</option> <option value="1">500</option> <option value="2">2000</option> <option value="3">5000</option> </select>
-				</div>
-				<p style="color:#fff;float: left;margin-left: 14px;margin-top: 35px;">——</p>
-				<div class="input-field col s4" style="width:15.5%;float: left;margin-left:18px;">
-					<select id="competition_highest_score"> <option value="" disabled="" selected="">最高战斗力范围</option> <option value="1">1000</option> <option value="2">4000</option> <option value="3">6000</option> </select>
-				</div>
-				<div style="float:left;">
-					<input style="width:25%;float: left;" placeholder="最低战斗力范围" id="first_name" type="text" class="validate" />
-					<p style="color:#fff;float: left;margin-left: 14px;margin-top: 16px;">——</p>
-					<input style="width:26%;margin-left:20px;float: left;" placeholder="最高战斗力范围" id="first_name" type="text" class="validate"
-					/>
-				</div>
-			</div>
-			<div style="float:left;width:60%;">
-				<p>可比赛时间</p>
-				<input id="competition_start" class="kbtn" />
-			</div>
-			<div style="float:left;width:60%;">
-				<p>结束时间</p>
-				<input id="competition_end" class="kbtn" />
-			</div>
-				<div style="float:left;width:60%;">
-				<p>可报名时间</p>
-				<input id="competition_sign_start" class="kbtn" />
-			</div>
-			<div style="float:left;width:60%;">
-				<p>报名结束时间</p>
-				<input id="competition_sign_end" class="kbtn" />
-			</div>
-		</div>
-		<div class="input-field col s12" style="width:40%;margin-left:25px;float:left;">
-			<select id="competition_fee"> <option value="" disabled="" selected="">每场赛报名费</option> <option value="1">10</option> <option value="2">20</option> <option value="3">30</option> </select>
-		</div>
-		<div class="input-field col s12" style="width:40%;margin-left:25px;float:left;">
-			<select id=""> <option value="" disabled="" selected="">挑战模式</option> <option value="1">1v1</option> <option value="2">2v2</option> <option value="3">3v3</option> </select>
-		</div>
-		<div class="row">
-			<form class="col s12">
-				<div class="row">
-					<div class="input-field col s12">
-						<textarea id="competition_rule" class="materialize-textarea"></textarea>
-						<label for="competition_rule">赛事规则</label>
-					</div>
-				</div>
-			</form>
-		</div>
-		<div class="row">
-			<form class="col s12">
-				<div class="row">
-					<div class="input-field col s12">
-						<textarea id="competition_comment" class="materialize-textarea"></textarea>
-						<label for="competition_comment">赛事说明</label>
-					</div>
-				</div>
-			</form>
-		</div>
-		<input id="competition_createtime" class="kbtn" type="hidden" />
-		<div style="padding-left:20px;padding-bottom:20px;">
-			<a class="waves-effect waves-light btn" id="create_match">完成</a>
-		</div>
-	</div>
-	<!-- 弹出弹出 -->
-
-	<div id="modalpopo" class="modal" style="background: #455a64;">
-		<div class="modal-content">
-			<h4 style="color: #fff;">模态标题</h4>
-			<p class="ceneter_w" style="color: #fff;">一堆文本</p>
-		</div>
-		<div class="modal-footer" style="background: #455a64;">
-			<button style="background: #26a69a;" class="btn waves-effect waves-light" type="submit" name="action">确定
-							
-							</button>
-		</div>
-	</div>
-<!-- 邀请好友弹出 -->
-<div id="coollap" class="modal" style="background-color: #455a64;width:35%;">
-		<div class="row">
-				<div class="input-field col s6">
-				  <input style="color:#fff;" value="" id="first_name2" type="text" class="validate">
-				  <label class="active" for="first_name2">对方ID</label>
-				</div>
-			</div>
-			  <a class="waves-effect waves-light btn collpost" >添加</a>
-	  </div>
-	</div>
-	<!-- 反馈信息 -->
-	<div id="fankui" class="modal modal-fixed-footer fankui_size" style="height: 50%;background:#455a64;">
-		<div class="row">
-			<form class="col s12">
-				<div class="input-field col s8">
-					<input style="color:#fff;" id="last_named" type="text" class="validate">
-					<label for="last_named" style="color:#fff;">姓名</label>
-				</div>
-
-				<div class="row">
 					<div class="input-field col s8">
-						<input style="color:#fff;" id="emails" type="email" class="validate">
-						<label for="emails" style="color:#fff;">联系方式</label>
+						<input style="color:#fff;" id="last_named" type="text" class="validate">
+						<label for="last_named" style="color:#fff;">姓名</label>
 					</div>
-				</div>
-				<div class="row">
-					<form id="radio">
-						<p>
-						  <input class="with-gap" name="group1" type="radio" id="test1" value="对方没有参加比赛" />
-						  <label for="test1">对方没有参加比赛</label>
-						
-						  <input class="with-gap" name="group1" type="radio" id="test2" value="对方中途退出" />
-						  <label for="test2">对方中途退出</label>
-						
-						  <input class="with-gap" name="group1" type="radio" id="test3" value="对方实力强出太多" />
-						  <label for="test3">对方实力强出太多</label>
-						</p>
-						<p>
-						  <input class="with-gap" name="group1" type="radio" id="test4" value="提现没有到账" />
-						  <label for="test4">提现没有到账</label>
 
-						  <input class="with-gap" name="group1" type="radio" id="test5" value="充值没有到账" />
-						  <label for="test5">充值没有到账</label>
-						</p>
-					</form>
-					<form class="col s12">
-						<div class="row">
-							<div class="input-field col s8">
-								<textarea maxlength="200" style="color:#fff;" id="textarea1" class="materialize-textarea" length="80"></textarea>
-								<label for="textarea1" style="color:#fff;">输入反馈细节:</label>
-								<span class="character-counter" style="color:#fff;float: right; font-size: 12px; height: 1px;"></span></div>
+					<div class="row">
+						<div class="input-field col s8">
+							<input style="color:#fff;" id="emails" type="email" class="validate">
+							<label for="emails" style="color:#fff;">联系方式</label>
 						</div>
+					</div>
+					<div class="row">
+						<form id="radio">
+							<p>
+							<input class="with-gap" name="group1" type="radio" id="test1" value="对方没有参加比赛" />
+							<label for="test1">对方没有参加比赛</label>
+							
+							<input class="with-gap" name="group1" type="radio" id="test2" value="对方中途退出" />
+							<label for="test2">对方中途退出</label>
+							
+							<input class="with-gap" name="group1" type="radio" id="test3" value="对方实力强出太多" />
+							<label for="test3">对方实力强出太多</label>
+							</p>
+							<p>
+							<input class="with-gap" name="group1" type="radio" id="test4" value="提现没有到账" />
+							<label for="test4">提现没有到账</label>
 
-					</form>
-					<a class="waves-effect waves-light btn" style="margin-left:10px;" id="feedbackInput">提交反馈</a>
-				</div>
+							<input class="with-gap" name="group1" type="radio" id="test5" value="充值没有到账" />
+							<label for="test5">充值没有到账</label>
+							</p>
+						</form>
+						<form class="col s12">
+							<div class="row">
+								<div class="input-field col s8">
+									<textarea maxlength="200" style="color:#fff;" id="textarea1" class="materialize-textarea" length="80"></textarea>
+									<label for="textarea1" style="color:#fff;">输入反馈细节:</label>
+									<span class="character-counter" style="color:#fff;float: right; font-size: 12px; height: 1px;"></span></div>
+							</div>
 
-			</form>
+						</form>
+						<a class="waves-effect waves-light btn" style="margin-left:10px;" id="feedbackInput">提交反馈</a>
+					</div>
+
+				</form>
+			</div>
 		</div>
-	</div>
+		<div class="main" style="display: none;">
+			<div class="w1">
+			系统菜单包含注册登录和绑定英雄联盟账号
+			</div>  
+			<div class="w2"></div>
+			<div id="walkthrough-2">
+		
+		 	</div>
+			<div class="w3"></div>
+			<div id="walkthrough-3">
+				发起约战与队友一起战斗
+		 	</div>
+			<div class="w4"></div>
+			<div id="walkthrough-4">
+				充值提现资金流水详情都在个人中心
+		 	</div>
+			<img  usemap="#Map">
+			<div id="walkthrough-5">
+				好友,充值,个人能力分析快捷入口
+			</div>
+		 	<div id="walkthrough-6">
+				第四部演示
+			</div>
+		</div>
 
+		<div id="datePlugin"></div>
+		<script src="./js/jquery-2.2.4.js"></script>
+		<script src="./js/materialize.min.js"></script>
+		<script src="./js/socket_util.js"></script>
+		<script src="./js/global.js"></script>
+		<script src="./js/jquery.validate.min.js"></script>
+		<script src="./js/validate_sign.js"></script>
+		<script src="./js/global.js"></script>
+		<!-- <script src="./js/spa.js"></script> -->
+		<script src="./js/login.js"></script>
+		<script src="./js/game_history_query.js"></script>
+		<script src="./js/swig.js"></script>
+		<script src="./js/request_rank_list.js"></script>
+		<script src="./js/Chart.bundle.js"></script>
+		<script src="./js/generate_radar.js"></script>
+		<script src="./js/close_modal.js"></script>
+		<script src="./js/bind_lol.js"></script>
+		<script src="./js/create_room.js"></script>
+		<script src="./js/message_center.js"></script>
+		<script src="./js/personal_center.js"></script>
+		<script src="./js/test_page.js"></script>
+		<script src="./flipclock/flipclock.js"></script>
+		<script src="./js/date.js"></script>
+		<script src="./js/gerenly.js"></script>
+		<script src="./js/cjdwly.js"></script>
+		
+		<!-- <script src="./js/chat.js"></script> -->
+		<script src="https://js.stripe.com/v3/"></script>
 
+		<script src="./js/recharge.js"></script>
+		<script src="./js/feedback_message.js"></script>
+		<script src="./js/turn_to_room.js"></script>
+		<script src="./js/add_friend.js"></script>
+		<script src="./js/bullup_message_box.js"></script>
+		<script src="./js/jquery.pagewalkthrough.js"></script>
+		<script type="text/javascript" src="./js/time_js.js"></script>
+		<script src="./js/change_icon.js"></script>
 
-	<div id="datePlugin"></div>
-	<script src="./js/jquery-2.2.4.js"></script>
-	<script src="./js/materialize.min.js"></script>
-	<script src="./js/socket_util.js"></script>
-	<script src="./js/global.js"></script>
-	<script src="./js/jquery.validate.min.js"></script>
-	<script src="./js/validate_sign.js"></script>
-	<script src="./js/global.js"></script>
-	<!-- <script src="./js/spa.js"></script> -->
-	<script src="./js/login.js"></script>
-	<script src="./js/game_history_query.js"></script>
-	<script src="./js/swig.js"></script>
-	<script src="./js/request_rank_list.js"></script>
-	<script src="./js/Chart.bundle.js"></script>
-	<script src="./js/generate_radar.js"></script>
-	<script src="./js/close_modal.js"></script>
-	<script src="./js/bind_lol.js"></script>
-	<script src="./js/create_room.js"></script>
-	<script src="./js/message_center.js"></script>
-	<script src="./js/personal_center.js"></script>
-	<script src="./js/test_page.js"></script>
-	<script src="./flipclock/flipclock.js"></script>
-	<script src="./js/date.js"></script>
-	<script src="./js/gerenly.js"></script>
-	<script src="./js/cjdwly.js"></script>
-	<script src="./js/match.js"></script>
-	<!-- <script src="./js/chat.js"></script> -->
-	<script src="https://js.stripe.com/v3/"></script>
-	<script src="./js/feedback_message.js"></script>
-	<script src="./js/turn_to_room.js"></script>
-	<script src="./js/bullup_message_box.js"></script>
-	<script src="./js/bullup_message_box.js"></script>
-	
-
-
-	<!--处理提现-->
-	<!-- <script src="./js/handleWithdraw.js"></script> -->
-
-
-
-		<!-- test data script -->
-		<!-- comment this out and replace these data with those from database -->
 		<script src="./js/testData.js"></script>
 		<!-- router -->
 		<script src="./js/router.js"></script>
 		<!-- 银行格式js -->
 		<script src="./js/bankInput.js"></script>
-
+		<!-- 聊天室js -->
+		<script src="./js/jquery.qqFace.js"></script>
+		<script src="./js/chat.js"></script>
 
 		<script>
-			
-			// if(userInfo){
-			// 	var tempId = userInfo.userId;
-			// 	alert(tempId);
-			// 	$('#admin').css('display','block');
-			// }else{
-			// 	$('#admin').css('display','none');
-			// 	// if(userInfo.userRole==1){
-			// 	// 	$('#admin').css('display','block');
-			// 	// }
-			// }
-			
-
 			$().ready(function () {
 				var temp = bullup.loadSwigView("./swig_menu.html", null);
 				$('#system_menu').html(temp);
@@ -796,11 +762,6 @@
 			// 	$('.account').bankList();
 			// });
 			//弹出popo
-			function poroto_w() {
-				$('#modalpopo .modal-content  h4').text("sdwdwdwdwd")
-				$('#modalpopo .ceneter_w').text("s123123123")
-				$('#modalpopo').modal('open');
-			}
 			$('.waves-light').click(function () {
 				$('#modalpopo').modal('close');
 			});
@@ -828,11 +789,55 @@
 					}
 				});
 			});
-			
-			
-			
-			
-		</script>
-</body>
+			//引导页
+			$(function() {
+				// 设置参数
+				$('body').pagewalkthrough({
+					name: 'introduction',
+					steps: [{
+						popup: { //定义弹出提示引导层
+							content: '开启界面引导',
+							type: 'modal'
+						}
+					}, {
+						wrapper: '.dro-index',//当前引导对应的元素位置
+						popup: {
+							content: '.w1',//关联的内容元素
+							type: 'tooltip',//弹出方式（tooltip和modal以及nohighlight）
+							position: 'bottom',//弹出层位置（top,left, right or bottom）
+							width:'200'
+							
+							
+						}
+					}, {
+						wrapper: '#yuezhan',
+						popup: {
+							content: '#walkthrough-3',
+							type: 'tooltip',
+							position: 'bottom',
+							top: '505px',
+							left: '368.406'
 
+						}
+					}, {
+						wrapper: '#router_index',
+						popup: {
+							content: '#walkthrough-4',
+							type: 'tooltip',
+							position: 'bottom'
+						}
+					}, {
+						wrapper: '.fa-plus',
+						popup: {
+							content: '#walkthrough-5',
+							type: 'tooltip',
+							position: 'left'
+						}
+					}]
+				});
+				// 一步一步显示引导页
+				$('body').pagewalkthrough('show');
+			});
+		</script>
+	</body>
 </html>

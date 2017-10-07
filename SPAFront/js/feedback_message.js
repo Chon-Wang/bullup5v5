@@ -9,7 +9,7 @@
         var $account = userInfo.name;
         //alert($account);
         if(userInfo==null){
-            alert("提示:","您没有登陆请登录");
+            bullup.alert("请您先登录");
         }else{
             socket.emit('feedbackMessage',{
                 name:$name,
