@@ -129,7 +129,7 @@ io.on('disconnect', function (socket) {
 });
 
 //一天更新一次约战排行榜
-timmer.autoUpdateRankList(24 * 3600);
+//timmer.autoUpdateRankList(24 * 3600);
 
 //开启消息推送器
 socketProxy.startstableEmiter();
@@ -138,7 +138,7 @@ socketProxy.startstableEmiter();
 //timmer.autoUpdateRankList(24 * 3600);
 
 //监听数据库更新赛事状态
-timmer.autoUpdateMatchState(1 * 3600);
+//timmer.autoUpdateMatchState(1 * 3600);
 io.listen(3000);
 
 
