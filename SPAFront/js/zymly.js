@@ -14,6 +14,11 @@ $().ready(function(){
         e.preventDefault();
         bullup.loadTemplateIntoTarget('swig_form_component.html', {}, 'main-view');           
     });
+
+    $('#personal_recharge_btn').on('click', function(e){
+        window.location.href = "#recharge";
+    });
+    
 });
    
 

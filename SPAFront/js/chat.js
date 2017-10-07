@@ -14,6 +14,13 @@ $(document).ready(function () {
 
     });
 
+    $("#saytext").keypress(function(event){
+        if(event.which == 13) { 
+            $('#sub_btn').click();
+            $('#saytext').val("");
+        }
+    });
+
     $('#sub_btn').on('click', function () {		
         if(userInfo == null){
             bullup.alert("请先登录");
