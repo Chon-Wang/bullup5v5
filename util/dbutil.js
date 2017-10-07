@@ -925,63 +925,67 @@ exports.updateStrengthInfo = function (bindInfo, callback) {
 }
 
 /**个人中心数据处理 */
-exports.getPersonalCenterInfoByUserId = function (userId, callback) {
-    console.log("id=" + userId);
+exports.getPersonalCenterInfoByUserId=function(userId, callback){
+    console.log("id="+userId);
     async.waterfall([
-        function (callback) {
+        function(callback){
             //个人信息
-            var userPersonalInfo = {};
+            var userPersonalInfo={};
             connection.query('select * from `user_base` where user_id=?', [userId], function (err, results, fields) {
                 if (err) throw err;
-                userPersonalInfo.userInfo = results;
+                userPersonalInfo.userInfo=results;
                 callback(null, userPersonalInfo);
             });
             //消费记录
-        }, function (userPersonalInfo, callback) {
-            connection.query('select * from bullup_payment_history where user_id=?', [userId], function (err, results, fields) {
-                console.log("userId" + userPersonalInfo.userId);
-                if (err) throw err;
-                //payment_history.userId=results[0].user_id;
-                userPersonalInfo.paymentHistory = results;
-                console.log(JSON.stringify(userPersonalInfo.paymentHistory));
-                callback(null, userPersonalInfo);
+        },function(userPersonalInfo,callback){
+            connection.query('select  bullup_bill_time,bullup_bill_value from bullup_payment_history where user_id=? order by bullup_bill_time desc limit 6',[userId],function(err, results, fields){
+                if(err) throw err;
+                 userPersonalInfo.day0=results[0].bullup_bill_value;
+                 userPersonalInfo.day1=results[1].bullup_bill_value;
+                 userPersonalInfo.day2=results[2].bullup_bill_value;
+                 userPersonalInfo.day3=results[3].bullup_bill_value;
+                 userPersonalInfo.day4=results[4].bullup_bill_value;
+                 userPersonalInfo.day5=results[5].bullup_bill_value;
+                //console.log("111"+results);
+                //console.log("222"+userPersonalInfo);
+                callback(null,userPersonalInfo);
             });
             //个人能力数据
-        }, function (userPersonalInfo, callback) {
-            connection.query('select bullup_strength_wins,bullup_strength_k,bullup_strength_d,bullup_strength_a,bullup_strength_minion,bullup_strength_gold,bullup_strength_tower,bullup_strength_gold_perminiute,bullup_strength_damage,bullup_strength_damage_taken,bullup_strength_heal,bullup_strength_score from bullup_strength where user_id=?', [userId], function (err, results, fields) {
-                if (err) throw err;
-                userPersonalInfo.lolInfo_wins = results[0].bullup_strength_wins;
-                userPersonalInfo.lolInfo_strength_k = results[0].bullup_strength_k;
-                userPersonalInfo.lolInfo_strength_d = results[0].bullup_strength_d;
-                userPersonalInfo.lolInfo_strength_a = results[0].bullup_strength_a;
-                userPersonalInfo.lolInfo_strength_minion = results[0].bullup_strength_minion;
-                userPersonalInfo.lolInfo_strength_gold = results[0].bullup_strength_gold;
-                userPersonalInfo.lolInfo_strength_tower = results[0].bullup_strength_tower;
-                userPersonalInfo.lolInfo_strength_damage = results[0].bullup_strength_damage;
-                userPersonalInfo.lolInfo_strength_damage_taken = results[0].bullup_strength_damage_taken;
-                userPersonalInfo.lolInfo_strength_score = results[0].bullup_strength_score;
-                userPersonalInfo.lolInfo_strength_gold_perminiute = results[0].bullup_strength_gold_perminiute;
-                userPersonalInfo.lolInfo_strength_heal = results[0].bullup_strength_heal;
-                callback(null, userPersonalInfo);
+        },function(userPersonalInfo,callback){
+            connection.query('select bullup_strength_wins,bullup_strength_k,bullup_strength_d,bullup_strength_a,bullup_strength_minion,bullup_strength_gold,bullup_strength_tower,bullup_strength_gold_perminiute,bullup_strength_damage,bullup_strength_damage_taken,bullup_strength_heal,bullup_strength_score from bullup_strength where user_id=?',[userId],function(err,results, fields){
+                if(err) throw err;
+                userPersonalInfo.lolInfo_wins=results[0].bullup_strength_wins;
+                userPersonalInfo.lolInfo_strength_k=results[0].bullup_strength_k;
+                userPersonalInfo.lolInfo_strength_d=results[0].bullup_strength_d;
+                userPersonalInfo.lolInfo_strength_a=results[0].bullup_strength_a;
+                userPersonalInfo.lolInfo_strength_minion=results[0].bullup_strength_minion;
+                userPersonalInfo.lolInfo_strength_gold=results[0].bullup_strength_gold;
+                userPersonalInfo.lolInfo_strength_tower=results[0].bullup_strength_tower;
+                userPersonalInfo.lolInfo_strength_damage=results[0].bullup_strength_damage;
+                userPersonalInfo.lolInfo_strength_damage_taken=results[0].bullup_strength_damage_taken;
+                userPersonalInfo.lolInfo_strength_score=results[0].bullup_strength_score;
+                userPersonalInfo.lolInfo_strength_gold_perminiute=results[0].bullup_strength_gold_perminiute;
+                userPersonalInfo.lolInfo_strength_heal=results[0].bullup_strength_heal;
+                callback(null,userPersonalInfo); 
             });
-        }, function (userPersonalInfo, callback) {
-            connection.query('select count(bullup_competition_id) as num ,bullup_competition_wins from bullup_competition_paticipant where user_id=?', [userId], function (err, results, fields) {
-                if (err) throw err;
-                userPersonalInfo.bullup_competitionResult = results[0].num;
-                userPersonalInfo.bullup_competition_wins = results[0].bullup_competition_wins;
-                userPersonalInfo.competition_wins = ((userPersonalInfo.bullup_competition_wins) / (userPersonalInfo.bullup_competitionResult)) + '%';
-                callback(null, userPersonalInfo);
+        },function(userPersonalInfo,callback){
+            connection.query('select count(bullup_competition_id) as num ,bullup_competition_wins from bullup_competition_paticipant where user_id=?',[userId],function(err, results, fields){
+                if(err) throw err;
+                userPersonalInfo.bullup_competitionResult=results[0].num;
+                userPersonalInfo.bullup_competition_wins=results[0].bullup_competition_wins;
+                userPersonalInfo.competition_wins=((userPersonalInfo.bullup_competition_wins)/(userPersonalInfo.bullup_competitionResult))+'%';
+                callback(null,userPersonalInfo);
             });
-        }, function (userPersonalInfo, callback) {
+        },function(userPersonalInfo,callback){
             //var lolInfoId={};
-            connection.query('select lol_info_id from lol_bind where user_id=?', [userId], function (err, results, fields) {
-                if (err) throw err;
-                console.log('id:' + userId);
-                userPersonalInfo.Id = results[0].lol_info_id;
-                console.log('pid' + userPersonalInfo.Id);
-                callback(null, userPersonalInfo);
+            connection.query('select lol_info_id from lol_bind where user_id=?',[userId],function(err, results, fields){
+                if(err) throw err;
+                console.log('id:'+userId);
+                userPersonalInfo.Id=results[0].lol_info_id;
+                console.log('pid'+userPersonalInfo.Id);
+                callback(null,userPersonalInfo);
             });
-        }, function (userPersonalInfo, callback) {
+        },function(userPersonalInfo,callback){       
             // var lolInfo={};
             connection.query('select * from lol_info where lol_info_id=?',[userPersonalInfo.Id],function(err, results, fields){
                 if(err) throw err;
@@ -1012,10 +1016,8 @@ exports.getPersonalCenterInfoByUserId = function (userId, callback) {
     ],function(err,res){
         callback(res);
         console.log(res);
-    });
+    });   
 }
-
-
 // exports.insertFeedback = function (UserId, textarea1, name, email, callback) {
 //     // console.log(userId);
 //     async.waterfall([

@@ -831,10 +831,10 @@ function handleInviteFromFriend(message) {
     $("#message_center_nav").click();
     //console.log("messageInfo:  " + JSON.stringify(messageInfo));
 }
-
+/**个人中心 */
 function handlePersonalCenterResult(feedback){
     //判断是否成功
-    if (feedback.errorCode == 0) {
+    if(feedback.errorCode == 0){
         var data = feedback.extension;
         //console.log('data='+JSON.stringify(data));
         //radar.setData(data);
@@ -858,7 +858,13 @@ function handlePersonalCenterResult(feedback){
                wealth:data.UserWealth,
                strength:data.UserStrength,
                winning_rate:data.competition_wins,
-               avatarId:data.User_icon_id
+               avatarId:data.User_icon_id,
+               one:data.First,
+               two:data.Second,
+               three:data.Thirdly,
+               four:data.Fourthly,
+               five:data.Fifth,
+               six:data.Sixth
             }
         });
         $('#main-view').html(personalCenterHtml);
@@ -866,6 +872,7 @@ function handlePersonalCenterResult(feedback){
         bullup.alert("页面加载失败!");
     }
 }
+
 
 function handleBattleInviteRequest(message) {
     messageInfo.push(message);
