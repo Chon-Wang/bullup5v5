@@ -2,7 +2,7 @@
 $().ready(function(){
     $('#router_chat').on('click', function(e){
         e.preventDefault();
-        bullup.loadTemplateIntoTarget('chatroom.html', {}, 'main-view');
+        bullup.loadTemplateIntoTarget('swig_chatroom.html', {}, 'main-view');
         $.getScript('./js/chat.js');
 });
    

@@ -3,6 +3,7 @@ var lolapi = require('./js/lolutil.js');
 
 process.on('uncaughtException', function(err) {
     //alert("召唤师不存在或设置的时间段过长！");
+    console.log(String(err));
 });
 
 $().ready(function () {
@@ -10,19 +11,20 @@ $().ready(function () {
         e.preventDefault();
         var summonerName = $('#query_summoner_name').val();
         if(summonerName == ""){
-            alert("请输入召唤师的名字");
+            bullup.alert("请输入召唤师的名字");
             return;
         }
         var startDate = $('#query_start_data').val();
         if(startDate == ""){
-            alert("请输入起始时间");
+            bullup.alert("请输入起始时间");
             return;
         }
         var endDate = $('#query_end_data').val();
         if(endDate == ""){
-            alert("请输入终止时间");
+            bullup.alert("请输入终止时间");
             return;
         }
+        bullup.alert("正在查询对战记录，请稍等");
         var strs = startDate.split(",");
         var year = strs[1];
         var day = strs[0].split(" ")[0];
@@ -66,7 +68,7 @@ $().ready(function () {
         endDate = year + "/" + month + "/" + day;
         lolapi.getMatchDetailsBySummonerName(summonerName, startDate, endDate, function(matchDetails){
             if(matchDetails == null || matchDetails == undefined){
-                alert("召唤师不存在或设置的时间段过长！");
+                bullup.alert("召唤师不存在或设置的时间段过长！");
                 return;
             }else{
                 var frame = bullup.loadSwigView("swig_queryres.html", {});

@@ -1,6 +1,6 @@
 var dbUtil = require('../util/dbutil.js');
 var logger = require('../util/logutil.js');
-var socketProxy = require('./socketproxy.js');
+var socketProxy = require('./socketProxy.js');
 var teamProxy = require('./teamProxy.js');
 var async = require('async');
 
@@ -138,18 +138,41 @@ exports.handleRegister = function (socket) {
                     extension: null
                 });
             } else {
-                dbUtil.addUser(userInfo, function (userAddRes) {
-                    socketProxy.stableSocketEmit(socket, 'feedback', {
-                        errorCode: 0,
-                        text: '注册成功',
-                        type: 'REGISTERRESULT',
-                        extension: {
-                            userAccount: userInfo.userAccount,
-                            userNickname: userInfo.userNickname,
-                            userId: userAddRes.userId,
-                            userIconId: 1,
-                        }
-                    });
+                dbUtil.findUserByNickname(userInfo.userNickname, function (user) {
+                    if(user){
+                        socketProxy.stableSocketEmit(socket, 'feedback', {
+                            errorCode: 1,
+                            text: '该昵称已被使用',
+                            type: 'REGISTERRESULT',
+                            extension: null
+                        });
+                    }else{
+                        dbUtil.findUserByCode(userInfo.userEmail, function (user) {
+                            if(user){
+                                socketProxy.stableSocketEmit(socket, 'feedback', {
+                                    errorCode: 1,
+                                    text: '该邀请码已被使用',
+                                    type: 'REGISTERRESULT',
+                                    extension: null
+                                });
+                            }else{
+                                dbUtil.addUser(userInfo, function (userAddRes) {
+                                    socketProxy.stableSocketEmit(socket, 'feedback', {
+                                        errorCode: 0,
+                                        text: '注册成功',
+                                        type: 'REGISTERRESULT',
+                                        extension: {
+                                            userAccount: userInfo.userAccount,
+                                            userNickname: userInfo.userNickname,
+                                            userId: userAddRes.userId,
+                                            userIconId: 1,
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                        
+                    }
                 });
             }
         });
@@ -170,10 +193,22 @@ exports.handleInviteFriend = function (socket) {
             socketProxy.stableSocketEmit(socket, 'feedback', {
                 errorCode: 1,
                 type: 'INVITERESULT',
-                text: inviteMessage.userName + '邀请失败,该用户已经下线'
+                text: '邀请失败,该用户已经下线'
             });
         }
-    })
+    });
+}
+
+exports.handleIconIdUpdate = function (socket) {
+    socket.on('iconIdUpdate', function (iconData) {
+        dbUtil.updateUserIconIdByUserId(iconData.userId, iconData.newIconId);
+        socketProxy.stableSocketEmit(socket, 'feedback', {
+            'errorCode': 0,
+            'type': 'ICONUPDATERESULT',
+            'text': '头像更新成功',
+            'extension': null
+        });
+    });
 }
 
 //查询账户余额
@@ -345,14 +380,13 @@ exports.handlePersonalCenterRequest = function(socket){
                 var data = {};
                 //填充data
                 data.userId = queryResult.userInfo[0].user_id;
-                
                 console.log('id..'+queryResult.user_id);
                 //data.XXX = queryResult.XXX;
                 data.userAccount=queryResult.userInfo[0].user_account;
                 data.name=queryResult.userInfo[0].user_nickname;
                 data.payAccountId=queryResult.Id.bullup_payment_account_id;
-                data.paymentType=queryResult.paymentHistory.bullup_paymet_type;
-                data.paymentAccount=queryResult.paymentHistory.bullup_account;
+                // data.paymentType=queryResult.paymentHistory.bullup_paymet_type;
+                // data.paymentAccount=queryResult.paymentHistory.bullup_account;
                 data.lolInfoId=queryResult.info[0].lol_info_id;
                 data.UserlolAccount=queryResult.info[0].user_lol_account;
                 data.UserlolNickname=queryResult.info[0].user_lol_nickname;
@@ -370,6 +404,7 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserInfo_heal=queryResult.lolInfo_strength_heal;
                 data.UserStrengthRank=queryResult.strengthRank;
                 data.UserWealthRank=queryResult.wealthRank;
+                data.User_icon_id=queryResult.icon_id;
                 data.UserWealth=queryResult.wealth;
                 data.UserStrength=queryResult.lolInfo_strength_score;
                 data.competition_wins=queryResult.competition_wins;
@@ -383,10 +418,77 @@ exports.handlePersonalCenterRequest = function(socket){
             }
             socketProxy.stableSocketEmit(socket, 'feedback', feedback);
             console.log('feedback111:'+JSON.stringify(feedback));
-
         });
     });
+}
 
+exports.handleAddFriendRequest = function(socket){
+    socket.on('addFriendRequest', function(request){
+        var userInfo = request.userInfo;
+        var invitedUserNickname = request.invitedUserNickname;
+        var flag = false;
+        for(var index in exports.users){
+            if(exports.users[index].name == invitedUserNickname){
+                //发送请求
+                var invitedUserInfo = exports.users[index];
+                var tarSocket = socketProxy.mapUserIdToSocket(invitedUserInfo.userId);
+                socketProxy.stableSocketEmit(tarSocket, 'message', {
+                    'userInfo':  userInfo,
+                    'invitedUserInfo': invitedUserInfo,
+                    'messageType': 'addFriend',
+                    'messageText': '添加好友'
+                });
+                flag = true;
+                break;
+            }
+        }
+        if(!flag){
+            socketProxy.stableSocketEmit(socket, 'feedback', {
+                'errorCode': 1,
+                'text': '好友添加失败，对方不在线',
+                'type': 'ADDFRIENDRESULT',
+                'extension': null
+            })
+        }
+    });
+}
+
+exports.handleAddFriendResult = function(socket){
+    socket.on('addFriendResult', function(result){
+        var userInfo = result.extension.userInfo;
+        var invitedUserInfo = result.extension.invitedUserInfo;
+        var socket1 = socketProxy.mapUserIdToSocket(userInfo.userId);
+        if(result.errorCode == 0){
+            var socket2 = socketProxy.mapUserIdToSocket(invitedUserInfo.userId);
+            socketProxy.stableSocketEmit(socket1, 'feedback', {
+                'errorCode': 0,
+                'type': "ADDFRIENDRESULT",
+                'text': invitedUserInfo.name + "同意了您的好友添加请求",
+                'extension': {
+                    'newFriend':  invitedUserInfo
+                }
+            });
+
+            socketProxy.stableSocketEmit(socket2, 'feedback', {
+                'errorCode': 0,
+                'type': "ADDFRIENDRESULT",
+                'text': "成功将" + userInfo.name + "添加为好友",
+                'extension': {
+                    'newFriend':  userInfo
+                }
+            });
+
+            dbUtil.addFriendRelationship(userInfo.userId, invitedUserInfo.userId);
+            
+        }else{
+            socketProxy.stableSocketEmit(socket1, 'feedback', {
+                'errorCode': 1,
+                'type': "ADDFRIENDRESULT",
+                'text': invitedUserInfo.name + "拒绝了您的好友添加请求",
+                'extension': null
+            });
+        }
+    });
 }
 
 exports.insertFeedbackMessage=function(socket){

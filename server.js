@@ -2,15 +2,20 @@ var io = require('socket.io')();
 var logger = require('./util/logutil');
 var timmer = require('./timer');
 
+var dbutil = require('./util/dbutil.js');
+
 // 代理
-var userProxy = require('./proxy/userproxy.js'); 
+var userProxy = require('./proxy/userProxy.js'); 
 var teamProxy = require('./proxy/teamProxy.js');
-var socketProxy = require('./proxy/socketproxy.js');
+var socketProxy = require('./proxy/socketProxy.js');
 var battleProxy = require('./proxy/battleProxy.js');
 var paymentProxy = require('./proxy/paymentProxy.js');
 var chatProxy = require('./proxy/chatProxy.js');
 var matchProxy = require('./proxy/matchProxy.js')
 var adminProxy = require('./proxy/adminProxy.js');
+var stripeProxy = require('./proxy/stripeProxy.js');
+var lolKeyProxy = require('./proxy/lolKeyProxy.js');
+
 
 // 初始化Proxy, 所有需要保存数据结构的对象都需要初始化, 只能初始化一次
 userProxy.init();
@@ -21,6 +26,7 @@ paymentProxy.init();
 chatProxy.init();
 matchProxy.init();
 adminProxy.init();
+lolKeyProxy.init();
 
 io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
@@ -37,6 +43,9 @@ io.on('connection', function(socket) {
     userProxy.insertFeedbackMessage(socket);
 
     userProxy.handleLOLBind(socket); 
+    userProxy.handleIconIdUpdate(socket);
+    userProxy.handleAddFriendRequest(socket);
+    userProxy.handleAddFriendResult(socket);
 
     //余额
     userProxy.handleGetBalance(socket);
@@ -61,6 +70,8 @@ io.on('connection', function(socket) {
     battleProxy.handleLOLRoomEstablished(io, socket);
 
     battleProxy.handleBattleResult(io, socket);
+
+    battleProxy.handleMatch(io);
 
     paymentProxy.handlePayment(socket);
     paymentProxy.handleBankInfo(socket);
@@ -96,31 +107,10 @@ io.on('connection', function(socket) {
 
     chatProxy.handleChat(io,socket);
 
-    matchProxy.handlematchInfo(socket);
+    //LOLkey
+    lolKeyProxy.handleLOLKeyUpdate(socket);
+    lolKeyProxy.handleLOLKeyRequest(socket);
 
-    matchProxy.handleInitiateCompetition(socket);
-
-    matchProxy.handlecheckMatchInfo(socket);
-
-    matchProxy.handleJoinCompetition(socket);
-    
-    matchProxy.handleApplyInfo(socket);
-
-    matchProxy.handleAwaitApplyInfo(socket);
-
-    matchProxy.handleAwayGame(socket);
-
-    matchProxy.handleUnderway(socket);
-
-    matchProxy.handleFinishGame(socket);
-
-    matchProxy.handleapplyMatch(socket);
-
-    matchProxy.handleauditApply(socket);
-
-    matchProxy.handleagreeApply(socket);
-
-    matchProxy.handlerejectApply(socket);
 });
 
 io.on('disconnect', function (socket) {
@@ -134,19 +124,22 @@ io.on('disconnect', function (socket) {
 //开启消息推送器
 socketProxy.startstableEmiter();
 
-//一天更新一次排行榜
-//timmer.autoUpdateRankList(24 * 3600);
+//开启匹配器
+teamProxy.match();
 
-//监听数据库更新赛事状态
-//timmer.autoUpdateMatchState(1 * 3600);
+//监听充值请求
+stripeProxy.recharge();
+
+//一天更新一次排行榜
+//timmer.autoUpdateRankList(10);
+//dbutil.updateRankList();
 io.listen(3000);
 
 
-// //一天更新一次赛事排行榜
-// timmer.autoUpdatematchRankList(1 * 3600);
 
-// io.listen(3000);
-
-
+process.on('uncaughtException', function(err) {
+    logger.logToFile("./logs/errors.txt", "append", String(err));
+    console.log(String(err));
+});
 
 

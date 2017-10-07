@@ -1,5 +1,5 @@
 
-      $().ready(function () {
+    $().ready(function () {
 		
 		$("#withdraw_btn").on('click', function () {
 				var $bank_cardnumber = $('#bank_cardnumber').val();

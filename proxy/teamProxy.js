@@ -1,5 +1,6 @@
 var logger = require('../util/logutil.js');
-var socketProxy = require('./socketproxy');
+var socketProxy = require('./socketProxy');
+var battleProxy = require('./battleProxy');
 
 exports.init = function() {
     // 已经创建完毕的队伍
@@ -8,6 +9,18 @@ exports.init = function() {
     this.unformedTeams = {};
     // 用来进行广播的队伍列表
     this.broadcastTeamInfos = {};
+    
+    // 创建匹配调度池
+    this.matchPools = [];
+    for(var i = 0;i<5;i++){
+        var matchPool = {};
+        for(var index = 0;index < 90;index++){
+            matchPool[index * 50] = {};
+            matchPool[index * 50].delay = 0;
+            matchPool[index * 50].queue = [];
+        }
+        this.matchPools.push(matchPool);
+    }
 }
 
 /**
@@ -85,32 +98,48 @@ exports.handleTeamEstablish = function (io, socket) {
         // 更新队伍信息状态
         teamInfo.status = 'PUBLISHING';
         // 将未形成队伍列表中的队伍放入已形成队伍列表中
-        exports.formedTeams[teamInfo.roomName] = teamInfo;
-        // 将该队伍可以用来广播的内容加入到广播列表中
-        //
-        // exports.broadcastTeamInfos[teamInfo.roomName] = {
-        //     teamName: teamInfo.roomName,
-        //     status: teamInfo.status,
-        //     type: teamInfo.gameMode,
-        //     bet: teamInfo.rewardAmount,
-        //     mapId: teamInfo.mapSelection,
-        //     rule: teamInfo.winningCondition,
-        //     participantsCount: teamInfo.participants.length
-        // };
-        delete exports.unformedTeams[teamInfo.roomName];
-        var feedback = {
-            errorCode: 0,
-            type: 'ESTABLISHTEAMRESULT',
-            text: '队伍创建成功',
-            extension: {
-                teamInfo: teamInfo,
-                formedTeams: exports.formedTeams
+
+        if(teamInfo.gameMode == 'battle'){
+            //约战
+            exports.formedTeams[teamInfo.roomName] = teamInfo;
+            // 将该队伍可以用来广播的内容加入到广播列表中
+            //
+            // exports.broadcastTeamInfos[teamInfo.roomName] = {
+            //     teamName: teamInfo.roomName,
+            //     status: teamInfo.status,
+            //     type: teamInfo.gameMode,
+            //     bet: teamInfo.rewardAmount,
+            //     mapId: teamInfo.mapSelection,
+            //     rule: teamInfo.winningCondition,
+            //     participantsCount: teamInfo.participants.length
+            // };
+            delete exports.unformedTeams[teamInfo.roomName];
+            var feedback = {
+                errorCode: 0,
+                type: 'ESTABLISHTEAMRESULT',
+                text: '队伍创建成功',
+                extension: {
+                    teamInfo: teamInfo,
+                    formedTeams: exports.formedTeams
+                }
+            };
+            // 告诉该队伍中的所有用户队伍已经形成
+            var sockets = io.sockets;
+            socketProxy.stableSocketsEmit(sockets, teamInfo.roomName, 'feedback', feedback);
+        }else if(teamInfo.gameMode == 'match'){
+            //匹配
+            //把队伍加入调度池
+            //计算队伍平均战力
+            var sumScore = 0;
+            for(var index in teamInfo.participants){
+                var score = teamInfo.participants[index].strength.score;
+                sumScore += score;
             }
-        };
-        // 告诉该队伍中的所有用户队伍已经形成
-        var sockets = io.sockets;
-        socketProxy.stableSocketsEmit(sockets, teamInfo.roomName, 'feedback', feedback);
-        //socketProxy.stableEmit();
+            var level = String(parseInt(sumScore / teamInfo.participants.length / 50) * 50);
+            exports.matchPools[String(teamInfo.participants.length - 1)][level].queue.push(teamInfo);
+            //测试调度算法
+            //exports.match();
+        }
     });
 }
 /**
@@ -176,4 +205,15 @@ exports.printfAllTeamsInfo = function(){
     console.log(this.unformedTeams);
     console.log("Broadcast Team :");
     console.log(this.broadcastTeamInfos);
+}
+
+exports.match = function(){
+    setInterval(()=>{
+        
+        for(var i = 0;i<5;i++){
+            //console.log(exports.matchPools[String(i)]['2000'].queue.length);
+            battleProxy.matchScheduling(exports.matchPools[String(i)]);
+        }
+        
+    },1000);
 }
