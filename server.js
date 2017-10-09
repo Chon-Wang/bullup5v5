@@ -49,7 +49,8 @@ io.on('connection', function(socket) {
 
     //余额
     userProxy.handleGetBalance(socket);
-    //
+    //登录时间
+    userProxy.handlelastLoginTime(socket);
     
     userProxy.handlePersonalCenterRequest(socket);
   

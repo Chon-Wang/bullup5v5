@@ -20,6 +20,21 @@ exports.findUserByAccount = function (account, callback) {
         callback(results[0]);
     });
 }
+//新手指引
+exports.checkLastLoginTime = function(userId,callback){
+    connection.query('select last_login_time from user_info where user_id=?',[userId],function(err,res){
+        if (err) throw err;
+        console.log(res[0].last_login_time);
+        var time = res[0].last_login_time;
+        callback(time);
+    });
+}
+exports.insertLastLoginTime = function(data,callback){
+    connection.query('update user_info set last_login_time=? where user_id=?',[data.date,data.userId],function(err,res){
+        if (err) throw err;
+        callback(res);
+    });
+}
 
 //---------------------------------------添加好友关系-------------------------------------//
 exports.addFriendRelationship = function(userId1, userId2){

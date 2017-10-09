@@ -432,10 +432,10 @@ function handleLoginResult(feedback) {
     if (feedback.errorCode == 0) {
         // 登录成功
         //bullup.alert(feedback.text);
-        bullup.alert("登录成功!");
+        //alert("登录成功!");
         userInfo = feedback.extension;
         // console.log("User info");
-        // console.log(userInfo);
+        console.log(userInfo);
         //bullup.alert(userInfo.userRole);
         //跳转
         var temp = bullup.loadSwigView("./swig_menu.html", { logged_user: userInfo });
@@ -454,6 +454,24 @@ function handleLoginResult(feedback) {
             $("#log_modal").css("display", "block");
             $('#system_menu').html(temp);
         });
+        alert(userInfo.lastLoginTime);
+        var $userId = userInfo.userId;
+        var $date = new Date();
+        var time = userInfo.lastLoginTime;
+        if(time==null){
+            //alert('maybe u can');
+            $('body').pagewalkthrough('show');
+            socket.emit('loginTime',{
+                userId:$userId,
+                date:$date
+            });
+        }else{
+            socket.emit('loginTime',{
+                userId:$userId,
+                date:$date
+            });
+        }
+ 
     } else if (feedback.errorCode == 1) {
         // 登录失败
        // bullup.alert(feedback.text);
