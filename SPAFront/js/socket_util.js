@@ -314,6 +314,24 @@ socket.on('lolRoomEstablish', function (lolRoom) {
         lol_process.grabLOLData('room', socket);
         bullup.alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
         
+        //////////////////////////////////////
+        var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
+        var dataArray1 = [50,50,50,50,50,50];
+        var dataArray2 = [30,70,50,40,20,90];
+        bullup.generateRadar(dataArray1, dataArray2, labelArray, "战力对比", "teams-radar-chart");
+        var clock = $('.countdown-clock').FlipClock(60, {
+			// ... your options here
+			clockFace: 'MinuteCounter',
+			countdown: true
+        });
+		$('#my_collapsible').collapsible('open', 0);
+		$('#my_collapsible').collapsible('open', 1);
+		$('#my_collapsible').collapsible('open', 2);
+		$('#component_collapsible').collapsible('open', 0);
+		$('#component_collapsible').collapsible('open', 1);
+		$('#component_collapsible').collapsible('open', 2);
+
+        //////////////////////////////////////
     }
 });
 

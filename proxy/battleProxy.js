@@ -335,6 +335,10 @@ function matchSchedulingLevel1(matchPool, poolIndex){
         var teamNum2 = matchList.secondTeam.teamNum;
         var secondTeam = matchPool[queuesIndex[queueNum2]].queue[teamNum2];
 
+        if(firstTeam == undefined || secondTeam == undefined){
+            return;
+        }
+
         if(queueNum1 == queueNum2){
             delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
             if(teamNum1 < teamNum2){
@@ -359,27 +363,149 @@ function matchSchedulingLevel1(matchPool, poolIndex){
 }
 
 function matchSchedulingLevel2(matchPool, poolIndex){
+    var indexes = [];
     if(parseInt(poolIndex) >= 4300){
         //前找2个
+        indexes.push(String(poolIndex));
+        indexes.push(String(parseInt(poolIndex) - 50));
+        indexes.push(String(parseInt(poolIndex) - 100));
     }else{
         //后找2个
+        indexes.push(String(poolIndex));
+        indexes.push(String(parseInt(poolIndex) + 50));
+        indexes.push(String(parseInt(poolIndex) + 100));
+    }
+
+    var queues = [];
+    var queuesIndex = [];
+    var count = 0;
+    for(var index in indexes){
+        queues.push(matchPool[indexes[index]].queue);
+        queuesIndex.push(indexes[index]);
+        count += matchPool[indexes[index]].queue.length;
+    }
+    if(count >= matchLevel2MinCount){
+        var matchList = excuteMatch(queues);
+        var queueNum1 = matchList.firstTeam.queueNum;
+        var teamNum1 = matchList.firstTeam.teamNum;
+        var firstTeam = matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+        var queueNum2 = matchList.secondTeam.queueNum;
+        var teamNum2 = matchList.secondTeam.teamNum;
+        var secondTeam = matchPool[queuesIndex[queueNum2]].queue[teamNum2];
+
+        if(firstTeam == undefined || secondTeam == undefined){
+            return;
+        }
+
+        if(queueNum1 == queueNum2){
+            delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+            if(teamNum1 < teamNum2){
+                delete matchPool[queuesIndex[queueNum1]].queue[teamNum2-1];
+            }else{
+                delete matchPool[queuesIndex[queueNum1]].queue[teamNum2];
+            }
+            matchPool[queuesIndex[queueNum1]].queue.length -= 2;
+        }else{
+            delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+            matchPool[queuesIndex[queueNum1]].queue.length -= 1;
+            delete matchPool[queuesIndex[queueNum2]].queue[teamNum2];
+            matchPool[queuesIndex[queueNum2]].queue.length -= 1;
+        }
+        broadCastMatchResult(firstTeam, secondTeam);
+        matchPool[poolIndex].delay -= 2;
+        if(matchPool[poolIndex].delay < 0){
+            matchPool[poolIndex].delay = 0;
+        }
     }
 }
 
 function matchSchedulingLevel3(matchPool, poolIndex){
+    var indexes = [];
     if(parseInt(poolIndex) >= 4100){
-        //前找5个
+        //前找4个
+        indexes.push(String(poolIndex));
+        indexes.push(String(parseInt(poolIndex) - 50));
+        indexes.push(String(parseInt(poolIndex) - 100));
+        indexes.push(String(parseInt(poolIndex) - 150));
+        indexes.push(String(parseInt(poolIndex) - 200));
     }else{
-        //后找5个
+        //后找4个
+        indexes.push(String(poolIndex));
+        indexes.push(String(parseInt(poolIndex) + 50));
+        indexes.push(String(parseInt(poolIndex) + 100));
+        indexes.push(String(parseInt(poolIndex) + 150));
+        indexes.push(String(parseInt(poolIndex) + 200));
+    }
+
+    var queues = [];
+    var queuesIndex = [];
+    var count = 0;
+    for(var index in indexes){
+        queues.push(matchPool[indexes[index]].queue);
+        queuesIndex.push(indexes[index]);
+        count += matchPool[indexes[index]].queue.length;
+    }
+    if(count >= matchLevel3MinCount){
+        var matchList = excuteMatch(queues);
+        var queueNum1 = matchList.firstTeam.queueNum;
+        var teamNum1 = matchList.firstTeam.teamNum;
+        var firstTeam = matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+        var queueNum2 = matchList.secondTeam.queueNum;
+        var teamNum2 = matchList.secondTeam.teamNum;
+        var secondTeam = matchPool[queuesIndex[queueNum2]].queue[teamNum2];
+
+        if(firstTeam == undefined || secondTeam == undefined){
+            return;
+        }
+
+        if(queueNum1 == queueNum2){
+            delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+            if(teamNum1 < teamNum2){
+                delete matchPool[queuesIndex[queueNum1]].queue[teamNum2-1];
+            }else{
+                delete matchPool[queuesIndex[queueNum1]].queue[teamNum2];
+            }
+            matchPool[queuesIndex[queueNum1]].queue.length -= 2;
+        }else{
+            delete matchPool[queuesIndex[queueNum1]].queue[teamNum1];
+            matchPool[queuesIndex[queueNum1]].queue.length -= 1;
+            delete matchPool[queuesIndex[queueNum2]].queue[teamNum2];
+            matchPool[queuesIndex[queueNum2]].queue.length -= 1;
+        }
+        broadCastMatchResult(firstTeam, secondTeam);
+        matchPool[poolIndex].delay -= 2;
+        if(matchPool[poolIndex].delay < 0){
+            matchPool[poolIndex].delay = 0;
+        }
     }
 }
 
 function excuteMatch(queues){
-    var queueCount = queues.length;
+
+    var newQueues = [];
+    var newQueueIndexes = [];
+    for(var queueNum in queues){
+        if(queues[queueNum].length != 0){
+            newQueues.push(queues[queueNum]);
+            newQueueIndexes.push(queueNum);
+        }
+    }
+
+    var queueCount = newQueues.length;
+
     var queueNum1 = (parseInt(Math.random() * 100)) % queueCount;
     var queueNum2 = (parseInt(Math.random() * 100)) % queueCount;
-    var teamNum1 = (parseInt(Math.random() * 10 * queues[queueNum1].length)) % queues[queueNum1].length;
-    var teamNum2 = (parseInt(Math.random() * 10 * queues[queueNum2].length)) % queues[queueNum2].length;
+    if(queueNum1 == queueNum2 && newQueues[queueNum2].length == 1){
+        if(queueNum1 == 0){
+            queueNum1 ++;
+        }else{
+            queueNum1 --;
+        }
+    }
+
+
+    var teamNum1 = (parseInt(Math.random() * 10 * newQueues[queueNum1].length)) % newQueues[queueNum1].length;
+    var teamNum2 = (parseInt(Math.random() * 10 * newQueues[queueNum2].length)) % newQueues[queueNum2].length;
     if(queueNum1 == queueNum2 && teamNum1 == teamNum2){
         //调度到了同一个队伍
         if(queueCount = 1){
@@ -401,11 +527,11 @@ function excuteMatch(queues){
     }
     var matchList = {
         'firstTeam':{
-            'queueNum': queueNum1,
+            'queueNum': newQueueIndexes[queueNum1],
             'teamNum': teamNum1
         },
         'secondTeam':{
-            'queueNum': queueNum2,
+            'queueNum': newQueueIndexes[queueNum2],
             'teamNum': teamNum2
         }
     }

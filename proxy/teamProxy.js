@@ -211,12 +211,12 @@ exports.printfAllTeamsInfo = function(){
 }
 
 exports.match = function(){
-    setInterval(()=>{
+    //setInterval(()=>{
         
         for(var i = 0;i<5;i++){
             //console.log(exports.matchPools[String(i)]['2000'].queue.length);
             battleProxy.matchScheduling(exports.matchPools[String(i)]);
         }
         
-    },1000);
+    //},1000);
 }
