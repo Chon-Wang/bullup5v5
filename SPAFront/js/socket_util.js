@@ -315,7 +315,7 @@ socket.on('lolRoomEstablish', function (lolRoom) {
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
         //bullup.alert('请等待');
-        if(userInfo.creatingRoom == undefined || !userInfo.creatingRoom){
+        if(userInfo.creatingRoom){
             lol_process.grabLOLData('room', socket);
             bullup.alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
             
