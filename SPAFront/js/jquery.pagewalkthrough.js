@@ -1033,7 +1033,7 @@
       // ID of the button
       jpwClose: {
         // Translation string for the button
-        i18n: '点击退出引导',
+        i18n: '退出引导',
         // Whether or not to show the button.  Can be a boolean value, or a
         // function which returns a boolean value
         show: true
