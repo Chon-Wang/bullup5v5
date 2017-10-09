@@ -229,8 +229,8 @@ exports.handleBattleResult = function (io, socket){
                         if(bluePaticipant.userId == userId){
                             winTeam = blueSidePaticipants;
                             loseTeam = redSidePaticipants;
-                            winTeamStrengthScore = teamProxy.formedTeams[blueSide.roomName].teamStrengthScore;
-                            loseTeamStrengthScore = teamProxy.formedTeams[redSide.roomName].teamStrengthScore;
+                            winTeamStrengthScore = blueSide.teamStrengthScore;
+                            loseTeamStrengthScore = redSide.teamStrengthScore;
 
                             finishedBattle = battle;
                             delete teamProxy.formedTeams[blueSide.roomName];
@@ -245,8 +245,8 @@ exports.handleBattleResult = function (io, socket){
                             if(redPaticipant.userId == userId){
                                 winTeam = redSidePaticipants;
                                 loseTeam = blueSidePaticipants;
-                                winTeamStrengthScore = teamProxy.formedTeams[redSide.roomName].teamStrengthScore;
-                                loseTeamStrengthScore = teamProxy.formedTeams[blueSide.roomName].teamStrengthScore;
+                                winTeamStrengthScore = redSide.teamStrengthScore;
+                                loseTeamStrengthScore = blueSide.teamStrengthScore;
 
                                 finishedBattle = battle;
                                 delete teamProxy.formedTeams[blueSide.roomName];
