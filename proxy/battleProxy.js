@@ -212,6 +212,10 @@ exports.handleBattleResult = function (io, socket){
                 var loseTeam = {};
                 var finishedBattle = {};
                 var battles = exports.battles;
+                var winTeamStrengthScore = 0;
+                var loseTeamStrengthScore = 0;
+
+
                 for(var battleIndex in battles){
                     var battle = battles[battleIndex];
 
@@ -225,6 +229,9 @@ exports.handleBattleResult = function (io, socket){
                         if(bluePaticipant.userId == userId){
                             winTeam = blueSidePaticipants;
                             loseTeam = redSidePaticipants;
+                            winTeamStrengthScore = teamProxy.formedTeams[blueSide.roomName].teamStrengthScore;
+                            loseTeamStrengthScore = teamProxy.formedTeams[redSide.roomName].teamStrengthScore;
+
                             finishedBattle = battle;
                             delete teamProxy.formedTeams[blueSide.roomName];
                             delete teamProxy.formedTeams[redSide.roomName];
@@ -237,6 +244,9 @@ exports.handleBattleResult = function (io, socket){
                         if(redPaticipant.userId == userId){
                             winTeam = redSidePaticipants;
                             loseTeam = blueSidePaticipants;
+                            winTeamStrengthScore = teamProxy.formedTeams[redSide.roomName].teamStrengthScore;
+                            loseTeamStrengthScore = teamProxy.formedTeams[blueSide.roomName].teamStrengthScore;
+
                             finishedBattle = battle;
                             delete teamProxy.formedTeams[blueSide.roomName];
                             delete teamProxy.formedTeams[redSide.roomName];
@@ -261,17 +271,17 @@ exports.handleBattleResult = function (io, socket){
                 resultPacket.loseTeam = loseTeam;
             
                 //算战力变化
-                var newScore = exports.strengthScoreChangedCalculation(winTeam.teamStrengthScore, loseTeam.teamStrengthScore);
-                var winScoreUpdateValue = newScore.newWinnerScore - winTeam.teamStrengthScore;
-                var loseScoreUpdateValue = newScore.newLoserScore - loseTeam.teamStrengthScore;
+                var newScore = exports.strengthScoreChangedCalculation(winTeamStrengthScore, loseTeamStrengthScore);
+                var winScoreUpdateValue = newScore.newWinnerScore - winTeamStrengthScore;
+                var loseScoreUpdateValue = newScore.newLoserScore - loseTeamStrengthScore;
                 //扣钱
                 for(var index in winTeam){
                     var player = winTeam[index];
-                    dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + winScoreUpdateValue, rewardAmount);
+                    dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + winScoreUpdateValue, resultPacket.rewardAmount);
                 }
                 for(var index in loseTeam){
                     var player = loseTeam[index];
-                    dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * rewardAmount);
+                    dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount);
                 }
 
 

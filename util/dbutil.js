@@ -12,6 +12,8 @@ connection.connect(function(err) {
         return;
     }
     console.log('Mysql connected as id ' + connection.threadId);
+
+    exports.updateRankList();
 });
 
 exports.findUserByAccount = function(account, callback) {
@@ -1059,7 +1061,7 @@ exports.insertBankInfo = function(bankInfo, callback) {
 exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChangedValue){
     connection.query('select bullup_currency_amount from bullup_wealth where user_id = ?', [userId], (err, res) => {
         if(err)throw err;
-        connection.query('update bullup_wealth set bullup_currency_amount = ? where user_id = ?', [res[0].bullup_currency_amount + wealthChangedValue, userId], (err, res)=>{
+        connection.query('update bullup_wealth set bullup_currency_amount = ? where user_id = ?', [parseInt(res[0].bullup_currency_amount) + parseInt(wealthChangedValue), userId], (err, res)=>{
             if(err)throw err;
         });
     });
