@@ -121,7 +121,7 @@ io.on('disconnect', function (socket) {
 socketProxy.startstableEmiter();
 
 //开启匹配器
-//teamProxy.match();
+teamProxy.match();
 
 //监听充值请求
 stripeProxy.recharge();
