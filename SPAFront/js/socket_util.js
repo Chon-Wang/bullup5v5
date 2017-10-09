@@ -444,6 +444,9 @@ function handleRankList(rankList){
 }
 
 function handleLOLBindResult(feedback){
+    //
+    
+    
     bullup.alert(feedback.extension.tips);
 }
 //处理提现申请及信息入库

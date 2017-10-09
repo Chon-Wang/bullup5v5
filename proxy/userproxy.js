@@ -491,6 +491,36 @@ exports.handleAddFriendResult = function(socket){
     });
 }
 
+
+exports.originStrengthScoreCalculation = function(lastSesonRank, currentSeasonRank){
+	switch(lastSesonRank){
+		case 'UNRANKED': lastSesonRank = 1200; break;
+		case 'BRONZE': lastSesonRank = 1050; break;
+		case 'SILVER': lastSesonRank = 1300; break;
+		case 'GOLD': lastSesonRank = 1550; break;
+		case 'PLATINUM': lastSesonRank = 1850; break;
+		case 'DIAMOND': lastSesonRank = 2200; break;
+		case 'MASTER': lastSesonRank = 2350; break;
+		case 'CHALLENGER': lastSesonRank = 2350; break;
+		default : lastSesonRank = 1200; break;
+	}
+	
+	switch(currentSeasonRank){
+		case 'UNRANKED': currentSeasonRank = 1200; break;
+		case 'BRONZE': currentSeasonRank = 1050; break;
+		case 'SILVER': currentSeasonRank = 1300; break;
+		case 'GOLD': currentSeasonRank = 1550; break;
+		case 'PLATINUM': currentSeasonRank = 1850; break;
+		case 'DIAMOND': currentSeasonRank = 2200; break;
+		case 'MASTER': currentSeasonRank = 2350; break;
+		case 'CHALLENGER': currentSeasonRank = 2350; break;
+		default : currentSeasonRank = 1200; break;
+	}
+	return lastSesonRank * 0.6 + currentSeasonRank * 0.4;
+}
+
+
+
 exports.insertFeedbackMessage=function(socket){
     socket.on('feedbackMessage',function(result){
         console.log('result:'+JSON.stringify(result)); 

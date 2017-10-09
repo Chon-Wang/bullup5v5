@@ -423,3 +423,32 @@ function broadCastMatchResult(firstTeam, secondTeam){
 exports.handleMatch = function(io){
     this.io = io;
 }
+
+exports.strengthScoreChangedCalculation = function(winnerScore, loserScore){
+	var newScore = {};	
+	var D = Math.abs(winnerScore - loserScore);
+	var K = 10;
+	var Sa = 1.0 / (1 + Math.pow(10, -1 * D / 400));
+	var diff = 2;
+	var losePunishment = 0;
+	if(D >= 100){
+		//There is big stength gap
+		if(winnerScore > loserScore){
+			diff = 1.6;
+			diff = 1.6;
+		}else{
+			diff = 2.5;
+			diff = 2.5;
+			if(D >= 200){
+				//If there is greate stength gap and the team which has higher strength score lose the game
+				losePunishment = 0.6;
+			}
+		}
+	}
+	var newWinnerScore = Math.round(winnerScore + K * Sa * diff);
+	var newLoserScore = Math.round(loserScore - K * (1 - Sa + losePunishment) * diff);
+	newLoserScore = newLoserScore < 0 ? 0 : newLoserScore;	
+	newScore.newWinnerScore = newWinnerScore;
+	newScore.newLoserScore = newLoserScore;
+	return newScore;
+}
