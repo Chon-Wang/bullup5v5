@@ -210,7 +210,7 @@ exports.handleBattleResult = function (io, socket){
                 var userId = socketProxy.mapSocketToUserId(socket.id);
                 var winTeam = {};
                 var loseTeam = {};
-                var finishedBattle = {};
+                var finishedBattle = null;
                 var battles = exports.battles;
                 var winTeamStrengthScore = 0;
                 var loseTeamStrengthScore = 0;
@@ -239,19 +239,21 @@ exports.handleBattleResult = function (io, socket){
                             break;
                         }
                     }
-                    for(var redPaticipantIndex in redSidePaticipants){
-                        var redPaticipant = redSidePaticipants[redPaticipantIndex];
-                        if(redPaticipant.userId == userId){
-                            winTeam = redSidePaticipants;
-                            loseTeam = blueSidePaticipants;
-                            winTeamStrengthScore = teamProxy.formedTeams[redSide.roomName].teamStrengthScore;
-                            loseTeamStrengthScore = teamProxy.formedTeams[blueSide.roomName].teamStrengthScore;
+                    if(finishedBattle == null){
+                        for(var redPaticipantIndex in redSidePaticipants){
+                            var redPaticipant = redSidePaticipants[redPaticipantIndex];
+                            if(redPaticipant.userId == userId){
+                                winTeam = redSidePaticipants;
+                                loseTeam = blueSidePaticipants;
+                                winTeamStrengthScore = teamProxy.formedTeams[redSide.roomName].teamStrengthScore;
+                                loseTeamStrengthScore = teamProxy.formedTeams[blueSide.roomName].teamStrengthScore;
 
-                            finishedBattle = battle;
-                            delete teamProxy.formedTeams[blueSide.roomName];
-                            delete teamProxy.formedTeams[redSide.roomName];
-                            delete exports.battles[battleIndex];
-                            break;
+                                finishedBattle = battle;
+                                delete teamProxy.formedTeams[blueSide.roomName];
+                                delete teamProxy.formedTeams[redSide.roomName];
+                                delete exports.battles[battleIndex];
+                                break;
+                            }
                         }
                     }
 
