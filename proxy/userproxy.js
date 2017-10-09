@@ -295,7 +295,10 @@ exports.handleLOLBind = function(socket){
         var userId = socketProxy.socketUserMap[socket.id];
         var lolAccount = loginPacket.accountId;
         var lolNickname = loginPacket.nickname;
-        var lolArea = "china";
+        var lolArea = loginPacket.serverName;
+        var lastRank = loginPacket.lastRank;
+        var currentRank = loginPacket.currentRank;
+        var oriScore = exports.originStrengthScoreCalculation(lastRank, currentRank);
 
         async.waterfall([
             function(callback){
@@ -336,7 +339,8 @@ exports.handleLOLBind = function(socket){
                                 tips: '绑定成功',
                                 userId: userId,
                                 lolNickname: lolNickname,
-                                lolArea : lolArea
+                                lolArea : lolArea,
+                                lolAccount: lolAccount
                             }
                         };
                         callback(null, feedback);
@@ -357,6 +361,7 @@ exports.handleLOLBind = function(socket){
             if(feedback.errorCode == 0){
                 //更新用户战力表
                 var bindInfo = feedback.extension;
+                bindInfo.oriStrengthScore = oriScore;
                 dbUtil.updateStrengthInfo(bindInfo, function(result){
                     console.log("result" + result);
                 });

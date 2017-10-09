@@ -1,1 +1,2 @@
 [2017-10-05 16:49:52] TypeError: Cannot read property 'user_lol_account' of undefined
+[2017-10-09 21:03:44] TypeError: Cannot read property 'affectedRows' of undefined
