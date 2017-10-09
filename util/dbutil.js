@@ -2,7 +2,6 @@ var mysql = require('mysql');
 var dbCfg = require('./dbcfg.js');
 var logger = require('../util/logutil.js');
 var async = require('async');
-var socketProxy = require('../proxy/socketProxy.js');
 
 var connection = mysql.createConnection(dbCfg.server);
 
