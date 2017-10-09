@@ -190,6 +190,8 @@ socket.on('teamInfoUpdate', function (data) {
     socket.emit('tokenData', data.token);
 
     roomInfo = data;
+
+    userInfo.creatingRoom = true;
     //console.log(JSON.stringify(roomInfo));
     //更新房间信息
     var roomInfoFrameHtml = bullup.loadSwigView('swig_myroom_frame.html', {});
@@ -273,16 +275,19 @@ socket.on('battleInfo', function (battle) {
     $('#waiting-modal').css('display', 'none');    
     $('#team-detail-modal').css('display', 'none');    
     $('.modal-overlay').remove();
+
+    
 });
 
 socket.on('lolRoomEstablish', function (lolRoom) {
 
     socket.emit('tokenData', lolRoom.token);
-    userInfo.creatingRoom = true;
+    
     userInfo.liseningResult = true; 
     if (userInfo.userId == lolRoom.creatorId) {
         //开始抓包
-        if(userInfo.creatingRoom == undefined || !userInfo.creatingRoom){
+        if( userInfo.creatingRoom){
+            userInfo.creatingRoom = false;
             lol_process.grabLOLData('room', socket);
             // 如果用户是创建者，则创建房间
             bullup.alert('请在规定时间内创建房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password);
@@ -654,6 +659,8 @@ function handleRoomEstablishmentResult(feedback){
         bullup.alert("服务器错误，创建失败");
         return;
     }
+
+    userInfo.creatingRoom = true;
     //socket.emit('tokenData', feedback.token);
     roomInfo = feedback.extension;
     //console.log(JSON.stringify(roomInfo));
