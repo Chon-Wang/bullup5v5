@@ -4,7 +4,7 @@ $(document).ready(function(){
     });
 
     $('#starter-match-btn').on('click', function(){
-        bullup.alert("敬请期待");
+        bullup.alert("程序猿玩命开发中ε=ε=ε=ε=ε=ε=┌(￣◇￣)┘");
     });
 
     $('#starter-rank-btn').on('click', function(e){
