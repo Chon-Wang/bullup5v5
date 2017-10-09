@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://192.168.2.142:3000');
+var socket = io.connect('http://49.140.81.199:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 var radar_chart = require('./js/generate_radar.js');
@@ -444,6 +444,10 @@ function handleRankList(rankList){
 }
 
 function handleLOLBindResult(feedback){
+    //
+    if(feedback.errorCode == 0){
+        userInfo.lolAccountInfo = feedback.extension;
+    }   
     bullup.alert(feedback.extension.tips);
 }
 //处理提现申请及信息入库

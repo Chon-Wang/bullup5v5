@@ -917,8 +917,7 @@ exports.insertBindInfo = function(userId, lolAccount, lolNickname, lolArea, call
 // }
 
 exports.updateStrengthInfo = function(bindInfo, callback){
-    //这里正常应该是通过获取绑定账号的数据来赋予初始战力  此处暂时默认初始战力为2000
-    connection.query("update bullup_strength set bullup_strength_score = 2000 where user_id = ?", [bindInfo.userId], function(err, res){
+    connection.query("update bullup_strength set bullup_strength_score = ? where user_id = ?", [bindInfo.oriStrengthScore, bindInfo.userId], function(err, res){
         callback(res);
     });
 }
