@@ -155,8 +155,8 @@
 									<div class="input-field col s12">
 										<!-- Winning Condition -->
 										<select id="map-selection">
-											<option id="map-selection-1" value="">召唤师峡谷</option>
-											<option id="map-selection-2" value="">嚎哭深渊</option>
+											<option class = "map-selection-item" id="map-selection-1" value="">召唤师峡谷</option>
+											<option class = "map-selection-item" id="map-selection-2" value="">嚎哭深渊</option>
 										</select>
 										<label>地图</label>
 									</div>
@@ -379,7 +379,7 @@
 							</div>
 						</div>
 
-						<a id="bind_lol_btn" class="btn waves-effect waves-light right teal lighten-2" name="action">绑定</a>
+						<a id="bind_lol_btn" class="btn waves-effect right teal lighten-2" name="action">绑定</a>
 			
 				</button>
 					</form>
@@ -776,12 +776,13 @@
 
 				//地图替换
 				$('.dropdown-content li').on("click",function () {
+				//$('.map-selection-item').on("click",function () {
 					var map = $(this).index();
-				
-					if ( map == 1 ) {
-						$('.room_map').attr('src','./media/imgs/hhsy_map.jpg');
-					}else{
+					var html=$(this).html();
+					if(html.indexOf('召唤师峡谷')!= -1){
 						$('.room_map').attr('src','./media/imgs/rift_map.jpg');
+					}else if(html.indexOf('嚎哭深渊')!= -1){
+						$('.room_map').attr('src','./media/imgs/hhsy_map.jpg');
 					}
 				});
 			});
