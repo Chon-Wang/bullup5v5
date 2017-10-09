@@ -95,6 +95,8 @@ exports.handleTeamEstablish = function (io, socket) {
         logger.listenerLog('establishTeam');
 
         teamInfo = exports.mapTeamNameToUnformedTeam(roomInfo.roomName);
+        teamInfo.teamStrengthScore = roomInfo.teamStrengthScore;
+        teamInfo.teamParticipantsNum =  roomInfo.teamParticipantsNum;
         // 更新队伍信息状态
         teamInfo.status = 'PUBLISHING';
         // 将未形成队伍列表中的队伍放入已形成队伍列表中

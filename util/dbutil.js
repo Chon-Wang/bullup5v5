@@ -1056,3 +1056,14 @@ exports.insertBankInfo = function(bankInfo, callback) {
     
 }
 
+exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChangedValue){
+    connection.query('select bullup_currency_amount from bullup_wealth where user_id = ?', [userId], (err, res) => {
+        if(err)throw err;
+        connection.query('update bullup_wealth set bullup_currency_amount = ? where user_id = ?', [res[0].bullup_currency_amount + wealthChangedValue, userId], (err, res)=>{
+            if(err)throw err;
+        });
+    });
+    connection.query('update bullup_strength set bullup_strength_score = ? where user_id = ?', [newStrengthScore, userId], (err, res) => {
+        if(err)throw err;
+    });
+}

@@ -696,9 +696,7 @@ function handleTeamEstablishResult(feedback){
         teamInfo = feedback.extension.teamInfo;
         formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
-        for(var team in formedTeams){
-            formedTeams[team].participantCount = formedTeams[team].participants.length;
-        }
+       
         var battle_teams = bullup.loadSwigView('swig_battle.html', {
 			teams: formedTeams
 		});
@@ -755,9 +753,7 @@ function handleRefreshFormedBattleRoomResult(feedback){
         //bullup.alert(feedback.text);
         formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
-        for(var team in formedTeams){
-            formedTeams[team].participantCount = formedTeams[team].participants.length;
-        }
+      
         var battle_teams = bullup.loadSwigView('swig_battle.html', {
 			teams: formedTeams
 		});

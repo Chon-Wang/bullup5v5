@@ -1,5 +1,6 @@
 var teamProxy = require('./teamProxy.js');
 var socketProxy = require('./socketProxy.js');
+var dbUtil = require('../util/dbutil.js');
 
 var matchLevel1MinCount = 2;
 var matchLevel2MinCount = 2;
@@ -259,6 +260,21 @@ exports.handleBattleResult = function (io, socket){
                 resultPacket.winTeam = winTeam;
                 resultPacket.loseTeam = loseTeam;
             
+                //算战力变化
+                var newScore = exports.strengthScoreChangedCalculation(winTeam.teamStrengthScore, loseTeam.teamStrengthScore);
+                var winScoreUpdateValue = newScore.newWinnerScore - winTeam.teamStrengthScore;
+                var loseScoreUpdateValue = newScore.newLoserScore - loseTeam.teamStrengthScore;
+                //扣钱
+                for(var index in winTeam){
+                    var player = winTeam[index];
+                    dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + winScoreUpdateValue, rewardAmount);
+                }
+                for(var index in loseTeam){
+                    var player = loseTeam[index];
+                    dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * rewardAmount);
+                }
+
+
                 //广播结果数据包
                 socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), finishedBattle.battleName, 'battleResult', resultPacket);
                 console.log(finishedBattle.battleName + "结束");
