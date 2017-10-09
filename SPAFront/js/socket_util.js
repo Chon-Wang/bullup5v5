@@ -227,6 +227,17 @@ socket.on('teamInfoUpdate', function (data) {
                 var dataArray1 = [50,50,50,50,50,50];
                 bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
             }
+
+            var teamStrengthScore = 0;
+            var teamParticipantsNum = 0;
+            for(var index in roomInfo.participants){
+                teamStrengthScore += roomInfo.participants[index].strength.score;
+                teamParticipantsNum++;
+            }
+            teamStrengthScore /= teamParticipantsNum;
+            roomInfo.teamStrengthScore = teamStrengthScore;
+            roomInfo.teamParticipantsNum = teamParticipantsNum;
+
             socket.emit('establishTeam', roomInfo);
         });
 
@@ -662,6 +673,17 @@ function handleRoomEstablishmentResult(feedback){
             var dataArray1 = [50,50,50,50,50,50];
             bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
         }
+        
+        var teamStrengthScore = 0;
+        var teamParticipantsNum = 0;
+        for(var index in roomInfo.participants){
+            teamStrengthScore += roomInfo.participants[index].strength.score;
+            teamParticipantsNum++;
+        }
+        teamStrengthScore /= teamParticipantsNum;
+        roomInfo.teamStrengthScore = teamStrengthScore;
+        roomInfo.teamParticipantsNum = teamParticipantsNum;
+
         socket.emit('establishTeam', roomInfo);
 	});
 
