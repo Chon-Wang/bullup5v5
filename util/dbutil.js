@@ -2,7 +2,6 @@ var mysql = require('mysql');
 var dbCfg = require('./dbcfg.js');
 var logger = require('../util/logutil.js');
 var async = require('async');
-var socketProxy = require('../proxy/socketProxy.js');
 
 var connection = mysql.createConnection(dbCfg.server);
 
@@ -12,6 +11,8 @@ connection.connect(function(err) {
         return;
     }
     console.log('Mysql connected as id ' + connection.threadId);
+
+    exports.updateRankList();
 });
 
 exports.findUserByAccount = function(account, callback) {
@@ -476,8 +477,8 @@ exports.addUser = function(userInfo, callback) {
             });
         },
         function(userInfo, callback){
-            connection.query('insert into `bullup_wealth` (user_id, bullup_currency_type, bullup_currency_amount) values (?, ?, ?)', [userInfo.userId, 'score', '0'], function(err, row){
-                userInfo.wealth = 0;
+            connection.query('insert into `bullup_wealth` (user_id, bullup_currency_type, bullup_currency_amount) values (?, ?, ?)', [userInfo.userId, 'score', '300'], function(err, row){
+                userInfo.wealth = 300;
                 callback(null, userInfo);
             });
         },
@@ -1056,3 +1057,14 @@ exports.insertBankInfo = function(bankInfo, callback) {
     
 }
 
+exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChangedValue){
+    connection.query('select bullup_currency_amount from bullup_wealth where user_id = ?', [userId], (err, res) => {
+        if(err)throw err;
+        connection.query('update bullup_wealth set bullup_currency_amount = ? where user_id = ?', [parseInt(res[0].bullup_currency_amount) + parseInt(wealthChangedValue), userId], (err, res)=>{
+            if(err)throw err;
+        });
+    });
+    connection.query('update bullup_strength set bullup_strength_score = ? where user_id = ?', [newStrengthScore, userId], (err, res) => {
+        if(err)throw err;
+    });
+}

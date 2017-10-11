@@ -190,6 +190,8 @@ socket.on('teamInfoUpdate', function (data) {
     socket.emit('tokenData', data.token);
 
     roomInfo = data;
+
+    userInfo.creatingRoom = true;
     //console.log(JSON.stringify(roomInfo));
     //更新房间信息
     var roomInfoFrameHtml = bullup.loadSwigView('swig_myroom_frame.html', {});
@@ -227,6 +229,17 @@ socket.on('teamInfoUpdate', function (data) {
                 var dataArray1 = [50,50,50,50,50,50];
                 bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
             }
+
+            var teamStrengthScore = 0;
+            var teamParticipantsNum = 0;
+            for(var index in roomInfo.participants){
+                teamStrengthScore += roomInfo.participants[index].strength.score;
+                teamParticipantsNum++;
+            }
+            teamStrengthScore /= teamParticipantsNum;
+            roomInfo.teamStrengthScore = teamStrengthScore;
+            roomInfo.teamParticipantsNum = teamParticipantsNum;
+
             socket.emit('establishTeam', roomInfo);
         });
 
@@ -262,57 +275,80 @@ socket.on('battleInfo', function (battle) {
     $('#waiting-modal').css('display', 'none');    
     $('#team-detail-modal').css('display', 'none');    
     $('.modal-overlay').remove();
+
+    
 });
 
 socket.on('lolRoomEstablish', function (lolRoom) {
 
     socket.emit('tokenData', lolRoom.token);
-
+    
+    userInfo.liseningResult = true; 
     if (userInfo.userId == lolRoom.creatorId) {
         //开始抓包
-        lol_process.grabLOLData('room', socket);
-        // 如果用户是创建者，则创建房间
-        bullup.alert('请在规定时间内创建房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password);
+        if( userInfo.creatingRoom){
+            userInfo.creatingRoom = false;
+            lol_process.grabLOLData('room', socket);
+            // 如果用户是创建者，则创建房间
+            bullup.alert('请在规定时间内创建房间，房间名: ' + lolRoom.roomName + ' 密码： ' + lolRoom.password);
         
-
-        //////////////////////////////////////
-        var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
-        var dataArray1 = [50,50,50,50,50,50];
-        var dataArray2 = [30,70,50,40,20,90];
-        bullup.generateRadar(dataArray1, dataArray2, labelArray, "战力对比", "teams-radar-chart");
-        var clock = $('.countdown-clock').FlipClock(60, {
-			// ... your options here
-			clockFace: 'MinuteCounter',
-			countdown: true
-        });
-		$('#my_collapsible').collapsible('open', 0);
-		$('#my_collapsible').collapsible('open', 1);
-		$('#my_collapsible').collapsible('open', 2);
-		$('#component_collapsible').collapsible('open', 0);
-		$('#component_collapsible').collapsible('open', 1);
-		$('#component_collapsible').collapsible('open', 2);
-
-        //////////////////////////////////////
-
-        //自动创建房间
-        //auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
-        
+            //////////////////////////////////////
+            var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
+            var dataArray1 = [50,50,50,50,50,50];
+            var dataArray2 = [30,70,50,40,20,90];
+            bullup.generateRadar(dataArray1, dataArray2, labelArray, "战力对比", "teams-radar-chart");
+            var clock = $('.countdown-clock').FlipClock(60, {
+                // ... your options here
+                clockFace: 'MinuteCounter',
+                countdown: true
+            });
+            $('#my_collapsible').collapsible('open', 0);
+            $('#my_collapsible').collapsible('open', 1);
+            $('#my_collapsible').collapsible('open', 2);
+            $('#component_collapsible').collapsible('open', 0);
+            $('#component_collapsible').collapsible('open', 1);
+            $('#component_collapsible').collapsible('open', 2);
+            //////////////////////////////////////
+            //自动创建房间
+            //auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
+        }
     } else {
         // 如果不是创建者，则显示等待蓝方队长建立房间
         //bullup.alert('请等待');
-        lol_process.grabLOLData('room', socket);
-        bullup.alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
-        
+        if(userInfo.creatingRoom){
+            lol_process.grabLOLData('room', socket);
+            bullup.alert('房间名： ' + lolRoom.roomName + '  密码： ' + lolRoom.password);
+            
+            //////////////////////////////////////
+            var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
+            var dataArray1 = [50,50,50,50,50,50];
+            var dataArray2 = [30,70,50,40,20,90];
+            bullup.generateRadar(dataArray1, dataArray2, labelArray, "战力对比", "teams-radar-chart");
+            var clock = $('.countdown-clock').FlipClock(60, {
+                // ... your options here
+                clockFace: 'MinuteCounter',
+                countdown: true
+            });
+            $('#my_collapsible').collapsible('open', 0);
+            $('#my_collapsible').collapsible('open', 1);
+            $('#my_collapsible').collapsible('open', 2);
+            $('#component_collapsible').collapsible('open', 0);
+            $('#component_collapsible').collapsible('open', 1);
+            $('#component_collapsible').collapsible('open', 2);
+        }
+        //////////////////////////////////////
     }
 });
 
 socket.on('lolRoomEstablished', function (data) {
-
     socket.emit('tokenData', data.token);    
-
     //游戏开始 刷新时钟 
-    lol_process.grabLOLData('result', socket);
-    bullup.alert('游戏已开始');
+    if(userInfo.liseningResult == true ){
+        lol_process.grabLOLData('result', socket);
+        bullup.alert('游戏已开始');
+        userInfo.liseningResult = false;
+    }
+    userInfo.creatingRoom = false;
 });
 
 socket.on('chatMsg', function(msg){
@@ -623,6 +659,8 @@ function handleRoomEstablishmentResult(feedback){
         bullup.alert("服务器错误，创建失败");
         return;
     }
+
+    userInfo.creatingRoom = true;
     //socket.emit('tokenData', feedback.token);
     roomInfo = feedback.extension;
     //console.log(JSON.stringify(roomInfo));
@@ -662,6 +700,17 @@ function handleRoomEstablishmentResult(feedback){
             var dataArray1 = [50,50,50,50,50,50];
             bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
         }
+        
+        var teamStrengthScore = 0;
+        var teamParticipantsNum = 0;
+        for(var index in roomInfo.participants){
+            teamStrengthScore += roomInfo.participants[index].strength.score;
+            teamParticipantsNum++;
+        }
+        teamStrengthScore /= teamParticipantsNum;
+        roomInfo.teamStrengthScore = teamStrengthScore;
+        roomInfo.teamParticipantsNum = teamParticipantsNum;
+
         socket.emit('establishTeam', roomInfo);
 	});
 
@@ -674,9 +723,7 @@ function handleTeamEstablishResult(feedback){
         teamInfo = feedback.extension.teamInfo;
         formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
-        for(var team in formedTeams){
-            formedTeams[team].participantCount = formedTeams[team].participants.length;
-        }
+       
         var battle_teams = bullup.loadSwigView('swig_battle.html', {
 			teams: formedTeams
 		});
@@ -733,9 +780,7 @@ function handleRefreshFormedBattleRoomResult(feedback){
         //bullup.alert(feedback.text);
         formedTeams = feedback.extension.formedTeams;
         delete formedTeams[teamInfo.roomName];
-        for(var team in formedTeams){
-            formedTeams[team].participantCount = formedTeams[team].participants.length;
-        }
+      
         var battle_teams = bullup.loadSwigView('swig_battle.html', {
 			teams: formedTeams
 		});

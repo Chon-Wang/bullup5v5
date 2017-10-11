@@ -127,8 +127,7 @@ teamProxy.match();
 stripeProxy.recharge();
 
 //一天更新一次排行榜
-//timmer.autoUpdateRankList(10);
-//dbutil.updateRankList();
+timmer.autoUpdateRankList(24 * 3600 * 1000);
 io.listen(3000);
 
 
