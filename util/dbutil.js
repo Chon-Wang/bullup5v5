@@ -12,7 +12,7 @@ connection.connect(function(err) {
     }
     console.log('Mysql connected as id ' + connection.threadId);
 
-    exports.updateRankList();
+    //exports.updateRankList();
 });
 
 exports.findUserByAccount = function(account, callback) {
