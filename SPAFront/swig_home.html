@@ -41,6 +41,9 @@
 				float: left;
 				margin-left: 10px;
 			}
+			.qies .credit{
+				cursor: pointer;
+			}
 			.main{ width: 1440px; height: 738px; margin-left: auto; margin-right: auto; position: relative; }
 			.w1,.w2,.w3,.w4{position:absolute; width:300px; height:80px;  top:120px; left:220px}
 			.w2{top:310px; left:220px; width:600px; height:40px; }
@@ -68,6 +71,22 @@
 				margin-right:10px;
 				margin-top:-5px;
 			}
+		
+			.friend-messages p{
+				white-space:normal;
+				background: #b3ade9;
+				color: #fff;
+				font-size: 18px;
+				padding: 15px; 
+				margin: 5px 10px 0;
+				border-radius: 10px;  
+				float:left;
+				max-width: 23em;
+				word-break:break-all;
+				/* word-wrap:break-word; */
+
+			}
+			
 		</style>
 
 
@@ -327,13 +346,13 @@
 				<input id="money" type="text" class="validate" placeholder="请输入充值金额">
 			</div>
 			<div class="qies">
-				<div class="chip">19</div>
-				<div class="chip">29</div>
-				<div class="chip">39</div>
-				<div class="chip">49</div>
-				<div class="chip">89</div>
-				<div class="chip">99</div>
-				<div class="chip">199</div>
+				<div class="chip credit">19</div>
+				<div class="chip credit">29</div>
+				<div class="chip credit">39</div>
+				<div class="chip credit">49</div>
+				<div class="chip credit">89</div>
+				<div class="chip credit">99</div>
+				<div class="chip credit">199</div>
 			</div>
 			<div>
 
@@ -749,12 +768,12 @@
 				selectYears: 15 // Creates a dropdown of 15 years to control year
 			});
 			// 价格$
-			$('.chip').click(function () {
+			$('.credit').click(function () {
 				var iox = $(this).index();
-				var clasvlue = $('.chip').eq(iox).text();
+				var clasvlue = $('.credit').eq(iox).text();
 				$("#money").val(clasvlue);
 				$('.ois').addClass('active');
-				$('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
+				$('.credit').eq(iox).addClass("selected").siblings().removeClass('selected');
 			})
 			// //银行卡号输入js配置
 			// $(document).ready(function () {

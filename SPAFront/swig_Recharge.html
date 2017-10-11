@@ -163,12 +163,12 @@ $(document).ready(function() {
 //$('select').material_select();
 });
 // 价格$
-$('.chip').click(function() {
+$('.credit').click(function() {
 var iox = $(this).index();
-var clasvlue = $('.chip').eq(iox).text();
+var clasvlue = $('.credit').eq(iox).text();
 $("#first_name").val(clasvlue);
 $('.ois').addClass('active');
-$('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
+$('.credit').eq(iox).addClass("selected").siblings().removeClass('selected');
 
 });
 $('.datepicker').pickadate({

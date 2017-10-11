@@ -4,7 +4,7 @@ $(document).ready(function () {
         str = str.replace(/\>/g,'&gt;');
         str = str.replace(/\n/g,'<br/>');
         str = str.replace(/\[em_([0-9]*)\]/g,'<img src="media/arclist/$1.gif" border="0" />');
-        console.log(str);
+      
         return str;
     }
     $('.emotion').qqFace({
@@ -14,20 +14,18 @@ $(document).ready(function () {
 
     });
 
-    $("#saytext").keypress(function(event){
-        if(event.which == 13) { 
-            $('#sub_btn').click();
-            $('#saytext').val("");
-        }
-    });
-
-    $('#sub_btn').on('click', function () {		
+    //发送消息
+    function psMsg(){
         if(userInfo == null){
             bullup.alert("请先登录");
             return ;
         }
         var $Msg = document.getElementById('saytext').value;
+      
         if($Msg == ""){
+            setTimeout(function () {
+                $('#saytext').val('');
+            },1);
             return;
         }
         var $msg1 = replace_em($Msg);
@@ -37,6 +35,18 @@ $(document).ready(function () {
             chatName:$chatName,
             userIconId:userInfo.avatarId
         });
-        $('#saytext').val('');
+        setTimeout(function () {
+            $('#saytext').val('');
+        },1);
+    }
+    $("#saytext").keypress(function(event){
+        if(event.which == 13) { 
+           
+            psMsg();
+        }
+    });
+
+    $('#sub_btn').on('click', function () {		
+        psMsg();
     });
 });

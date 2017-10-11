@@ -1,5 +1,5 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://49.140.81.199:3000');
+var socket = io.connect('http://67.216.196.197:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 var radar_chart = require('./js/generate_radar.js');
@@ -357,12 +357,12 @@ socket.on('chatMsg', function(msg){
     }
     if(userInfo.name == undefined || msg.chatName!=userInfo.name){
         var msgId = msg.chatName + String((new Date).valueOf());
-        var msgHtml = '<ul id="messages" style="width: 100%;"><li class="friend-messages" style="float:right;"><img style="width:50px;height:50px;border-radius: 36px;float:left;margin-top:9px;" src="./media/user_icon/'+ msg.userIconId + '.png"><p id="' + msgId + '" style="white-space:nowrap;background: #b3ade9;color: #fff;font-size: 18px;padding: 15px; margin: 5px 10px 0;border-radius: 10px;  float:left"></p> </li></ul>'
+        var msgHtml = '<ul id="messages" style="width: 100%;"><li class="friend-messages" style="float:right;"><img style="width:50px;height:50px;border-radius: 36px;float:left;margin-top:9px;" src="./media/user_icon/'+ msg.userIconId + '.png"><p id="' + msgId + '" style="white-space: normal;;background: #b3ade9;color: #fff;font-size: 18px;padding: 15px; margin: 5px 10px 0;border-radius: 10px;  float:left"></p> </li></ul>'
         $('#messages').append(msgHtml);
         $('#' + msgId + '').html(msg.chatName + ":" + msg.chatMsg);
     }else{
         var msgId = msg.chatName + String((new Date).valueOf());
-        var msgHtml = '<ul id="messages" style="width: 100%;"><li class="friend-messages" style="float:left;"><img style="width:50px;height:50px;border-radius: 36px;float:left;margin-top:9px;" src="./media/user_icon/'+ msg.userIconId + '.png"><p id="' + msgId + '" style="white-space:nowrap;background: #009fab;color: #fff;font-size: 18px;padding: 15px; margin: 5px 10px 0;border-radius: 10px; float:left;"></p> </li></ul>'
+        var msgHtml = '<ul id="messages" style="width: 100%;"><li class="friend-messages" style="float:left;"><img style="width:50px;height:50px;border-radius: 36px;float:left;margin-top:9px;" src="./media/user_icon/'+ msg.userIconId + '.png"><p id="' + msgId + '" style="white-space: normal;;background: #009fab;color: #fff;font-size: 18px;padding: 15px; margin: 5px 10px 0;border-radius: 10px; float:left;"></p> </li></ul>'
         $('#messages').append(msgHtml);
         $('#' + msgId + '').html(msg.chatName + ":" + msg.chatMsg);
     }
