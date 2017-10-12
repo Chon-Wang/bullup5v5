@@ -60,7 +60,7 @@ $('.carousel.carousel-slider').carousel({
 });
 var time =null;
 $("#starter-carousel").hover(function () {
-    console.log(1);
+    
     clearTimeout(time);
 },function (){
     clearTimeout(time);

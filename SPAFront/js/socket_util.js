@@ -440,7 +440,8 @@ function handleLoginResult(feedback) {
         $('#log_modal').modal('close');
         $('.modal-overlay').remove();
         $("#log_out_button").on('click', function(e){
-		    bullup.alert('登出成功!');
+            bullup.alert('登出成功!');
+            $('#log_modal').modal('close');
             e.preventDefault();
             userInfo = null;
             var temp = bullup.loadSwigView("./swig_menu.html", null);
