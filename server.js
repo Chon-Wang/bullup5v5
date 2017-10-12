@@ -27,6 +27,7 @@ chatProxy.init();
 matchProxy.init();
 adminProxy.init();
 lolKeyProxy.init();
+logger.init();
 
 io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
@@ -112,6 +113,7 @@ io.on('connection', function(socket) {
     lolKeyProxy.handleLOLKeyUpdate(socket);
     lolKeyProxy.handleLOLKeyRequest(socket);
 
+
 });
 
 io.on('disconnect', function (socket) {
@@ -138,7 +140,7 @@ io.listen(3000);
 
 
 process.on('uncaughtException', function(err) {
-    logger.logToFile("./logs/errors.txt", "append", String(err));
+    logger.logErrToFile("./logs/errors.txt", "append", err);
     console.log(String(err));
 });
 
