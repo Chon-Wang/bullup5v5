@@ -11,7 +11,6 @@ var socketProxy = require('./proxy/socketProxy.js');
 var battleProxy = require('./proxy/battleProxy.js');
 var paymentProxy = require('./proxy/paymentProxy.js');
 var chatProxy = require('./proxy/chatProxy.js');
-var matchProxy = require('./proxy/matchProxy.js')
 var adminProxy = require('./proxy/adminProxy.js');
 var stripeProxy = require('./proxy/stripeProxy.js');
 var lolKeyProxy = require('./proxy/lolKeyProxy.js');
@@ -24,10 +23,8 @@ socketProxy.init();
 battleProxy.init();
 paymentProxy.init();
 chatProxy.init();
-matchProxy.init();
 adminProxy.init();
 lolKeyProxy.init();
-logger.init();
 
 io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
@@ -50,8 +47,7 @@ io.on('connection', function(socket) {
 
     //余额
     userProxy.handleGetBalance(socket);
-    //登录时间
-    userProxy.handlelastLoginTime(socket);
+    //
     
     userProxy.handlePersonalCenterRequest(socket);
   
@@ -113,7 +109,6 @@ io.on('connection', function(socket) {
     lolKeyProxy.handleLOLKeyUpdate(socket);
     lolKeyProxy.handleLOLKeyRequest(socket);
 
-
 });
 
 io.on('disconnect', function (socket) {
@@ -121,8 +116,6 @@ io.on('disconnect', function (socket) {
     socketProxy.remove(socket);
 });
 
-//一天更新一次约战排行榜
-//timmer.autoUpdateRankList(24 * 3600);
 
 //开启消息推送器
 socketProxy.startstableEmiter();
@@ -140,7 +133,7 @@ io.listen(3000);
 
 
 process.on('uncaughtException', function(err) {
-    logger.logErrToFile("./logs/errors.txt", "append", err);
+    logger.logToFile("./logs/errors.txt", "append", String(err));
     console.log(String(err));
 });
 

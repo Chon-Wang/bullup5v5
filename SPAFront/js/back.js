@@ -12,8 +12,7 @@ $("#back_recharge").on('click',function(){
     $.getScript('/js/gerenly.js');
 })
 //更改信息
-$("#back-update").on('click',function(e){
-    e.preventDefault();
+$("#back-update").on('click',function(){
     bullup.loadTemplateIntoTarget('swig_index.html', {}, 'main-view');
     $.getScript('/js/zymly.js');
     $.getScript('/js/gerenly.js');

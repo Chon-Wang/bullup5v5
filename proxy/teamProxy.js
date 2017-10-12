@@ -144,6 +144,7 @@ exports.handleTeamEstablish = function (io, socket) {
         }
     });
 }
+
 /**
  * 处理用户更新对战大厅房间请求
  * @param socket

@@ -69,12 +69,9 @@ exports.handleLogin = function (socket) {
                             callback(null, userInfo);
                         });
                     },
-                    function(userInfo,callback){
-                        dbUtil.checkLastLoginTime(userInfo.userId,function(lastLoginTime){
-                            userInfo.lastLoginTime = lastLoginTime;
-                            callback(null,userInfo);
-                        });
-                    }
+                    // function(userInfo,callback){
+                    // 提现限制
+                    // }
                 ], function(err, userInfo){
                     var userStrength = userInfo.strengthInfo;
                     var feedback = {
@@ -86,7 +83,6 @@ exports.handleLogin = function (socket) {
                             userId: userInfo.userId,
                             //----------------------
                             userRole:user.user_role,
-                            lastLoginTime:userInfo.lastLoginTime,
                             //----------------------
                             avatarId: userInfo.userIconId,
                             wealth: userInfo.wealth,
@@ -229,24 +225,6 @@ exports.handleGetBalance = function (socket){
                     "balance": tempBalance,
                 }
             });
-        });
-     });
-}
-
-//用户最近登陆时间
-exports.handlelastLoginTime = function (socket){
-    socket.on('loginTime', function(data){
-        //console.log('2134');
-        dbUtil.insertLastLoginTime(data,function(res){
-            // var tempBalance = balance.bullup_currency_amount;
-            // socket.emit('feedback', {
-            //     errorCode: 0,
-            //     text: '查询余额OK',
-            //     type: 'GETBALANCERESULT',
-            //     extension: {
-            //         "balance": tempBalance,
-            //     }
-            // });
         });
      });
 }
@@ -411,6 +389,9 @@ exports.handlePersonalCenterRequest = function(socket){
                 //data.XXX = queryResult.XXX;
                 data.userAccount=queryResult.userInfo[0].user_account;
                 data.name=queryResult.userInfo[0].user_nickname;
+                data.payAccountId=queryResult.Id.bullup_payment_account_id;
+                // data.paymentType=queryResult.paymentHistory.bullup_paymet_type;
+                // data.paymentAccount=queryResult.paymentHistory.bullup_account;
                 data.lolInfoId=queryResult.info[0].lol_info_id;
                 data.UserlolAccount=queryResult.info[0].user_lol_account;
                 data.UserlolNickname=queryResult.info[0].user_lol_nickname;
@@ -432,12 +413,6 @@ exports.handlePersonalCenterRequest = function(socket){
                 data.UserWealth=queryResult.wealth;
                 data.UserStrength=queryResult.lolInfo_strength_score;
                 data.competition_wins=queryResult.competition_wins;
-                data.First=queryResult.day0;
-                data.Second=queryResult.day1;
-                data.Thirdly=queryResult.day2;
-                data.Fourthly=queryResult.day3;
-                data.Fifth=queryResult.day4;
-                data.Sixth=queryResult.day5;
                 feedback.extension = data;
               //  console.log('feedback:'+JSON.stringify(data));
             }else{

@@ -72,63 +72,21 @@ socket.on('feedback', function (feedback) {
         case 'ESTABLISHTEAMRESULT':
             handleTeamEstablishResult(feedback);
             break;
-
+        
         case 'REFRESHFORMEDBATTLEROOMRESULT':
             handleRefreshFormedBattleRoomResult(feedback);
             break;
-        case 'FEEDBACKMESSAGE':
+       case  'FEEDBACKMESSAGE':
             feedbackMessage(feedback);
             break;
 
         case 'PESONALCENTERRESULT':
             handlePersonalCenterResult(feedback);
             break;
-
-        case 'PAYMENTRESULT':
+         
+        case 'PAYMENTRESULT' :
             handleBankInfo(feedback);
             break;
-
-        case 'INITATERESULT':
-            handleInitiateCompetition(feedback);
-            break;
-
-        case 'MATCHRESULT':
-            handlecheckMatchInfo(feedback);
-            break;
-
-
-        case 'JOINRESULT':
-            handleJoinCompetition(feedback);
-            break;
-
-        case 'APPLYRESULT':
-            handleApplyInfo(feedback);
-            break;
-
-        case 'AWAITAPPLYRESULT':
-            handleAwaitApplyInfo(feedback);
-            break;
-
-        case 'AWAYGAMERESULT':
-            handleAwayGame(feedback);
-            break;
-        case 'UNDERWAYRESULT':
-            handleUnderway(feedback);
-            break;
-        case 'FINISHRESULT':
-            handleAwayGame(feedback);
-            break;
-
-        case 'AUDITRESULT':
-            handleauditApply(feedback);
-            break;
-    }
-
-});
-
-socket.on('message', function (message) {
-
-    switch (message.messageType) {
         //-------------------------------
         case 'RECHARGERESULT':
             handleRechargeResult(feedback);
@@ -242,13 +200,13 @@ socket.on('teamInfoUpdate', function (data) {
     });
     var teamates = roomInfo.participants;
     var teamatesHtml = bullup.loadSwigView('swig_myroom_teamate.html', {
-        teamates: teamates
+        teamates : teamates
     });
     $('.content').html(roomInfoFrameHtml);
     $('#team_info').html(roomInfoHtml);
     $('#teamates_info').html(teamatesHtml);
-
-    if (userInfo.name == roomInfo.participants[0].name) {
+    
+    if(userInfo.name == roomInfo.participants[0].name){
         //房主更新friendList
         $.getScript('/js/invite_friend.js');
         $('#invite_friend_btn').sideNav({
@@ -256,8 +214,8 @@ socket.on('teamInfoUpdate', function (data) {
             edge: 'right', // Choose the horizontal origin
             closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
             draggable: true, // Choose whether you can drag to open on touch screens,
-            onOpen: function (el) { },
-            onClose: function (el) { }
+            onOpen: function(el) {},
+            onClose: function(el) {}
         });
 
         $("#confirm_create_team_btn").click(function(){
@@ -423,19 +381,19 @@ socket.on('battleResult', function(resultPacket){
     var winTeam = resultPacket.winTeam;
     var battleResultData = {};
     var flag = false;
-    for (var paticipantIndex in winTeam) {
-        if (winTeam[paticipantIndex].userId == userInfo.userId) {
+    for(var paticipantIndex in winTeam){
+        if(winTeam[paticipantIndex].userId == userInfo.userId){
             flag = true;
             break;
         }
     }
-    if (flag) {
-        //赢了        
+    if(flag){
+    //赢了        
         battleResultData.own_team = resultPacket.winTeam;
         battleResultData.win = 1;
         battleResultData.rival_team = resultPacket.loseTeam;
-    } else {
-        //输了
+    }else{
+    //输了
         battleResultData.own_team = resultPacket.loseTeam;
         battleResultData.win = 0;
         battleResultData.rival_team = resultPacket.winTeam;
@@ -468,10 +426,10 @@ function handleLoginResult(feedback) {
     if (feedback.errorCode == 0) {
         // 登录成功
         //bullup.alert(feedback.text);
-        //alert("登录成功!");
+        bullup.alert("登录成功!");
         userInfo = feedback.extension;
         // console.log("User info");
-        console.log(userInfo);
+        // console.log(userInfo);
         //bullup.alert(userInfo.userRole);
         //跳转
         var temp = bullup.loadSwigView("./swig_menu.html", { logged_user: userInfo });
@@ -490,24 +448,6 @@ function handleLoginResult(feedback) {
             $("#log_modal").css("display", "block");
             $('#system_menu').html(temp);
         });
-        alert(userInfo.lastLoginTime);
-        var $userId = userInfo.userId;
-        var $date = new Date();
-        var time = userInfo.lastLoginTime;
-        if(time==null){
-            //alert('maybe u can');
-            $('body').pagewalkthrough('show');
-            socket.emit('loginTime',{
-                userId:$userId,
-                date:$date
-            });
-        }else{
-            socket.emit('loginTime',{
-                userId:$userId,
-                date:$date
-            });
-        }
- 
     } else if (feedback.errorCode == 1) {
         // 登录失败
        // bullup.alert(feedback.text);
@@ -526,7 +466,7 @@ function handleFeedback(feedback) {
     }
 }
 
-function handleRankList(rankList) {
+function handleRankList(rankList){
     var strengthRankList = rankList.strengthRankList;
     var wealthRankList = rankList.wealthRankList;
     var rank_list = bullup.loadSwigView('swig_rank.html', {
@@ -732,7 +672,7 @@ function handleRoomEstablishmentResult(feedback){
     var captain = roomInfo.captain;
     teamates.push(captain);
     var teamatesHtml = bullup.loadSwigView('swig_myroom_teamate.html', {
-        teamates: teamates
+        teamates : teamates
     });
     $('.content').html(roomInfoFrameHtml);
     $('#team_info').html(roomInfoHtml);
@@ -745,8 +685,8 @@ function handleRoomEstablishmentResult(feedback){
         edge: 'right', // Choose the horizontal origin
         closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
         draggable: true, // Choose whether you can drag to open on touch screens,
-        onOpen: function (el) { },
-        onClose: function (el) { }
+        onOpen: function(el) {},
+        onClose: function(el) {}
     });
 
     $("#confirm_create_team_btn").click(function(){
@@ -785,21 +725,21 @@ function handleTeamEstablishResult(feedback){
         delete formedTeams[teamInfo.roomName];
        
         var battle_teams = bullup.loadSwigView('swig_battle.html', {
-            teams: formedTeams
-        });
+			teams: formedTeams
+		});
         //页面跳转到对战大厅
         $('.content').html(battle_teams);
-        $('#team-detail-modal').modal();
-        $('#waiting-modal').modal();
+		$('#team-detail-modal').modal();
+		$('#waiting-modal').modal();
         $.getScript('./js/close_modal.js');
         $.getScript('./js/refresh_formed_room.js');
         $(".team_detail_btn").unbind();
-        $(".team_detail_btn").click(function () {
+        $(".team_detail_btn").click(function(){
             var btnId = $(this).attr('id');
             var roomName = btnId.substring(0, btnId.indexOf('_'));
             var room = null;
-            for (var team in formedTeams) {
-                if (formedTeams[team].roomName == roomName) {
+            for(var team in formedTeams){
+                if(formedTeams[team].roomName == roomName){
                     room = formedTeams[team];
                     break;
                 }
@@ -812,7 +752,7 @@ function handleTeamEstablishResult(feedback){
             location.hash = "#team-detail-modal";
             ///////////untest
             $('#invite-battle-btn').unbind();
-            $('#invite-battle-btn').click(function () {
+            $('#invite-battle-btn').click(function(){
                 var battleInfo = {};
                 battleInfo.hostTeamName = $('#team_details_team_name').html();
                 battleInfo.challengerTeamName = teamInfo.roomName;
@@ -842,21 +782,21 @@ function handleRefreshFormedBattleRoomResult(feedback){
         delete formedTeams[teamInfo.roomName];
       
         var battle_teams = bullup.loadSwigView('swig_battle.html', {
-            teams: formedTeams
-        });
+			teams: formedTeams
+		});
         //页面跳转到对战大厅
         $('.content').html(battle_teams);
-        $('#team-detail-modal').modal();
-        $('#waiting-modal').modal();
+		$('#team-detail-modal').modal();
+		$('#waiting-modal').modal();
         $.getScript('./js/close_modal.js');
         $.getScript('./js/refresh_formed_room.js');
         $(".team_detail_btn").unbind();
-        $(".team_detail_btn").click(function () {
+        $(".team_detail_btn").click(function(){
             var btnId = $(this).attr('id');
             var roomName = btnId.substring(0, btnId.indexOf('_'));
             var room = null;
-            for (var team in formedTeams) {
-                if (formedTeams[team].roomName == roomName) {
+            for(var team in formedTeams){
+                if(formedTeams[team].roomName == roomName){
                     room = formedTeams[team];
                     break;
                 }
@@ -868,7 +808,7 @@ function handleRefreshFormedBattleRoomResult(feedback){
             location.hash = "#team-detail-modal";
             ///////////untest
             $('#invite-battle-btn').unbind();
-            $('#invite-battle-btn').click(function () {
+            $('#invite-battle-btn').click(function(){
                 var battleInfo = {};
                 battleInfo.hostTeamName = $('#team_details_team_name').html();
                 battleInfo.challengerTeamName = teamInfo.roomName;
@@ -891,14 +831,14 @@ function handleRefreshFormedBattleRoomResult(feedback){
     }   
 }
 
-function handleInviteFromFriend(message) {
+function handleInviteFromFriend(message){
     //把收到的邀请添加到消息队列
     messageInfo.push(message);
     //弹出消息中心
     $("#message_center_nav").click();
     //console.log("messageInfo:  " + JSON.stringify(messageInfo));
-}
-/**个人中心 */
+} 
+
 function handlePersonalCenterResult(feedback){
     //判断是否成功
     if(feedback.errorCode == 0){
@@ -925,13 +865,7 @@ function handlePersonalCenterResult(feedback){
                wealth:data.UserWealth,
                strength:data.UserStrength,
                winning_rate:data.competition_wins,
-               avatarId:data.User_icon_id,
-               one:data.First,
-               two:data.Second,
-               three:data.Thirdly,
-               four:data.Fourthly,
-               five:data.Fifth,
-               six:data.Sixth
+               avatarId:data.User_icon_id
             }
         });
         $('#main-view').html(personalCenterHtml);
@@ -940,8 +874,7 @@ function handlePersonalCenterResult(feedback){
     }
 }
 
-
-function handleBattleInviteRequest(message) {
+function handleBattleInviteRequest(message){
     messageInfo.push(message);
     //弹出消息中心
     $("#message_center_nav").click();
@@ -1003,112 +936,6 @@ function feedbackMessage(feedback){
     bullup.alert(feedback.text);
 }
 
-//我发起的赛事
-function handleInitiateCompetition(feedback) {
-    var initiateInfo = feedback.extension;
-    // console.log(initiateInfo)
-    // console.log("发起"+JSON.stringify(initiateInfo));
-    var handleWithHtml = bullup.loadSwigView('swig_launchevent.html', {
-        dataResult: { data: initiateInfo }
-
-    });
-    $('#main-view').html(handleWithHtml);
-    $.getScript('/js/check.js');
-
-}
-
-//所有赛事
-function handlecheckMatchInfo(feedback) {
-    var matchInfo = feedback.extension.data;
-    // alert(matchInfo.results[0].user_id);
-    // console.log("所有" + JSON.stringify(matchInfo));
-
-    var handleWithHtml = bullup.loadSwigView('swig_allcompetition.html', {
-        dataResult: { data: matchInfo }
-    });
-    $('#main-view').html(handleWithHtml);
-    $.getScript('/js/check.js');
-
-}
-//我参与的赛事
-function handleJoinCompetition(feedback) {
-    var matchInfo = feedback.extension;
-    // console.log("参加"+JSON.stringify(matchInfo));
-    var handleWithHtml = bullup.loadSwigView('swig_participateinevents.html', {
-        dataResult: { data: matchInfo }
-    });
-    $('#main-view').html(handleWithHtml);
-    $.getScript('/js/check.js');
-
-}
-//报名赛事详情
-function handleApplyInfo(feedback) {
-   
-    var matchInfo = feedback.extension;
-
-    var handleWithHtml = bullup.loadSwigView('swig_signup.html', {
-        dataResult: { data: matchInfo }
-    });
-    $('#main-view').html(handleWithHtml);
-    $.getScript('/js/check.js');
-}
-//等待报名详情
-function handleAwaitApplyInfo(feedback) {
-
-    var matchInfo = feedback.extension;
-    var handleWithHtml = bullup.loadSwigView('swig_waittosignup.html', {
-        dataResult: { data: matchInfo }
-    });
-    $('#main-view').html(handleWithHtml);
-    $.getScript('/js/check.js');
-
-}
-//等待比赛
-function handleAwayGame(feedback) {
-    var matchInfo = feedback.extension;
-    var handleWithHtml = bullup.loadSwigView('swig_await.html', {
-        dataResult: { data: matchInfo }
-    });
-    $('#main-view').html(handleWithHtml);
-    $.getScript('/js/check.js');
-    $.getScript('/js/createateam.js');
-
-}
-//比赛进行中
-function handleUnderway(feedback) {
-    var matchInfo = feedback.extension;
-    var handleWithHtml = bullup.loadSwigView('swig_playbyplay.html', {
-        dataResult: { data: matchInfo }
-    });
-    $('#main-view').html(handleWithHtml);
-    $.getScript('/js/check.js');
-    $.getScript('/js/createateam.js');
-
-}
-//比赛结束
-function handleFinishGame(feedback) {
-    var matchInfo = feedback.extension;
-    var handleWithHtml = bullup.loadSwigView('swig_finished.html', {
-        dataResult: { data: matchInfo }
-    });
-    $('#main-view').html(handleWithHtml);
-    $.getScript('/js/check.js');
-
-}
-//报名审核
-function handleauditApply(feedback) {
-
-    var matchInfo = feedback.extension;
-    console.log(JSON.stringify(matchInfo));
-
-    var handleWithHtml = bullup.loadSwigView('swig_audit.html', {
-        dataResult: { data: matchInfo }
-    });
-    $('#main-view').html(handleWithHtml);
-    // $.getScript('/js/check.js');
-
-}
- 
 
 setInterval(()=>{
     if(socket != undefined){

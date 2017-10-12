@@ -1,5 +1,6 @@
-// var lolProcess = require('C:/Users/Public/Bullup/auto_program/lol_process.js');
-// var child_process = require("child_process");
+var lolProcess = require('C:/Users/Public/Bullup/auto_program/lol_process.js');
+var child_process = require("child_process");
+var request = require("request");
 
 $(document).ready(function(){
     $("#router_test_page").click(function(e){

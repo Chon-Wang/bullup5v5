@@ -1,58 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <title>spa_rank</title>
-  <link href="./css/play.css" rel="stylesheet">
-  <script src="./js/applyMatch.js"></script>
+    <meta charset="UTF-8">
+    <title>spa_rank</title>
+    <link href="./css/play.css" rel="stylesheet">
 </head>
-
 <body>
-  <!-- Rank List -->
-  {% if dataResult %} {% for key in dataResult%} {% for i in key.results%}
-  <div class="row sign_row" style="">
-    <div class="col s12 m6 sign_col" style="width:100%;">
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text await_p " style="line-height: 50px">
+<!-- Rank List -->
 
-          <p>比赛名称：{{i.bullup_competition_name}}</p>
-          <p>报名时间：{{i.bullup_competition_sign_start}}-{{i.bullup_competition_sign_end}}</p>
-          <p>比赛时间：{{i.bullup_competition_start}}-{{i.bullup_competition_end}}</p>
-          <p>战斗力上下线：{{i.bullup_competition_lowest_score}}-{{i.bullup_competition_highest_score}}</p>
-          <div style="position: relative;">
-            <p>报名成员：{{i.bullup_competition_max_paticipant}}</p>
-            <p id="sign-up" style="display:none;">{{i.bullup_competition_id}}</p>
-            <!-- <p id="sign-up-id"  style="display:none;" >{{i.user_id}}</p> -->
-          </div>
-          <p>赛事说明：{{i.bullup_competition_comment}}</p>
+<div class="row sign_row">
+    <div class="col s12 m6 sign_col">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+         
+          <p>比赛名称：希迪杯</p>
+          <p>报名时间：2017.02.07. 23：00-24:00</p>
+          <p>比赛时间：2017.02.07. 23：00-24:00</p>
+          <p>战斗力上下线：600-7000</p>
+          <p>报名成员：70/100</p>
+          <p>赛事说明：奖金10000000</p>
+
 
         </div>
+        <div class="card-action">
+            <a class="waves-effect waves-light btn">报名</a>
+        </div>
       </div>
-      {% if i.flag==1%}
-      <div class="card-action">
-        <input type="button" style="" class="waves-effect waves-light btn" id="apply" value="报名" />
-      </div>
-      {% else %}
-       <div class="card-action">
-        <input type="button" style="" class="waves-effect waves-light btn" value="已报名" />
-      </div>
-      {%endif%}
-      {% endfor%} {% endfor%} {%endif%}
     </div>
   </div>
-
-
-  <!-- Rank List -->
-  <!-- Rank List -->
-
-
-
-
-  <!-- Rank List -->
+        
+        
+<!-- Rank List -->
 
 
 
 </body>
-
 </html>

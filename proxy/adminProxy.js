@@ -20,14 +20,14 @@ exports.handleWithdraw = function (socket) {
         dbUtil.findAllWithdrawInfo(function(res){
             //console.log("resResult"+JSON.stringify(res));
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '查询失败，请稍后重试',
                     type: 'SEARCHWITHDRAWRESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '查询成功',
                     type: 'SEARCHWITHDRAWRESULT',
@@ -50,14 +50,14 @@ exports.handleWithdrawAgree = function (socket) {
         dbUtil.setStatusTrue(data,function(res){
             //console.log("resResult"+JSON.stringify(res));
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '操作失败，请稍后重试',
                     type: 'SETSTATUSTRUERESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '操作成功,请刷新界面',
                     type: 'SETSTATUSTRUERESULT',
@@ -78,14 +78,14 @@ exports.handleWithdrawDisagree = function (socket) {
         dbUtil.setStatusFalse(data,function(res){
             //console.log("resResult"+JSON.stringify(res));
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '操作失败，请稍后重试',
                     type: 'SETSTATUSFALSERESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '操作成功，请刷新界面',
                     type: 'SETSTATUSFALSERESULT',
@@ -109,14 +109,14 @@ exports.handleSearchBattleRecord = function (socket) {
             //console.log("resResult"+JSON.stringify(res));
             //console.log(res);
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '查询失败，请稍后重试',
                     type: 'SEARCHBATTLERECORDRESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '查询成功',
                     type: 'SEARCHBATTLERECORDRESULT',
@@ -140,14 +140,14 @@ exports.handleChangeBattleResult = function (socket) {
             // console.log("resResult"+JSON.stringify(res));
             console.log(res);
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '操作失败，请稍后重试',
                     type: 'CHANGEBATTLERECORDRESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '操作成功,请刷新页面后查看',
                     type: 'CHANGEBATTLERECORDRESULT',
@@ -171,14 +171,14 @@ exports.handleAllAccount = function (socket) {
             console.log("resResult"+JSON.stringify(res));
             //console.log(res);
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '查询失败，请稍后重试',
                     type: 'SEARCHALLACCOUNTRESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '查询成功',
                     type: 'SEARCHALLACCOUNTRESULT',
@@ -203,14 +203,14 @@ exports.handleSuspendAccount = function (socket) {
             console.log("resResult"+JSON.stringify(res));
             //console.log(res);
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '封号失败，请稍后重试',
                     type: 'SUSPENDACCOUNTRESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '封号成功，请刷新页面',
                     type: 'SUSPENDACCOUNTRESULT',
@@ -229,14 +229,14 @@ exports.handleUnblockAccount = function (socket) {
         dbUtil.unblockAccount(data,function(res){
             //console.log("resResult"+JSON.stringify(res));
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '解封失败，请稍后重试',
                     type: 'UNBLOCKACCOUNTRESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '解封成功,请刷新页面',
                     type: 'UNBLOCKACCOUNTRESULT',
@@ -257,14 +257,14 @@ exports.searchAllRechargeInfo = function (socket) {
         dbUtil.findAllRechargeInfo(function(res){
             console.log("resResult"+JSON.stringify(res));
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '查询失败，请稍后重试',
                     type: 'SEARCHRECHARGEINFORESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '查询成功,请刷新页面',
                     type: 'SEARCHRECHARGEINFORESULT',
@@ -290,14 +290,14 @@ exports.handleSearchFeedback = function (socket) {
             console.log("resResult"+JSON.stringify(res));
             //console.log(res);
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '查询失败，请稍后重试',
                     type: 'SEARCHFEEDBACKRESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '查询成功',
                     type: 'SEARCHFEEDBACKRESULT',
@@ -321,14 +321,14 @@ exports.handleFeedback = function (socket) {
             console.log("resResult"+JSON.stringify(res));
             //console.log(res);
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '操作失败，请稍后重试',
                     type: 'HANDLEFEEDBACKRESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '操作成功,请刷新页面',
                     type: 'HANDLEFEEDBACKRESULT',
@@ -352,14 +352,14 @@ exports.handleAnalysis = function (socket) {
             console.log("resResult"+JSON.stringify(res));
             //console.log(res);
             if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                socket.emit('feedback', {
                     errorCode: 1,
                     text: '查询失败，请稍后重试',
                     type: 'ANALYSISDATARESULT',
                     extension: null
                 });
             } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
+                 socket.emit('feedback', {
                     errorCode: 0,
                     text: '查询成功,请刷新页面',
                     type: 'ANALYSISDATARESULT',

@@ -676,7 +676,8 @@
 						<a class="waves-effect waves-light btn" style="margin-left:10px;" id="feedbackInput">提交反馈</a>
 					</div>
 
-			</form>
+				</form>
+			</div>
 		</div>
 		<div class="main" style="display: none;">
 			<div class="w1">
@@ -703,76 +704,45 @@
 			</div>
 		 	 
 		</div>
-		  
-		<div class="w2"></div>
-		<div id="walkthrough-2">
 
-		</div>
-		<div class="w3"></div>
-		<div id="walkthrough-3">
-			发起约战与队友一起战斗
-		</div>
-		<div class="w4"></div>
-		<div id="walkthrough-4">
-			充值提现资金流水详情都在个人中心
-		</div>
-		<img  usemap="#Map">
-		<div id="walkthrough-5">
-			好友,充值,个人能力分析快捷入口
-		</div>
-		<div id="walkthrough-6">
-			第四部演示
-		</div>
-	</div>
+		<div id="datePlugin"></div>
+		<script src="./js/jquery-2.2.4.js"></script>
+		<script src="./js/materialize.min.js"></script>
+		<script src="./js/socket_util.js"></script>
+		<script src="./js/global.js"></script>
+		<script src="./js/jquery.validate.min.js"></script>
+		<script src="./js/validate_sign.js"></script>
+		<script src="./js/global.js"></script>
+		<!-- <script src="./js/spa.js"></script> -->
+		<script src="./js/login.js"></script>
+		<script src="./js/game_history_query.js"></script>
+		<script src="./js/swig.js"></script>
+		<script src="./js/request_rank_list.js"></script>
+		<script src="./js/Chart.bundle.js"></script>
+		<script src="./js/generate_radar.js"></script>
+		<script src="./js/close_modal.js"></script>
+		<script src="./js/bind_lol.js"></script>
+		<script src="./js/create_room.js"></script>
+		<script src="./js/message_center.js"></script>
+		<script src="./js/personal_center.js"></script>
+		<script src="./js/test_page.js"></script>
+		<script src="./flipclock/flipclock.js"></script>
+		<script src="./js/date.js"></script>
+		<script src="./js/gerenly.js"></script>
+		<script src="./js/cjdwly.js"></script>
+		
+		<!-- <script src="./js/chat.js"></script> -->
+		<script src="https://js.stripe.com/v3/"></script>
 
+		<script src="./js/recharge.js"></script>
+		<script src="./js/feedback_message.js"></script>
+		<script src="./js/turn_to_room.js"></script>
+		<script src="./js/add_friend.js"></script>
+		<script src="./js/bullup_message_box.js"></script>
+		<script src="./js/jquery.pagewalkthrough.js"></script>
+		<script type="text/javascript" src="./js/time_js.js"></script>
+		<script src="./js/change_icon.js"></script>
 
-
-	<div id="datePlugin"></div>
-	<script src="./js/jquery-2.2.4.js"></script>
-	<script src="./js/materialize.min.js"></script>
-	<script src="./js/socket_util.js"></script>
-	<script src="./js/global.js"></script>
-	<script src="./js/jquery.validate.min.js"></script>
-	<script src="./js/validate_sign.js"></script>
-	<script src="./js/global.js"></script>
-	<!-- <script src="./js/spa.js"></script> -->
-	<script src="./js/login.js"></script>
-	<script src="./js/game_history_query.js"></script>
-	<script src="./js/swig.js"></script>
-	<script src="./js/request_rank_list.js"></script>
-	<script src="./js/Chart.bundle.js"></script>
-	<script src="./js/generate_radar.js"></script>
-	<script src="./js/close_modal.js"></script>
-	<script src="./js/bind_lol.js"></script>
-	<script src="./js/create_room.js"></script>
-	<script src="./js/message_center.js"></script>
-	<script src="./js/personal_center.js"></script>
-	<script src="./js/test_page.js"></script>
-	<script src="./flipclock/flipclock.js"></script>
-	<script src="./js/date.js"></script>
-	<script src="./js/gerenly.js"></script>
-	<script src="./js/cjdwly.js"></script>
-	
-	<!-- <script src="./js/chat.js"></script> -->
-	<script src="https://js.stripe.com/v3/"></script>
-
-	<script src="./js/recharge.js"></script>
-	<script src="./js/feedback_message.js"></script>
-	<script src="./js/turn_to_room.js"></script>
-	<script src="./js/add_friend.js"></script>
-	<script src="./js/bullup_message_box.js"></script>
-	<script src="./js/jquery.pagewalkthrough.js"></script>
-	<script type="text/javascript" src="./js/time_js.js"></script>
-	<script src="./js/change_icon.js"></script>
-
-
-	<!--处理提现-->
-	<!-- <script src="./js/handleWithdraw.js"></script> -->
-
-
-
-		<!-- test data script -->
-		<!-- comment this out and replace these data with those from database -->
 		<script src="./js/testData.js"></script>
 		<!-- router -->
 		<script src="./js/router.js"></script>
@@ -817,13 +787,8 @@
 			});
 			$(function () {
 				$('#beginTime').date();
-				$('#competition_sign_end').date({ theme: "datetime" });
-				$('#competition_sign_start').date({ theme: "datetime" });
-				$('#competition_end').date({ theme: "datetime" });
-				$('#competition_start').date({ theme: "datetime" });
-			// $(document).ready(function () {
-			// 	$('input#input_text, textarea#textarea1').characterCounter();
-			// });
+				$('#endTime').date({ theme: "datetime" });
+				$('#endTime2').date({ theme: "datetime" });
 			});
 			$(document).ready(function () {
 				$('input#input_text, textarea#textarea1').characterCounter();
@@ -841,7 +806,6 @@
 				});
 			});
 			//引导页
-		
 			$(function() {
 				// 设置参数
 				$('body').pagewalkthrough({
@@ -899,8 +863,6 @@
 				// 一步一步显示引导页
 				$('body').pagewalkthrough('show');
 			});
-
 		</script>
-</body>
-
+	</body>
 </html>
