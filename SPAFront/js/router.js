@@ -28,7 +28,7 @@ $().ready(function(){
 	});
 
 	$('#router_tournament').on('click', function(e){
-		bullup.alert("敬请期待");
+		bullup.alert("程序猿正在玩命开发中ε=ε=ε=ε=ε=ε=┌(￣◇￣)┘");
 		//e.preventDefault();
 		// var tournaments_data = [];
 		// bullup.loadTemplateIntoTarget('swig_tournament.html', tournaments_data, 'main-view');

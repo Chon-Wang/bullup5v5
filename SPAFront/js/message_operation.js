@@ -7,8 +7,61 @@ $(".message_accept_btn").on('click', function(e){
     var messageIndexString = messageAcceptBtnIdString.substring(0,messageAcceptBtnIdString.indexOf('_'));
     var message = messageInfo[Number.parseInt(messageIndexString)];
 
+   
     switch(message.messageType){
         case 'invitedFromFriend':{
+            var bet = message.team.bet;
+            if(userInfo.lolAccountInfo == undefined || userInfo.lolAccountInfo == null){
+                //无法加入房间
+                bullup.alert("您还没有绑定LOL账号！无法加入该房间！");
+                var inviteResult = {
+                    errorCode: 1,
+                    type: 'INVITERESULT',
+                    text: userInfo.name + '由于没有绑定LOL账号，无法加入房间！',
+                    extension: {
+                        hostName: message.host.name,
+                        hostId: message.host.userId,
+                        teamName: message.team.name,
+                        userInfo: {
+                            name: userInfo.name,
+                            userId: userInfo.userId,
+                            avatarId: userInfo.avatarId,
+                            strength: userInfo.strength
+                        }
+                    }
+                };
+                socket.emit('inviteResult', inviteResult);
+                //删除消息
+                messageInfo.splice(Number.parseInt(messageIndexString), 1);
+                $('#message_center_nav').click();
+                break;;
+            }
+            if(userInfo.wealth < message.team.bet){
+                //无法加入房间
+                bullup.alert("您的余额已经不足！无法加入该房间！");
+                var inviteResult = {
+                    errorCode: 1,
+                    type: 'INVITERESULT',
+                    text: userInfo.name + '由于余额不足，无法加入房间！',
+                    extension: {
+                        hostName: message.host.name,
+                        hostId: message.host.userId,
+                        teamName: message.team.name,
+                        userInfo: {
+                            name: userInfo.name,
+                            userId: userInfo.userId,
+                            avatarId: userInfo.avatarId,
+                            strength: userInfo.strength
+                        }
+                    }
+                };
+                socket.emit('inviteResult', inviteResult);
+                //删除消息
+                messageInfo.splice(Number.parseInt(messageIndexString), 1);
+                $('#message_center_nav').click();
+                break;;
+            }
+
             var inviteResult = {
                 errorCode: 0,
                 type: 'INVITERESULT',
@@ -30,6 +83,7 @@ $(".message_accept_btn").on('click', function(e){
             //删除消息
             messageInfo.splice(Number.parseInt(messageIndexString), 1);
             //console.log(JSON.stringify(messageInfo[Number.parseInt(messageIndexString)]));
+            $('#message_center_nav').click();
             break;
         }
 
@@ -51,7 +105,6 @@ $(".message_accept_btn").on('click', function(e){
         }
 
         case 'addFriend':{
-
             var addFriendResult = {
                 errorCode: 0,
                 type: 'ADDFRIENDRESULT',

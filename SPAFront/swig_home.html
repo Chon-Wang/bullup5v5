@@ -41,6 +41,9 @@
 				float: left;
 				margin-left: 10px;
 			}
+			.qies .credit{
+				cursor: pointer;
+			}
 			.main{ width: 1440px; height: 738px; margin-left: auto; margin-right: auto; position: relative; }
 			.w1,.w2,.w3,.w4{position:absolute; width:300px; height:80px;  top:120px; left:220px}
 			.w2{top:310px; left:220px; width:600px; height:40px; }
@@ -68,6 +71,22 @@
 				margin-right:10px;
 				margin-top:-5px;
 			}
+		
+			.friend-messages p{
+				white-space:normal;
+				background: #b3ade9;
+				color: #fff;
+				font-size: 18px;
+				padding: 15px; 
+				margin: 5px 10px 0;
+				border-radius: 10px;  
+				float:left;
+				max-width: 23em;
+				word-break:break-all;
+				/* word-wrap:break-word; */
+
+			}
+			
 		</style>
 
 
@@ -89,7 +108,7 @@
 					<ul class="right hide-on-med-and-down wang_ul">
 						<!-- <li><a id="admin" style="display:none">提现管理</a></li> -->
 						<li><a class="nav-link" id="router_starter">主页</a></li>
-						<li><a id="router_test_page">测试</a></li>
+						<!-- <li><a id="router_test_page">测试</a></li> -->
 						<li><a id="router_tournament">赛事</a></li>
 						<li><a id="router_dataquery">数据查询</a></li>
 						<li><a id="router_rank">排行榜</a></li>
@@ -155,8 +174,8 @@
 									<div class="input-field col s12">
 										<!-- Winning Condition -->
 										<select id="map-selection">
-											<option id="map-selection-1" value="">召唤师峡谷</option>
-											<option id="map-selection-2" value="">嚎哭深渊</option>
+											<option class = "map-selection-item" id="map-selection-1" value="">召唤师峡谷</option>
+											<option class = "map-selection-item" id="map-selection-2" value="">嚎哭深渊</option>
 										</select>
 										<label>地图</label>
 									</div>
@@ -271,7 +290,7 @@
 						<div class="input-field col s6">
 							<i class="fa fa-envelope prefix" aria-hidden="true"></i>
 							<input id="usr_name" type="text" class="validate">
-							<label for="usr_name">邮箱</label>
+							<label for="usr_name">邮箱（用户名）</label>
 						</div>
 
 						<div class="input-field col s6">
@@ -327,13 +346,13 @@
 				<input id="money" type="text" class="validate" placeholder="请输入充值金额">
 			</div>
 			<div class="qies">
-				<div class="chip">19</div>
-				<div class="chip">29</div>
-				<div class="chip">39</div>
-				<div class="chip">49</div>
-				<div class="chip">89</div>
-				<div class="chip">99</div>
-				<div class="chip">199</div>
+				<div class="chip credit">19</div>
+				<div class="chip credit">29</div>
+				<div class="chip credit">39</div>
+				<div class="chip credit">49</div>
+				<div class="chip credit">89</div>
+				<div class="chip credit">99</div>
+				<div class="chip credit">199</div>
 			</div>
 			<div>
 
@@ -355,7 +374,7 @@
 					</div>
 		
 					<div>
-						<a id="charge_btn" class="btn an_n" style="margin:20px;">Submit Payment</a>
+						<a id="charge_btn" class="btn an_n" style="margin:20px;">提交订单</a>
 					</div>
 					
 				</form>
@@ -379,7 +398,7 @@
 							</div>
 						</div>
 
-						<a id="bind_lol_btn" class="btn waves-effect waves-light right teal lighten-2" name="action">绑定</a>
+						<a id="bind_lol_btn" class="btn waves-effect right teal lighten-2" name="action">绑定</a>
 			
 				</button>
 					</form>
@@ -659,11 +678,30 @@
 
 			</form>
 		</div>
-	</div>
-
-	<div id="newGuide" class="main"  style="display: none;">
-		<div class="w1">
-			系统菜单包含注册登录和绑定英雄联盟账号
+		<div class="main" style="display: none;">
+			<div class="w1">
+			注册登录和绑定英雄联盟账号之后才能玩喔^ω^
+			</div>  
+			<div class="w2"></div>
+			<div id="walkthrough-2">
+		
+		 	</div>
+			<div class="w3"></div>
+			<div id="walkthrough-3">
+				发起约战与队友一起战斗，金币哗哗的( $ _ $ )！！！！
+		 	</div>
+			<div class="w4"></div>
+			<div id="walkthrough-4">
+				充值提现资金流水看这里→_→
+		 	</div>
+			<img  usemap="#Map">
+			<div id="walkthrough-5">
+				添加好友,快速充值,战力分析一键进入呦（*∩_∩*）！
+			</div>
+			<div id="walkthrough-7">
+				一起来YY呀๑乛◡乛๑！！！！！！
+			</div>
+		 	 
 		</div>
 		  
 		<div class="w2"></div>
@@ -760,12 +798,12 @@
 				selectYears: 15 // Creates a dropdown of 15 years to control year
 			});
 			// 价格$
-			$('.chip').click(function () {
+			$('.credit').click(function () {
 				var iox = $(this).index();
-				var clasvlue = $('.chip').eq(iox).text();
+				var clasvlue = $('.credit').eq(iox).text();
 				$("#money").val(clasvlue);
 				$('.ois').addClass('active');
-				$('.chip').eq(iox).addClass("selected").siblings().removeClass('selected');
+				$('.credit').eq(iox).addClass("selected").siblings().removeClass('selected');
 			})
 			// //银行卡号输入js配置
 			// $(document).ready(function () {
@@ -792,63 +830,74 @@
 
 				//地图替换
 				$('.dropdown-content li').on("click",function () {
+				//$('.map-selection-item').on("click",function () {
 					var map = $(this).index();
-				
-					if ( map == 1 ) {
-						$('.room_map').attr('src','./media/imgs/hhsy_map.jpg');
-					}else{
+					var html=$(this).html();
+					if(html.indexOf('召唤师峡谷')!= -1){
 						$('.room_map').attr('src','./media/imgs/rift_map.jpg');
+					}else if(html.indexOf('嚎哭深渊')!= -1){
+						$('.room_map').attr('src','./media/imgs/hhsy_map.jpg');
 					}
 				});
 			});
 			//引导页
 		
 			$(function() {
-                // 设置参数
-                $('body').pagewalkthrough({
-                    name: 'introduction',
-                    steps: [{
-                            popup: { //定义弹出提示引导层
-                                content: '开启界面引导',
-                                type: 'modal'
-                            }
-                        }, {
-                            wrapper: '.dro-index',//当前引导对应的元素位置
-                            popup: {
-                                content: '.w1',//关联的内容元素
-                                type: 'tooltip',//弹出方式（tooltip和modal以及nohighlight）
-								position: 'bottom',//弹出层位置（top,left, right or bottom）
-								width:'200'	
-                            }
-                        }, {
-                            wrapper: '#yuezhan',
-                            popup: {
-                                content: '#walkthrough-3',
-                                type: 'tooltip',
-								position: 'bottom',
-								top: '505px',
-								left: '368.406'
+				// 设置参数
+				$('body').pagewalkthrough({
+					name: 'introduction',
+					steps: [{
+						popup: { //定义弹出提示引导层
+							content: '引导开始啦(*^▽^*)，follow me',
+							type: 'modal'
+						}
+					}, {
+						wrapper: '.dro-index',//当前引导对应的元素位置
+						popup: {
+							content: '.w1',//关联的内容元素
+							type: 'tooltip',//弹出方式（tooltip和modal以及nohighlight）
+							position: 'bottom',//弹出层位置（top,left, right or bottom）
+							width:'200'
+							
+							
+						}
+					}, {
+						wrapper: '#yuezhan',
+						popup: {
+							content: '#walkthrough-3',
+							type: 'tooltip',
+							position: 'bottom',
+							top: '505px',
+							left: '368.406'
 
-                            }
-                        }, {
-                            wrapper: '#router_index',
-                            popup: {
-                                content: '#walkthrough-4',
-                                type: 'tooltip',
-                                position: 'bottom'
-                            }
-                        }, {
-                            wrapper: '.fa-plus',
-                            popup: {
-                                content: '#walkthrough-5',
-                                type: 'tooltip',
-                                position: 'left'
-                            }
-                        }]
-                });
-
-                // 一步一步显示引导页
-                //$('body').pagewalkthrough('show');
+						}
+					}, {
+						wrapper: '#router_index',
+						popup: {
+							content: '#walkthrough-4',
+							type: 'tooltip',
+							position: 'bottom'
+						}
+					}, {
+						wrapper: '.chitchat',
+						popup: {
+							content: '#walkthrough-7',
+							type: 'tooltip',
+							position: 'left'
+						}
+					},
+					{
+						wrapper: '.fa-plus',
+						popup: {
+							content: '#walkthrough-5',
+							type: 'tooltip',
+							position: 'left'
+					}
+						
+					}]
+				});
+				// 一步一步显示引导页
+				$('body').pagewalkthrough('show');
 			});
 
 		</script>

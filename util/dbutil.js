@@ -2,7 +2,6 @@ var mysql = require('mysql');
 var dbCfg = require('./dbcfg.js');
 var logger = require('../util/logutil.js');
 var async = require('async');
-var socketProxy = require('../proxy/socketProxy.js');
 
 var connection = mysql.createConnection(dbCfg.server);
 
@@ -12,6 +11,8 @@ connection.connect(function (err) {
         return;
     }
     console.log('Mysql connected as id ' + connection.threadId);
+
+    //exports.updateRankList();
 });
 
 exports.findUserByAccount = function (account, callback) {
@@ -490,9 +491,9 @@ exports.addUser = function (userInfo, callback) {
                 callback(null, userInfo);
             });
         },
-        function (userInfo, callback) {
-            connection.query('insert into `bullup_wealth` (user_id, bullup_currency_type, bullup_currency_amount) values (?, ?, ?)', [userInfo.userId, 'score', '0'], function (err, row) {
-                userInfo.wealth = 0;
+        function(userInfo, callback){
+            connection.query('insert into `bullup_wealth` (user_id, bullup_currency_type, bullup_currency_amount) values (?, ?, ?)', [userInfo.userId, 'score', '300'], function(err, row){
+                userInfo.wealth = 300;
                 callback(null, userInfo);
             });
         },
@@ -932,9 +933,8 @@ exports.insertBindInfo = function (userId, lolAccount, lolNickname, lolArea, cal
 //     });
 // }
 
-exports.updateStrengthInfo = function (bindInfo, callback) {
-    //这里正常应该是通过获取绑定账号的数据来赋予初始战力  此处暂时默认初始战力为2000
-    connection.query("update bullup_strength set bullup_strength_score = 2000 where user_id = ?", [bindInfo.userId], function (err, res) {
+exports.updateStrengthInfo = function(bindInfo, callback){
+    connection.query("update bullup_strength set bullup_strength_score = ? where user_id = ?", [bindInfo.oriStrengthScore, bindInfo.userId], function(err, res){
         callback(res);
     });
 }
@@ -1372,6 +1372,14 @@ exports.autoUpdateMatchState = function (matchInfo, callback) {
  *       ┗┻┛　┗┻┛
  */
 
-//exports.getPersonalCenterInfoByUserId(29, function(res){
- //   console.log(res);
-//});
+exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChangedValue){
+    connection.query('select bullup_currency_amount from bullup_wealth where user_id = ?', [userId], (err, res) => {
+        if(err)throw err;
+        connection.query('update bullup_wealth set bullup_currency_amount = ? where user_id = ?', [parseInt(res[0].bullup_currency_amount) + parseInt(wealthChangedValue), userId], (err, res)=>{
+            if(err)throw err;
+        });
+    });
+    connection.query('update bullup_strength set bullup_strength_score = ? where user_id = ?', [newStrengthScore, userId], (err, res) => {
+        if(err)throw err;
+    });
+}

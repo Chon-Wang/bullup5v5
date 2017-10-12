@@ -1,1 +1,4 @@
 [2017-10-05 16:49:52] TypeError: Cannot read property 'user_lol_account' of undefined
+[2017-10-09 21:03:44] TypeError: Cannot read property 'affectedRows' of undefined
+[2017-10-09 23:31:16] Error: connect ETIMEDOUT
+[2017-10-11 22:06:29] TypeError: Cannot read property 'user_nickname' of undefined
