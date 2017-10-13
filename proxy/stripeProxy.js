@@ -13,10 +13,12 @@ exports.recharge = function(){
     app.use(bodyParser.urlencoded({extended:false}));
     
     app.get('/',function(req,res){
-        var rechargeValue = parseInt(req.url.substr(req.url.indexOf('=') + 1));
+        //var str = req.url.substr(req.url.indexOf('?'), req.url.indexOf('=') - req.url.indexOf('?'));
+
+        var rechargeValue = parseInt(req.url.substr(req.url.indexOf('rechargeAccount=') + 16, 5));
         var data = fs.readFileSync('./stripe_views/index.hbs').toString();
-        data = data.replace("aaaaa", String(rechargeValue));
-        data = data.replace("aaaaaa", String(rechargeValue));
+        data = data.replace("chargeAmountValue", String(rechargeValue));
+        data = data.replace("chargeAmountValueHidden", String(rechargeValue));
         fs.writeFileSync('./stripe_views/temp.hbs', data);
         res.sendFile('F:/NodeWorkspace/bullup5v5/stripe_views/temp.hbs');
         //res.sendFile('C:/Users/JM.Guo/Desktop/Stripe/views/index.hbs');
@@ -24,9 +26,11 @@ exports.recharge = function(){
     
     
     app.post("/charge",function(req,res){
-        console.log(1111);
+
+        var body = req.body;
         var token = req.body.stripeToken;
         var chargeAmount = req.body.chargeAmount;
+        
         console.log(token);
         var charge = stripe.charges.create({
             amount:chargeAmount,
