@@ -18,7 +18,7 @@ exports.recharge = function(){
         data = data.replace("aaaaa", String(rechargeValue));
         data = data.replace("aaaaaa", String(rechargeValue));
         fs.writeFileSync('./stripe_views/temp.hbs', data);
-        res.sendFile('F:/NodeWorkspace/bullup5v5/stripe_views/temp.hbs');
+        res.sendFile('C:/Users/Administrator/Desktop/bullup5v5/stripe_views/temp.hbs');
         //res.sendFile('C:/Users/JM.Guo/Desktop/Stripe/views/index.hbs');
     });
     
