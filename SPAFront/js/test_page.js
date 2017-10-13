@@ -5,16 +5,17 @@ var request = require("request");
 $(document).ready(function(){
     $("#router_test_page").click(function(e){
 
-        e.preventDefault();
-        var dataStr = '{"roomName":"admin1507119264941","captain":{"name":"admin","userId":36,"avatarId":1},"participants":[{"name":"admin","userId":36,"avatarId":1,"strength":{"kda":"0.0","averageGoldEarned":0,"averageTurretsKilled":0,"averageDamage":0,"averageDamageTaken":0,"averageHeal":0,"score":0}}],"status":"ESTABLISHING","gameMode":"match","battleDesc":"","rewardType":"bullupScore","rewardAmount":"10","mapSelection":"map-selection-1","winningCondition":"push-crystal"}';
-        var data = JSON.parse(dataStr);
+            
 
-        bullup.loadTemplateIntoTarget('swig_fightfor.html', {
-            'participants': data.participants
-        }, 'main-view');
-        var labelArray = ['击杀', '死亡', '助攻','治疗', '造成伤害', '承受伤害'];
-        var dataArray1 = [50,50,50,50,50,50];
-        bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
+        // var dataStr = '{"roomName":"admin1507119264941","captain":{"name":"admin","userId":36,"avatarId":1},"participants":[{"name":"admin","userId":36,"avatarId":1,"strength":{"kda":"0.0","averageGoldEarned":0,"averageTurretsKilled":0,"averageDamage":0,"averageDamageTaken":0,"averageHeal":0,"score":0}}],"status":"ESTABLISHING","gameMode":"match","battleDesc":"","rewardType":"bullupScore","rewardAmount":"10","mapSelection":"map-selection-1","winningCondition":"push-crystal"}';
+        // var data = JSON.parse(dataStr);
+
+        // bullup.loadTemplateIntoTarget('swig_fightfor.html', {
+        //     'participants': data.participants
+        // }, 'main-view');
+        // var labelArray = ['击杀', '死亡', '助攻','治疗', '造成伤害', '承受伤害'];
+        // var dataArray1 = [50,50,50,50,50,50];
+        // bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
 
         // lolProcess.grabLOLData('result', socket);
         // function processResultPacket(stdout){

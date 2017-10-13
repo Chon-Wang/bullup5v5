@@ -12,14 +12,15 @@
 		<script src='https://checkout.stripe.com/checkout.js' 
 		class='stripe-button' 
 		data-key='pk_live_xXGeuc5byKCm3RkS7sX26hHQ' 
-		data-amount='aaaaa'
+		data-amount='chargeAmountValue'
 		data-name="Bullup.Inc" 
 		{{!-- data-description='just a test'  --}}
 		data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
 		data-currency='usd'>
 
 		</script>
-		<input type="hidden" name="chargeAmount" value="aaaaaa">
+		<input type="hidden" name="chargeAmount" value="chargeAmountValueHidden">
+		<input type="hidden" name="userName" value="userNameValue">
 	</form> 
 
 </body>

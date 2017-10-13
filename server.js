@@ -132,9 +132,28 @@ io.listen(3000);
 
 
 
-process.on('uncaughtException', function(err) {
-    logger.logToFile("./logs/errors.txt", "append", String(err));
+
+process.on('uncaughtException', function (err) {
+    logger.logErrToFile("./logs/errors.txt", "append", err);
     console.log(String(err));
+    if(err instanceof Error){
+
+    }else if(err instanceof TypeError){
+
+    }else if(err instanceof SyntaxError){
+
+    }else if(err instanceof ReferenceError){
+
+    }else if(err instanceof EvalError){
+
+    }else if(err instanceof RangeError){
+
+    }else if(err instanceof URIError){
+
+    }else{
+
+    }
 });
+
 
 
