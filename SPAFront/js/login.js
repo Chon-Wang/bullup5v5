@@ -24,16 +24,69 @@ $().ready(function () {
 		var $tel = $('#usr_tel').val();
 		var $email = $('#usr_email').val();
 
-		if ($userPassword == $confirmedPwd) {
-			socket.emit('register', {
-				userAccount: $userAccount,
-				userPassword: $userPassword,
-				userNickname: $userNickname,
-				userPhoneNumber: $tel,
-				userEmail: $email
-			});
-		} else {
-			bullup.alert("两次密码输入不一致!");
+		function verifyemail(str){  
+			var reg=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;  
+			if( reg.test(str) ){  
+				return true;  
+			}else{  
+				return false;  
+			} 
 		}
+		function verifyHandset(str) {
+			//中国手机号  
+			var reg = /^(\+86)|(86)?1[3,5,8]{1}[0-9]{1}[0-9]{8}$/;  
+			if( reg.test(str)) {  
+				return true;  
+			} else {  
+				return false;  
+			}
+		}
+		
+		function verifyPassword(str) {
+			//密码  
+			var reg = /^([0-9]|[a-zA-Z]){6,16}$/;  
+			if( reg.test(str)) {  
+				return true;  
+			} else {  
+				return false;  
+			}
+		} 
+		//alert($email);
+
+		// function telephoneCheck(str) {
+		// 	// 美国手机号
+		// 	var reg = /^(1\s?)?(\(\d{3}\)|\d{3})[\s\-]?\d{3}[\s\-]?\d{4}$/g;
+		// 	return reg.test(str);
+
+		// }
+		// // telephoneCheck("555-555-5555");
+
+		if(verifyemail($userAccount)==true){
+			if(verifyHandset($tel)==true){
+				if(verifyPassword($userPassword)==true){
+					if ($userPassword == $confirmedPwd) {
+						
+							socket.emit('register', {
+								userAccount: $userAccount,
+								userPassword: $userPassword,
+								userNickname: $userNickname,
+								userPhoneNumber: $tel,
+								userEmail: $email
+							});
+					
+					} else {
+						alert("两次密码输入不一致!");
+					}
+				}else{
+					alert('请输入6到16位的字母或者数字');
+				}
+			}else{
+				alert('请输入正确的手机号码')
+			}
+		}else{
+			alert('请输入正确的邮箱格式');
+		}
+
+		
 	});
 });
