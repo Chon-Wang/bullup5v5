@@ -2,6 +2,8 @@ var io = require('socket.io')();
 var logger = require('./util/logutil');
 var timmer = require('./timer');
 
+var dbutil = require('./util/dbutil.js');
+
 // 代理
 var userProxy = require('./proxy/userProxy.js'); 
 var teamProxy = require('./proxy/teamProxy.js');
@@ -39,7 +41,7 @@ io.on('connection', function(socket) {
     userProxy.insertFeedbackMessage(socket);
 
     userProxy.handleLOLBind(socket); 
-
+    userProxy.handleIconIdUpdate(socket);
     userProxy.handleAddFriendRequest(socket);
     userProxy.handleAddFriendResult(socket);
 
@@ -47,7 +49,9 @@ io.on('connection', function(socket) {
     userProxy.handleGetBalance(socket);
     //登录时间
     userProxy.handlelastLoginTime(socket);
-    
+    //更改信息
+    userProxy.handleUserUpdateInfo(socket);
+
     userProxy.handlePersonalCenterRequest(socket);
   
     teamProxy.handleRoomEstablish(socket);
@@ -101,6 +105,8 @@ io.on('connection', function(socket) {
 
     //简单统计
     adminProxy.handleAnalysis(socket);
+    //邀请码信息
+    adminProxy.handleInvitedCode(socket);
 
     chatProxy.handleChat(io,socket);
 
@@ -126,7 +132,8 @@ teamProxy.match();
 stripeProxy.recharge();
 
 //一天更新一次排行榜
-//timmer.autoUpdateRankList(24 * 3600);
+//timmer.autoUpdateRankList(10);
+//dbutil.updateRankList();
 io.listen(3000);
 
 

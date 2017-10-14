@@ -151,6 +151,11 @@ socket.on('feedback', function (feedback) {
         case 'ANALYSISDATARESULT':
             handleAnalysisDataResult(feedback);
             break;
+        //--------邀请码信息------------
+        case 'INVITEDCODERESULT':
+            handleInvitedCodeResult(feedback);
+            break;
+        //--------LOLAPIKey更新结果----------、
         case 'LOLUPDATERESULT':
             handleLOLApiUpdateResult(feedback);
             break;
@@ -160,7 +165,12 @@ socket.on('feedback', function (feedback) {
         case 'ADDFRIENDRESULT':
             handleAddFriendResult(feedback);
             break;
-        //--------LOLAPIKey更新结果----------、
+        case 'ICONUPDATERESULT':
+            handleIconUpdateResult(feedback);
+            break;  
+        case 'UPDATEINFORESULT':
+            handleUpdateInfoResult(feedback);
+            break;
         }
 });
 
@@ -307,16 +317,22 @@ socket.on('lolRoomEstablished', function (data) {
 
     socket.emit('tokenData', data.token);    
 
-    //游戏开始 刷新时钟
+    //游戏开始 刷新时钟 
     lol_process.grabLOLData('result', socket);
     bullup.alert('游戏已开始');
 });
 
 socket.on('chatMsg', function(msg){
-    if(msg.chatId==userInfo.userId){
-        $('#messages').append($('<li class="chat-message " style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;background:  #b3ade9;color: #fff;float:right;" >').html(msg.chatName+':'+" "+msg.chatMsg));
+    if(userInfo.name == undefined || msg.chatName!=userInfo.name){
+        var msgId = msg.chatName + String((new Date).valueOf());
+        var msgHtml = '<ul id="messages" style="width: 100%;"><li class="friend-messages" style="float:right;"><img style="width:50px;height:50px;border-radius: 36px;float:left;margin-top:9px;" src="./media/user_icon/'+ msg.userIconId + '.png"><p id="' + msgId + '" style="white-space:nowrap;background: #b3ade9;color: #fff;font-size: 18px;padding: 15px; margin: 5px 10px 0;border-radius: 10px;  float:left"></p> </li></ul>'
+        $('#messages').append(msgHtml);
+        $('#' + msgId + '').html(msg.chatName + ":" + msg.chatMsg);
     }else{
-        $('#messages').append($('<li class="friend-messages"  style="width:88%;padding: 15px; margin: 5px 10px 0;  border-radius: 10px; font-size: 18px;;background: #009fab;color: #fff;float:left;"  >').html(msg.chatName+':'+" "+msg.chatMsg));
+        var msgId = msg.chatName + String((new Date).valueOf());
+        var msgHtml = '<ul id="messages" style="width: 100%;"><li class="friend-messages" style="float:left;"><img style="width:50px;height:50px;border-radius: 36px;float:left;margin-top:9px;" src="./media/user_icon/'+ msg.userIconId + '.png"><p id="' + msgId + '" style="white-space:nowrap;background: #009fab;color: #fff;font-size: 18px;padding: 15px; margin: 5px 10px 0;border-radius: 10px; float:left;"></p> </li></ul>'
+        $('#messages').append(msgHtml);
+        $('#' + msgId + '').html(msg.chatName + ":" + msg.chatMsg);
     }
 });
     
@@ -374,7 +390,7 @@ function handleLoginResult(feedback) {
     if (feedback.errorCode == 0) {
         // 登录成功
         //bullup.alert(feedback.text);
-        //alert("登录成功!");
+        alert("登录成功!");
         userInfo = feedback.extension;
         // console.log("User info");
         console.log(userInfo);
@@ -395,8 +411,10 @@ function handleLoginResult(feedback) {
             // 打开
             $("#log_modal").css("display", "block");
             $('#system_menu').html(temp);
+
+            $('#router_starter').click();
         });
-        alert(userInfo.lastLoginTime);
+        //alert(userInfo);
         var $userId = userInfo.userId;
         var $date = new Date();
         var time = userInfo.lastLoginTime;
@@ -448,6 +466,12 @@ function handleRankList(rankList){
 function handleLOLBindResult(feedback){
     bullup.alert(feedback.extension.tips);
 }
+
+//用户修改信息
+function handleUpdateInfoResult(feedback){
+    bullup.alert(feedback.text);
+}
+
 //处理提现申请及信息入库
 function handleBankInfo(feedback){
     bullup.alert(feedback.text);
@@ -496,18 +520,7 @@ function handleGetBalanceResult(feedback){
         });
     $('#main-view').html(balanceHtml);
     $.getScript('/js/zymly.js');
-    //$.getScript('/js/zymly.js');
     $.getScript('/js/payment.js');
-    options = {
-        url: 'http://127.0.0.1:3001',
-    };
-    request(options, function(error, response, body){
-        var bodyStartIndex = body.indexOf("<body>");
-        var bodyEndIndex = body.indexOf("</body>");
-        var htmlStr = body.substr(0, bodyEndIndex);
-        htmlStr = htmlStr.substr(bodyStartIndex + 6, htmlStr.length - 6);
-        $('#payment').html(htmlStr);
-    });
 }
 
 //处理查到的资金流动记录
@@ -572,6 +585,20 @@ function handleOverFeedbackResult(feedback){
     bullup.alert(feedback.text);
 }
 
+//处理操作用户反馈
+function handleIconUpdateResult(feedback){
+    bullup.alert(feedback.text);
+    var friendCount = 0;
+    for(var index in userInfo.friendList){
+        friendCount++
+    }
+    bullup.loadTemplateIntoTarget('swig_home_friendlist.html', {
+        'userInfo': userInfo,
+        'friendListLength': friendCount
+    }, 'user-slide-out');
+    $('.collapsible').collapsible();
+}
+
 //充值管理
 function handleSearchAllRechargeResult(feedback){
     var tempData = feedback.extension.data;
@@ -602,7 +629,16 @@ function handleAnalysisDataResult(feedback){
     });
     $('#main-view').html(analysisDataHtml);
 }
-    
+ 
+//邀请码信息
+function handleInvitedCodeResult(feedback){
+    var tempData = feedback.extension.data;
+    alert(tempData[0].user_nickname);
+    var handleInvitedCodeHtml = bullup.loadSwigView('swig_admin_invitedCode.html',{
+        dataSource:{data:tempData} 
+    });
+    $('#main-view').html(handleInvitedCodeHtml);
+}
 
 function handleRegistResult(feedback){
     bullup.alert(feedback.text);
@@ -789,7 +825,7 @@ function handleInviteFromFriend(message){
     //console.log("messageInfo:  " + JSON.stringify(messageInfo));
 } 
 
-function  handlePersonalCenterResult(feedback){
+function handlePersonalCenterResult(feedback){
     //判断是否成功
     if(feedback.errorCode == 0){
         var data = feedback.extension;
@@ -810,18 +846,18 @@ function  handlePersonalCenterResult(feedback){
                tower:data.UserlolInfo_tower,
                damage:data.UserlolInfo_damage,
                taken:data.UserInfo_damage_taken,
-               cap:data.UserStrengthRank[0].strengthRank,
-               wealthRank:data.UserWealthRank[0].wealthRank,
+               cap:data.UserStrengthRank,
+               wealthRank:data.UserWealthRank,
                wealth:data.UserWealth,
                strength:data.UserStrength,
-               winning_rate:data.competition_wins
+               winning_rate:data.competition_wins,
+               avatarId:data.User_icon_id
             }
         });
         $('#main-view').html(personalCenterHtml);
     }else{
         bullup.alert("页面加载失败!");
     }
-   
 }
 
 function handleBattleInviteRequest(message){

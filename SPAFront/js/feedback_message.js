@@ -7,6 +7,7 @@
         var $textarea1=$('#textarea1').val();
         var $radioReason = $('input:radio:checked').val();
         var $account = userInfo.name;
+        var $userId = userInfo.userId;
         //alert($account);
         if(userInfo==null){
             bullup.alert("请您先登录");
@@ -15,7 +16,7 @@
                 name:$name,
                 email:$email,
                 textarea1:$radioReason+',其他:'+$textarea1,
-                UserId:userInfo.userId,
+                userId:$userId,
                 account:$account
             });
         }

@@ -44,3 +44,10 @@ $('#admin_lolkey_update').on('click', function(e){
     e.preventDefault();
     socket.emit('lolKeyUpdate');
 });
+
+//邀请码信息
+$('#admin_invitedCode').on('click', function(e){
+    e.preventDefault();
+    bullup.loadTemplateIntoTarget('swig_admin_invitedCode.html',{}, 'main-view');
+    socket.emit('getInvitedCodeData');
+});
