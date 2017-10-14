@@ -264,7 +264,9 @@ exports.handleBattleResult = function (io, socket){
                 //管理服务端的全局变量 队伍和对局
 
                 //组织通知双方队伍胜负结果的数据包
-
+                if(finishedBattle == null || finishedBattle.blueSide == undefined){
+                    return;
+                }
                 var resultPacket = {};
                 resultPacket.rewardType = finishedBattle.blueSide.rewardType;
                 resultPacket.rewardAmount = finishedBattle.blueSide.rewardAmount;

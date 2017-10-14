@@ -1061,6 +1061,9 @@ exports.insertBankInfo = function(bankInfo, callback) {
 }
 
 exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChangedValue){
+    if(newStrengthScore < 0){
+        newStrengthScore = 0;
+    }
     connection.query('select bullup_currency_amount from bullup_wealth where user_id = ?', [userId], (err, res) => {
         if(err)throw err;
         connection.query('update bullup_wealth set bullup_currency_amount = ? where user_id = ?', [parseInt(res[0].bullup_currency_amount) + parseInt(wealthChangedValue), userId], (err, res)=>{
