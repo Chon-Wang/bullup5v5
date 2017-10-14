@@ -138,9 +138,3 @@ io.listen(3000);
 
 
 
-process.on('uncaughtException', function(err) {
-    logger.logToFile("./logs/errors.txt", "append", String(err));
-    console.log(String(err));
-});
-
-
