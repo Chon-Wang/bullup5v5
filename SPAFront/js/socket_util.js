@@ -1,5 +1,6 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://caa9450e.ngrok.io');
+//var socket = io.connect('http://699d4459.ngrok.io');
+var socket = io.connect('49.140.81.199:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 var radar_chart = require('./js/generate_radar.js');
@@ -470,6 +471,8 @@ function handleFeedback(feedback) {
 function handleRankList(rankList){
     var strengthRankList = rankList.strengthRankList;
     var wealthRankList = rankList.wealthRankList;
+    strengthRankList.sort(createCompareFunction(""));
+    wealthRankList.sort(createCompareFunction(""));
     var rank_list = bullup.loadSwigView('swig_rank.html', {
         strengthRankList: strengthRankList.rankList,
         wealthRankList: wealthRankList.rankList,
@@ -478,6 +481,20 @@ function handleRankList(rankList){
     });
     $('.content').html(rank_list);
     $('ul.tabs').tabs();
+}
+
+function createCompareFunction(propertyName){
+    return function(object1,object2){
+        var value1 = object1.propertyName;
+        var value2 = object2.propertyName;
+        if(value1>value2){
+            return -1;
+        } else if(value1<value2){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }
 
 function handleLOLBindResult(feedback){
