@@ -170,9 +170,21 @@ socket.on('feedback', function (feedback) {
 
 socket.on('message', function(message){
     socket.emit('tokenData', message.token);
+
+    if(message.messageToken == undefined){
+        var err;
+        throw err;
+    }else{
+        for(messageIndex in messageInfo){
+            if(message.messageToken == messageInfo[messageIndex].messageToken){
+                return;
+            }
+        }
+    }
+
     switch(message.messageType){
         case 'invitedFromFriend':
-            handleInviteFromFriend(message);
+            handleInviteFromFriend(message); 
             break;
         case 'inviteBattle':
             handleBattleInviteRequest(message);

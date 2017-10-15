@@ -88,8 +88,9 @@ $(document).ready(function(){
                 room: roomInfo
             });
             var teamates = [];
-            var captain = roomInfo.captain;
-            teamates.push(captain);
+            for(var participantIndex in roomInfo.participants){
+                teamates.push(roomInfo.participants[participantIndex]);
+            }
             var teamatesHtml = bullup.loadSwigView('swig_myroom_teamate.html', {
                 teamates : teamates
             });
