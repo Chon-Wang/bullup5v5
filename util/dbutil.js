@@ -21,6 +21,68 @@ exports.findUserByAccount = function(account, callback) {
         callback(results[0]);
     });
 }
+//新手指引
+exports.checkLastLoginTime = function(userId,callback){
+    connection.query('select last_login_time from user_info where user_id=?',[userId],function(err,res){
+        if (err) throw err;
+        //console.log(res);
+        var time = res[0].last_login_time;
+        callback(time);
+    });
+}
+exports.insertLastLoginTime = function(data,callback){
+    connection.query('update user_info set last_login_time=? where user_id=?',[data.date,data.userId],function(err,res){
+        if (err) throw err;
+        callback(res);
+    });
+}
+
+//用户约战次数
+exports.findUserBattleCount = function(userId,callback){
+    async.waterfall([
+        function(callback){
+            connection.query('select user_nickname from user_base where user_id=?',[userId],function(err,res1){
+                if (err) throw err;
+                //console.log(res1);
+                callback(null,res1);
+            });
+        },function(res1,callback){
+            connection.query('select count(*) as battleCount from bullup_battle_record where bullup_battle_paticipants_red like ? or bullup_battle_paticipants_blue like ?',['%'+res1[0].user_nickname+'%','%'+res1[0].user_nickname+'%'],function(err,res2){
+                if (err) throw err;
+                //console.log(res2);
+                callback(null,res2);
+            });
+        }
+    ],function(err,res){
+        if (err) throw err;
+        callback(res);
+    });
+}
+
+//用户修改信息
+exports.updateUserInfo = function(data,callback){
+    async.parallel([
+        function(done){
+            connection.query('update user_base set user_nickname=? where user_id=?',[data.nickname,data.userId],function(err,res){
+                if (err) throw err;
+                done(null,res);
+            });
+        },function(done){
+            connection.query('update user_info set user_phone=? where user_id=?',[data.phone,data.userId],function(err,res){
+                if (err) throw err;
+                done(null,res);
+            });
+        },function(done){
+            connection.query('update bullup_rank set user_nickname=? where user_id=?',[data.nickname,data.userId],function(err,res){
+                if (err) throw err;
+                done(null,res);
+            });
+        }
+    ],function(err,res){
+        if (err) throw err;
+        callback(res);
+    });
+}
 
 //---------------------------------------添加好友关系-------------------------------------//
 exports.addFriendRelationship = function(userId1, userId2){
@@ -39,8 +101,21 @@ exports.findUserByNickname = function(nickname, callback) {
     });
 }
 
+exports.findPhoneNumber = function(phone, callback) {
+    connection.query('select * from `user_info` where user_phone=?', [phone], function (err, results){
+        if (err) throw err;
+        callback(results[0]);
+    });
+}
+
+// exports.findUserByCode  = function(code, callback) {
+//     connection.query('select * from `user_info` where user_mail=?', [code], function (err, results){
+//         if (err) throw err;
+//         callback(results[0]);
+//     });
+// }
 exports.findUserByCode  = function(code, callback) {
-    connection.query('select * from `user_info` where user_mail=?', [code], function (err, results){
+    connection.query('select * from `user_base` where user_account=?', [code], function (err, results){
         if (err) throw err;
         callback(results[0]);
     });
@@ -61,7 +136,7 @@ exports.findAllWithdrawInfo = function(callback) {
 }
 //--------------处理同意提现，将状态改为TRUE------------------------
 exports.setStatusTrue = function(data,callback) {
-    connection.query("update bullup_bankcard_info set bullup_bank_state='已完成' where bullup_payment_account_id=?",[data.payId],function (err, results){
+    connection.query("update bullup_bankcard_info set bullup_bank_state='已完成' where bullup_withdraw_id=?",[data.payId],function (err, results){
         if (err) throw err;
         callback(results);
     });
@@ -1022,7 +1097,7 @@ exports.insertFeedback=function(result,callback){
    // console.log(userId);
     async.waterfall([
         function(callback){
-            connection.query('insert into bullup_feedback (user_id,user_account,user_feedback_content,user_feedback_name,user_feedback_email) values (?,?,?,?,?)',[result.UserId,result.account,result.textarea1,result.name,result.email],function(err,results){
+            connection.query('insert into bullup_feedback (user_id,user_account,user_feedback_content,user_feedback_name,user_feedback_email) values (?,?,?,?,?)',[result.userId,result.account,result.textarea1,result.name,result.email],function(err,results){
               if (err) throw err;
               callback(null,results);      
             });
@@ -1039,8 +1114,8 @@ exports.insertFeedback=function(result,callback){
 exports.insertBankInfo = function(bankInfo, callback) {
     async.parallel([
         function(done){
-            connection.query('insert into bullup_bankcard_info(user_id,bullup_bank_cardnumber,Bullup_bank_expiremonth,Bullup_bank_expireyear,Bullup_bank_country,Bullup_bank_firstname,Bullup_bank_lastname,Bullup_bank_areacode,Bullup_bank_phone,Bullup_bank_money,Bullup_bank_email,Bullup_bank_companyname,Bullup_bank_streetaddress,Bullup_bank_apt_suite_bldg,Bullup_bank_zipcode,Bullup_bank_cvc) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-            [bankInfo.userId,bankInfo.cardnumber,bankInfo.exptremonth,bankInfo.exptreyear,bankInfo.country,bankInfo.firstname,bankInfo.lastname,bankInfo.areacode,bankInfo.phone,bankInfo.money,bankInfo.email,bankInfo.companyname,bankInfo.streetaddress,bankInfo.apt_suite_bldg,bankInfo.zipcode,bankInfo.cvc], function (err, results){
+            connection.query('insert into bullup_bankcard_info(user_id,bullup_bank_cardnumber,bullup_bank_firstname,bullup_bank_lastname,bullup_bank_areacode,bullup_bank_phone,bullup_bank_money,bullup_bank_email,bullup_bank_streetaddress,bullup_bank_apt_suite_bldg,bullup_bank_zipcode,bullup_bank_cvc) values (?,?,?,?,?,?,?,?,?,?,?,?)',
+            [bankInfo.userId,bankInfo.cardnumber,bankInfo.firstname,bankInfo.lastname,bankInfo.areacode,bankInfo.phone,bankInfo.money,bankInfo.email,bankInfo.streetaddress,bankInfo.apt_suite_bldg,bankInfo.zipcode,bankInfo.cvc], function (err, results){
                if (err) throw err;                                                                                                                                                                                                                             
                done(err,results);
            });

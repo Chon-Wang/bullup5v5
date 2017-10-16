@@ -1,6 +1,6 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://699d4459.ngrok.io');
-//var socket = io.connect('http://127.0.0.1:3000');
+//var socket = io.connect('http://699d4459.ngrok.io');
+var socket = io.connect('http://127.0.0.1:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 var radar_chart = require('./js/generate_radar.js');
@@ -152,6 +152,11 @@ socket.on('feedback', function (feedback) {
         case 'ANALYSISDATARESULT':
             handleAnalysisDataResult(feedback);
             break;
+        //--------邀请码信息------------
+        case 'INVITEDCODERESULT':
+            handleInvitedCodeResult(feedback);
+            break;
+        //--------LOLAPIKey更新结果----------、
         case 'LOLUPDATERESULT':
             handleLOLApiUpdateResult(feedback);
             break;
@@ -164,7 +169,9 @@ socket.on('feedback', function (feedback) {
         case 'ICONUPDATERESULT':
             handleIconUpdateResult(feedback);
             break;  
-        //--------LOLAPIKey更新结果----------、
+        case 'UPDATEINFORESULT':
+            handleUpdateInfoResult(feedback);
+            break;
         }
 });
 
@@ -469,6 +476,8 @@ function handleLoginResult(feedback) {
             // 打开
             $("#log_modal").css("display", "block");
             $('#system_menu').html(temp);
+
+            $('#router_starter').click();
         });
     } else if (feedback.errorCode == 1) {
         // 登录失败
@@ -524,6 +533,12 @@ function handleLOLBindResult(feedback){
     }   
     bullup.alert(feedback.extension.tips);
 }
+
+//用户修改信息
+function handleUpdateInfoResult(feedback){
+    bullup.alert(feedback.text);
+}
+
 //处理提现申请及信息入库
 function handleBankInfo(feedback){
     bullup.alert(feedback.text);
@@ -681,7 +696,16 @@ function handleAnalysisDataResult(feedback){
     });
     $('#main-view').html(analysisDataHtml);
 }
-    
+ 
+//邀请码信息
+function handleInvitedCodeResult(feedback){
+    var tempData = feedback.extension.data;
+    alert(tempData[0].user_nickname);
+    var handleInvitedCodeHtml = bullup.loadSwigView('swig_admin_invitedCode.html',{
+        dataSource:{data:tempData} 
+    });
+    $('#main-view').html(handleInvitedCodeHtml);
+}
 
 function handleRegistResult(feedback){
     bullup.alert(feedback.text);
