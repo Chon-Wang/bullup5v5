@@ -380,26 +380,26 @@ exports.handleInvitedCode = function (socket) {
     socket.on('getInvitedCodeData',function () {
         // console.log('bankInfo:'+bank.firstname);
         // logger.listenerLog('changeInfo');
-        dbUtil.getInvitedInfo(function(res){
-            console.log("resResult"+JSON.stringify(res));
-            //console.log(res);
-            if (!res) {
-                socketProxy.stableSocketEmit(socket,'feedback', {
-                    errorCode: 1,
-                    text: '查询失败，请稍后重试',
-                    type: 'INVITEDCODERESULT',
-                    extension: null
-                });
-            } else {
-                socketProxy.stableSocketEmit(socket,'feedback', {
-                    errorCode: 0,
-                    text: '查询成功,请刷新页面',
-                    type: 'INVITEDCODERESULT',
-                    extension: {
-                        data:res
-                    }
-                });
-            }
-        });
+        // dbUtil.getInvitedInfo(function(res){
+        //     console.log("resResult"+JSON.stringify(res));
+        //     //console.log(res);
+        //     if (!res) {
+        //         socketProxy.stableSocketEmit(socket,'feedback', {
+        //             errorCode: 1,
+        //             text: '查询失败，请稍后重试',
+        //             type: 'INVITEDCODERESULT',
+        //             extension: null
+        //         });
+        //     } else {
+        //         socketProxy.stableSocketEmit(socket,'feedback', {
+        //             errorCode: 0,
+        //             text: '查询成功,请刷新页面',
+        //             type: 'INVITEDCODERESULT',
+        //             extension: {
+        //                 data:res
+        //             }
+        //         });
+        //     }
+        // });
     });
 }

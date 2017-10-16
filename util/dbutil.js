@@ -1106,7 +1106,20 @@ exports.insertFeedback=function(result,callback){
         callback(res)
     });
 }
-
+//反馈信息
+exports.insertFeedback=function(result,callback){
+    // console.log(userId);
+     async.waterfall([
+         function(callback){
+             connection.query('insert into bullup_feedback (user_id,user_account,user_feedback_content,user_feedback_name,user_feedback_email) values (?,?,?,?,?)',[result.userId,result.account,result.textarea1,result.name,result.email],function(err,results){
+               if (err) throw err;
+               callback(null,results);      
+             });
+         }       
+     ],function(err,res){
+         callback(res)
+     });
+ }
 /**
  * 收集银行信息,提现申请入库
  * @param getBankInfo 收集信息

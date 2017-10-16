@@ -625,3 +625,29 @@ exports.insertFeedbackMessage=function(socket){
         });
     })
 }
+
+exports.insertFeedbackMessage=function(socket){
+    socket.on('feedbackMessage',function(result){
+        console.log('result:'+JSON.stringify(result)); 
+        logger.listenerLog('feedbackMessage');
+        dbUtil.insertFeedback(result,function(res){
+            if(!res){
+                socketProxy.stableSocketEmit(socket, 'feedback',{
+                //console.log('result:'+JSON.stringify(result)); 
+                //logger.listenerLog('feedbackMessage');
+                    errorCode:1,
+                    text:'反馈失败,请稍后重试',
+                    type:'FEEDBACKMESSAGE',
+                    extension:null
+                });
+            }else{
+                socketProxy.stableSocketEmit(socket, 'feedback',{
+                    errorCode:0,
+                    text:'反馈成功，请耐心等待处理',
+                    type:'FEEDBACKMESSAGE',
+                    extension:null
+                });
+            }
+        });
+    })
+}
