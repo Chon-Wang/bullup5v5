@@ -130,30 +130,24 @@ stripeProxy.recharge();
 timmer.autoUpdateRankList(24 * 3600 * 1000);
 io.listen(3000);
 
-
-
-
 process.on('uncaughtException', function (err) {
     logger.logErrToFile("./logs/errors.txt", "append", err);
     console.log(String(err));
     if(err instanceof Error){
-
+        
     }else if(err instanceof TypeError){
-
+        logger.logErrToFile("./logs/type_errors.txt", "append", err);
     }else if(err instanceof SyntaxError){
-
+        logger.logErrToFile("./logs/syntax_errors.txt", "append", err);
     }else if(err instanceof ReferenceError){
-
+        logger.logErrToFile("./logs/reference_errors.txt", "append", err);
     }else if(err instanceof EvalError){
-
+        logger.logErrToFile("./logs/eval_errors.txt", "append", err);
     }else if(err instanceof RangeError){
-
+        logger.logErrToFile("./logs/range_errors.txt", "append", err);
     }else if(err instanceof URIError){
-
+        logger.logErrToFile("./logs/uri_errors.txt", "append", err);
     }else{
 
     }
 });
-
-
-

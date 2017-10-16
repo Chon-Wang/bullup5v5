@@ -199,6 +199,8 @@ exports.handleInviteFriend = function (socket) {
         logger.listenerLog('message');
         if (socketProxy.isUserOnline(inviteMessage.userId)) {
             var dstSocket = socketProxy.mapUserIdToSocket(inviteMessage.userId);
+            inviteMessage.messageToken = 'message' + inviteMessage.userId + (new Date()).getTime();
+
             socketProxy.stableSocketEmit(dstSocket, 'message', inviteMessage);
         } else {
             socketProxy.stableSocketEmit(socket, 'feedback', {
@@ -451,7 +453,8 @@ exports.handleAddFriendRequest = function(socket){
                     'userInfo':  userInfo,
                     'invitedUserInfo': invitedUserInfo,
                     'messageType': 'addFriend',
-                    'messageText': '添加好友'
+                    'messageText': '添加好友',
+                    'messageToken': 'message' + userInfo.name + (new Date()).getTime()
                 });
                 flag = true;
                 break;

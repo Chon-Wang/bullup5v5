@@ -1,5 +1,6 @@
 var io = require('socket.io-client');
-var socket = io.connect('http://67.216.196.197:3000');
+//var socket = io.connect('http://699d4459.ngrok.io');
+var socket = io.connect('http://127.0.0.1:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 var radar_chart = require('./js/generate_radar.js');
@@ -169,9 +170,21 @@ socket.on('feedback', function (feedback) {
 
 socket.on('message', function(message){
     socket.emit('tokenData', message.token);
+
+    if(message.messageToken == undefined){
+        var err;
+        throw err;
+    }else{
+        for(messageIndex in messageInfo){
+            if(message.messageToken == messageInfo[messageIndex].messageToken){
+                return;
+            }
+        }
+    }
+
     switch(message.messageType){
         case 'invitedFromFriend':
-            handleInviteFromFriend(message);
+            handleInviteFromFriend(message); 
             break;
         case 'inviteBattle':
             handleBattleInviteRequest(message);
@@ -308,6 +321,10 @@ socket.on('lolRoomEstablish', function (lolRoom) {
             $('#component_collapsible').collapsible('open', 0);
             $('#component_collapsible').collapsible('open', 1);
             $('#component_collapsible').collapsible('open', 2);
+            $('#my_collapsible').collapsible('open', 3);
+            $('#my_collapsible').collapsible('open', 4);
+            $('#component_collapsible').collapsible('open', 3);
+            $('#component_collapsible').collapsible('open', 4);
             //////////////////////////////////////
             //自动创建房间
             //auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
@@ -335,6 +352,10 @@ socket.on('lolRoomEstablish', function (lolRoom) {
             $('#component_collapsible').collapsible('open', 0);
             $('#component_collapsible').collapsible('open', 1);
             $('#component_collapsible').collapsible('open', 2);
+            $('#my_collapsible').collapsible('open', 3);
+            $('#my_collapsible').collapsible('open', 4);
+            $('#component_collapsible').collapsible('open', 3);
+            $('#component_collapsible').collapsible('open', 4);
         }
         //////////////////////////////////////
     }
@@ -470,6 +491,8 @@ function handleFeedback(feedback) {
 function handleRankList(rankList){
     var strengthRankList = rankList.strengthRankList;
     var wealthRankList = rankList.wealthRankList;
+    strengthRankList.rankList.sort(createCompareFunction("bullup_strength_score"));
+    wealthRankList.rankList.sort(createCompareFunction("bullup_wealth_sum"));
     var rank_list = bullup.loadSwigView('swig_rank.html', {
         strengthRankList: strengthRankList.rankList,
         wealthRankList: wealthRankList.rankList,
@@ -478,6 +501,20 @@ function handleRankList(rankList){
     });
     $('.content').html(rank_list);
     $('ul.tabs').tabs();
+}
+
+function createCompareFunction(propertyName){
+    return function(object1,object2){
+        var value1 = object1[propertyName];
+        var value2 = object2[propertyName];
+        if(value1>value2){
+            return -1;
+        } else if(value1<value2){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }
 
 function handleLOLBindResult(feedback){

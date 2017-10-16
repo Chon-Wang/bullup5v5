@@ -26,6 +26,10 @@ $(document).ready(function(){
             $('#component_collapsible').collapsible('open', 0);
             $('#component_collapsible').collapsible('open', 1);
             $('#component_collapsible').collapsible('open', 2);
+            $('#my_collapsible').collapsible('open', 3);
+            $('#my_collapsible').collapsible('open', 4);
+            $('#component_collapsible').collapsible('open', 3);
+            $('#component_collapsible').collapsible('open', 4);
 
         }else if(teamInfo != null){
             //回到对战大厅页面
@@ -84,8 +88,9 @@ $(document).ready(function(){
                 room: roomInfo
             });
             var teamates = [];
-            var captain = roomInfo.captain;
-            teamates.push(captain);
+            for(var participantIndex in roomInfo.participants){
+                teamates.push(roomInfo.participants[participantIndex]);
+            }
             var teamatesHtml = bullup.loadSwigView('swig_myroom_teamate.html', {
                 teamates : teamates
             });

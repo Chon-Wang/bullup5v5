@@ -32,6 +32,8 @@ exports.handleBattleInvite = function (socket) {
             message.messageText = '对战请求';
             message.name = challengerTeam.captain.name;
             //向host team发送挑战队伍信息
+            message.messageToken = 'message' + message.name + (new Date()).getTime();
+
             socketProxy.stableSocketEmit(dstSocket, 'message', message);
             //socketProxy.stableEmit();
         } else {
@@ -264,6 +266,9 @@ exports.handleBattleResult = function (io, socket){
                 //管理服务端的全局变量 队伍和对局
 
                 //组织通知双方队伍胜负结果的数据包
+                if(finishedBattle == null || finishedBattle.blueSide == undefined){
+                    return;
+                }
 
                 var resultPacket = {};
                 resultPacket.rewardType = finishedBattle.blueSide.rewardType;
@@ -271,7 +276,7 @@ exports.handleBattleResult = function (io, socket){
                 resultPacket.roomName = finishedBattle.blueSide.roomName;
                 resultPacket.winTeam = winTeam;
                 resultPacket.loseTeam = loseTeam;
-            
+                resultPacket.participants = lolResultPacket.participants
                 //算战力变化
                 var newScore = exports.strengthScoreChangedCalculation(winTeamStrengthScore, loseTeamStrengthScore);
                 var winScoreUpdateValue = newScore.newWinnerScore - winTeamStrengthScore;
