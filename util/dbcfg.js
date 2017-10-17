@@ -3,7 +3,8 @@ exports.server = {
     host: '67.216.196.197',
     user: 'root',
     password: '123456',
-    database: 'bullup'
+    database: 'bullup',
+    useConnectionPooling: true
 };
 
 exports.userTbl = {

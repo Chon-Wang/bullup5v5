@@ -25,7 +25,7 @@
 	{% if battle_res.own_team %}
 	  <div class="col s4">
 		<ul class="collection team-won">
-		  {% for memberIndex in battle_res.own_team %}
+		  {% for member in battle_res.own_team %}
 			<!-- loop for creating members' list -->
 			<li class="collection-item avatar">
 			  <img class="circle res-champ-img" alt="" src=""/>
@@ -40,8 +40,8 @@
 				</a>
 			  </div>
 
-			  <span class="title">{{ memberIndex.name }}</span>
-				<div>1/0/0</div>
+			  <span class="title">{{ member.name }}</span>
+				<div>{{ member.k }}/{{ member.d }}/{{ member.a }}</div>
 			</li>
 			
 		  {% endfor %}
@@ -106,7 +106,7 @@
 	{% if battle_res.rival_team %}
 		<div class="col s4">
 		<ul class="collection team-won">
-			{% for memberIndex in battle_res.rival_team %}
+			{% for member in battle_res.rival_team %}
 			<!-- loop for creating members' list -->
 			<li class="collection-item avatar">
 				<img class="circle res-champ-img" alt="" src=""/>
@@ -121,8 +121,8 @@
 				</a>
 				</div>
 
-				<span class="title">{{ memberIndex.name }}</span>
-				<div>1/0/0</div>
+				<span class="title">{{ member.name }}</span>
+				<div>{{ member.k }}/{{ member.d }}/{{ member.a }}</div>
 			</li>
 			
 			{% endfor %}

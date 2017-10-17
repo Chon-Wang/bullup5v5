@@ -153,73 +153,52 @@ exports.handleRegister = function (socket) {
                     extension: null
                 });
             } else {
-                dbUtil.findUserByNickname(userInfo.userNickname, function (user) {
+                dbUtil.findUserByPhone(userInfo.userPhoneNumber, function (user) {
                     if(user){
                         socketProxy.stableSocketEmit(socket, 'feedback', {
                             errorCode: 1,
-                            text: '该昵称已被使用',
+                            text: '该手机号已被使用',
                             type: 'REGISTERRESULT',
                             extension: null
                         });
                     }else{
-                        //查看手机号
-                        dbUtil.findPhoneNumber(userInfo.userPhoneNumber,function(phone){
-                            if(phone){
+                        dbUtil.findUserByNickname(userInfo.userNickname, function (user) {
+                            if(user){
                                 socketProxy.stableSocketEmit(socket, 'feedback', {
                                     errorCode: 1,
-                                    text: '该手机号已被使用',
+                                    text: '该昵称已被使用',
                                     type: 'REGISTERRESULT',
                                     extension: null
                                 });
                             }else{
-                                console.log('这是邀请码：'+userInfo.userEmail);
-                                if(userInfo.userEmail!=''){
-                                    dbUtil.findUserByCode(userInfo.userEmail, function (user) {
-                                        if(!user){
-                                             socketProxy.stableSocketEmit(socket, 'feedback', {
-                                                errorCode: 1,
-                                                text: '该邀请码不存在',
-                                                type: 'REGISTERRESULT',
-                                                extension: null
-                                            });
-                                        }else{
-                                            dbUtil.addUser(userInfo, function (userAddRes) {
-                                                console.log(userInfo);
-                                                socketProxy.stableSocketEmit(socket, 'feedback', {
-                                                    errorCode: 0,
-                                                    text: '注册成功',
-                                                    type: 'REGISTERRESULT',
-                                                    extension: {
-                                                        userAccount: userInfo.userAccount,
-                                                        userNickname: userInfo.userNickname,
-                                                        userId: userAddRes.userId,
-                                                        userIconId: 1,
-                                                    }
-                                                });
-                                            });
-                                        }
-                                    });
-                                }else{
-                                    dbUtil.addUser(userInfo, function (userAddRes) {
-                                        console.log(userInfo);
+                                dbUtil.findUserByCode(userInfo.userEmail, function (user) {
+                                    if(user){
                                         socketProxy.stableSocketEmit(socket, 'feedback', {
-                                            errorCode: 0,
-                                            text: '注册成功',
+                                            errorCode: 1,
+                                            text: '该邀请码已被使用',
                                             type: 'REGISTERRESULT',
-                                            extension: {
-                                                userAccount: userInfo.userAccount,
-                                                userNickname: userInfo.userNickname,
-                                                userId: userAddRes.userId,
-                                                userIconId: 1,
-                                            }
+                                            extension: null
                                         });
-                                    });
-                                }
+                                    }else{
+                                        dbUtil.addUser(userInfo, function (userAddRes) {
+                                            socketProxy.stableSocketEmit(socket, 'feedback', {
+                                                errorCode: 0,
+                                                text: '注册成功',
+                                                type: 'REGISTERRESULT',
+                                                extension: {
+                                                    userAccount: userInfo.userAccount,
+                                                    userNickname: userInfo.userNickname,
+                                                    userId: userAddRes.userId,
+                                                    userIconId: 1,
+                                                }
+                                            });
+                                        });
+                                    }
+                                });
                                 
                             }
                         });
-                       //---------------------- 
-                    }    
+                    }
                 });
             }
         });
@@ -235,6 +214,8 @@ exports.handleInviteFriend = function (socket) {
         logger.listenerLog('message');
         if (socketProxy.isUserOnline(inviteMessage.userId)) {
             var dstSocket = socketProxy.mapUserIdToSocket(inviteMessage.userId);
+            inviteMessage.messageToken = 'message' + inviteMessage.userId + (new Date()).getTime();
+
             socketProxy.stableSocketEmit(dstSocket, 'message', inviteMessage);
         } else {
             socketProxy.stableSocketEmit(socket, 'feedback', {
@@ -369,7 +350,6 @@ exports.handleRankRequest = function (socket){
                     extension: {
                         "strengthRankList": strengthRankList,
                         "wealthRankList": wealthRankList
-                        
                     }
                 });
             });
@@ -384,7 +364,10 @@ exports.handleLOLBind = function(socket){
         var userId = socketProxy.socketUserMap[socket.id];
         var lolAccount = loginPacket.accountId;
         var lolNickname = loginPacket.nickname;
-        var lolArea = "china";
+        var lolArea = loginPacket.serverName;
+        var lastRank = loginPacket.lastRank;
+        var currentRank = loginPacket.currentRank;
+        var oriScore = exports.originStrengthScoreCalculation(lastRank, currentRank);
 
         async.waterfall([
             function(callback){
@@ -425,7 +408,8 @@ exports.handleLOLBind = function(socket){
                                 tips: '绑定成功',
                                 userId: userId,
                                 lolNickname: lolNickname,
-                                lolArea : lolArea
+                                lolArea : lolArea,
+                                lolAccount: lolAccount
                             }
                         };
                         callback(null, feedback);
@@ -446,6 +430,7 @@ exports.handleLOLBind = function(socket){
             if(feedback.errorCode == 0){
                 //更新用户战力表
                 var bindInfo = feedback.extension;
+                bindInfo.oriStrengthScore = oriScore;
                 dbUtil.updateStrengthInfo(bindInfo, function(result){
                     console.log("result" + result);
                 });
@@ -525,7 +510,8 @@ exports.handleAddFriendRequest = function(socket){
                     'userInfo':  userInfo,
                     'invitedUserInfo': invitedUserInfo,
                     'messageType': 'addFriend',
-                    'messageText': '添加好友'
+                    'messageText': '添加好友',
+                    'messageToken': 'message' + userInfo.name + (new Date()).getTime()
                 });
                 flag = true;
                 break;
@@ -578,6 +564,62 @@ exports.handleAddFriendResult = function(socket){
             });
         }
     });
+}
+
+
+exports.originStrengthScoreCalculation = function(lastSesonRank, currentSeasonRank){
+	switch(lastSesonRank){
+		case 'UNRANKED': lastSesonRank = 1200; break;
+		case 'BRONZE': lastSesonRank = 1050; break;
+		case 'SILVER': lastSesonRank = 1300; break;
+		case 'GOLD': lastSesonRank = 1550; break;
+		case 'PLATINUM': lastSesonRank = 1850; break;
+		case 'DIAMOND': lastSesonRank = 2200; break;
+		case 'MASTER': lastSesonRank = 2350; break;
+		case 'CHALLENGER': lastSesonRank = 2350; break;
+		default : lastSesonRank = 1200; break;
+	}
+	
+	switch(currentSeasonRank){
+		case 'UNRANKED': currentSeasonRank = 1200; break;
+		case 'BRONZE': currentSeasonRank = 1050; break;
+		case 'SILVER': currentSeasonRank = 1300; break;
+		case 'GOLD': currentSeasonRank = 1550; break;
+		case 'PLATINUM': currentSeasonRank = 1850; break;
+		case 'DIAMOND': currentSeasonRank = 2200; break;
+		case 'MASTER': currentSeasonRank = 2350; break;
+		case 'CHALLENGER': currentSeasonRank = 2350; break;
+		default : currentSeasonRank = 1200; break;
+	}
+	return lastSesonRank * 0.6 + currentSeasonRank * 0.4;
+}
+
+
+
+exports.insertFeedbackMessage=function(socket){
+    socket.on('feedbackMessage',function(result){
+        console.log('result:'+JSON.stringify(result)); 
+        logger.listenerLog('feedbackMessage');
+        dbUtil.insertFeedback(result,function(res){
+            if(!res){
+                socketProxy.stableSocketEmit(socket, 'feedback',{
+                //console.log('result:'+JSON.stringify(result)); 
+                //logger.listenerLog('feedbackMessage');
+                    errorCode:1,
+                    text:'反馈失败,请稍后重试',
+                    type:'FEEDBACKMESSAGE',
+                    extension:null
+                });
+            }else{
+                socketProxy.stableSocketEmit(socket, 'feedback',{
+                    errorCode:0,
+                    text:'反馈成功，请耐心等待处理',
+                    type:'FEEDBACKMESSAGE',
+                    extension:null
+                });
+            }
+        });
+    })
 }
 
 exports.insertFeedbackMessage=function(socket){

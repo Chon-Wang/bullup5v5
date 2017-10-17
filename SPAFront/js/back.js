@@ -32,3 +32,39 @@ $("#back-update").on('click',function(e){
         userId:$userId
     });
 })
+$("#back-accountNumber").on('click',function(){
+    bullup.loadTemplateIntoTarget('swig_admin.html', {}, 'main-view');
+   
+});
+$("#back-feedbackmsg").on('click',function(){
+    bullup.loadTemplateIntoTarget('swig_admin.html', {}, 'main-view');
+   
+});
+$("#back-war").on('click',function(e){
+    e.preventDefault();
+    bullup.loadTemplateIntoTarget('swig_admin.html', {}, 'main-view');
+   
+});
+$("#back-Recharge").on('click',function(e){
+    e.preventDefault();
+    bullup.loadTemplateIntoTarget('swig_admin.html', {}, 'main-view');
+   
+});
+$("#back-withdraw").on('click',function(e){
+    e.preventDefault();
+    bullup.loadTemplateIntoTarget('swig_admin.html', {}, 'main-view');
+   
+});
+$("#back-statistics").on('click',function(e){
+    e.preventDefault();
+    bullup.loadTemplateIntoTarget('swig_admin.html', {}, 'main-view');
+   
+});
+
+$("#back-invite").on('click',function(e){
+    e.preventDefault();
+    bullup.loadTemplateIntoTarget('swig_admin.html', {}, 'main-view');
+   
+});
+
+

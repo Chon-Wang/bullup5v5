@@ -529,12 +529,19 @@
 
     $('#tooltipInner').append(getContent(step)).show();
 
-    $jpwTooltip.append(
-        '<span class="' + step.popup.position + '">&nbsp;</span>'
-    );
+    if(step.popup.position == "myleft"){
+        $jpwTooltip.append(
+          '<span class="left">&nbsp;</span>'
+      );
+    }else{
+        $jpwTooltip.append(
+          '<span class="' + step.popup.position + '">&nbsp;</span>'
+      );
+    }
+    
 
     switch (step.popup.position) {
-
+      
       case 'top':
         top = overlayHoleTop - ($jpwTooltip.height() + (arrow / 2)) +
             parseInt(step.popup.offsetVertical, 10) - 86;
@@ -580,12 +587,27 @@
             parseInt(step.popup.offsetArrowHorizontal, 10) :
             '';
         break;
+      case 'myleft':
+        top = 678;
+        left = 710;
+        arrowTop = arrow + parseInt(step.popup.offsetArrowVertical, 10);
+        arrowLeft = (step.popup.offsetArrowVertical) ?
+            parseInt(step.popup.offsetArrowHorizontal, 10) :
+            '';
+        break;
     }
-
-    $('#jpwTooltip span.' + step.popup.position).css({
-      'top': cleanValue(arrowTop),
-      'left': cleanValue(arrowLeft)
-    });
+    if(step.popup.position == "myleft"){
+      $('#jpwTooltip span.left').css({
+        'top': cleanValue(arrowTop),
+        'left': cleanValue(arrowLeft)
+      });
+    }else{
+      $('#jpwTooltip span.' + step.popup.position).css({
+        'top': cleanValue(arrowTop),
+        'left': cleanValue(arrowLeft)
+      });
+    }
+    
 
     $jpwTooltip.css({
       'top': cleanValue(top),
@@ -1033,7 +1055,7 @@
       // ID of the button
       jpwClose: {
         // Translation string for the button
-        i18n: '点击退出引导',
+        i18n: '退出引导',
         // Whether or not to show the button.  Can be a boolean value, or a
         // function which returns a boolean value
         show: true
