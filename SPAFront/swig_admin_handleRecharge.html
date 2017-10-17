@@ -46,24 +46,9 @@
 <a class="waves-effect waves-light btn" style="position: absolute;margin-top: 10px;right: 50px;" id="back-Recharge">返回</a>
 <script>$.getScript('./js/back.js');</script>
 <div>
-    <div class="row">
-		<div class="input-field col s6 offset-s3">
-		  <input id="search" type="text">
-		  <label>输入用户ID查询指定记录</label>
-		</div>
-        <div class="input-field col s3">
-        <a id = "query_btn" class="btn waves-effect waves-light">
-            <i class="fa fa-search" aria-hidden="true"></i>
-            搜索
-          </a>
-        </div>
-	  </div>
-
-</div>
-<div>
 <table id="tab" class="responsive-table centered">
     <thead>
-        <tr>
+        <tr style="background:#26a69a">
             <th>序号</th>
             <th>用户ID</th>
             <th>交易单号</th>
@@ -85,10 +70,6 @@
             <!-- <td>{{ key.bullup_bill_ }}</td> -->
             <td>{{ key.bullup_bill_time }}</td>
             <td>{{ key.bullup_bill_state }}</td>
-    
-            <td>
-                <a class="waves-effect waves-light btn-small unblock">有问题？</a>
-            </td>
         </tr>
         {% endfor %}
         {% endif %}

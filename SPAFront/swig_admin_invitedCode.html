@@ -46,30 +46,31 @@
 <a class="waves-effect waves-light btn" style="position: absolute;margin-top: 10px;right: 50px;" id="back-invite">返回</a>
 <script>$.getScript('./js/back.js');</script>
 <div>
-<table id="tab" class="responsive-table centered">
+<table id="tab" class="responsive-table">
     <thead>
-        <tr>
+        <tr style="background:#26a69a">
             <th>序号</th>
+            <th>邀请码</th>
             <th>用户ID</th>
             <th>账号</th>
             <th>昵称</th>
-            <th>真实姓名</th>
-            <th>*性别</th>
-            <th>已邀请人数</th>
+            <th>用户盈利(除本金)</th>
+            <th>平台盈利</th>
+        
         </tr>
     </thead>
     <tbody>
         {% for key in dataSource.data %}
         <tr class="keyRow">
             <td>{{ loop.index }}</td>
+            <td>{{ key.inviteCode }}</td>
             <td>{{ key.user_id }}</td>
             <td>{{ key.user_account }}</td>
             <td>{{ key.user_nickname }}</td>
-            <td></td>
-            <td></td>
-            <td>{{ key.total }}</td>
+            <td>{{ key.userGet }}</td>
+            <td>{{ key.companyGet }}</td> 
         </tr>
-        {% endfor %}
+       {% endfor %}
     </tbody>
 </table>
 </div>

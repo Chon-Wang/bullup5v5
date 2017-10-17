@@ -75,7 +75,7 @@
 					} 
 				}
 				
-				if($battleCount>10){
+				if($battleCount>=10){
 					if($bank_money!=null&&$bank_money!=0){
 						if(verifyCVC($bank_cvc)==true){
 							if(verifyName($name)==true){
