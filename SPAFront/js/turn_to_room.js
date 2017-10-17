@@ -10,6 +10,27 @@ $(document).ready(function(){
             $('#waiting-modal').css('display', 'none');    
             $('#team-detail-modal').css('display', 'none');    
             $('.modal-overlay').remove();
+
+            var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
+            var dataArray1 = [50,50,50,50,50,50];
+            var dataArray2 = [30,70,50,40,20,90];
+            bullup.generateRadar(dataArray1, dataArray2, labelArray, "战力对比", "teams-radar-chart");
+            var clock = $('.countdown-clock').FlipClock(60, {
+                // ... your options here
+                clockFace: 'MinuteCounter',
+                countdown: true
+            });
+            $('#my_collapsible').collapsible('open', 0);
+            $('#my_collapsible').collapsible('open', 1);
+            $('#my_collapsible').collapsible('open', 2);
+            $('#component_collapsible').collapsible('open', 0);
+            $('#component_collapsible').collapsible('open', 1);
+            $('#component_collapsible').collapsible('open', 2);
+            $('#my_collapsible').collapsible('open', 3);
+            $('#my_collapsible').collapsible('open', 4);
+            $('#component_collapsible').collapsible('open', 3);
+            $('#component_collapsible').collapsible('open', 4);
+
         }else if(teamInfo != null){
             //回到对战大厅页面
             for(var team in formedTeams){
@@ -67,8 +88,9 @@ $(document).ready(function(){
                 room: roomInfo
             });
             var teamates = [];
-            var captain = roomInfo.captain;
-            teamates.push(captain);
+            for(var participantIndex in roomInfo.participants){
+                teamates.push(roomInfo.participants[participantIndex]);
+            }
             var teamatesHtml = bullup.loadSwigView('swig_myroom_teamate.html', {
                 teamates : teamates
             });
@@ -89,6 +111,26 @@ $(document).ready(function(){
         
             $("#confirm_create_team_btn").click(function(){
                 console.log(roomInfo);
+                if(roomInfo.gameMode == 'match'){
+                    //bullup.alert("匹配中，请等待！");
+                    bullup.loadTemplateIntoTarget('swig_fightfor.html', {
+                        'participants': roomInfo.participants
+                    }, 'main-view');
+                    var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
+                    var dataArray1 = [50,50,50,50,50,50];
+                    bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
+                }
+
+                var teamStrengthScore = 0;
+                var teamParticipantsNum = 0;
+                for(var index in roomInfo.participants){
+                    teamStrengthScore += roomInfo.participants[index].strength.score;
+                    teamParticipantsNum++;
+                }
+                teamStrengthScore /= teamParticipantsNum;
+                roomInfo.teamStrengthScore = teamStrengthScore;
+                roomInfo.teamParticipantsNum = teamParticipantsNum;
+
                 socket.emit('establishTeam', roomInfo);
             });
         }

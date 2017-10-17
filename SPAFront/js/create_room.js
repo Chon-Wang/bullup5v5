@@ -29,6 +29,15 @@ $(document).ready(function(){
 				rewardType : $("#reward_type").val(),
 				rewardAmount : $("#reward_amount").val()
 			}
+			if(userInfo.lolAccountInfo == undefined || userInfo.lolAccountInfo == null){
+				bullup.alert("您还没有绑定LOL账号！");
+				return;
+			}
+			if(userInfo.wealth < room.rewardAmount){
+				bullup.alert("您的余额不足！请充值后再继续游戏！");
+				return;
+			}
+
 			socket.emit('roomEstablish', {
 				roomName: userInfo.name + (new Date).valueOf(),
 				captain: {

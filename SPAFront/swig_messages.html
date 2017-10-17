@@ -4,7 +4,7 @@
             <li>
                 <div class="collapsible-header"><i class="fa fa-handshake-o" aria-hidden="true"></i>{{ message.messageText }}</div>
                 <div class="collapsible-body">
-                    <span>{{ message.name }}邀请您加入一场约战比赛，赌金为{{ message.team.bet }}，比赛胜利条件是{% if message.team.rule = ‘push_crystal’ %}推掉水晶{% endif %},请问您是否加入队伍？</span>
+                    <span>{{ message.host.name }}邀请您加入一场约战比赛，赌金为{{ message.team.bet }}，比赛胜利条件是{% if message.team.rule = ‘push_crystal’ %}推掉水晶{% endif %},请问您是否加入队伍？</span>
                     <div class="right">
                     <a class="waves-effect waves-light btn">
                         <i id="message_{{loop.index - 1}}_accept_btn" class="message_accept_btn fa fa-check" aria-hidden="true"></i>

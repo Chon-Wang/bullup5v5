@@ -7,6 +7,8 @@ $(document).ready(function(){
         if(userInfo==null){
             bullup.alert("您没有登录，请登录!");
             //location.href = '#log_modal';
+        }else if(userInfo.lolAccountInfo == undefined){
+            bullup.alert("您没有绑定LOL账号，无法查看战力!");
         }else{
             socket.emit('pesonalCenterRequest',userInfo);
         }  

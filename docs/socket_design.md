@@ -182,7 +182,7 @@ var inivitFeedback = {
 ## 确认创建队伍
 确认创建队伍发送的数据包
 ```js
-var establishTeamPacket = {
+var Packet = {
     teamName: 'hudsonjoe134124',
     userId: 13
 }
