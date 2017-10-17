@@ -1,6 +1,5 @@
 var io = require('socket.io-client');
-//var socket = io.connect('http://699d4459.ngrok.io');
-var socket = io.connect('http://127.0.0.1:3000');
+var socket = io.connect('http://18.220.130.245:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 var radar_chart = require('./js/generate_radar.js');
@@ -420,7 +419,10 @@ socket.on('battleResult', function(resultPacket){
         battleResultData.rival_team = resultPacket.winTeam;
     }
     battleResultData.wealth_change = resultPacket.rewardAmount;
-    console.log(JSON.stringify(battleResultData));
+    //console.log(JSON.stringify(battleResultData));
+    
+
+
     var battleResHtml = bullup.loadSwigView('./swig_battleres.html', {
         battle_res: battleResultData
     });
