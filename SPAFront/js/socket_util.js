@@ -22,7 +22,7 @@ socket.on('success', function (data) {
 
     socket.emit('tokenData', data.token);
 
-    logger.listenerLog('success');
+    logger.listenerLog('success'); 
     console.log(data);
 });
 
