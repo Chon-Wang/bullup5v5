@@ -9,18 +9,35 @@
         var $account = userInfo.name;
         var $userId = userInfo.userId;
         //alert($account);
-        if(userInfo==null){
-            bullup.alert("请您先登录");
-        }else{
-            socket.emit('feedbackMessage',{
-                name:$name,
-                email:$email,
-                textarea1:$radioReason+',其他:'+$textarea1,
-                userId:$userId,
-                account:$account
-            });
+
+        function verifyemail(str){  
+            var reg=/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;  
+            if( reg.test(str) ){  
+                return true;  
+            }else{  
+                return false;  
+            } 
         }
-        $('#fankui').modal('close');
-        // alert('反馈已提交，请耐心等待处理');
+
+        if(verifyemail($email)==true){
+            if($name.length<=15&&$name!=""){
+                if($textarea1.length<=140&&$textarea1!=""){
+                    socket.emit('feedbackMessage',{
+                        name:$name,
+                        email:$email,
+                        textarea1:$radioReason+',其他:'+$textarea1,
+                        userId:$userId,
+                        account:$account
+                    });
+                    $('#fankui').modal('close');
+                }else{
+                    alert('请填写信息且字数小于140字');
+                }
+            }else{
+                alert('请填写正确的姓名');
+            } 
+        }else{
+            alert('填写邮箱');
+        }
     });
   });

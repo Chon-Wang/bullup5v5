@@ -65,7 +65,7 @@ $().ready(function () {
 			if(verifyHandset($tel)==true){
 				if(verifyPassword($userPassword)==true){
 					if ($userPassword == $confirmedPwd) {
-						
+						if($userNickname.length<=15){
 							socket.emit('register', {
 								userAccount: $userAccount,
 								userPassword: $userPassword,
@@ -73,7 +73,9 @@ $().ready(function () {
 								userPhoneNumber: $tel,
 								userEmail: $email
 							});
-					
+						}else{
+							alert('昵称不得超过15字');
+						}
 					} else {
 						alert("两次密码输入不一致!");
 					}
@@ -85,8 +87,6 @@ $().ready(function () {
 			}
 		}else{
 			alert('请输入正确的邮箱格式');
-		}
-
-		
+		}	
 	});
 });

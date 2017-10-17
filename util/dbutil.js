@@ -501,31 +501,44 @@ exports.findAnalysisData = function(callback){
 
 //------------------------------邀请码信息------------------------------
 exports.getInvitedInfo = function(callback){
-      async.waterfall([
-          function(callback){
-              connection.query('select user_mail,count(*) as total from user_info where user_mail<>"" group by user_mail',function(err,res){
+    async.waterfall([
+        function(callback){
+            connection.query('select a.user_id,a.user_account,a.user_nickname,b.user_mail from user_base as a inner join user_info as b on a.user_id=b.user_id where user_mail<>"" order by user_mail;',function(err,res){
                 if (err) throw err;
                 callback(null,res);
-              });
-          },function(res,callback){
-              connection.query('select user_id,user_account,user_nickname from user_base',function(err,res2){
-                  if (err) throw err;
-                  var data = [];
-                  for(var i=0;i<res2.length;i++){
-                      for(var j=0;j<res.length;j++){
-                          if(res2[i].user_account==res[j].user_mail){
-                              res2[i].total = res[j].total;
-                              data.push(res2[i]);
-                          }
-                      }
-                  }
-                  callback(null,data);
-              });
-          }
-      ],function(err,res){
+            });
+        },
+        function(res,callback){
+            var codeInfo = {};
+            async.eachSeries(res, function(baseInfo, errCb){
+                //console.log(baseInfo.user_nickname);
+                connection.query('select sum(bullup_battle_bet)-sum(bullup_battle_bet)*2*0.1 as userGet,sum(bullup_battle_bet)*2*0.1 as companyGet from bullup_battle_record where bullup_battle_paticipants_red like ? and bullup_battle_result="红方赢" or bullup_battle_paticipants_blue like ? and bullup_battle_result="蓝方赢"',['%'+baseInfo.user_nickname+'%','%'+baseInfo.user_nickname+'%'],function(err, row) {
+                    if (err) throw err;
+                    (codeInfo[baseInfo.user_id]) = {};
+                    (codeInfo[baseInfo.user_id]).user_id = baseInfo.user_id;
+                    (codeInfo[baseInfo.user_id]).user_account = baseInfo.user_account;
+                    (codeInfo[baseInfo.user_id]).user_nickname = baseInfo.user_nickname;
+                    (codeInfo[baseInfo.user_id]).inviteCode = baseInfo.user_mail;
+                    (codeInfo[baseInfo.user_id]).userGet = row[0].userGet;
+                    (codeInfo[baseInfo.user_id]).companyGet = row[0].companyGet;
+                    //console.log("resResult"+JSON.stringify(row));
+                    errCb();
+                });
+            },function(errCb){
+                callback(null, codeInfo);
+            });
+        }
+    ],function(err,res){
           if (err) throw err;
-          callback(res);
-      });
+          var codeArray = new Array();
+          for(obj in res){
+            codeArray.push(res[obj]);
+          }
+          codeArray.sort(function(x,y){
+              return x.inviteCode < y.inviteCode ? 1 : -1;
+          });
+          callback(codeArray);
+    });
 }
 
 exports.findUserById = function(userId, callback) {

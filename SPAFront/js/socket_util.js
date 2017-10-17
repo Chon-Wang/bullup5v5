@@ -633,7 +633,8 @@ function handleAnalysisDataResult(feedback){
 //邀请码信息
 function handleInvitedCodeResult(feedback){
     var tempData = feedback.extension.data;
-    alert(tempData[0].user_nickname);
+    console.log(tempData);
+    //alert(tempData[0]);
     var handleInvitedCodeHtml = bullup.loadSwigView('swig_admin_invitedCode.html',{
         dataSource:{data:tempData} 
     });

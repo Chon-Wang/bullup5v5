@@ -378,11 +378,8 @@ exports.handleAnalysis = function (socket) {
 */
 exports.handleInvitedCode = function (socket) {
     socket.on('getInvitedCodeData',function () {
-        // console.log('bankInfo:'+bank.firstname);
-        // logger.listenerLog('changeInfo');
         dbUtil.getInvitedInfo(function(res){
             console.log("resResult"+JSON.stringify(res));
-            //console.log(res);
             if (!res) {
                 socketProxy.stableSocketEmit(socket,'feedback', {
                     errorCode: 1,

@@ -584,26 +584,22 @@ exports.insertFeedbackMessage=function(socket){
     socket.on('feedbackMessage',function(result){
         console.log('result:'+JSON.stringify(result)); 
         logger.listenerLog('feedbackMessage');
-        dbUtil.insertFeedback(result.UserId,result.textarea1,result.name,result.email,function(res){
-            if(result.textarea1==""||result.name==""||result.email==""){
+        dbUtil.insertFeedback(result,function(res){
+            if(!res){
                 socketProxy.stableSocketEmit(socket, 'feedback',{
                 //console.log('result:'+JSON.stringify(result)); 
                 //logger.listenerLog('feedbackMessage');
                     errorCode:1,
-                    text:'反馈失败,请输入反馈信息',
+                    text:'反馈失败,请稍后重试',
                     type:'FEEDBACKMESSAGE',
                     extension:null
                 });
             }else{
                 socketProxy.stableSocketEmit(socket, 'feedback',{
                     errorCode:0,
-                    text:'反馈成功',
+                    text:'反馈成功，请耐心等待处理',
                     type:'FEEDBACKMESSAGE',
-                    extension:{
-                        Msgname:result.name,
-                        Msgemail:result.name,
-                        Msgtextarea1:result.textarea1
-                    }
+                    extension:null
                 });
             }
         });
