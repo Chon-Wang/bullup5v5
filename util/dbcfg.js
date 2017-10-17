@@ -11,7 +11,7 @@ exports.server = {
     host:'18.220.130.245',
     user: 'root',
     password: '1234',
-    database: 'test',
+    database: 'bullup',
     useConnectionPooling: true
 };
 
