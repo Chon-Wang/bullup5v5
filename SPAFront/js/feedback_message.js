@@ -20,7 +20,7 @@ $().ready(function () {
   
           if(verifyemail($email)==true){
               if($name.length<=15&&$name!=""){
-                  if($textarea1.length<=140&&$textarea1!=""){
+                  if($textarea1.length<=140 && $textarea1!=""){
                       socket.emit('feedbackMessage',{
                           name:$name,
                           email:$email,

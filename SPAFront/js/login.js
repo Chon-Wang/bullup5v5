@@ -74,7 +74,7 @@ $().ready(function () {
 		}
 		function verifyHandset(str) {
 			//中国手机号  
-			var reg = /^(\+86)|(86)?1[3,5,8]{1}[0-9]{1}[0-9]{8}$/;  
+			var reg = /^(\+86)|(86)?1[3,5,7,8]{1}[0-9]{1}[0-9]{8}$/;  
 			if( reg.test(str)) {  
 				return true;  
 			} else {  
@@ -116,25 +116,25 @@ $().ready(function () {
 										userEmail: $email
 									});
 								}else{
-									bullup.alert("昵称不能为空且小于15字");
+									alert("昵称不能为空且小于15字");
 								}
 							}else{
-								bullup.alert("请输入邀请码！");
+								alert("请输入邀请码！");
 							}
 						}else{
-							bullup.alert("请仔细阅读并同意用户协议！");
+							alert("请仔细阅读并同意用户协议！");
 						}
 					} else {
-						bullup.alert("两次密码输入不一致!");
+						alert("两次密码输入不一致!");
 					}
 				}else{
-					bullup.alert('请输入6到16位的字母或者数字');
+					alert('请输入6到16位的字母或者数字的密码');
 				}
 			}else{
-				bullup.alert('请输入正确的手机号码')
+				alert('请输入正确的手机号码')
 			}
 		}else{
-			bullup.alert('请输入正确的邮箱格式');
+			alert('请输入正确的邮箱格式');
 		}
 
 		
