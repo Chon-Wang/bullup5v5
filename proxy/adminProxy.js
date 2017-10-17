@@ -378,7 +378,6 @@ exports.handleAnalysis = function (socket) {
 */
 exports.handleInvitedCode = function (socket) {
     socket.on('getInvitedCodeData',function () {
-<<<<<<< HEAD
         dbUtil.getInvitedInfo(function(res){
             console.log("resResult"+JSON.stringify(res));
             if (!res) {
@@ -399,30 +398,5 @@ exports.handleInvitedCode = function (socket) {
                 });
             }
         });
-=======
-        // console.log('bankInfo:'+bank.firstname);
-        // logger.listenerLog('changeInfo');
-        // dbUtil.getInvitedInfo(function(res){
-        //     console.log("resResult"+JSON.stringify(res));
-        //     //console.log(res);
-        //     if (!res) {
-        //         socketProxy.stableSocketEmit(socket,'feedback', {
-        //             errorCode: 1,
-        //             text: '查询失败，请稍后重试',
-        //             type: 'INVITEDCODERESULT',
-        //             extension: null
-        //         });
-        //     } else {
-        //         socketProxy.stableSocketEmit(socket,'feedback', {
-        //             errorCode: 0,
-        //             text: '查询成功,请刷新页面',
-        //             type: 'INVITEDCODERESULT',
-        //             extension: {
-        //                 data:res
-        //             }
-        //         });
-        //     }
-        // });
->>>>>>> edd66fdafd45ec6f941bcd62127210122188afca
     });
 }
