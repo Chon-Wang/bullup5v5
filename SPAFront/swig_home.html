@@ -655,7 +655,7 @@
 		<div id="coollap" class="modal" style="background-color: #455a64;width:26%;overflow: hidden;height: 70px;">
 			<div class="row">
 					<div class="input-field col s6" style="width:70%;float:left;margin-top:12px;">
-					<input style="color:#fff;" value="" id="first_name2" type="text" class="validate">
+					<input style="color:#fff;" value="" id="first_name2" maxlength="15" type="text" class="validate">
 					<label class="active" for="first_name2">对方昵称</label>
 					</div>
 					<a id="confirm_add_friend_btn" class="btn waves-effect teal lighten-2 remove-a">添加</a>
@@ -993,7 +993,7 @@
 				});
 				$("#country").change();
 				//监听取值
-				$("button").click(function(){
+				$("#register_btn").click(function(){
 					console.log($("#country").val()+'-'+$("#province").val()+'-'+$("#city").val());
 				});
 			</script>
