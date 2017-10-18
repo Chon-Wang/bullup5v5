@@ -138,40 +138,51 @@ exports.handleRegister = function (socket) {
                     extension: null
                 });
             } else {
-                dbUtil.findUserByNickname(userInfo.userNickname, function (user) {
+                dbUtil.findUserByPhone(userInfo.userPhoneNumber, function (user) {
                     if(user){
                         socketProxy.stableSocketEmit(socket, 'feedback', {
                             errorCode: 1,
-                            text: '该昵称已被使用',
+                            text: '该手机号已被使用',
                             type: 'REGISTERRESULT',
                             extension: null
                         });
                     }else{
-                        dbUtil.findUserByCode(userInfo.userEmail, function (user) {
+                        dbUtil.findUserByNickname(userInfo.userNickname, function (user) {
                             if(user){
                                 socketProxy.stableSocketEmit(socket, 'feedback', {
                                     errorCode: 1,
-                                    text: '该邀请码已被使用',
+                                    text: '该昵称已被使用',
                                     type: 'REGISTERRESULT',
                                     extension: null
                                 });
                             }else{
-                                dbUtil.addUser(userInfo, function (userAddRes) {
-                                    socketProxy.stableSocketEmit(socket, 'feedback', {
-                                        errorCode: 0,
-                                        text: '注册成功',
-                                        type: 'REGISTERRESULT',
-                                        extension: {
-                                            userAccount: userInfo.userAccount,
-                                            userNickname: userInfo.userNickname,
-                                            userId: userAddRes.userId,
-                                            userIconId: 1,
-                                        }
-                                    });
+                                dbUtil.findUserByCode(userInfo.userEmail, function (user) {
+                                    if(user){
+                                        socketProxy.stableSocketEmit(socket, 'feedback', {
+                                            errorCode: 1,
+                                            text: '该邀请码已被使用',
+                                            type: 'REGISTERRESULT',
+                                            extension: null
+                                        });
+                                    }else{
+                                        dbUtil.addUser(userInfo, function (userAddRes) {
+                                            socketProxy.stableSocketEmit(socket, 'feedback', {
+                                                errorCode: 0,
+                                                text: '注册成功',
+                                                type: 'REGISTERRESULT',
+                                                extension: {
+                                                    userAccount: userInfo.userAccount,
+                                                    userNickname: userInfo.userNickname,
+                                                    userId: userAddRes.userId,
+                                                    userIconId: 1,
+                                                }
+                                            });
+                                        });
+                                    }
                                 });
+                                
                             }
                         });
-                        
                     }
                 });
             }
@@ -188,6 +199,8 @@ exports.handleInviteFriend = function (socket) {
         logger.listenerLog('message');
         if (socketProxy.isUserOnline(inviteMessage.userId)) {
             var dstSocket = socketProxy.mapUserIdToSocket(inviteMessage.userId);
+            inviteMessage.messageToken = 'message' + inviteMessage.userId + (new Date()).getTime();
+
             socketProxy.stableSocketEmit(dstSocket, 'message', inviteMessage);
         } else {
             socketProxy.stableSocketEmit(socket, 'feedback', {
@@ -280,7 +293,6 @@ exports.handleRankRequest = function (socket){
                     extension: {
                         "strengthRankList": strengthRankList,
                         "wealthRankList": wealthRankList
-                        
                     }
                 });
             });
@@ -441,7 +453,8 @@ exports.handleAddFriendRequest = function(socket){
                     'userInfo':  userInfo,
                     'invitedUserInfo': invitedUserInfo,
                     'messageType': 'addFriend',
-                    'messageText': '添加好友'
+                    'messageText': '添加好友',
+                    'messageToken': 'message' + userInfo.name + (new Date()).getTime()
                 });
                 flag = true;
                 break;

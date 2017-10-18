@@ -6,7 +6,9 @@ $(".message_accept_btn").on('click', function(e){
     messageAcceptBtnIdString = messageAcceptBtnIdString.substring(messageAcceptBtnIdString.indexOf('_') + 1);
     var messageIndexString = messageAcceptBtnIdString.substring(0,messageAcceptBtnIdString.indexOf('_'));
     var message = messageInfo[Number.parseInt(messageIndexString)];
-
+    if(message == undefined){
+        return;
+    }
    
     switch(message.messageType){
         case 'invitedFromFriend':{
@@ -132,7 +134,10 @@ $(".message_reject_btn").on('click', function(e){
     messageRejectBtnIdString = messageRejectBtnIdString.substring(messageRejectBtnIdString.indexOf('_') + 1);
     var messageIndexString = messageRejectBtnIdString.substring(0,messageRejectBtnIdString.indexOf('_'));
     var message = messageInfo[Number.parseInt(messageIndexString)];
-   
+    if(message == undefined){
+        return;
+    }
+
     switch(message.messageType){
         case 'invitedFromFriend':{
             var inviteResult = {
@@ -155,6 +160,7 @@ $(".message_reject_btn").on('click', function(e){
             //删除消息
             messageInfo.splice(Number.parseInt(messageIndexString), 1);
             //console.log(JSON.stringify(messageInfo[Number.parseInt(messageIndexString)]));
+            $('#message_center_nav').click();
             break;
         }
 

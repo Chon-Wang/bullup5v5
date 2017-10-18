@@ -425,6 +425,12 @@ exports.findAnalysisData = function(callback){
     })
 }
 
+exports.findUserByPhone = function(userPhoneNumber, callback){
+    connection.query('select * from `user_info` where user_phone=?', [userPhoneNumber], function (err, results, fields) {
+        if (err) throw err;
+        callback(results[0]);
+    });
+}
 
 exports.findUserById = function(userId, callback) {
     async.waterfall([
@@ -508,7 +514,6 @@ exports.findUserIconById = function(userId, callback){
         if (err) throw err;
         callback(results[0]);
     });
-
 }
 
 exports.findStrengthInfoByUserId = function(userId, callback) {
@@ -536,10 +541,8 @@ exports.findFriendListByUserId = function(userId, callback) {
         var friendList = {};
         async.eachSeries(rows, function(row, errCb){
             exports.findUserById(row.friend_user_id, function(user) {
-                
                 // var online = require('../proxy/socketProxy').isUserOnline(user.user_id);
                 // var status = null;
-                
                 // //获取用户状态
                 // if (online) {
                 //     status = socketProxy.mapUserIdToSocket(user.user_id).status;
@@ -1058,6 +1061,9 @@ exports.insertBankInfo = function(bankInfo, callback) {
 }
 
 exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChangedValue){
+    if(newStrengthScore < 0){
+        newStrengthScore = 0;
+    }
     connection.query('select bullup_currency_amount from bullup_wealth where user_id = ?', [userId], (err, res) => {
         if(err)throw err;
         connection.query('update bullup_wealth set bullup_currency_amount = ? where user_id = ?', [parseInt(res[0].bullup_currency_amount) + parseInt(wealthChangedValue), userId], (err, res)=>{
