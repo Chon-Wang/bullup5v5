@@ -22,8 +22,13 @@
                 <img src="./media/user_icon/{{friend.avatarId}}.png">
             </p>
                 <p class="collap-p2">{{friend.name}}</p>
+                {% if friend.online=='true' %}
                 <div class="color-dot color-dot-green">
                 </div>
+                {% else %}
+                <div class="color-dot color-dot-red">
+                </div>
+                {% endif %}
             </div>
         </div>
         {% endfor %}

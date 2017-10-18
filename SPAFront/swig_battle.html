@@ -5,9 +5,10 @@
 </div>
 
 {% if teams %}
-  <!-- cycle through two teams, put  -->
+	<!-- cycle through two teams, put  -->
   {% for team in teams %}
 	<!-- For the first team -->
+
 	{% if loop.index % 3 == 1 %}
 	  <div class="row">
     {% endif %}

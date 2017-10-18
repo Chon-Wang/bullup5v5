@@ -47,7 +47,16 @@ exports.handleLogin = function (socket) {
                     },
                     function(userInfo, callback){
                         dbUtil.findFriendListByUserId(userInfo.userId, function (friendList) {
-                            userInfo.friendList = friendList;
+                            //定义一个空数组，用来保存根据状态排序后的信息
+                            var arr = new Array();
+                            for(obj in friendList){
+                                arr.push(friendList[obj]);
+                            }
+                            arr.sort(function(x,y){
+                                return x.online < y.online ? 1 : -1;
+                            });
+                            //console.log(arr);
+                            userInfo.friendList = arr;
                             callback(null, userInfo);
                         });
                     },

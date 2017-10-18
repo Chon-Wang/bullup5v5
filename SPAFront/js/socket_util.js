@@ -1,6 +1,6 @@
 var io = require('socket.io-client');
 //var socket = io.connect('http://699d4459.ngrok.io');
-var socket = io.connect('http://127.0.0.1:3000');
+var socket = io.connect('http://192.168.2.162:3000');
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
 var radar_chart = require('./js/generate_radar.js');
@@ -807,7 +807,7 @@ function handleTeamEstablishResult(feedback){
                     break;
                 }
             }
-
+            //room在队伍详情页
             var teamDetailsHtml = bullup.loadSwigView('swig_team_detail.html', {
                 team: room
             });
@@ -825,10 +825,10 @@ function handleTeamEstablishResult(feedback){
             //////////
         });
 		var pages = {
-			totalPage: 10,
-	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-	 		currentPage: 1
-		};
+            totalPage: 10,
+             pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+             currentPage: 1
+        };
 		//
 		var pagination = bullup.loadSwigView('swig_pagination.html', pages);
 		//		console.log(pagination);
