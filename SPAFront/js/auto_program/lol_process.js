@@ -3,7 +3,7 @@ var log = require("./logutil.js")
 var fs = require("fs");
 
 exports.grabLOLData = function(type, socket){
-    log.logToFile("D://temp_log.txt", "append", "grabbing");
+    //log.logToFile("D://temp_log.txt", "append", "grabbing");
     switch (type){
         case "login": {
             syncLogin(function(jsonStr){
