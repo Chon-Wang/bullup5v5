@@ -583,7 +583,8 @@ exports.addUser = function(userInfo, callback) {
             });
         },
         function(userInfo, callback){
-            connection.query('insert into `user_info` (user_id, user_phone, user_mail) values (?, ?, ?)', [userInfo.userId, userInfo.userPhoneNumber, userInfo.userEmail], function(err, row){
+            connection.query('insert into `user_info` (user_id, user_phone, user_mail,user_country,user_province,user_city) values (?, ?, ?, ?, ?, ?)', [userInfo.userId, userInfo.userPhoneNumber,userInfo.userEmail,userInfo.userCountry,userInfo.userProvince,userInfo.userCity], function(err, row){
+                
                 if(err) console.log(err);
                 callback(null, userInfo);
             });

@@ -23,6 +23,10 @@ $().ready(function () {
 		var $tel = $('#usr_tel').val();
 		var $email = $('#usr_email').val();
 		var agreeRules = $('#filled-in-box').is(':checked');
+		//获取国家、省会、城市值
+		var $country = $('#country').val();
+		var $city =$('#city').val();
+		var $province=$('#province').val();
 		// if(agreeRules != true){
 		// 	bullup.alert("请仔细阅读并同意用户协议！");
 		// 	return;
@@ -108,13 +112,33 @@ $().ready(function () {
 						if(agreeRules = true){
 							if($email != ""){
 								if($userNickname!=''&&$userNickname.length<=15){
+									//对选择国家的校验
+									if($country != ""){
+										//对选择城市的校验
+										if($city != ""){
+											//对选择省会的校验
+											if($province != ""){
 									socket.emit('register', {
 										userAccount: $userAccount,
 										userPassword: $userPassword,
 										userNickname: $userNickname,
 										userPhoneNumber: $tel,
-										userEmail: $email
+										userEmail: $email,
+										userCountry:$country,
+										userCity:$city,
+										userProvince:$province
 									});
+									}else{
+										alert("请选择省会！");
+									}
+										
+								}else{
+									alert("请选择城市！");
+								}
+								
+							}else{
+							alert("请选择国家！");
+							}
 								}else{
 									alert("昵称不能为空且小于15字");
 								}
