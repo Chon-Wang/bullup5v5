@@ -1,12 +1,14 @@
-var lolProcess = require('C:/Users/Public/Bullup/auto_program/lol_process.js');
+var lolProcess = require('./js/auto_program/lol_process.js');
+
+
 var child_process = require("child_process");
 var request = require("request");
 
 $(document).ready(function(){
     $("#router_test_page").click(function(e){
 
-            
-
+        lolProcess.grabLOLData("login", null);
+        
         // var dataStr = '{"roomName":"admin1507119264941","captain":{"name":"admin","userId":36,"avatarId":1},"participants":[{"name":"admin","userId":36,"avatarId":1,"strength":{"kda":"0.0","averageGoldEarned":0,"averageTurretsKilled":0,"averageDamage":0,"averageDamageTaken":0,"averageHeal":0,"score":0}}],"status":"ESTABLISHING","gameMode":"match","battleDesc":"","rewardType":"bullupScore","rewardAmount":"10","mapSelection":"map-selection-1","winningCondition":"push-crystal"}';
         // var data = JSON.parse(dataStr);
 
