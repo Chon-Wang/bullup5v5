@@ -64,6 +64,7 @@
 
 .color-dot-green {
     background-color: forestgreen;
+    margin-left: 5px;
 }
 
 .friend-status--offline {
