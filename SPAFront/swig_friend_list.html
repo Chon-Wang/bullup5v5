@@ -14,13 +14,19 @@
 		<div class="friend-nickname" id="user-{{ friend.name }}">
           {{ friend.name }}
 		</div>
-
+		{% if friend.online=='true' %}
 		<div class="color-dot color-dot-green">
 		</div>
 		<label class="friend-status friend-status--offline">
           在线
 		</label>
-
+		{% else %}
+		<div class="color-dot color-dot-red">
+		</div>
+		<label class="friend-status friend-status--offline">
+          不在线
+		</label>
+		{% endif %}
 		<p class="invitebox right">
           <input type="checkbox" id="friend_{{ loop.index }}_check_box" class="filled-in" value="{{ friend.name }}">
 					<label for="friend_{{ loop.index }}_check_box"></label>

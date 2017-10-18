@@ -17,7 +17,7 @@ $(document).ready(function(){
         // var dataArray1 = [50,50,50,50,50,50];
         // bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
 
-        // lolProcess.grabLOLData('result', socket);
+        //lolProcess.grabLOLData('result', socket);
         // function processResultPacket(stdout){
         //     var resultPacket = {};
         //     resultPacket.head = "result";

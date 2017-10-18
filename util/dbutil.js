@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 var dbCfg = require('./dbcfg.js');
 var logger = require('../util/logutil.js');
+var socketProxy = require('../proxy/socketproxy.js');
 var async = require('async');
 
 var connection = mysql.createConnection(dbCfg.server);
@@ -649,21 +650,30 @@ exports.hello = function () {
 exports.findFriendListByUserId = function(userId, callback) {
     connection.query('select friend_user_id from bullup_friend where user_id=?', [userId], function(err, rows) {
         var friendList = {};
+        var status;
         async.eachSeries(rows, function(row, errCb){
             exports.findUserById(row.friend_user_id, function(user) {
-                // var online = require('../proxy/socketProxy').isUserOnline(user.user_id);
-                // var status = null;
-                // //获取用户状态
-                // if (online) {
-                //     status = socketProxy.mapUserIdToSocket(user.user_id).status;
-                // }
-                friendList[user.user_nickname] = {
-                    name: user.user_nickname,
-                    userId: user.user_id,
-                    avatarId: user.icon_id,
-                    online: "true",
-                    status: "idle"
-                };
+                //调用socketProxy中的方法，判断用户是否在线
+                if (socketProxy.isUserOnline(user.user_id)) {
+                    //返回true时
+                    friendList[user.user_nickname] = {
+                        name: user.user_nickname,
+                        userId: user.user_id,
+                        avatarId: user.icon_id,
+                        online: 'true',
+                        status: "idle"
+                    };
+                }else{
+                    //返回false时
+                    friendList[user.user_nickname] = {
+                        name: user.user_nickname,
+                        userId: user.user_id,
+                        avatarId: user.icon_id,
+                        online: 'false',
+                        status: "idle"
+                    };
+                }
+                
                 errCb();
             })
         }, function(err) {
@@ -1195,5 +1205,11 @@ exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChang
     });
     connection.query('update bullup_strength set bullup_strength_score = ? where user_id = ?', [newStrengthScore, userId], (err, res) => {
         if(err)throw err;
+    });
+}
+exports.findUserByPhone = function(userPhoneNumber, callback){
+    connection.query('select * from `user_info` where user_phone=?', [userPhoneNumber], function (err, results, fields) {
+        if (err) throw err;
+        callback(results[0]);
     });
 }
