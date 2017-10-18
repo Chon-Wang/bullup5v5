@@ -1081,7 +1081,7 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 if(err) throw err;
                 userPersonalInfo.bullup_competitionResult=results[0].num;
                 userPersonalInfo.bullup_competition_wins=results[0].bullup_competition_wins;
-                userPersonalInfo.competition_wins=((userPersonalInfo.bullup_competition_wins)/(userPersonalInfo.bullup_competitionResult))+'%';
+                userPersonalInfo.competition_wins=((userPersonalInfo.bullup_competition_wins)/(userPersonalInfo.bullup_competitionResult))*100+'%';
                 callback(null,userPersonalInfo);
             });
         },function(userPersonalInfo,callback){
