@@ -10,7 +10,7 @@ exports.grabLOLData = function(type, socket){
                 jsonStr = JSON.parse(jsonStr);
                 if(jsonStr.UserInfo != undefined){
                     var packet = processLoginPacket(jsonStr);
-                    log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
+                    //log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
                     socket.emit('lolLoginResult', packet);
                 }
             });break;
@@ -20,7 +20,7 @@ exports.grabLOLData = function(type, socket){
                 jsonStr = JSON.parse(jsonStr);
                 if(jsonStr.actions != undefined){
                     var packet = processRoomPacket(jsonStr);
-                    log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
+                    //log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
                     socket.emit('lolRoomEstablished', packet);
                 }
             });break;
@@ -30,7 +30,7 @@ exports.grabLOLData = function(type, socket){
                 jsonStr = JSON.parse(jsonStr);
                 if(jsonStr.gameMode != undefined){
                     var packet = processResultPacket(jsonStr);
-                    log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
+                    //log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
                     socket.emit('lolBattleResult', packet);
                 }
             });break;
