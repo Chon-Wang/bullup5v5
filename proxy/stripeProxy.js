@@ -30,7 +30,7 @@ exports.recharge = function(){
         var body = req.body;
         var token = req.body.stripeToken;
         var chargeAmount = req.body.chargeAmount;
-        
+        var userName = req.body.userName;
         console.log(token);
         var charge = stripe.charges.create({
             amount:chargeAmount,

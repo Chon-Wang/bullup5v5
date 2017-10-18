@@ -8,8 +8,8 @@ $(document).ready(function(){
         var value = parseInt(chargeValue);
         if(value == NaN){
             bullup.alert("请输入合法的充值金额!");
-        }else if(value < 10){
-            bullup.alert("最低充值金额为$10");
+        }else if(value < 5){
+            bullup.alert("最低充值金额为$5");
         }else{
             options = {
                 url: 'http://127.0.0.1:3001?rechargeAccount='+(value*100)
