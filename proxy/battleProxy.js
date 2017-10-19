@@ -217,6 +217,7 @@ exports.handleBattleResult = function (io, socket){
                 var winTeamStrengthScore = 0;
                 var loseTeamStrengthScore = 0;
 
+                var blueWin = true;
 
                 for(var battleIndex in battles){
                     var battle = battles[battleIndex];
@@ -249,7 +250,7 @@ exports.handleBattleResult = function (io, socket){
                                 loseTeam = blueSidePaticipants;
                                 winTeamStrengthScore = redSide.teamStrengthScore;
                                 loseTeamStrengthScore = blueSide.teamStrengthScore;
-
+                                blueWin = false;
                                 finishedBattle = battle;
                                 delete teamProxy.formedTeams[blueSide.roomName];
                                 delete teamProxy.formedTeams[redSide.roomName];
@@ -269,6 +270,8 @@ exports.handleBattleResult = function (io, socket){
                 if(finishedBattle == null || finishedBattle.blueSide == undefined){
                     return;
                 }
+                finishedBattle.blueWin = blueWin;
+                finishedBattle.redWin = !blueWin;
 
                 var resultPacket = {};
                 resultPacket.rewardType = finishedBattle.blueSide.rewardType;
@@ -276,7 +279,7 @@ exports.handleBattleResult = function (io, socket){
                 resultPacket.roomName = finishedBattle.blueSide.roomName;
                 resultPacket.winTeam = winTeam;
                 resultPacket.loseTeam = loseTeam;
-                resultPacket.participants = lolResultPacket.participants
+                resultPacket.participants = lolResultPacket.participants;
                 //算战力变化
                 var newScore = exports.strengthScoreChangedCalculation(winTeamStrengthScore, loseTeamStrengthScore);
                 var winScoreUpdateValue = newScore.newWinnerScore - winTeamStrengthScore;
@@ -290,7 +293,7 @@ exports.handleBattleResult = function (io, socket){
                     var player = loseTeam[index];
                     dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount);
                 }
-
+                dbUtil.writeBattleRecord(finishedBattle);
 
                 //广播结果数据包
                 socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), finishedBattle.battleName, 'battleResult', resultPacket);

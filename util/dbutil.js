@@ -1,6 +1,7 @@
 var mysql = require('mysql');
 var dbCfg = require('./dbcfg.js');
 var logger = require('../util/logutil.js');
+var socketProxy = require('../proxy/socketproxy.js');
 var async = require('async');
 
 var connection = mysql.createConnection(dbCfg.server);
@@ -21,6 +22,68 @@ exports.findUserByAccount = function(account, callback) {
         callback(results[0]);
     });
 }
+//新手指引
+exports.checkLastLoginTime = function(userId,callback){
+    connection.query('select last_login_time from user_info where user_id=?',[userId],function(err,res){
+        if (err) throw err;
+        //console.log(res);
+        var time = res[0].last_login_time;
+        callback(time);
+    });
+}
+exports.insertLastLoginTime = function(data,callback){
+    connection.query('update user_info set last_login_time=? where user_id=?',[data.date,data.userId],function(err,res){
+        if (err) throw err;
+        callback(res);
+    });
+}
+
+//用户约战次数
+exports.findUserBattleCount = function(userId,callback){
+    async.waterfall([
+        function(callback){
+            connection.query('select user_nickname from user_base where user_id=?',[userId],function(err,res1){
+                if (err) throw err;
+                //console.log(res1);
+                callback(null,res1);
+            });
+        },function(res1,callback){
+            connection.query('select count(*) as battleCount from bullup_battle_record where bullup_battle_paticipants_red like ? or bullup_battle_paticipants_blue like ?',['%'+res1[0].user_nickname+'%','%'+res1[0].user_nickname+'%'],function(err,res2){
+                if (err) throw err;
+                //console.log(res2);
+                callback(null,res2);
+            });
+        }
+    ],function(err,res){
+        if (err) throw err;
+        callback(res);
+    });
+}
+
+//用户修改信息
+exports.updateUserInfo = function(data,callback){
+    async.parallel([
+        function(done){
+            connection.query('update user_base set user_nickname=? where user_id=?',[data.nickname,data.userId],function(err,res){
+                if (err) throw err;
+                done(null,res);
+            });
+        },function(done){
+            connection.query('update user_info set user_phone=? where user_id=?',[data.phone,data.userId],function(err,res){
+                if (err) throw err;
+                done(null,res);
+            });
+        },function(done){
+            connection.query('update bullup_rank set user_nickname=? where user_id=?',[data.nickname,data.userId],function(err,res){
+                if (err) throw err;
+                done(null,res);
+            });
+        }
+    ],function(err,res){
+        if (err) throw err;
+        callback(res);
+    });
+}
 
 //---------------------------------------添加好友关系-------------------------------------//
 exports.addFriendRelationship = function(userId1, userId2){
@@ -39,8 +102,21 @@ exports.findUserByNickname = function(nickname, callback) {
     });
 }
 
+exports.findPhoneNumber = function(phone, callback) {
+    connection.query('select * from `user_info` where user_phone=?', [phone], function (err, results){
+        if (err) throw err;
+        callback(results[0]);
+    });
+}
+
+// exports.findUserByCode  = function(code, callback) {
+//     connection.query('select * from `user_info` where user_mail=?', [code], function (err, results){
+//         if (err) throw err;
+//         callback(results[0]);
+//     });
+// }
 exports.findUserByCode  = function(code, callback) {
-    connection.query('select * from `user_info` where user_mail=?', [code], function (err, results){
+    connection.query('select * from `user_base` where user_account=?', [code], function (err, results){
         if (err) throw err;
         callback(results[0]);
     });
@@ -61,7 +137,7 @@ exports.findAllWithdrawInfo = function(callback) {
 }
 //--------------处理同意提现，将状态改为TRUE------------------------
 exports.setStatusTrue = function(data,callback) {
-    connection.query("update bullup_bankcard_info set bullup_bank_state='已完成' where bullup_payment_account_id=?",[data.payId],function (err, results){
+    connection.query("update bullup_bankcard_info set bullup_bank_state='已完成' where bullup_withdraw_id=?",[data.payId],function (err, results){
         if (err) throw err;
         callback(results);
     });
@@ -425,10 +501,45 @@ exports.findAnalysisData = function(callback){
     })
 }
 
-exports.findUserByPhone = function(userPhoneNumber, callback){
-    connection.query('select * from `user_info` where user_phone=?', [userPhoneNumber], function (err, results, fields) {
-        if (err) throw err;
-        callback(results[0]);
+//------------------------------邀请码信息------------------------------
+exports.getInvitedInfo = function(callback){
+    async.waterfall([
+        function(callback){
+            connection.query('select a.user_id,a.user_account,a.user_nickname,b.user_mail from user_base as a inner join user_info as b on a.user_id=b.user_id where user_mail<>"" order by user_mail;',function(err,res){
+                if (err) throw err;
+                callback(null,res);
+            });
+        },
+        function(res,callback){
+            var codeInfo = {};
+            async.eachSeries(res, function(baseInfo, errCb){
+                //console.log(baseInfo.user_nickname);
+                connection.query('select sum(bullup_battle_bet)-sum(bullup_battle_bet)*2*0.1 as userGet,sum(bullup_battle_bet)*2*0.1 as companyGet from bullup_battle_record where bullup_battle_paticipants_red like ? and bullup_battle_result="红方赢" or bullup_battle_paticipants_blue like ? and bullup_battle_result="蓝方赢"',['%'+baseInfo.user_nickname+'%','%'+baseInfo.user_nickname+'%'],function(err, row) {
+                    if (err) throw err;
+                    (codeInfo[baseInfo.user_id]) = {};
+                    (codeInfo[baseInfo.user_id]).user_id = baseInfo.user_id;
+                    (codeInfo[baseInfo.user_id]).user_account = baseInfo.user_account;
+                    (codeInfo[baseInfo.user_id]).user_nickname = baseInfo.user_nickname;
+                    (codeInfo[baseInfo.user_id]).inviteCode = baseInfo.user_mail;
+                    (codeInfo[baseInfo.user_id]).userGet = row[0].userGet;
+                    (codeInfo[baseInfo.user_id]).companyGet = row[0].companyGet;
+                    //console.log("resResult"+JSON.stringify(row));
+                    errCb();
+                });
+            },function(errCb){
+                callback(null, codeInfo);
+            });
+        }
+    ],function(err,res){
+          if (err) throw err;
+          var codeArray = new Array();
+          for(obj in res){
+            codeArray.push(res[obj]);
+          }
+          codeArray.sort(function(x,y){
+              return x.inviteCode < y.inviteCode ? 1 : -1;
+          });
+          callback(codeArray);
     });
 }
 
@@ -472,7 +583,8 @@ exports.addUser = function(userInfo, callback) {
             });
         },
         function(userInfo, callback){
-            connection.query('insert into `user_info` (user_id, user_phone, user_mail) values (?, ?, ?)', [userInfo.userId, userInfo.userPhoneNumber, userInfo.userEmail], function(err, row){
+            connection.query('insert into `user_info` (user_id, user_phone, user_mail,user_country,user_province,user_city) values (?, ?, ?, ?, ?, ?)', [userInfo.userId, userInfo.userPhoneNumber,userInfo.userEmail,userInfo.userCountry,userInfo.userProvince,userInfo.userCity], function(err, row){
+                
                 if(err) console.log(err);
                 callback(null, userInfo);
             });
@@ -484,7 +596,7 @@ exports.addUser = function(userInfo, callback) {
         },
         function(userInfo, callback){
             connection.query('insert into `bullup_wealth` (user_id, bullup_currency_type, bullup_currency_amount) values (?, ?, ?)', [userInfo.userId, 'score', '300'], function(err, row){
-                userInfo.wealth = 300;
+                userInfo.wealth = 10;
                 callback(null, userInfo);
             });
         },
@@ -539,21 +651,30 @@ exports.hello = function () {
 exports.findFriendListByUserId = function(userId, callback) {
     connection.query('select friend_user_id from bullup_friend where user_id=?', [userId], function(err, rows) {
         var friendList = {};
+        var status;
         async.eachSeries(rows, function(row, errCb){
             exports.findUserById(row.friend_user_id, function(user) {
-                // var online = require('../proxy/socketProxy').isUserOnline(user.user_id);
-                // var status = null;
-                // //获取用户状态
-                // if (online) {
-                //     status = socketProxy.mapUserIdToSocket(user.user_id).status;
-                // }
-                friendList[user.user_nickname] = {
-                    name: user.user_nickname,
-                    userId: user.user_id,
-                    avatarId: user.icon_id,
-                    online: "true",
-                    status: "idle"
-                };
+                //调用socketProxy中的方法，判断用户是否在线
+                if (socketProxy.isUserOnline(user.user_id)) {
+                    //返回true时
+                    friendList[user.user_nickname] = {
+                        name: user.user_nickname,
+                        userId: user.user_id,
+                        avatarId: user.icon_id,
+                        online: 'true',
+                        status: "idle"
+                    };
+                }else{
+                    //返回false时
+                    friendList[user.user_nickname] = {
+                        name: user.user_nickname,
+                        userId: user.user_id,
+                        avatarId: user.icon_id,
+                        online: 'false',
+                        status: "idle"
+                    };
+                }
+                
                 errCb();
             })
         }, function(err) {
@@ -608,25 +729,24 @@ exports.searchCashFlow = function(data,callback){
  * @param userId
  */
 exports.userRecharge = function(data, callback) {
-    var tempMoney = (data.money) / 100;
     async.parallel([
         function(done) {
-            connection.query('update bullup_wealth set bullup_currency_amount=bullup_currency_amount+? where user_id=?', [tempMoney,data.userId], function (err, results){
+            connection.query('update bullup_wealth set bullup_currency_amount=bullup_currency_amount+? where user_id=?', [data.money,data.userId], function (err, results){
                 if (err) throw err;
                 done(err,results);
             });
         },
         function(done){
-            connection.query('insert into bullup_payment_history(user_id,bullup_bill_value,bullup_bill_type) values (?,?,?)', [data.userId,tempMoney,data.currency], function (err, results){
+            connection.query('insert into bullup_payment_history(user_id, bullup_payment_account_id, bullup_bill_value,bullup_bill_type) values (?,?,?,?)', [data.userId, 0, data.money, data.currency], function (err, results){
                 if (err) throw err;
                 done(err,results);
             });
         }
     ],function(err,results){
         if(!err)
-            callback(null,results);
+            callback(results);
         else
-            callback(err,null);
+            callback(null);
     });
     
 }
@@ -971,7 +1091,7 @@ exports.getPersonalCenterInfoByUserId=function(userId, callback){
                 if(err) throw err;
                 userPersonalInfo.bullup_competitionResult=results[0].num;
                 userPersonalInfo.bullup_competition_wins=results[0].bullup_competition_wins;
-                userPersonalInfo.competition_wins=((userPersonalInfo.bullup_competition_wins)/(userPersonalInfo.bullup_competitionResult))+'%';
+                userPersonalInfo.competition_wins=((userPersonalInfo.bullup_competition_wins)/(userPersonalInfo.bullup_competitionResult))*100+'%';
                 callback(null,userPersonalInfo);
             });
         },function(userPersonalInfo,callback){
@@ -1022,7 +1142,7 @@ exports.insertFeedback=function(result,callback){
    // console.log(userId);
     async.waterfall([
         function(callback){
-            connection.query('insert into bullup_feedback (user_id,user_account,user_feedback_content,user_feedback_name,user_feedback_email) values (?,?,?,?,?)',[result.UserId,result.account,result.textarea1,result.name,result.email],function(err,results){
+            connection.query('insert into bullup_feedback (user_id,user_account,user_feedback_content,user_feedback_name,user_feedback_email) values (?,?,?,?,?)',[result.userId,result.account,result.textarea1,result.name,result.email],function(err,results){
               if (err) throw err;
               callback(null,results);      
             });
@@ -1031,7 +1151,20 @@ exports.insertFeedback=function(result,callback){
         callback(res)
     });
 }
-
+//反馈信息
+exports.insertFeedback=function(result,callback){
+    // console.log(userId);
+     async.waterfall([
+         function(callback){
+             connection.query('insert into bullup_feedback (user_id,user_account,user_feedback_content,user_feedback_name,user_feedback_email) values (?,?,?,?,?)',[result.userId,result.account,result.textarea1,result.name,result.email],function(err,results){
+               if (err) throw err;
+               callback(null,results);      
+             });
+         }       
+     ],function(err,res){
+         callback(res)
+     });
+ }
 /**
  * 收集银行信息,提现申请入库
  * @param getBankInfo 收集信息
@@ -1039,8 +1172,8 @@ exports.insertFeedback=function(result,callback){
 exports.insertBankInfo = function(bankInfo, callback) {
     async.parallel([
         function(done){
-            connection.query('insert into bullup_bankcard_info(user_id,bullup_bank_cardnumber,Bullup_bank_expiremonth,Bullup_bank_expireyear,Bullup_bank_country,Bullup_bank_firstname,Bullup_bank_lastname,Bullup_bank_areacode,Bullup_bank_phone,Bullup_bank_money,Bullup_bank_email,Bullup_bank_companyname,Bullup_bank_streetaddress,Bullup_bank_apt_suite_bldg,Bullup_bank_zipcode,Bullup_bank_cvc) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-            [bankInfo.userId,bankInfo.cardnumber,bankInfo.exptremonth,bankInfo.exptreyear,bankInfo.country,bankInfo.firstname,bankInfo.lastname,bankInfo.areacode,bankInfo.phone,bankInfo.money,bankInfo.email,bankInfo.companyname,bankInfo.streetaddress,bankInfo.apt_suite_bldg,bankInfo.zipcode,bankInfo.cvc], function (err, results){
+            connection.query('insert into bullup_bankcard_info(user_id,bullup_bank_cardnumber,bullup_bank_firstname,bullup_bank_lastname,bullup_bank_areacode,bullup_bank_phone,bullup_bank_money,bullup_bank_email,bullup_bank_streetaddress,bullup_bank_apt_suite_bldg,bullup_bank_zipcode,bullup_bank_cvc) values (?,?,?,?,?,?,?,?,?,?,?,?)',
+            [bankInfo.userId,bankInfo.cardnumber,bankInfo.firstname,bankInfo.lastname,bankInfo.areacode,bankInfo.phone,bankInfo.money,bankInfo.email,bankInfo.streetaddress,bankInfo.apt_suite_bldg,bankInfo.zipcode,bankInfo.cvc], function (err, results){
                if (err) throw err;                                                                                                                                                                                                                             
                done(err,results);
            });
@@ -1060,6 +1193,39 @@ exports.insertBankInfo = function(bankInfo, callback) {
     
 }
 
+exports.writeBattleRecord = function(battle){
+    
+    var competitionType = battle.blueSide.gameMode;
+    var competitionId = 0;
+    var battleName = battle.battleName;
+    var battleMap = battle.blueSide.mapSelection;
+    var battleBet = battle.blueSide.rewardAmount;
+    var teamNum = battle.blueSide.paticipants.length;
+    var redNames = "";
+    var blueNames = "";
+    var time = new Date().format("yyyy-MM-dd HH:mm:ss"); 
+    var duration = 0;
+    var result = "";
+    if(battle.blueWin){
+        result = "蓝方赢";
+    }else{
+        result = "红方赢";
+    }
+    for(var index in battle.blueSide.paticipants){
+        blueNames += ",";
+        blueNames += battle.blueSide.paticipants[index].name;
+    }
+    blueNames = blueNames.substr(1);
+
+    for(var index in battle.redSide.paticipants){
+        redNames += ",";
+        redNames += battle.redSide.paticipants[index].name;
+    }
+    redNames = redNames.substr(1);
+
+    
+}
+
 exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChangedValue){
     if(newStrengthScore < 0){
         newStrengthScore = 0;
@@ -1072,5 +1238,11 @@ exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChang
     });
     connection.query('update bullup_strength set bullup_strength_score = ? where user_id = ?', [newStrengthScore, userId], (err, res) => {
         if(err)throw err;
+    });
+}
+exports.findUserByPhone = function(userPhoneNumber, callback){
+    connection.query('select * from `user_info` where user_phone=?', [userPhoneNumber], function (err, results, fields) {
+        if (err) throw err;
+        callback(results[0]);
     });
 }

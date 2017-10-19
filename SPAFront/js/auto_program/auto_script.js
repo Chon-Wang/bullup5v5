@@ -108,9 +108,9 @@ exports.autoCreateRoom = function(roomName, password, callback){
     });
 }
 
-var jsonStr = fs.readFileSync("C:/Users/Public/Bullup/createRoom.txt");
-var jsonObj = JSON.parse(jsonStr);
+// var jsonStr = fs.readFileSync("C:/Users/Public/Bullup/createRoom.txt");
+// var jsonObj = JSON.parse(jsonStr);
 
-exports.autoCreateRoom(jsonObj.roomName, jsonObj.password, function(data){
+// exports.autoCreateRoom(jsonObj.roomName, jsonObj.password, function(data){
 
-});
+// });

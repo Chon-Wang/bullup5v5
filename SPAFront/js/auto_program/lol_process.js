@@ -3,37 +3,40 @@ var log = require("./logutil.js")
 var fs = require("fs");
 
 exports.grabLOLData = function(type, socket){
-    log.logToFile("D://temp_log.txt", "append", "grabbing");
+    //log.logToFile("D://temp_log.txt", "append", "grabbing");
     switch (type){
         case "login": {
             syncLogin(function(jsonStr){
                 jsonStr = JSON.parse(jsonStr);
                 if(jsonStr.UserInfo != undefined){
                     var packet = processLoginPacket(jsonStr);
-                    log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
+                    //log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
                     socket.emit('lolLoginResult', packet);
                 }
-            });break;
+            });
+            break;
         }
         case "room": {
             syncRoom(function(jsonStr){
                 jsonStr = JSON.parse(jsonStr);
                 if(jsonStr.actions != undefined){
                     var packet = processRoomPacket(jsonStr);
-                    log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
+                    //log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
                     socket.emit('lolRoomEstablished', packet);
                 }
-            });break;
+            });
+            break;
         }
         case "result": {
             syncResult(function(jsonStr){
                 jsonStr = JSON.parse(jsonStr);
                 if(jsonStr.gameMode != undefined){
                     var packet = processResultPacket(jsonStr);
-                    log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
+                    //log.logToFile("D://temp_log.txt", "append", "grabbing data is " + JSON.parse(packet));
                     socket.emit('lolBattleResult', packet);
                 }
-            });break;
+            });
+            break;
         }
     }
 }
@@ -48,27 +51,55 @@ function readJsonStr(path, callback){
 }
  
 function syncLogin(callback){
-    process.execSync('C:/Users/Public/Bullup/auto_program/BullupServiceNew UserInfo');
-    readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
-        log.logToFile("D://temp_log.txt", "append",jsonStr);
-        callback(jsonStr);
+    process.exec('C:/Users/Public/Bullup/auto_program/BullupServiceNew UserInfo', function(error, stdout, stderr){
+        if(error){
+            throw error;
+        }
+        readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
+            //log.logToFile("D://temp_log.txt", "append",jsonStr);
+            callback(jsonStr);
+        });
     });
+    // process.execSync('C:/Users/Public/Bullup/auto_program/BullupServiceNew UserInfo');
+    // readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
+    //     log.logToFile("D://temp_log.txt", "append",jsonStr);
+    //     callback(jsonStr);
+    // });
 }
 
 function syncRoom(callback){
-    process.execSync('C:/Users/Public/Bullup/auto_program/BullupServiceNew UserInfo');
-    readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
-        log.logToFile("D://temp_log.txt", "append",jsonStr);
-        callback(jsonStr);
+    process.exec('C:/Users/Public/Bullup/auto_program/BullupServiceOld actions', function(error, stdout, stderr){
+        if(error){
+            throw error;
+        }
+        readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
+            //log.logToFile("D://temp_log.txt", "append",jsonStr);
+            callback(jsonStr);
+        });
     });
+    
+    // process.execSync('C:/Users/Public/Bullup/auto_program/BullupServiceOld actions');
+    // readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
+    //     log.logToFile("D://temp_log.txt", "append",jsonStr);
+    //     callback(jsonStr);
+    // });
 }
 
 function syncResult(callback){
-    process.execSync('C:/Users/Public/Bullup/auto_program/BullupServiceNew UserInfo');
-    readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
-        log.logToFile("D://temp_log.txt", "append",jsonStr);
-        callback(jsonStr);
+    process.exec('C:/Users/Public/Bullup/auto_program/BullupServiceOld gameMode', function(error, stdout, stderr){
+        if(error){
+            throw error;
+        }
+        readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
+            //log.logToFile("D://temp_log.txt", "append",jsonStr);
+            callback(jsonStr);
+        });
     });
+    // process.execSync('C:/Users/Public/Bullup/auto_program/BullupServiceOld gameMode');
+    // readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
+    //     log.logToFile("D://temp_log.txt", "append",jsonStr);
+    //     callback(jsonStr);
+    // });
 }
 
 
@@ -149,6 +180,6 @@ function processResultPacket(stdout){
     return resultPacket;
 }
 
-exports.grabLOLData("login", null);
+//exports.grabLOLData("login", null);
 //exports.grabLOLData("room", null);
 //exports.grabLOLData("result", null);

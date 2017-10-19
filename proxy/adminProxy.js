@@ -39,13 +39,14 @@ exports.handleWithdraw = function (socket) {
         });
     });
 }
+
 /**
  * 处理提现反馈-----同意
  * @param socket
 */
 exports.handleWithdrawAgree = function (socket) {
     socket.on('agree', function (data) {
-        // console.log('bankInfo:'+bank.firstname);
+        console.log(':'+data.payId);
         // logger.listenerLog('changeInfo');
         dbUtil.setStatusTrue(data,function(res){
             //console.log("resResult"+JSON.stringify(res));
@@ -363,6 +364,35 @@ exports.handleAnalysis = function (socket) {
                     errorCode: 0,
                     text: '查询成功,请刷新页面',
                     type: 'ANALYSISDATARESULT',
+                    extension: {
+                        data:res
+                    }
+                });
+            }
+        });
+    });
+}
+
+//--------------------邀请码信息----------------------
+/**
+ * @param socket
+*/
+exports.handleInvitedCode = function (socket) {
+    socket.on('getInvitedCodeData',function () {
+        dbUtil.getInvitedInfo(function(res){
+            console.log("resResult"+JSON.stringify(res));
+            if (!res) {
+                socketProxy.stableSocketEmit(socket,'feedback', {
+                    errorCode: 1,
+                    text: '查询失败，请稍后重试',
+                    type: 'INVITEDCODERESULT',
+                    extension: null
+                });
+            } else {
+                socketProxy.stableSocketEmit(socket,'feedback', {
+                    errorCode: 0,
+                    text: '查询成功,请刷新页面',
+                    type: 'INVITEDCODERESULT',
                     extension: {
                         data:res
                     }

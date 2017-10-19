@@ -242,9 +242,9 @@
 								<div class="row">
 									<div class="input-field col s12">
 										<select id="reward_amount">
-											<option value="10">1</option>
-											<option value="50">5</option>
-											<option value="100">10</option>
+											<option value="1">1</option>
+											<option value="5">5</option>
+											<option value="10">10</option>
 										</select>
 										<label>下注数额</label>
 									</div>
@@ -358,9 +358,10 @@
 						</p>
 						
 					</div>
-					<button onclick="disabled=1;v=this;setTimeout('v.disabled=0',3000);" class="btn waves-effect right orange lighten-1" id="register_btn">注册
-            <i class="fa fa-paper-plane" aria-hidden="true"></i>
-          </button>
+
+					<button onclick="disabled=1;v=this;setTimeout('v.disabled=0',3000);" class="btn waves-effect waves-light right orange lighten-1" id="register_btn">注册
+						<i class="fa fa-paper-plane" aria-hidden="true"></i>
+					</button>
 				</div>
 			</div>
 			<div>
@@ -669,13 +670,13 @@
 				<form class="col s12">
 					<div class="input-field col s8">
 						<input style="color:#fff;" id="last_named" type="text" class="validate">
-						<label for="last_named" style="color:#fff;">姓名</label>
+						<label for="last_named" style="color:#fff;">您的姓名:</label>
 					</div>
 
 					<div class="row">
 						<div class="input-field col s8">
 							<input style="color:#fff;" id="emails" type="email" class="validate">
-							<label for="emails" style="color:#fff;">联系方式</label>
+							<label for="emails" style="color:#fff;">您的邮箱:</label>
 						</div>
 					</div>
 					<div class="row">
@@ -713,7 +714,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="main" style="display: none;">
+		<div id="newGuide" class="main" style="display: none;">
 			<div class="w1">
 			注册登录和绑定英雄联盟账号之后才能玩喔^ω^
 			</div>  
@@ -890,107 +891,51 @@
 			});
 			//引导页
 			$(function() {
-				// 设置参数
-				$('body').pagewalkthrough({
-					name: 'introduction',
-					steps: [{
-						popup: { //定义弹出提示引导层
-							content: '引导开始啦(*^▽^*)，follow me',
-							type: 'modal'
-						}
-					}, {
-						wrapper: '.dro-index',//当前引导对应的元素位置
-						popup: {
-							content: '.w1',//关联的内容元素
-							type: 'tooltip',//弹出方式（tooltip和modal以及nohighlight）
-							position: 'bottom',//弹出层位置（top,left, right or bottom）
-							width:'200'
-							
-							
-						}
-					}, {
-						wrapper: '#yuezhan',
-						popup: {
-							content: '#walkthrough-3',
-							type: 'tooltip',
-							position: 'bottom',
-							top: '505px',
-							left: '500px'
+                // 设置参数
+                $('body').pagewalkthrough({
+                    name: 'introduction',
+                    steps: [{
+                            popup: { //定义弹出提示引导层
+                                content: '开启界面引导',
+                                type: 'modal'
+                            }
+                        }, {
+                            wrapper: '.dro-index',//当前引导对应的元素位置
+                            popup: {
+                                content: '.w1',//关联的内容元素
+                                type: 'tooltip',//弹出方式（tooltip和modal以及nohighlight）
+								position: 'bottom',//弹出层位置（top,left, right or bottom）
+								width:'200'	
+                            }
+                        }, {
+                            wrapper: '#yuezhan',
+                            popup: {
+                                content: '#walkthrough-3',
+                                type: 'tooltip',
+								position: 'bottom',
+								top: '505px',
+								left: '368.406'
 
-						}
-					}, {
-						wrapper: '#router_index',
-						popup: {
-							content: '#walkthrough-4',
-							type: 'tooltip',
-							position: 'bottom'
-						}
-					}, 
-					
-					{
-						wrapper: '.fa-plus',
-						popup: {
-							content: '#walkthrough-5',
-							type: 'tooltip',
-							position: 'myleft'
-							
-						}
-						
-					},
-					{
-						wrapper: '.chitchat',
-						popup: {
-							content: '#walkthrough-6',
-							type: 'tooltip',
-							position: 'left'
-						}
-					},
-				]
-				});
-				
-				// 一步一步显示引导页
-				$('body').pagewalkthrough('show');
-				(function (){
-					var time = null;
-					time = setInterval(function (){
-						var flag = $("#jpWalkthrough").length>0 ? "1" : "2"; 
-						if(flag == "2"){
-							clearInterval(time);
-						// 解绑事件
-							$(document).unbind('scroll');
-							
-							$("html").css("height","auto");
-							$("body").css({
-								"overflow":"auto",
-								"paddingRight":"0",
-								"height":"auto"
-							});
-						}
-					},300);
-				})();
-				// 绑定要阻止默认元素事件
-				$("#jpwOverlay")[0].addEventListener('touchmove', handler, false);
-				$("html").css("height","100%");
-				$("body").css({
-					"overflow":"hidden",
-					"paddingRight":"17px",
-					"height":"100%"
-				});
-				function handler() {
-					event.preventDefault();
-				}
-				$(document).bind('scroll');
-				// 解绑事件
-				$("#jpwClose").on("click",function () {
-					$(document).unbind('scroll');
-					$("#jpwOverlay")[0].removeEventListener('touchmove', handler, false);
-					$("html").css("height","auto");
-					$("body").css({
-						"overflow":"auto",
-						"paddingRight":"0",
-						"height":"auto"
-					});
-				});
+                            }
+                        }, {
+                            wrapper: '#router_index',
+                            popup: {
+                                content: '#walkthrough-4',
+                                type: 'tooltip',
+                                position: 'bottom'
+                            }
+                        }, {
+                            wrapper: '.fa-plus',
+                            popup: {
+                                content: '#walkthrough-5',
+                                type: 'tooltip',
+                                position: 'left'
+                            }
+                        }]
+                });
+
+                // 一步一步显示引导页
+                //$('body').pagewalkthrough('show');
 			});
 				
 			</script>
