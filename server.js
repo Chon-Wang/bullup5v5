@@ -25,7 +25,6 @@ paymentProxy.init();
 chatProxy.init();
 adminProxy.init();
 lolKeyProxy.init();
-logger.init();
 
 io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
@@ -48,8 +47,11 @@ io.on('connection', function(socket) {
 
     //余额
     userProxy.handleGetBalance(socket);
-    //
-    
+    //登录时间
+    userProxy.handlelastLoginTime(socket);
+    //更改信息
+    userProxy.handleUserUpdateInfo(socket);
+
     userProxy.handlePersonalCenterRequest(socket);
   
     teamProxy.handleRoomEstablish(socket);
@@ -103,13 +105,14 @@ io.on('connection', function(socket) {
 
     //简单统计
     adminProxy.handleAnalysis(socket);
+    //邀请码信息
+    adminProxy.handleInvitedCode(socket);
 
     chatProxy.handleChat(io,socket);
 
     //LOLkey
     lolKeyProxy.handleLOLKeyUpdate(socket);
     lolKeyProxy.handleLOLKeyRequest(socket);
-
 
 });
 

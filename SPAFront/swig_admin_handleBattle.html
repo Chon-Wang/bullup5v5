@@ -44,14 +44,15 @@
 <!-- 约战管理 -->
 <script src="./js/admin_handleBattle.js"></script>
 <script src="./js/admin_battleFilter.js"></script>
-
+<a class="waves-effect waves-light btn" style="position: absolute;margin-top: 10px;right: 50px;"id="back-war">返回</a>
+<script>$.getScript('./js/back.js');</script>
 <table id="tab" class="responsive-table centered">
     <thead>
         <tr style="background:#26a69a">
             <th>对战ID</th>
             <th>
             <!-- Dropdown Trigger -->
-            <a class='dropdown-button btn-small' href='#' data-activates='dropdown1' style="color:azure" id="battleType">对战类型</a>
+            <a class='dropdown-button btn-small' href='#' data-activates='dropdown1' style="color:azure" id="battleType">对战类型▼</a>
             <!-- Dropdown Structure -->
                 <ul id='dropdown1' class='dropdown-content'>
                     <li><a href="#!" id="all_battle_type">全部</a></li>
@@ -63,7 +64,7 @@
             <th>房间名</th>
             <th>
             <!-- Dropdown Trigger -->
-            <a class='dropdown-button btn-small' href='#' data-activates='dropdown2' style="color:azure" id="mapType">地图类型</a>
+            <a class='dropdown-button btn-small' href='#' data-activates='dropdown2' style="color:azure" id="mapType">地图类型▼</a>
             <!-- Dropdown Structure -->
                 <ul id='dropdown2' class='dropdown-content'>
                     <li><a href="#!" id="all_map_type">全部</a></li>
@@ -76,7 +77,7 @@
             <th>$赌金</th>
             <th>
             <!-- Dropdown Trigger -->
-            <a class='dropdown-button btn-small' href='#' data-activates='dropdown3' style="color:azure" id="numberType">对战规模</a>
+            <a class='dropdown-button btn-small' href='#' data-activates='dropdown3' style="color:azure" id="numberType">对战规模▼</a>
             <!-- Dropdown Structure -->
                 <ul id='dropdown3' class='dropdown-content'>
                     <li><a href="#!" id="all_number_type">全部</a></li>

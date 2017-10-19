@@ -110,29 +110,36 @@ $(document).ready(function(){
             });
         
             $("#confirm_create_team_btn").click(function(){
-                console.log(roomInfo);
-                if(roomInfo.gameMode == 'match'){
-                    //bullup.alert("匹配中，请等待！");
-                    bullup.loadTemplateIntoTarget('swig_fightfor.html', {
-                        'participants': roomInfo.participants
-                    }, 'main-view');
-                    var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
-                    var dataArray1 = [50,50,50,50,50,50];
-                    bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
-                }
+                if( roomInfo != null){
+                        alert("您已经创建队伍,不能重复创建队伍");
+                }else{
+                    
+                    console.log(roomInfo);
+                    if(roomInfo.gameMode == 'match'){
+                        if(roomInfo.captain.name != roomInfo.participants.name){
+                        //bullup.alert("匹配中，请等待！");
+                        bullup.loadTemplateIntoTarget('swig_fightfor.html', {
+                            'participants': roomInfo.participants
+                        }, 'main-view');
+                        var labelArray = ['战力', '击杀', '死亡', '助攻', '造成伤害', '承受伤害'];
+                        var dataArray1 = [50,50,50,50,50,50];
+                        bullup.generateRadar(dataArray1, null, labelArray, "我方战力", "team-detail-chart");
+                        }
+                    }
+                    var teamStrengthScore = 0;
+                    var teamParticipantsNum = 0;
+                    for(var index in roomInfo.participants){
+                        teamStrengthScore += roomInfo.participants[index].strength.score;
+                        teamParticipantsNum++;
+                    }
+                    teamStrengthScore /= teamParticipantsNum;
+                    roomInfo.teamStrengthScore = teamStrengthScore;
+                    roomInfo.teamParticipantsNum = teamParticipantsNum;
+                    socket.emit('establishTeam', roomInfo);
+                        }
+                
+        });
 
-                var teamStrengthScore = 0;
-                var teamParticipantsNum = 0;
-                for(var index in roomInfo.participants){
-                    teamStrengthScore += roomInfo.participants[index].strength.score;
-                    teamParticipantsNum++;
-                }
-                teamStrengthScore /= teamParticipantsNum;
-                roomInfo.teamStrengthScore = teamStrengthScore;
-                roomInfo.teamParticipantsNum = teamParticipantsNum;
-
-                socket.emit('establishTeam', roomInfo);
-            });
         }
 
     });

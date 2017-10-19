@@ -1,6 +1,11 @@
 var io = require('socket.io-client');
+<<<<<<< HEAD
 var socket = io.connect('http://18.220.130.245:3000');
 //var socket = io.connect('http://127.0.0.1:3000');
+=======
+//var socket = io.connect('http://18.220.130.245:3000');
+var socket = io.connect('http://127.0.0.1:3000');
+>>>>>>> 5500632a1f54def3d62805805bcba64159241f43
 var auto_script = require('./js/auto_program/lol_auto_script');
 var lol_process = require('./js/auto_program/lol_process.js');
 var radar_chart = require('./js/generate_radar.js');
@@ -152,6 +157,11 @@ socket.on('feedback', function (feedback) {
         case 'ANALYSISDATARESULT':
             handleAnalysisDataResult(feedback);
             break;
+        //--------邀请码信息------------
+        case 'INVITEDCODERESULT':
+            handleInvitedCodeResult(feedback);
+            break;
+        //--------LOLAPIKey更新结果----------、
         case 'LOLUPDATERESULT':
             handleLOLApiUpdateResult(feedback);
             break;
@@ -164,7 +174,9 @@ socket.on('feedback', function (feedback) {
         case 'ICONUPDATERESULT':
             handleIconUpdateResult(feedback);
             break;  
-        //--------LOLAPIKey更新结果----------、
+        case 'UPDATEINFORESULT':
+            handleUpdateInfoResult(feedback);
+            break;
         }
 });
 
@@ -473,6 +485,8 @@ function handleLoginResult(feedback) {
             // 打开
             $("#log_modal").css("display", "block");
             $('#system_menu').html(temp);
+
+            $('#router_starter').click();
         });
     } else if (feedback.errorCode == 1) {
         // 登录失败
@@ -528,6 +542,12 @@ function handleLOLBindResult(feedback){
     }   
     bullup.alert(feedback.extension.tips);
 }
+
+//用户修改信息
+function handleUpdateInfoResult(feedback){
+    bullup.alert(feedback.text);
+}
+
 //处理提现申请及信息入库
 function handleBankInfo(feedback){
     bullup.alert(feedback.text);
@@ -685,7 +705,17 @@ function handleAnalysisDataResult(feedback){
     });
     $('#main-view').html(analysisDataHtml);
 }
-    
+ 
+//邀请码信息
+function handleInvitedCodeResult(feedback){
+    var tempData = feedback.extension.data;
+    console.log(tempData);
+    //alert(tempData[0]);
+    var handleInvitedCodeHtml = bullup.loadSwigView('swig_admin_invitedCode.html',{
+        dataSource:{data:tempData} 
+    });
+    $('#main-view').html(handleInvitedCodeHtml);
+}
 
 function handleRegistResult(feedback){
     bullup.alert(feedback.text);
@@ -786,7 +816,7 @@ function handleTeamEstablishResult(feedback){
                     break;
                 }
             }
-
+            //room在队伍详情页
             var teamDetailsHtml = bullup.loadSwigView('swig_team_detail.html', {
                 team: room
             });
@@ -804,10 +834,10 @@ function handleTeamEstablishResult(feedback){
             //////////
         });
 		var pages = {
-			totalPage: 10,
-	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-	 		currentPage: 1
-		};
+            totalPage: 10,
+             pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+             currentPage: 1
+        };
 		//
 		var pagination = bullup.loadSwigView('swig_pagination.html', pages);
 		//		console.log(pagination);
