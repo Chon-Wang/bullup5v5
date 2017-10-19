@@ -24,7 +24,7 @@ exports.recharge = function(){
         data = data.replace("userNameValue", String(userId));
         fs.writeFileSync('./stripe_views/temp.hbs', data);
         //每次合并代码应将此路径改为自己的
-        res.sendFile('C:/Users/Administrator/Desktop/bullup5v5/stripe_views/temp.hbs');
+        res.sendFile('./stripe_views/temp.hbs');
         //res.sendFile('C:/Users/JM.Guo/Desktop/Stripe/views/index.hbs');
     });
     
