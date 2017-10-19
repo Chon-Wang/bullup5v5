@@ -56,7 +56,7 @@ function syncLogin(callback){
 }
 
 function syncRoom(callback){
-    process.execSync('C:/Users/Public/Bullup/auto_program/BullupServiceNew UserInfo');
+    process.execSync('C:/Users/Public/Bullup/auto_program/BullupServiceOld actions');
     readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
         log.logToFile("D://temp_log.txt", "append",jsonStr);
         callback(jsonStr);
@@ -64,7 +64,7 @@ function syncRoom(callback){
 }
 
 function syncResult(callback){
-    process.execSync('C:/Users/Public/Bullup/auto_program/BullupServiceNew UserInfo');
+    process.execSync('C:/Users/Public/Bullup/auto_program/BullupServiceOld gameMode');
     readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
         log.logToFile("D://temp_log.txt", "append",jsonStr);
         callback(jsonStr);

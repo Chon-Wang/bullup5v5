@@ -7,6 +7,7 @@ var request = require("request");
 $(document).ready(function(){
     $("#router_test_page").click(function(e){
 
+        //lol_process.grabLOLData('room', socket);
         //lolProcess.grabLOLData("login", socket);
         
         // var dataStr = '{"roomName":"admin1507119264941","captain":{"name":"admin","userId":36,"avatarId":1},"participants":[{"name":"admin","userId":36,"avatarId":1,"strength":{"kda":"0.0","averageGoldEarned":0,"averageTurretsKilled":0,"averageDamage":0,"averageDamageTaken":0,"averageHeal":0,"score":0}}],"status":"ESTABLISHING","gameMode":"match","battleDesc":"","rewardType":"bullupScore","rewardAmount":"10","mapSelection":"map-selection-1","winningCondition":"push-crystal"}';
