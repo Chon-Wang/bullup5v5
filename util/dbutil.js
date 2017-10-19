@@ -484,7 +484,7 @@ exports.addUser = function(userInfo, callback) {
         },
         function(userInfo, callback){
             connection.query('insert into `bullup_wealth` (user_id, bullup_currency_type, bullup_currency_amount) values (?, ?, ?)', [userInfo.userId, 'score', '300'], function(err, row){
-                userInfo.wealth = 300;
+                userInfo.wealth = 10;
                 callback(null, userInfo);
             });
         },
