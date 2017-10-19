@@ -23,7 +23,8 @@ exports.recharge = function(){
         data = data.replace("chargeAmountValueHidden", String(Number.parseInt(rechargeValue) * 100));
         data = data.replace("userNameValue", String(userId));
         fs.writeFileSync('./stripe_views/temp.hbs', data);
-        res.sendFile('F:/NodeWorkspace/bullup5v5/stripe_views/temp.hbs');
+        //每次合并代码应将此路径改为自己的
+        res.sendFile('C:/Users/Administrator/Desktop/bullup5v5/stripe_views/temp.hbs');
         //res.sendFile('C:/Users/JM.Guo/Desktop/Stripe/views/index.hbs');
     });
     

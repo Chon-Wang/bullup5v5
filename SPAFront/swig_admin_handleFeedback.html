@@ -43,6 +43,8 @@
 <body>
 <!-- 约战管理 -->
 <script src="./js/admin_handleFeedback.js"></script>
+<a class="waves-effect waves-light btn" style="position: absolute;margin-top: 10px;right: 50px;"id="back-feedbackmsg">返回</a>
+<script>$.getScript('./js/back.js');</script>
 <div>
 <table id="tab" class="responsive-table centered">
     <thead>
@@ -69,7 +71,11 @@
             <td>{{ key.user_feedback_content }}</td>
             <!-- 时间格式 -->
             <td>{{ key.user_feedback_create_time|date('Y-m-d h:m') }}</td>
+            {% if key.user_feedback_handle_time==null %}
+            <td></td>
+            {% else %}
             <td>{{ key.user_feedback_handle_time|date('Y-m-d h:m') }}</td>
+            {% endif %}
             <td>{{ key.user_feedback_state }}</td>
             <td>
                 <a class="waves-effect waves-light btn-small alreadyHandle">解决</a>

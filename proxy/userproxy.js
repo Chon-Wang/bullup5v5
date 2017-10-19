@@ -47,7 +47,16 @@ exports.handleLogin = function (socket) {
                     },
                     function(userInfo, callback){
                         dbUtil.findFriendListByUserId(userInfo.userId, function (friendList) {
-                            userInfo.friendList = friendList;
+                            //定义一个空数组，用来保存根据状态排序后的信息
+                            var arr = new Array();
+                            for(obj in friendList){
+                                arr.push(friendList[obj]);
+                            }
+                            arr.sort(function(x,y){
+                                return x.online < y.online ? 1 : -1;
+                            });
+                            //console.log(arr);
+                            userInfo.friendList = arr;
                             callback(null, userInfo);
                         });
                     },
@@ -69,9 +78,22 @@ exports.handleLogin = function (socket) {
                             callback(null, userInfo);
                         });
                     },
-                    // function(userInfo,callback){
-                    // 提现限制
-                    // }
+                    //检查是否是第一次登录
+                    function(userInfo,callback){
+                        dbUtil.checkLastLoginTime(userInfo.userId,function(lastLoginTime){
+                            userInfo.lastLoginTime = lastLoginTime;
+                            callback(null,userInfo);
+                        });
+                    },
+                    //查找用户约战次数
+                    function(userInfo,callback){
+                        dbUtil.findUserBattleCount(userInfo.userId,function(count){
+                            userInfo.battleCount = count[0].battleCount;
+                            //console.log(userInfo.battleCount);
+                            callback(null,userInfo);
+                        });
+                    }
+
                 ], function(err, userInfo){
                     var userStrength = userInfo.strengthInfo;
                     var feedback = {
@@ -83,6 +105,8 @@ exports.handleLogin = function (socket) {
                             userId: userInfo.userId,
                             //----------------------
                             userRole:user.user_role,
+                            lastLoginTime:userInfo.lastLoginTime,
+                            battleCount:userInfo.battleCount,
                             //----------------------
                             avatarId: userInfo.userIconId,
                             wealth: userInfo.wealth,
@@ -230,7 +254,7 @@ exports.handleGetBalance = function (socket){
         //console.log('2134');
         dbUtil.getBalance(data,function(balance){
             var tempBalance = balance.bullup_currency_amount;
-            socket.emit('feedback', {
+            socketProxy.stableSocketEmit(socket,'feedback', {
                 errorCode: 0,
                 text: '查询余额OK',
                 type: 'GETBALANCERESULT',
@@ -238,6 +262,48 @@ exports.handleGetBalance = function (socket){
                     "balance": tempBalance,
                 }
             });
+        });
+     });
+}
+
+//用户更改信息
+exports.handleUserUpdateInfo = function(socket){
+    socket.on('updateInfo',function(data){
+        console.log(data);
+        dbUtil.updateUserInfo(data,function(res){
+            if(!res){
+                socketProxy.stableSocketEmit(socket,'feedback', {
+                    errorCode: 1,
+                    text: '修改失败,请稍后重试',
+                    type: 'UPDATEINFORESULT',
+                    extension: null
+                });
+            }else{
+                socketProxy.stableSocketEmit(socket,'feedback', {
+                    errorCode: 0,
+                    text: '信息修改成功',
+                    type: 'UPDATEINFORESULT',
+                    extension: null
+                });
+            } 
+        });
+    })
+}
+
+//用户最近登陆时间
+exports.handlelastLoginTime = function (socket){
+    socket.on('loginTime', function(data){
+        console.log(data);
+        dbUtil.insertLastLoginTime(data,function(res){
+            // var tempBalance = balance.bullup_currency_amount;
+            // socket.emit('feedback', {
+            //     errorCode: 0,
+            //     text: '查询余额OK',
+            //     type: 'GETBALANCERESULT',
+            //     extension: {
+            //         "balance": tempBalance,
+            //     }
+            // });
         });
      });
 }
@@ -543,26 +609,48 @@ exports.insertFeedbackMessage=function(socket){
     socket.on('feedbackMessage',function(result){
         console.log('result:'+JSON.stringify(result)); 
         logger.listenerLog('feedbackMessage');
-        dbUtil.insertFeedback(result.UserId,result.textarea1,result.name,result.email,function(res){
-            if(result.textarea1==""||result.name==""||result.email==""){
+        dbUtil.insertFeedback(result,function(res){
+            if(!res){
                 socketProxy.stableSocketEmit(socket, 'feedback',{
-        //console.log('result:'+JSON.stringify(result)); 
-        //logger.listenerLog('feedbackMessage');
+                //console.log('result:'+JSON.stringify(result)); 
+                //logger.listenerLog('feedbackMessage');
                     errorCode:1,
-                    text:'反馈失败,请输入反馈信息',
+                    text:'反馈失败,请稍后重试',
                     type:'FEEDBACKMESSAGE',
                     extension:null
                 });
             }else{
                 socketProxy.stableSocketEmit(socket, 'feedback',{
                     errorCode:0,
-                    text:'反馈成功',
+                    text:'反馈成功，请耐心等待处理',
                     type:'FEEDBACKMESSAGE',
-                    extension:{
-                        Msgname:result.name,
-                        Msgemail:result.name,
-                        Msgtextarea1:result.textarea1
-                    }
+                    extension:null
+                });
+            }
+        });
+    })
+}
+
+exports.insertFeedbackMessage=function(socket){
+    socket.on('feedbackMessage',function(result){
+        console.log('result:'+JSON.stringify(result)); 
+        logger.listenerLog('feedbackMessage');
+        dbUtil.insertFeedback(result,function(res){
+            if(!res){
+                socketProxy.stableSocketEmit(socket, 'feedback',{
+                //console.log('result:'+JSON.stringify(result)); 
+                //logger.listenerLog('feedbackMessage');
+                    errorCode:1,
+                    text:'反馈失败,请稍后重试',
+                    type:'FEEDBACKMESSAGE',
+                    extension:null
+                });
+            }else{
+                socketProxy.stableSocketEmit(socket, 'feedback',{
+                    errorCode:0,
+                    text:'反馈成功，请耐心等待处理',
+                    type:'FEEDBACKMESSAGE',
+                    extension:null
                 });
             }
         });

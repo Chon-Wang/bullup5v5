@@ -53,7 +53,11 @@
         胜率
 </label>
     <div class="personal-value">
-        {{ player.winning_rate }}
+        {% if player.winning_rate=='NaN%' %}
+		{{0}}
+		{% else %}
+		{{player.winning_rate}}
+		{%endif %}
     </div>
 </div>
 
