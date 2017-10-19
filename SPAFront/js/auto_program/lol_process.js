@@ -56,7 +56,7 @@ function syncLogin(callback){
             throw error;
         }
         readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
-            //log.logToFile("D://temp_log.txt", "append",jsonStr);
+            log.logToFile("D://login_log.txt", "append",jsonStr);
             callback(jsonStr);
         });
     });
@@ -73,7 +73,7 @@ function syncRoom(callback){
             throw error;
         }
         readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
-            //log.logToFile("D://temp_log.txt", "append",jsonStr);
+            log.logToFile("D://room_log.txt", "append",jsonStr);
             callback(jsonStr);
         });
     });
@@ -91,7 +91,7 @@ function syncResult(callback){
             throw error;
         }
         readJsonStr('C:/Users/Public/Bullup/log.txt', function(jsonStr){
-            //log.logToFile("D://temp_log.txt", "append",jsonStr);
+            log.logToFile("D://result_log.txt", "append",jsonStr);
             callback(jsonStr);
         });
     });
