@@ -216,16 +216,12 @@ exports.handleBattleResult = function (io, socket){
                 var battles = exports.battles;
                 var winTeamStrengthScore = 0;
                 var loseTeamStrengthScore = 0;
-
-
                 for(var battleIndex in battles){
                     var battle = battles[battleIndex];
-
                     var blueSide = battle.blueSide;
                     var blueSidePaticipants = blueSide.participants;
                     var redSide = battle.redSide;
                     var redSidePaticipants = redSide.participants;
-
                     for(var bluePaticipantIndex in blueSidePaticipants){
                         var bluePaticipant = blueSidePaticipants[bluePaticipantIndex];
                         if(bluePaticipant.userId == userId){
@@ -258,18 +254,15 @@ exports.handleBattleResult = function (io, socket){
                             }
                         }
                     }
-
                     if(winTeam[0] != undefined){
                         break;
                     }
                 }
                 //管理服务端的全局变量 队伍和对局
-
                 //组织通知双方队伍胜负结果的数据包
                 if(finishedBattle == null || finishedBattle.blueSide == undefined){
                     return;
                 }
-
                 var resultPacket = {};
                 resultPacket.rewardType = finishedBattle.blueSide.rewardType;
                 resultPacket.rewardAmount = finishedBattle.blueSide.rewardAmount;
@@ -290,14 +283,95 @@ exports.handleBattleResult = function (io, socket){
                     var player = loseTeam[index];
                     dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount);
                 }
-
-
                 //广播结果数据包
                 socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), finishedBattle.battleName, 'battleResult', resultPacket);
                 console.log(finishedBattle.battleName + "结束");
                 console.log("");
                 //对局中所有的socket离开所有的socketRoom
                 //io.sockets.in(finishedBattle.battleName).leaveAll();
+            }else if(lolResultPacket.win == 'no'){
+                var userLOLAccountId = lolResultPacket.accountId;
+                var userId = socketProxy.mapSocketToUserId(socket.id);
+                var winTeam = {};
+                var loseTeam = {};
+                var finishedBattle = null;
+                var battles = exports.battles;
+                var winTeamStrengthScore = 0;
+                var loseTeamStrengthScore = 0;
+                for(var battleIndex in battles){
+                    var battle = battles[battleIndex];
+                    var blueSide = battle.blueSide;
+                    var blueSidePaticipants = blueSide.participants;
+                    var redSide = battle.redSide;
+                    var redSidePaticipants = redSide.participants;
+                    for(var bluePaticipantIndex in blueSidePaticipants){
+                        var bluePaticipant = blueSidePaticipants[bluePaticipantIndex];
+                        if(bluePaticipant.userId == userId){
+                            loseTeam = blueSidePaticipants;
+                            winTeam = redSidePaticipants;
+                            loseTeamStrengthScore = blueSide.teamStrengthScore;
+                            winTeamStrengthScore = redSide.teamStrengthScore;
+
+                            finishedBattle = battle;
+                            delete teamProxy.formedTeams[blueSide.roomName];
+                            delete teamProxy.formedTeams[redSide.roomName];
+                            delete exports.battles[battleIndex];
+                            break;
+                        }
+                    }
+                    if(finishedBattle == null){
+                        for(var redPaticipantIndex in redSidePaticipants){
+                            var redPaticipant = redSidePaticipants[redPaticipantIndex];
+                            if(redPaticipant.userId == userId){
+                                loseTeam = redSidePaticipants;
+                                winTeam = blueSidePaticipants;
+                                loseTeamStrengthScore = redSide.teamStrengthScore;
+                                winTeamStrengthScore = blueSide.teamStrengthScore;
+
+                                finishedBattle = battle;
+                                delete teamProxy.formedTeams[blueSide.roomName];
+                                delete teamProxy.formedTeams[redSide.roomName];
+                                delete exports.battles[battleIndex];
+                                break;
+                            }
+                        }
+                    }
+                    if(winTeam[0] != undefined){
+                        break;
+                    }
+                }
+                //管理服务端的全局变量 队伍和对局
+                //组织通知双方队伍胜负结果的数据包
+                if(finishedBattle == null || finishedBattle.blueSide == undefined){
+                    return;
+                }
+                var resultPacket = {};
+                resultPacket.rewardType = finishedBattle.blueSide.rewardType;
+                resultPacket.rewardAmount = finishedBattle.blueSide.rewardAmount;
+                resultPacket.roomName = finishedBattle.blueSide.roomName;
+                resultPacket.winTeam = winTeam;
+                resultPacket.loseTeam = loseTeam;
+                resultPacket.participants = lolResultPacket.participants
+                //算战力变化
+                var newScore = exports.strengthScoreChangedCalculation(winTeamStrengthScore, loseTeamStrengthScore);
+                var winScoreUpdateValue = newScore.newWinnerScore - winTeamStrengthScore;
+                var loseScoreUpdateValue = newScore.newLoserScore - loseTeamStrengthScore;
+                //扣钱
+                for(var index in winTeam){
+                    var player = winTeam[index];
+                    dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + winScoreUpdateValue, resultPacket.rewardAmount);
+                }
+                for(var index in loseTeam){
+                    var player = loseTeam[index];
+                    dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount);
+                }
+                //广播结果数据包
+                socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), finishedBattle.battleName, 'battleResult', resultPacket);
+                console.log(finishedBattle.battleName + "结束");
+                console.log("");
+                //对局中所有的socket离开所有的socketRoom
+                //io.sockets.in(finishedBattle.battleName).leaveAll();
+
             }
         }
     });

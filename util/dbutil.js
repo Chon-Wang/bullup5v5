@@ -655,7 +655,7 @@ exports.findFriendListByUserId = function(userId, callback) {
         async.eachSeries(rows, function(row, errCb){
             exports.findUserById(row.friend_user_id, function(user) {
                 //调用socketProxy中的方法，判断用户是否在线
-                if (socketProxy.isUserOnline(user.user_id)) {
+                //if (socketProxy.isUserOnline(user.user_id)) {
                     //返回true时
                     friendList[user.user_nickname] = {
                         name: user.user_nickname,
@@ -664,16 +664,16 @@ exports.findFriendListByUserId = function(userId, callback) {
                         online: 'true',
                         status: "idle"
                     };
-                }else{
-                    //返回false时
-                    friendList[user.user_nickname] = {
-                        name: user.user_nickname,
-                        userId: user.user_id,
-                        avatarId: user.icon_id,
-                        online: 'false',
-                        status: "idle"
-                    };
-                }
+                // }else{
+                //     //返回false时
+                //     friendList[user.user_nickname] = {
+                //         name: user.user_nickname,
+                //         userId: user.user_id,
+                //         avatarId: user.icon_id,
+                //         online: 'false',
+                //         status: "idle"
+                //     };
+                // }
                 
                 errCb();
             })

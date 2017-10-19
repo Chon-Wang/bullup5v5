@@ -1,19 +1,19 @@
 
-exports.server = {
-    host: '67.216.196.197',
-    user: 'root',
-    password: '123456',
-    database: 'bullup',
-    useConnectionPooling: true
-};
-
 // exports.server = {
-//     host:'18.220.130.245',
+//     host: '67.216.196.197',
 //     user: 'root',
-//     password: '1234',
+//     password: '123456',
 //     database: 'bullup',
 //     useConnectionPooling: true
 // };
+
+exports.server = {
+    host:'18.220.130.245',
+    user: 'root',
+    password: '1234',
+    database: 'bullup',
+    useConnectionPooling: true
+};
 
 exports.userTbl = {
     name: 'user',
