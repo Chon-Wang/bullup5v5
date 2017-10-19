@@ -395,9 +395,7 @@ socket.on('chatMsg', function(msg){
     
 
 socket.on('battleResult', function(resultPacket){
-
     socket.emit('tokenData', resultPacket.token);  
-
     //读取数据
     var winTeam = resultPacket.winTeam;
     var battleResultData = {};
@@ -422,8 +420,6 @@ socket.on('battleResult', function(resultPacket){
     battleResultData.wealth_change = resultPacket.rewardAmount;
     //console.log(JSON.stringify(battleResultData));
     
-
-
     var battleResHtml = bullup.loadSwigView('./swig_battleres.html', {
         battle_res: battleResultData
     });
@@ -433,13 +429,18 @@ socket.on('battleResult', function(resultPacket){
     battleInfo = null;
     formedTeams = null;
 
-
     //页面跳转到结果详情页
     $('#main-view').html(battleResHtml);
     //添加确认按钮单击事件
     $('#confirm_battle_result').on('click', function(e){
         $('#router_starter').click();
 	});
+});
+
+socket.on('rechargeResult', function(text){
+    socket.emit('tokenData', text.token);  
+    bullup.alert(text.text);
+    $('#router_starter').click();
 });
 
 /**

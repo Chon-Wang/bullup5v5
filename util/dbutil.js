@@ -608,25 +608,24 @@ exports.searchCashFlow = function(data,callback){
  * @param userId
  */
 exports.userRecharge = function(data, callback) {
-    var tempMoney = (data.money) / 100;
     async.parallel([
         function(done) {
-            connection.query('update bullup_wealth set bullup_currency_amount=bullup_currency_amount+? where user_id=?', [tempMoney,data.userId], function (err, results){
+            connection.query('update bullup_wealth set bullup_currency_amount=bullup_currency_amount+? where user_id=?', [data.money,data.userId], function (err, results){
                 if (err) throw err;
                 done(err,results);
             });
         },
         function(done){
-            connection.query('insert into bullup_payment_history(user_id,bullup_bill_value,bullup_bill_type) values (?,?,?)', [data.userId,tempMoney,data.currency], function (err, results){
+            connection.query('insert into bullup_payment_history(user_id, bullup_payment_account_id, bullup_bill_value,bullup_bill_type) values (?,?,?,?)', [data.userId, 0, data.money, data.currency], function (err, results){
                 if (err) throw err;
                 done(err,results);
             });
         }
     ],function(err,results){
         if(!err)
-            callback(null,results);
+            callback(results);
         else
-            callback(err,null);
+            callback(null);
     });
     
 }

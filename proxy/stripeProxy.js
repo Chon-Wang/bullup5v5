@@ -1,6 +1,8 @@
 var express = require('express');
 var stripe = require('stripe')('sk_live_zrQoZpyN0MvLXDep0ESAhzHE');
 var bodyParser = require('body-parser');
+var dbUtil = require('../util/dbutil.js');
+var socketProxy = require('../proxy/socketProxy');
 
 var app = express();
 var fs = require("fs");
@@ -12,13 +14,14 @@ exports.recharge = function(){
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended:false}));
     
-    app.get('/',function(req,res){
+    app.post('/',function(req,res){
         //var str = req.url.substr(req.url.indexOf('?'), req.url.indexOf('=') - req.url.indexOf('?'));
-
-        var rechargeValue = parseInt(req.url.substr(req.url.indexOf('rechargeAccount=') + 16, 5));
+        var rechargeValue = req.body.rechargeAccount;
+        var userId = req.body.userId;
         var data = fs.readFileSync('./stripe_views/index.hbs').toString();
-        data = data.replace("chargeAmountValue", String(rechargeValue));
-        data = data.replace("chargeAmountValueHidden", String(rechargeValue));
+        data = data.replace("chargeAmountValue", String(Number.parseInt(rechargeValue) * 100));
+        data = data.replace("chargeAmountValueHidden", String(Number.parseInt(rechargeValue) * 100));
+        data = data.replace("userNameValue", String(userId));
         fs.writeFileSync('./stripe_views/temp.hbs', data);
         res.sendFile('F:/NodeWorkspace/bullup5v5/stripe_views/temp.hbs');
         //res.sendFile('C:/Users/JM.Guo/Desktop/Stripe/views/index.hbs');
@@ -26,19 +29,28 @@ exports.recharge = function(){
     
     
     app.post("/charge",function(req,res){
-
         var body = req.body;
         var token = req.body.stripeToken;
         var chargeAmount = req.body.chargeAmount;
-        var userName = req.body.userName;
+        var userId = req.body.userName;
         console.log(token);
         var charge = stripe.charges.create({
             amount:chargeAmount,
             currency:'usd',
             source:token,
         });
-        console.log('you payment was successed!')
-        //res.redirect('/')
+        var data = {};
+        data.userId = Number.parseInt(userId);
+        data.money = Number.parseInt(chargeAmount) / 100;
+        data.currency = 'dolla';
+        dbUtil.userRecharge(data, function(results){
+            var socket = socketProxy.mapUserIdToSocket(data.userId);
+            if(results != null){
+                socketProxy.stableSocketEmit(socket, "rechargeResult", {'text': '充值成功！'});
+            }else{
+                socketProxy.stableSocketEmit(socket, "rechargeResult", {'text': '充值失败！请联系客服！'});
+            }
+        });
     });
     
     
