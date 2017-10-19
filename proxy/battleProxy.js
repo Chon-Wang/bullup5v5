@@ -289,6 +289,9 @@ exports.handleBattleResult = function (io, socket){
                     var player = loseTeam[index];
                     dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount);
                 }
+                //写记录
+                dbUtil.writeBattleRecord(finishedBattle);
+
                 //广播结果数据包
                 socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), finishedBattle.battleName, 'battleResult', resultPacket);
                 console.log(finishedBattle.battleName + "结束");
@@ -377,6 +380,9 @@ exports.handleBattleResult = function (io, socket){
                     var player = loseTeam[index];
                     dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount);
                 }
+                //写记录
+                dbUtil.writeBattleRecord(finishedBattle);
+                
                 //广播结果数据包
                 socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), finishedBattle.battleName, 'battleResult', resultPacket);
                 console.log(finishedBattle.battleName + "结束");
