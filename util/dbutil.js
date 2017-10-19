@@ -1193,6 +1193,39 @@ exports.insertBankInfo = function(bankInfo, callback) {
     
 }
 
+exports.writeBattleRecord = function(battle){
+    
+    var competitionType = battle.blueSide.gameMode;
+    var competitionId = 0;
+    var battleName = battle.battleName;
+    var battleMap = battle.blueSide.mapSelection;
+    var battleBet = battle.blueSide.rewardAmount;
+    var teamNum = battle.blueSide.paticipants.length;
+    var redNames = "";
+    var blueNames = "";
+    var time = new Date().format("yyyy-MM-dd HH:mm:ss"); 
+    var duration = 0;
+    var result = "";
+    if(battle.blueWin){
+        result = "蓝方赢";
+    }else{
+        result = "红方赢";
+    }
+    for(var index in battle.blueSide.paticipants){
+        blueNames += ",";
+        blueNames += battle.blueSide.paticipants[index].name;
+    }
+    blueNames = blueNames.substr(1);
+
+    for(var index in battle.redSide.paticipants){
+        redNames += ",";
+        redNames += battle.redSide.paticipants[index].name;
+    }
+    redNames = redNames.substr(1);
+
+    
+}
+
 exports.updateStrengthAndWealth = function(userId, newStrengthScore, wealthChangedValue){
     if(newStrengthScore < 0){
         newStrengthScore = 0;

@@ -216,6 +216,9 @@ exports.handleBattleResult = function (io, socket){
                 var battles = exports.battles;
                 var winTeamStrengthScore = 0;
                 var loseTeamStrengthScore = 0;
+
+                var blueWin = true;
+
                 for(var battleIndex in battles){
                     var battle = battles[battleIndex];
                     var blueSide = battle.blueSide;
@@ -245,7 +248,7 @@ exports.handleBattleResult = function (io, socket){
                                 loseTeam = blueSidePaticipants;
                                 winTeamStrengthScore = redSide.teamStrengthScore;
                                 loseTeamStrengthScore = blueSide.teamStrengthScore;
-
+                                blueWin = false;
                                 finishedBattle = battle;
                                 delete teamProxy.formedTeams[blueSide.roomName];
                                 delete teamProxy.formedTeams[redSide.roomName];
@@ -263,13 +266,16 @@ exports.handleBattleResult = function (io, socket){
                 if(finishedBattle == null || finishedBattle.blueSide == undefined){
                     return;
                 }
+                finishedBattle.blueWin = blueWin;
+                finishedBattle.redWin = !blueWin;
+
                 var resultPacket = {};
                 resultPacket.rewardType = finishedBattle.blueSide.rewardType;
                 resultPacket.rewardAmount = finishedBattle.blueSide.rewardAmount;
                 resultPacket.roomName = finishedBattle.blueSide.roomName;
                 resultPacket.winTeam = winTeam;
                 resultPacket.loseTeam = loseTeam;
-                resultPacket.participants = lolResultPacket.participants
+                resultPacket.participants = lolResultPacket.participants;
                 //算战力变化
                 var newScore = exports.strengthScoreChangedCalculation(winTeamStrengthScore, loseTeamStrengthScore);
                 var winScoreUpdateValue = newScore.newWinnerScore - winTeamStrengthScore;
@@ -298,6 +304,9 @@ exports.handleBattleResult = function (io, socket){
                 var battles = exports.battles;
                 var winTeamStrengthScore = 0;
                 var loseTeamStrengthScore = 0;
+
+                var blueWin = true;
+
                 for(var battleIndex in battles){
                     var battle = battles[battleIndex];
                     var blueSide = battle.blueSide;
@@ -311,7 +320,7 @@ exports.handleBattleResult = function (io, socket){
                             winTeam = redSidePaticipants;
                             loseTeamStrengthScore = blueSide.teamStrengthScore;
                             winTeamStrengthScore = redSide.teamStrengthScore;
-
+                            blueWin = false;
                             finishedBattle = battle;
                             delete teamProxy.formedTeams[blueSide.roomName];
                             delete teamProxy.formedTeams[redSide.roomName];
@@ -345,6 +354,9 @@ exports.handleBattleResult = function (io, socket){
                 if(finishedBattle == null || finishedBattle.blueSide == undefined){
                     return;
                 }
+                finishedBattle.blueWin = blueWin;
+                finishedBattle.redWin = !blueWin;
+
                 var resultPacket = {};
                 resultPacket.rewardType = finishedBattle.blueSide.rewardType;
                 resultPacket.rewardAmount = finishedBattle.blueSide.rewardAmount;
