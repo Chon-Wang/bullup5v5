@@ -381,7 +381,7 @@ exports.handleBattleResult = function (io, socket){
                     dbUtil.updateStrengthAndWealth(player.userId, player.strength.score + loseScoreUpdateValue, -1 * resultPacket.rewardAmount);
                 }
                 //写记录
-                dbUtil.writeBattleRecord(finishedBattle);
+                // dbUtil.writeBattleRecord(finishedBattle);
                 
                 //广播结果数据包
                 socketProxy.stableSocketsEmit(io.sockets.in(finishedBattle.battleName), finishedBattle.battleName, 'battleResult', resultPacket);
