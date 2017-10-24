@@ -1,5 +1,6 @@
 var teamProxy = require('./teamProxy.js');
 var socketProxy = require('./socketProxy.js');
+var logUtil = require('../util/logutil.js');
 var dbUtil = require('../util/dbutil.js');
 
 var matchLevel1MinCount = 2;
@@ -17,7 +18,11 @@ exports.init = function () {
  */
 exports.handleBattleInvite = function (socket) {
     socket.on('battleInvite', function (battelRequest) {
+
+        logUtil.logToFile("./logs/data/data.txt", "append", JSON.parse(teamProxy.formedTeams), "battleInviteResult teamProxy.formedTeams");
+
         var hostTeam = teamProxy.mapTeamNameToFormedTeam(battelRequest.hostTeamName);
+        //写日志
 
         // 队伍不存在说明已经形成对局
         if (hostTeam && hostTeam.status == 'PUBLISHING') {
@@ -50,11 +55,17 @@ exports.handleBattleInvite = function (socket) {
 
 exports.handleBattleInviteResult = function (io, socket) {
     socket.on('inviteBattleResult', function (feedback) {
-        // 如果接受了邀请
+        // 如果接受了邀
+        logUtil.logToFile("./logs/data/data.txt", "append", "", "inviteBattleResult");
+
         if (feedback.errorCode == 0) {
             // 向两方队伍中的所有人进行广播
             var challengerTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.challengerTeam.roomName);
             var hostTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.hostTeam.roomName);
+
+            logUtil.logToFile("./logs/data/data.txt", "append", challengerTeam, "inviteBattleResult challengeTeam");
+            logUtil.logToFile("./logs/data/data.txt", "append", hostTeam, "inviteBattleResult hostTeam");
+
             var currentTime = require('moment')().format('YYYYMMDDHHmmss');
             // 更新队伍状态
             teamProxy.changeTeamStatus(challengerTeam.roomName, 'INBATTLE');
@@ -105,7 +116,8 @@ exports.handleBattleInviteResult = function (io, socket) {
 exports.handleLOLRoomEstablished = function (io, socket) {
     socket.on('lolRoomEstablished', function (roomPacket) {
         //检查数据包中的人员是否能对应上
-
+        logUtil.logToFile("./logs/data/data.txt", "append", JSON.stringify(roomPacket), "lolRoomEstablished roomPacket");
+        logUtil.logToFile("./logs/data/data.txt", "append", JSON.stringify(exports.battles), "lolRoomEstablished battles");
         //通知客户端游戏已开始
         for(var battleIndex in  exports.battles){
             var battle = exports.battles[battleIndex];
@@ -204,6 +216,10 @@ exports.handleLOLRoomEstablished = function (io, socket) {
 
 exports.handleBattleResult = function (io, socket){
     socket.on('lolBattleResult', function (lolResultPacket) {
+
+        logUtil.logToFile("./logs/data/data.txt", "append", JSON.stringify(lolResultPacket), "lolBattleResult lolResultPacket");
+        console.log(io.sockets.in(finishedBattle.battleName));
+
         if(true){
         //if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM_GAME'){
             if(lolResultPacket.win == 'yes'){
