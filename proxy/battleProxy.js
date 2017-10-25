@@ -18,8 +18,8 @@ exports.init = function () {
  */
 exports.handleBattleInvite = function (socket) {
     socket.on('battleInvite', function (battelRequest) {
-
-        logUtil.logToFile("./logs/data/data.txt", "append", JSON.parse(teamProxy.formedTeams), "battleInviteResult teamProxy.formedTeams");
+        console.log(teamProxy.formedTeams);
+        //logUtil.logToFile("./logs/data/data.txt", "append", JSON.parse(teamProxy.formedTeams), "battleInviteResult teamProxy.formedTeams");
 
         var hostTeam = teamProxy.mapTeamNameToFormedTeam(battelRequest.hostTeamName);
         //写日志
@@ -63,8 +63,8 @@ exports.handleBattleInviteResult = function (io, socket) {
             var challengerTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.challengerTeam.roomName);
             var hostTeam = teamProxy.mapTeamNameToFormedTeam(feedback.extension.hostTeam.roomName);
 
-            logUtil.logToFile("./logs/data/data.txt", "append", challengerTeam, "inviteBattleResult challengeTeam");
-            logUtil.logToFile("./logs/data/data.txt", "append", hostTeam, "inviteBattleResult hostTeam");
+            logUtil.logToFile("./logs/data/data.txt", "append", JSON.stringify(challengerTeam), "inviteBattleResult challengeTeam");
+            logUtil.logToFile("./logs/data/data.txt", "append", JSON.stringify(hostTeam), "inviteBattleResult hostTeam");
 
             var currentTime = require('moment')().format('YYYYMMDDHHmmss');
             // 更新队伍状态
@@ -218,7 +218,7 @@ exports.handleBattleResult = function (io, socket){
     socket.on('lolBattleResult', function (lolResultPacket) {
 
         logUtil.logToFile("./logs/data/data.txt", "append", JSON.stringify(lolResultPacket), "lolBattleResult lolResultPacket");
-        console.log(io.sockets.in(finishedBattle.battleName));
+        console.log(io.sockets);
 
         if(true){
         //if(lolResultPacket.head == 'result' && lolResultPacket.gameMode == 'CLASSIC' && lolResultPacket.gameType == 'CUSTOM_GAME'){

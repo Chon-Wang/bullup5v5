@@ -180,15 +180,15 @@ exports.handleRegister = function (socket) {
                                     extension: null
                                 });
                             }else{
-                                dbUtil.findUserByCode(userInfo.userEmail, function (user) {
-                                    if(user){
-                                        socketProxy.stableSocketEmit(socket, 'feedback', {
-                                            errorCode: 1,
-                                            text: '该邀请码已被使用',
-                                            type: 'REGISTERRESULT',
-                                            extension: null
-                                        });
-                                    }else{
+                                //dbUtil.findUserByCode(userInfo.userEmail, function (user) {
+                                    // if(user){
+                                    //     socketProxy.stableSocketEmit(socket, 'feedback', {
+                                    //         errorCode: 1,
+                                    //         text: '该邀请码已被使用',
+                                    //         type: 'REGISTERRESULT',
+                                    //         extension: null
+                                    //     });
+                                    // }else{
                                         dbUtil.addUser(userInfo, function (userAddRes) {
                                             socketProxy.stableSocketEmit(socket, 'feedback', {
                                                 errorCode: 0,
@@ -202,8 +202,8 @@ exports.handleRegister = function (socket) {
                                                 }
                                             });
                                         });
-                                    }
-                                });
+                                    //}
+                                //});
                                 
                             }
                         });

@@ -2,6 +2,7 @@ var logger = require('../util/logutil.js');
 var socketProxy = require('./socketProxy');
 var battleProxy = require('./battleProxy');
 
+
 exports.init = function() {
     // 已经创建完毕的队伍
     this.formedTeams = {};
@@ -100,7 +101,7 @@ exports.handleTeamEstablish = function (io, socket) {
         // 更新队伍信息状态
         teamInfo.status = 'PUBLISHING';
         // 将未形成队伍列表中的队伍放入已形成队伍列表中
-        logUtil.logToFile("./logs/data/data.txt", "append", JSON.stringify(teamInfo), "establishTeam teamInfo");
+        logger.logToFile("./logs/data/data.txt", "append", JSON.stringify(teamInfo), "establishTeam teamInfo");
         if(teamInfo.gameMode == 'battle'){
             //约战
             exports.formedTeams[teamInfo.roomName] = teamInfo;
@@ -116,8 +117,8 @@ exports.handleTeamEstablish = function (io, socket) {
             //     participantsCount: teamInfo.participants.length
             // };
             delete exports.unformedTeams[teamInfo.roomName];
-            logUtil.logToFile("./logs/data/data.txt", "append", JSON.stringify(exports.formedTeams), "establishTeam formedTeams");
-            logUtil.logToFile("./logs/data/data.txt", "append", JSON.stringify(exports.unformedTeams), "establishTeam unformedTeams");
+            logger.logToFile("./logs/data/data.txt", "append", JSON.stringify(exports.formedTeams), "establishTeam formedTeams");
+            logger.logToFile("./logs/data/data.txt", "append", JSON.stringify(exports.unformedTeams), "establishTeam unformedTeams");
 
             var feedback = {
                 errorCode: 0,
