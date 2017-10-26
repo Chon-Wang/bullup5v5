@@ -127,6 +127,11 @@ exports.stableSocketEmit = function(socket, head, data){
 }
 
 exports.stableSocketsEmit = function(sockets, roomName, head, data){
+    if(sockets.rooms.length != 0){
+        //log.logToFile("./logs/data/data.txt", "append", JSON.stringify(sockets), "satbleSocketsEmit sockets");
+        var a = 10;
+    }
+    
     for(var socketId in sockets.connected){
         if(sockets.adapter.rooms[roomName].sockets[socketId] == true){
             var token = Math.random().toString(36).substring(7) + socketId; 
