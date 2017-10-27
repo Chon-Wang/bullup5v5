@@ -5,7 +5,7 @@
 
 {% if room %}
   <!-- if team exists -->
-  <div class="col s2 center-align">
+  <div class="col s2 center-align" style="margin-top:10px;">
     <img src="./media/user_icon/{{ room.captain.avatarId }}.png" alt="" class="team-leader-img">
   </div>
   <div class="col s6 m2">
@@ -17,7 +17,7 @@
     <label class="team-title">押金</label>
     <div class="team-value">{{ room.rewardAmount }}</div>
   </div>
-  <div class="col s6 m2 right">
-    <a id="invite_friend_btn" data-activates="friend-list" class="toggle-friend-btn waves-effect waves-light btn">邀请好友</a>
+  <div class="col s6 m2 right" style="position: absolute;top: 284px;left: 17%;">
+    <a id="invite_friend_btn" data-activates="friend-list" class="toggle-friend-btn waves-effect waves-light btn">1.邀请好友</a>
   </div>
 {% endif %}

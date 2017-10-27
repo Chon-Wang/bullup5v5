@@ -76,7 +76,7 @@
 			  <p>{{ tournament.description }}</p>
 			</div>
 			<div class="card-action">
-			  <a href="#">加入</a>
+			  <a href="#">待开放</a>
 			</div>
 		  </div>
 		</div>
@@ -88,10 +88,10 @@
   </div>
   
   <div class="col s4 starter-collection-holder">
-		<div class="collection news-collection">
+		<div class="collection news-collection" style="border:none;">
 			{% if news %}
 			{% for n in news %}
-				<a class="collection-item">{{ n.title }}</a>
+				<a class="collection-item" style="background-color: #455a64;border:none;color:#fff;">{{ n.title }}</a>
 			{% endfor %}
 			{% endif %}
 		</div>

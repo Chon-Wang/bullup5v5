@@ -12,7 +12,8 @@ $().ready(function(){
 
     $('.update_personal_info').on('click', function(e){
         e.preventDefault();
-        bullup.loadTemplateIntoTarget('swig_form_component.html', {}, 'main-view');           
+        bullup.loadTemplateIntoTarget('swig_form_component.html', {}, 'main-view');
+        $('.button-collapse').sideNav('hide');           
     });
 
     $('#personal_recharge_btn').on('click', function(e){

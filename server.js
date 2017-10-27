@@ -25,7 +25,6 @@ paymentProxy.init();
 chatProxy.init();
 adminProxy.init();
 lolKeyProxy.init();
-logger.init();
 
 io.on('connection', function(socket) {
     logger.levelMsgLog(0, 'User ' + socket.id + ' connected!');
@@ -48,8 +47,11 @@ io.on('connection', function(socket) {
 
     //余额
     userProxy.handleGetBalance(socket);
-    //
-    
+    //登录时间
+    userProxy.handlelastLoginTime(socket);
+    //更改信息
+    userProxy.handleUserUpdateInfo(socket);
+
     userProxy.handlePersonalCenterRequest(socket);
   
     teamProxy.handleRoomEstablish(socket);
@@ -103,13 +105,14 @@ io.on('connection', function(socket) {
 
     //简单统计
     adminProxy.handleAnalysis(socket);
+    //邀请码信息
+    adminProxy.handleInvitedCode(socket);
 
     chatProxy.handleChat(io,socket);
 
     //LOLkey
     lolKeyProxy.handleLOLKeyUpdate(socket);
     lolKeyProxy.handleLOLKeyRequest(socket);
-
 
 });
 
@@ -132,11 +135,24 @@ stripeProxy.recharge();
 timmer.autoUpdateRankList(24 * 3600 * 1000);
 io.listen(3000);
 
-
-
-process.on('uncaughtException', function(err) {
-    logger.logErrToFile("./logs/errors.txt", "append", err);
+process.on('uncaughtException', function (err) {
+    logger.logToFile("./logs/error/errors.txt", "append", err);
     console.log(String(err));
+    if(err instanceof Error){
+        
+    }else if(err instanceof TypeError){
+        logger.logErrToFile("./logs/error/type_errors.txt", "append", err);
+    }else if(err instanceof SyntaxError){
+        logger.logErrToFile("./logs/error/syntax_errors.txt", "append", err);
+    }else if(err instanceof ReferenceError){
+        logger.logErrToFile("./logs/error/reference_errors.txt", "append", err);
+    }else if(err instanceof EvalError){
+        logger.logErrToFile("./logs/error/eval_errors.txt", "append", err);
+    }else if(err instanceof RangeError){
+        logger.logErrToFile("./logs/error/range_errors.txt", "append", err);
+    }else if(err instanceof URIError){
+        logger.logErrToFile("./logs/error/uri_errors.txt", "append", err);
+    }else{
+
+    }
 });
-
-

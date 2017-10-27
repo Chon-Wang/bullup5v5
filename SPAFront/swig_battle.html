@@ -5,13 +5,15 @@
 </div>
 
 {% if teams %}
-  <!-- cycle through two teams, put  -->
+	<!-- cycle through two teams, put  -->
   {% for team in teams %}
 	<!-- For the first team -->
+
 	{% if loop.index % 3 == 1 %}
 	  <div class="row">
     {% endif %}
-    <div class="col s12 m6 l4">
+    <div class="col s12 m6 l4" >
+			<a href="#team-detail-modal" id="{{ team.roomName }}_team_detail_btn" class="team_detail_btn">
       <div class="card battle-card grey darken-2" >
         <div class="card-content white-text" style="padding:15px;">
           <div class="row">
@@ -24,7 +26,7 @@
                 <span class="card-title right" style="min-width: 290px;">
 				  {{team.roomName}}
 				</span>
-                <div class="chip right ">
+                <div class="chip right" style="margin-top: -5px;">
                   {{ team.teamParticipantsNum }}V{{ team.teamParticipantsNum }}
                 </div>
               </div>
@@ -33,19 +35,20 @@
           <!-- first row -->
         </div>
 
-        <div class="card-action">
-					<a class="team_detail_btn" id="{{ team.roomName }}_team_detail_btn" href="#team-detail-modal">详情</a>
+        <div class="card-action" style="padding: 16px 15px;">
+					<a class="team_detail_btn"  href="#team-detail-modal">发起挑战</a>
 					<!-- <a id="battle_team_details_btn">详情</a> -->
           <a href="#">收藏</a>
 
-          <div class="chip right">
+          <div class="chip right"  style="margin-top: -5px;">
             <i class="fa fa-gamepad" aria-hidden="true"></i>{% if team.winningCondition=='push-crystal' %}推掉水晶{% endif %}
           </div>
-          <div class="chip right">
+          <div class="chip right" style="margin-top: -5px;">
             <i class="fa fa-money" aria-hidden="true"></i> {{ team.rewardAmount }}
           </div>
         </div>
-      </div>
+			</div>
+		</a>
     </div>
     {% if loop.index % 3 == 0 %}
 	  </div>
@@ -79,12 +82,12 @@
 	  <!-- End of Details -->
 	  <div class="col s12 m9">
 		<!--  Radar Chart of two teams                  -->
-		<canvas id="team-detail-chart"></canvas>
+		<canvas id="team-detail-chart" style="margin-left:56px;"></canvas>
 	  </div>
 	</div>
   </div>
   <div class="modal-footer">
-	<a href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-battle-btn">邀请战斗</a>
+	<a style="background-color: #26a69a;color:#fff;" href="#waiting-modal" class="modal-action waves-effect waves-green btn-flat" id="invite-battle-btn">邀请战斗</a>
   </div>
 </div>
 

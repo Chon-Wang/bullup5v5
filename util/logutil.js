@@ -1,9 +1,5 @@
 var fs = require('fs');
 
-exports.init = function(){
-    this.errorCount = 0;
-}
-
 Date.prototype.format = function (fmt) {
     var o = {
         "M+": this.getMonth() + 1, //月份
@@ -56,24 +52,22 @@ exports.methodLog = function(methodName) {
 }
 
 //openMode:  read/write/append
-exports.logToFile = function(filePath, openMode, logStr){
-    if(openMode == 'append'){
-        fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] '+ logStr + '\r\n', {flag: 'a'});
-    }else if(openMode == 'write'){
-        fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] '+ logStr + '\r\n', {flag: 'w'});
+exports.logToFile = function(filePath, openMode, logStr, header="none"){
+    
+    if(header != "none"){
+        fs.writeFileSync("./logs/comprehensive/comprehensive.txt", '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] ' + ' [' + header + '] ' + logStr + '\r\n', {flag: 'a'});
+        if(openMode == 'append'){
+            fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] ' + ' [' + header + '] ' + logStr + '\r\n', {flag: 'a'});
+        }else if(openMode == 'write'){
+            fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] ' + ' [' + header + '] ' + logStr + '\r\n', {flag: 'w'});
+        }
+    }else{
+        fs.writeFileSync("./logs/comprehensive/comprehensive.txt", '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] ' + logStr + '\r\n', {flag: 'a'});
+        if(openMode == 'append'){
+            fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] '+ logStr + '\r\n', {flag: 'a'});
+        }else if(openMode == 'write'){
+            fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] '+ logStr + '\r\n', {flag: 'w'});
+        }
     }
-}
-
-exports.logErrToFile = function(filePath, openMode, err){
-    var logStr = " ErrorName: " + err.name + "\r\n";
-    logStr += " ErrorMessage: " + err.message + "\r\n";
-    logStr += " ErrorStack:\r\n { \r\n" + err.stack + "\r\n\r\n";
-
-    if(openMode == 'append'){
-        fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] '+ logStr + '\r\n', {flag: 'a'});
-    }else if(openMode == 'write'){
-        fs.writeFileSync(filePath, '[' + (new Date()).format("yyyy-MM-dd hh:mm:ss") + '] '+ logStr + '\r\n', {flag: 'w'});
-    }
-
-    exports.errorCount++;
+    
 }

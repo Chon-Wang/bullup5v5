@@ -1,8 +1,8 @@
 var io = require('socket.io-client');
 var socket = io.connect('http://18.220.130.245:3000');
-//var socket = io.connect('http://192.168.2.162:3000');
-var auto_script = require('./js/auto_program/lol_auto_script');
-var lol_process = require('C:/Users/Public/Bullup/auto_program/lol_process');
+//var socket = io.connect('http://127.0.0.1:3000');
+//var auto_script = require('./js/auto_program/lol_auto_script');
+var lol_process = require('./js/auto_program/lol_process.js');
 var radar_chart = require('./js/generate_radar.js');
 var lolUtil = require('./js/lolutil.js');
 
@@ -152,6 +152,11 @@ socket.on('feedback', function (feedback) {
         case 'ANALYSISDATARESULT':
             handleAnalysisDataResult(feedback);
             break;
+        //--------邀请码信息------------
+        case 'INVITEDCODERESULT':
+            handleInvitedCodeResult(feedback);
+            break;
+        //--------LOLAPIKey更新结果----------、
         case 'LOLUPDATERESULT':
             handleLOLApiUpdateResult(feedback);
             break;
@@ -164,15 +169,29 @@ socket.on('feedback', function (feedback) {
         case 'ICONUPDATERESULT':
             handleIconUpdateResult(feedback);
             break;  
-        //--------LOLAPIKey更新结果----------、
+        case 'UPDATEINFORESULT':
+            handleUpdateInfoResult(feedback);
+            break;
         }
 });
 
 socket.on('message', function(message){
     socket.emit('tokenData', message.token);
+
+    if(message.messageToken == undefined){
+        var err;
+        throw err;
+    }else{
+        for(messageIndex in messageInfo){
+            if(message.messageToken == messageInfo[messageIndex].messageToken){
+                return;
+            }
+        }
+    }
+
     switch(message.messageType){
         case 'invitedFromFriend':
-            handleInviteFromFriend(message);
+            handleInviteFromFriend(message); 
             break;
         case 'inviteBattle':
             handleBattleInviteRequest(message);
@@ -309,6 +328,10 @@ socket.on('lolRoomEstablish', function (lolRoom) {
             $('#component_collapsible').collapsible('open', 0);
             $('#component_collapsible').collapsible('open', 1);
             $('#component_collapsible').collapsible('open', 2);
+            $('#my_collapsible').collapsible('open', 3);
+            $('#my_collapsible').collapsible('open', 4);
+            $('#component_collapsible').collapsible('open', 3);
+            $('#component_collapsible').collapsible('open', 4);
             //////////////////////////////////////
             //自动创建房间
             //auto_script.autoCreateLOLRoom(lolRoom.roomName, lolRoom.password);
@@ -336,6 +359,10 @@ socket.on('lolRoomEstablish', function (lolRoom) {
             $('#component_collapsible').collapsible('open', 0);
             $('#component_collapsible').collapsible('open', 1);
             $('#component_collapsible').collapsible('open', 2);
+            $('#my_collapsible').collapsible('open', 3);
+            $('#my_collapsible').collapsible('open', 4);
+            $('#component_collapsible').collapsible('open', 3);
+            $('#component_collapsible').collapsible('open', 4);
         }
         //////////////////////////////////////
     }
@@ -375,9 +402,7 @@ socket.on('chatMsg', function(msg){
     
 
 socket.on('battleResult', function(resultPacket){
-
     socket.emit('tokenData', resultPacket.token);  
-
     //读取数据
     var winTeam = resultPacket.winTeam;
     var battleResultData = {};
@@ -400,7 +425,8 @@ socket.on('battleResult', function(resultPacket){
         battleResultData.rival_team = resultPacket.winTeam;
     }
     battleResultData.wealth_change = resultPacket.rewardAmount;
-    console.log(JSON.stringify(battleResultData));
+    //console.log(JSON.stringify(battleResultData));
+    
     var battleResHtml = bullup.loadSwigView('./swig_battleres.html', {
         battle_res: battleResultData
     });
@@ -410,13 +436,18 @@ socket.on('battleResult', function(resultPacket){
     battleInfo = null;
     formedTeams = null;
 
-
     //页面跳转到结果详情页
     $('#main-view').html(battleResHtml);
     //添加确认按钮单击事件
     $('#confirm_battle_result').on('click', function(e){
         $('#router_starter').click();
 	});
+});
+
+socket.on('rechargeResult', function(text){
+    socket.emit('tokenData', text.token);  
+    bullup.alert(text.text);
+    $('#router_starter').click();
 });
 
 /**
@@ -449,6 +480,8 @@ function handleLoginResult(feedback) {
             // 打开
             $("#log_modal").css("display", "block");
             $('#system_menu').html(temp);
+
+            $('#router_starter').click();
         });
     } else if (feedback.errorCode == 1) {
         // 登录失败
@@ -471,6 +504,8 @@ function handleFeedback(feedback) {
 function handleRankList(rankList){
     var strengthRankList = rankList.strengthRankList;
     var wealthRankList = rankList.wealthRankList;
+    strengthRankList.rankList.sort(createCompareFunction("bullup_strength_score"));
+    wealthRankList.rankList.sort(createCompareFunction("bullup_wealth_sum"));
     var rank_list = bullup.loadSwigView('swig_rank.html', {
         strengthRankList: strengthRankList.rankList,
         wealthRankList: wealthRankList.rankList,
@@ -481,6 +516,20 @@ function handleRankList(rankList){
     $('ul.tabs').tabs();
 }
 
+function createCompareFunction(propertyName){
+    return function(object1,object2){
+        var value1 = object1[propertyName];
+        var value2 = object2[propertyName];
+        if(value1>value2){
+            return -1;
+        } else if(value1<value2){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+}
+
 function handleLOLBindResult(feedback){
     //
     if(feedback.errorCode == 0){
@@ -488,6 +537,12 @@ function handleLOLBindResult(feedback){
     }   
     bullup.alert(feedback.extension.tips);
 }
+
+//用户修改信息
+function handleUpdateInfoResult(feedback){
+    bullup.alert(feedback.text);
+}
+
 //处理提现申请及信息入库
 function handleBankInfo(feedback){
     bullup.alert(feedback.text);
@@ -645,7 +700,17 @@ function handleAnalysisDataResult(feedback){
     });
     $('#main-view').html(analysisDataHtml);
 }
-    
+ 
+//邀请码信息
+function handleInvitedCodeResult(feedback){
+    var tempData = feedback.extension.data;
+    console.log(tempData);
+    //alert(tempData[0]);
+    var handleInvitedCodeHtml = bullup.loadSwigView('swig_admin_invitedCode.html',{
+        dataSource:{data:tempData} 
+    });
+    $('#main-view').html(handleInvitedCodeHtml);
+}
 
 function handleRegistResult(feedback){
     bullup.alert(feedback.text);
@@ -746,7 +811,7 @@ function handleTeamEstablishResult(feedback){
                     break;
                 }
             }
-
+            //room在队伍详情页
             var teamDetailsHtml = bullup.loadSwigView('swig_team_detail.html', {
                 team: room
             });
@@ -764,10 +829,10 @@ function handleTeamEstablishResult(feedback){
             //////////
         });
 		var pages = {
-			totalPage: 10,
-	 		pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-	 		currentPage: 1
-		};
+            totalPage: 10,
+             pageNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+             currentPage: 1
+        };
 		//
 		var pagination = bullup.loadSwigView('swig_pagination.html', pages);
 		//		console.log(pagination);
